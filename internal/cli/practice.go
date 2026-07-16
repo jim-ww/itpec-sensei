@@ -22,6 +22,7 @@ import (
 type practiceFlags struct {
 	examType            string
 	examID              string
+	part                string
 	mode                string
 	order               string
 	timeLimit           time.Duration
@@ -33,6 +34,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("practice", flag.ExitOnError)
 	examType := fs.String("exam-type", "fe", "fe | itpassport")
 	examID := fs.String("exam", "", "scope to one exam id")
+	part := fs.String("part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
 	mode := fs.String("mode", "normal", "normal | review")
 	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate")
 	timeLimit := fs.Duration("time-limit", 0, "whole-session time limit, e.g. 150m")
@@ -41,9 +43,20 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		return err
 	}
 
+	partVal := strings.ToLower(*part)
+	switch partVal {
+	case "am", "pm":
+		// valid
+	case "all", "":
+		partVal = ""
+	default:
+		return fmt.Errorf("invalid --part %q, expected am, pm, or all", *part)
+	}
+
 	pf := practiceFlags{
 		examType:          *examType,
 		examID:            *examID,
+		part:              partVal,
 		mode:              *mode,
 		order:             *order,
 		timeLimit:         *timeLimit,
@@ -53,7 +66,12 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 }
 
 func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) error {
-	planned := c.Bank.Questions("", pf.examID)
+	var planned []*core.Question
+	if pf.examID != "" {
+		planned = c.Bank.Questions("", pf.examID)
+	} else {
+		planned = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(pf.part))
+	}
 	if pf.mode == "review" {
 		var err error
 		planned, err = reviewFiltered(ctx, c, planned)

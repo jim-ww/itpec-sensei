@@ -127,6 +127,49 @@ func (b *Bank) Questions(topic, examID string) []*Question {
 	return pool
 }
 
+// QuestionsForExams returns all questions across the given exam IDs, sorted by ID.
+func (b *Bank) QuestionsForExams(examIDs []string) []*Question {
+	var pool []*Question
+	for _, id := range examIDs {
+		pool = append(pool, b.byExam[id]...)
+	}
+	sort.Slice(pool, func(i, j int) bool { return pool[i].ID < pool[j].ID })
+	return pool
+}
+
+// ExamPart returns "am" or "pm" for an exam ID whose code ends in one of the
+// AM/PM (pre-2024 format) or A/B (2024-onward format) session suffixes, or ""
+// for exams with no AM/PM distinction (e.g. IT Passport).
+func ExamPart(examID string) string {
+	_, code, ok := strings.Cut(examID, "_")
+	if !ok {
+		code = examID
+	}
+	switch {
+	case strings.HasSuffix(code, "-AM"), strings.HasSuffix(code, "-A"):
+		return "am"
+	case strings.HasSuffix(code, "-PM"), strings.HasSuffix(code, "-B"):
+		return "pm"
+	default:
+		return ""
+	}
+}
+
+// ExamsByPart returns all known exam IDs whose ExamPart matches part
+// ("am" | "pm"), or all exam IDs if part is "" (no filtering).
+func (b *Bank) ExamsByPart(part string) []string {
+	if part == "" {
+		return b.exams
+	}
+	var matched []string
+	for _, id := range b.exams {
+		if ExamPart(id) == part {
+			matched = append(matched, id)
+		}
+	}
+	return matched
+}
+
 // Image lazily decodes and returns the image for a question.
 func (b *Bank) Image(q *Question) (image.Image, error) {
 	name := path.Join("images", q.ExamID, path.Base(q.ImageURL))
