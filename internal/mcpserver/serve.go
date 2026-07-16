@@ -41,8 +41,15 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	// Question images are embedded directly in tool results (see
 	// encodeQuestionImage), so the HTTP server here only needs to expose the
 	// Streamable HTTP MCP endpoint itself, not a separate image route.
+	//
+	// The SDK's default DNS-rebinding protection rejects any request whose
+	// Host header isn't localhost, since the server binds to a loopback
+	// address. With --ngrok that's exactly what legitimate forwarded
+	// requests look like (Host: <subdomain>.ngrok-free.app), so it has to be
+	// disabled in that case — the tunnel itself is the intentional exposure.
 	mux := http.NewServeMux()
-	mux.Handle("/", mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, nil))
+	mux.Handle("/", mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server },
+		&mcp.StreamableHTTPOptions{DisableLocalhostProtection: *useNgrok}))
 
 	httpServer := &http.Server{Addr: *addr, Handler: mux}
 	go func() {
