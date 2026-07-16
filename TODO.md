@@ -1,2 +1,3 @@
 - markdown rendered should block, until user press enter
 - add dark mode option, that inverts colors on images
+- see previous sessions data? mcp+cli

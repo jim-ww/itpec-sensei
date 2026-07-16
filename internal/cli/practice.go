@@ -277,6 +277,8 @@ questionLoop:
 			} else {
 				fmt.Println(rendered)
 			}
+			fmt.Print("Press Enter to continue...")
+			stdin.ReadString('\n')
 		}
 	}
 
