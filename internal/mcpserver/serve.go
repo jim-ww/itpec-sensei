@@ -2,6 +2,7 @@ package mcpserver
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -126,6 +127,23 @@ type getProgressSummaryOut struct {
 	MedianTimeMs float64 `json:"medianTimeMs,omitempty"`
 }
 
+type getQuestionIn struct {
+	ExamID       string `json:"examId" jsonschema:"exam id, e.g. 2025A_FE-A"`
+	Number       int    `json:"number" jsonschema:"question number within the exam"`
+	RevealAnswer bool   `json:"revealAnswer,omitempty" jsonschema:"if true, include the correct answer and explanation"`
+}
+
+type getQuestionOut struct {
+	QuestionID   string           `json:"questionId"`
+	ExamID       string           `json:"examId"`
+	ImageURL     string           `json:"imageUrl"`
+	Topic        string           `json:"topic,omitempty"`
+	Answer       json.RawMessage  `json:"answer,omitempty"`
+	SimpleAnswer string           `json:"simpleAnswer,omitempty"`
+	SubAnswers   []core.SubAnswer `json:"subAnswers,omitempty"`
+	Explanation  string           `json:"explanation,omitempty"`
+}
+
 type getHistoryIn struct {
 	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
 	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
@@ -192,6 +210,29 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 			imageURL = strings.TrimSuffix(*imageBaseURL, "/") + imageURL
 		}
 		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURL}, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "get_question",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Set revealAnswer=true to also return the correct answer and explanation.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
+		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
+		if err != nil {
+			return nil, getQuestionOut{}, err
+		}
+		imageURL := "/images/" + q.ImageRelPath()
+		if *imageBaseURL != "" {
+			imageURL = strings.TrimSuffix(*imageBaseURL, "/") + imageURL
+		}
+		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURL}
+		if q.Explanation != nil {
+			out.Topic = q.Explanation.Topic
+			out.Explanation = q.Explanation.Explanation
+		}
+		out.Answer = q.Answer
+		out.SimpleAnswer = q.SimpleAnswer
+		out.SubAnswers = q.SubAnswers
+		return nil, out, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
