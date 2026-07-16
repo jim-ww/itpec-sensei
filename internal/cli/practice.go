@@ -49,7 +49,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	question := fs.Int("q", 0, "practice only this specific question number within --exam")
 	limit := fs.Int("limit", 0, "max number of questions this session (0 = no limit)")
 	mode := fs.String("mode", "normal", "normal | review")
-	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate")
+	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate | weak (weighted towards low-accuracy topics)")
 	timeLimit := fs.Duration("time-limit", 0, "whole-session time limit, e.g. 150m")
 	questionTimeLimit := fs.Duration("question-time-limit", 0, "per-question time limit, e.g. 90s")
 	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
@@ -402,6 +402,30 @@ func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, or
 		sort.Slice(ordered, func(i, j int) bool {
 			return failCounts[ordered[i].GlobalID()] > failCounts[ordered[j].GlobalID()]
 		})
+	case "weak":
+		// Weight towards topics with lower accuracy, including ones never
+		// attempted yet (default weight below any known accuracy) — unlike
+		// fail-count/fail-rate this is topic-level, not tied to a specific
+		// question having been seen before.
+		topicStats, err := c.GetTopicStats(ctx, core.ScopeAll)
+		if err != nil {
+			return nil, err
+		}
+		accuracyByTopic := make(map[string]float64, len(topicStats))
+		for _, s := range topicStats {
+			if s.Answered > 0 {
+				accuracyByTopic[s.Topic] = s.Accuracy
+			}
+		}
+		const noDataWeight = 0.5
+		weight := func(q *core.Question) float64 {
+			if acc, ok := accuracyByTopic[q.Topic()]; ok {
+				return acc
+			}
+			return noDataWeight
+		}
+		shuffle(ordered) // randomize within topics of equal weakness
+		sort.SliceStable(ordered, func(i, j int) bool { return weight(ordered[i]) < weight(ordered[j]) })
 	default:
 		return nil, fmt.Errorf("unknown order strategy %q", order)
 	}

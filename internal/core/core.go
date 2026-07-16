@@ -23,13 +23,20 @@ func New(bank *Bank, store *sql.DB) *Core {
 
 // GetNextQuestion returns a question matching filter. It never includes the
 // answer or explanation — those are only ever exposed via SubmitAnswer.
+//
+// filter.Mode is "random" (default), "review" (only questions whose most
+// recent attempt was wrong — see reviewQueueIDs), or "weak" (any question in
+// the pool, but topics with lower accuracy are picked more often — unlike
+// "review" this doesn't require a prior wrong attempt on that exact
+// question, so it also surfaces never-attempted questions in weak topics).
 func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Question, error) {
 	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
 	if len(pool) == 0 {
 		return nil, fmt.Errorf("no questions match filter")
 	}
 
-	if strings.EqualFold(filter.Mode, "review") {
+	switch {
+	case strings.EqualFold(filter.Mode, "review"):
 		reviewIDs, err := c.reviewQueueIDs(ctx)
 		if err != nil {
 			return nil, err
@@ -44,10 +51,54 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 		if len(pool) == 0 {
 			return nil, fmt.Errorf("no questions in review queue for this filter")
 		}
-	}
+		return stripAnswer(pool[rand.Intn(len(pool))]), nil
 
-	pick := pool[rand.Intn(len(pool))]
-	return stripAnswer(pick), nil
+	case strings.EqualFold(filter.Mode, "weak"):
+		topicStats, err := c.GetTopicStats(ctx, ScopeAll)
+		if err != nil {
+			return nil, err
+		}
+		accuracyByTopic := make(map[string]float64, len(topicStats))
+		for _, s := range topicStats {
+			if s.Answered > 0 {
+				accuracyByTopic[s.Topic] = s.Accuracy
+			}
+		}
+		return stripAnswer(weightedPickByTopicWeakness(pool, accuracyByTopic)), nil
+
+	default:
+		return stripAnswer(pool[rand.Intn(len(pool))]), nil
+	}
+}
+
+// weightedPickByTopicWeakness picks randomly from pool, weighting each
+// question inversely to its topic's known accuracy (lower accuracy = picked
+// more often). Topics with no attempts yet get a moderate default weight so
+// they still surface at a reasonable rate alongside known-weak topics.
+func weightedPickByTopicWeakness(pool []*Question, accuracyByTopic map[string]float64) *Question {
+	const (
+		noDataWeight = 0.5  // topics never attempted: moderate priority
+		floorWeight  = 0.05 // even a 100%-accurate topic can still come up
+	)
+	weights := make([]float64, len(pool))
+	total := 0.0
+	for i, q := range pool {
+		w := noDataWeight
+		if acc, ok := accuracyByTopic[q.Topic()]; ok {
+			w = 1 - acc
+		}
+		w += floorWeight
+		weights[i] = w
+		total += w
+	}
+	r := rand.Float64() * total
+	for i, w := range weights {
+		r -= w
+		if r <= 0 {
+			return pool[i]
+		}
+	}
+	return pool[len(pool)-1]
 }
 
 // GetQuestion looks up one question by exam ID + question number. When
@@ -456,6 +507,9 @@ func (c *Core) GetExam(ctx context.Context, examID string) (*ExamDetail, error) 
 		DurationMinutes: info.DurationMinutes,
 		TotalQuestions:  info.TotalQuestions,
 	}
+	if info.DurationMinutes > 0 && info.TotalQuestions > 0 {
+		detail.TargetSecondsPerQuestion = info.DurationMinutes * 60 / info.TotalQuestions
+	}
 
 	stats, err := c.GetExamStats(ctx, Scope("exam:"+examID))
 	if err != nil {
@@ -466,6 +520,34 @@ func (c *Core) GetExam(ctx context.Context, examID string) (*ExamDetail, error) 
 		detail.Correct = stats[0].Correct
 		detail.Accuracy = stats[0].Accuracy
 	}
+
+	ids, err := c.scopeQuestionIDs(Scope("exam:" + examID))
+	if err != nil {
+		return nil, err
+	}
+	where, args := c.scopeWhere(ids)
+	query := `SELECT time_taken_ms FROM attempts WHERE time_taken_ms > 0`
+	if where != "" {
+		query += " AND " + where
+	}
+	rows, err := c.Store.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("query attempt times: %w", err)
+	}
+	defer rows.Close()
+	var times []int
+	for rows.Next() {
+		var ms int
+		if err := rows.Scan(&ms); err != nil {
+			return nil, fmt.Errorf("scan attempt time: %w", err)
+		}
+		times = append(times, ms)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate attempt times: %w", err)
+	}
+	detail.AvgTimeMs, _ = timeStats(times)
+
 	return detail, nil
 }
 

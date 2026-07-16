@@ -113,15 +113,17 @@ type ExamStat struct {
 // ExamDetail is the readable "get_exam" view: scraped exam metadata plus the
 // user's own progress on it.
 type ExamDetail struct {
-	ExamID          string  `json:"examId"`
-	Name            string  `json:"name,omitempty"`
-	Date            string  `json:"date,omitempty"`
-	Part            string  `json:"part,omitempty"` // "am" | "pm" | ""
-	DurationMinutes int     `json:"durationMinutes,omitempty"`
-	TotalQuestions  int     `json:"totalQuestions"`
-	Answered        int     `json:"answered"`
-	Correct         int     `json:"correct"`
-	Accuracy        float64 `json:"accuracy"`
+	ExamID                   string  `json:"examId"`
+	Name                     string  `json:"name,omitempty"`
+	Date                     string  `json:"date,omitempty"`
+	Part                     string  `json:"part,omitempty"` // "am" | "pm" | ""
+	DurationMinutes          int     `json:"durationMinutes,omitempty"`
+	TotalQuestions           int     `json:"totalQuestions"`
+	TargetSecondsPerQuestion int     `json:"targetSecondsPerQuestion,omitempty"` // pacing target implied by the real exam's time limit
+	Answered                 int     `json:"answered"`
+	Correct                  int     `json:"correct"`
+	Accuracy                 float64 `json:"accuracy"`
+	AvgTimeMs                float64 `json:"avgTimeMs,omitempty"` // your own average answer time on this exam's questions
 }
 
 // PartStat is per-part (AM/PM, or "other" for exams with no AM/PM split, e.g.

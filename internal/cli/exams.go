@@ -49,8 +49,18 @@ func RunExam(ctx context.Context, c *core.Core, args []string) error {
 	fmt.Printf("Part:            %s\n", orDash(partLabel(detail.Part)))
 	fmt.Printf("Duration:        %d min\n", detail.DurationMinutes)
 	fmt.Printf("Questions:       %d\n", detail.TotalQuestions)
+	if detail.TargetSecondsPerQuestion > 0 {
+		fmt.Printf("Pacing target:   %ds/question (real exam time pressure)\n", detail.TargetSecondsPerQuestion)
+	}
 	if detail.Answered > 0 {
 		fmt.Printf("Your progress:   %d/%d answered, %.0f%% correct\n", detail.Answered, detail.TotalQuestions, detail.Accuracy*100)
+		if detail.AvgTimeMs > 0 {
+			verdict := "on pace"
+			if detail.TargetSecondsPerQuestion > 0 && detail.AvgTimeMs/1000 > float64(detail.TargetSecondsPerQuestion) {
+				verdict = "slower than target"
+			}
+			fmt.Printf("Your avg time:   %.1fs/question (%s)\n", detail.AvgTimeMs/1000, verdict)
+		}
 	} else {
 		fmt.Println("Your progress:   not attempted yet")
 	}

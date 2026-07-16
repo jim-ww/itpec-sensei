@@ -99,7 +99,7 @@ Flags for practice:
   --q <n>                                                         practice only this question number within --exam
   --limit <n>                                                     max questions this session, default 0 (no limit)
   --mode <normal|review>                                          default "normal"
-  --order <sequential|random|fail-count|fail-rate>                default "random"
+  --order <sequential|random|fail-count|fail-rate|weak>           default "random"
   --time-limit <duration>                                         whole-session limit, e.g. 150m
   --question-time-limit <duration>                                per-question limit, e.g. 90s
   --image-viewer <sixel|xdg-open>                                  default "sixel"

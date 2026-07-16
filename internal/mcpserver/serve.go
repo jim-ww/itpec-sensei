@@ -180,7 +180,7 @@ type listTopicsOut struct {
 type getNextQuestionIn struct {
 	Topic     string `json:"topic,omitempty" jsonschema:"filter by topic"`
 	ExamID    string `json:"examId,omitempty" jsonschema:"filter by exam id"`
-	Mode      string `json:"mode,omitempty" jsonschema:"random or review, default random"`
+	Mode      string `json:"mode,omitempty" jsonschema:"random | review (only questions you most recently got wrong) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet), default random"`
 	LightMode bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
 }
 
@@ -188,7 +188,9 @@ type getNextQuestionOut struct {
 	SessionID  int64  `json:"sessionId" jsonschema:"pass verbatim to submit_answer"`
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
+	Number     int    `json:"number" jsonschema:"question number within examId; pass both to get_question to look this exact question back up (e.g. to re-fetch, toggle lightMode, or reveal the answer)"`
 	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
+	ImageMode  string `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl/embedded image actually is"`
 }
 
 type submitAnswerIn struct {
@@ -237,7 +239,7 @@ type getProgressSummaryOut struct {
 	Answered    int            `json:"answered"`
 	Streak      int            `json:"streak"`
 	MaxStreak   int            `json:"maxStreak"`
-	ReviewQueue int            `json:"reviewQueue"`
+	ReviewQueue int            `json:"reviewQueue" jsonschema:"count of questions whose MOST RECENT attempt was wrong — a simple wrong-last-time list, not a spaced-repetition schedule; use mode=review on get_next_question to draw from it"`
 	PartStats   []partStatOut  `json:"partStats"`
 	TopicStats  []topicStatOut `json:"topicStats,omitempty"`
 	ExamStats   []examStatOut  `json:"examStats,omitempty"`
@@ -254,7 +256,9 @@ type getQuestionOut struct {
 	SessionID    int64            `json:"sessionId,omitempty" jsonschema:"pass verbatim to submit_answer; only set when revealAnswer is false, since a revealed answer isn't meant to be graded"`
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
+	Number       int              `json:"number"`
 	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
+	ImageMode    string           `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl actually is"`
 	Topic        string           `json:"topic,omitempty"`
 	Answer       json.RawMessage  `json:"answer,omitempty"`
 	SimpleAnswer string           `json:"simpleAnswer,omitempty"`
@@ -341,6 +345,12 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		}
 		return url
 	}
+	imageModeFor := func(lightMode bool) string {
+		if lightMode {
+			return "light"
+		}
+		return "dark"
+	}
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_topics",
@@ -373,18 +383,24 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
-		return nil, getNextQuestionOut{SessionID: sess.id, QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}, nil
+		return nil, getNextQuestionOut{
+			SessionID: sess.id, QuestionID: q.GlobalID(), ExamID: q.ExamID, Number: q.ID,
+			ImageURL: imageURLFor(q, in.LightMode), ImageMode: imageModeFor(in.LightMode),
+		}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded).",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded).",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
 			return nil, getQuestionOut{}, err
 		}
-		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}
+		out := getQuestionOut{
+			QuestionID: q.GlobalID(), ExamID: q.ExamID, Number: q.ID,
+			ImageURL: imageURLFor(q, in.LightMode), ImageMode: imageModeFor(in.LightMode),
+		}
 		if !in.RevealAnswer {
 			if !sess.started {
 				id, err := c.StartSession(ctx, "fe", in.ExamID, "lookup", "direct", nil, nil)
