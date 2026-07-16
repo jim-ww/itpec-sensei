@@ -108,7 +108,7 @@ questionLoop:
 
 		answerCh := make(chan string, 1)
 		go func() {
-			fmt.Print("Your answer (or 'q' to quit): ")
+			fmt.Print("Your answer ('q' to quit, '?' if you don't know): ")
 			line, _ := stdin.ReadString('\n')
 			answerCh <- strings.TrimSpace(line)
 		}()
@@ -156,6 +156,14 @@ questionLoop:
 			break questionLoop
 		}
 
+		dontKnow := answer == "?" || strings.EqualFold(answer, "idk")
+		if dontKnow {
+			// Recorded as its own sentinel answer so it's distinguishable from a
+			// wrong guess in the attempts log, but still grades as incorrect and
+			// still counts as an answered question (the user did respond).
+			answer = "idk"
+		}
+
 		elapsed := time.Since(start)
 		result, err := c.SubmitAnswer(ctx, sessionID, q.ID, answer, lateFired, int(elapsed.Milliseconds()))
 		if err != nil {
@@ -164,10 +172,13 @@ questionLoop:
 		}
 
 		answered++
-		if result.Correct {
+		switch {
+		case result.Correct:
 			correct++
 			color.New(color.FgGreen, color.Bold).Println("✓ Correct!")
-		} else {
+		case dontKnow:
+			color.New(color.FgYellow, color.Bold).Println("○ Marked as unknown — recorded as incorrect.")
+		default:
 			color.New(color.FgRed, color.Bold).Println("✗ Incorrect.")
 		}
 		if lateFired {
