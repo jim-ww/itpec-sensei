@@ -28,11 +28,14 @@ type practiceFlags struct {
 	examType          string
 	examID            string
 	part              string
+	question          int
+	limit             int
 	mode              string
 	order             string
 	timeLimit         time.Duration
 	questionTimeLimit time.Duration
 	imageViewer       string
+	showAnswer        bool
 }
 
 // RunPractice implements `itpec-sensei practice ...`.
@@ -41,11 +44,14 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	examType := fs.String("exam-type", "fe", "fe | itpassport")
 	examID := fs.String("exam", "", "scope to one exam id")
 	part := fs.String("part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
+	question := fs.Int("q", 0, "practice only this specific question number within --exam")
+	limit := fs.Int("limit", 0, "max number of questions this session (0 = no limit)")
 	mode := fs.String("mode", "normal", "normal | review")
 	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate")
 	timeLimit := fs.Duration("time-limit", 0, "whole-session time limit, e.g. 150m")
 	questionTimeLimit := fs.Duration("question-time-limit", 0, "per-question time limit, e.g. 90s")
 	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
+	showAnswer := fs.Bool("answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -54,6 +60,10 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	case "sixel", "xdg-open":
 	default:
 		return fmt.Errorf("invalid --image-viewer %q, expected sixel or xdg-open", *imageViewer)
+	}
+
+	if *question > 0 && *examID == "" {
+		return fmt.Errorf("-q requires --exam")
 	}
 
 	partVal := strings.ToLower(*part)
@@ -70,23 +80,33 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		examType:          *examType,
 		examID:            *examID,
 		part:              partVal,
+		question:          *question,
+		limit:             *limit,
 		mode:              *mode,
 		order:             *order,
 		timeLimit:         *timeLimit,
 		questionTimeLimit: *questionTimeLimit,
 		imageViewer:       *imageViewer,
+		showAnswer:        *showAnswer,
 	}
 	return runPracticeSession(ctx, c, pf)
 }
 
 func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) error {
 	var planned []*core.Question
-	if pf.examID != "" {
+	switch {
+	case pf.question > 0:
+		q := c.Bank.QuestionByExamAndNumber(pf.examID, pf.question)
+		if q == nil {
+			return fmt.Errorf("question %s#%d not found", pf.examID, pf.question)
+		}
+		planned = []*core.Question{q}
+	case pf.examID != "":
 		planned = c.Bank.Questions("", pf.examID)
-	} else {
+	default:
 		planned = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(pf.part))
 	}
-	if pf.mode == "review" {
+	if pf.mode == "review" && pf.question == 0 {
 		var err error
 		planned, err = reviewFiltered(ctx, c, planned)
 		if err != nil {
@@ -101,6 +121,14 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 	ordered, err := orderQuestions(ctx, c, planned, pf.order)
 	if err != nil {
 		return err
+	}
+
+	if pf.limit > 0 && pf.limit < len(ordered) {
+		ordered = ordered[:pf.limit]
+	}
+
+	if pf.showAnswer {
+		return runAnswerReveal(c, pf, ordered)
 	}
 
 	var timeLimitSec, qTimeLimitSec *int
@@ -136,7 +164,10 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 
 questionLoop:
 	for i, q := range ordered {
-		fmt.Printf("\nQuestion %d of %d  (%s, q%d)\n", i+1, len(ordered), q.ExamID, q.ID)
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d)  [%s %s]\n",
+			i+1, len(ordered), q.ExamID, q.ID,
+			color.New(color.FgGreen, color.Bold).Sprintf("%d✓", correct),
+			color.New(color.FgRed, color.Bold).Sprintf("%d✗", answered-correct))
 		killExternalViewer(&lastExternalImage)
 		if err := renderImage(c, q, pf.imageViewer, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)
@@ -261,6 +292,54 @@ questionLoop:
 	fmt.Printf("Exit: %s\n", exitReason)
 
 	return nil
+}
+
+// runAnswerReveal walks ordered, showing each question's image immediately
+// followed by its correct answer and explanation — a read-only reference
+// mode. The user just presses Enter to advance ('q' to quit early); nothing
+// is graded and no session/attempt rows are written to the progress DB.
+func runAnswerReveal(c *core.Core, pf practiceFlags, ordered []*core.Question) error {
+	stdin := bufio.NewReader(os.Stdin)
+	var lastExternalImage string
+	defer killExternalViewer(&lastExternalImage)
+
+	for i, q := range ordered {
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d)\n", i+1, len(ordered), q.ExamID, q.ID)
+		killExternalViewer(&lastExternalImage)
+		if err := renderImage(c, q, pf.imageViewer, &lastExternalImage); err != nil {
+			fmt.Printf("[image unavailable: %v]\n", err)
+		}
+
+		fmt.Printf("Correct answer: %s\n", answerLabel(q))
+		if q.Explanation != nil {
+			fmt.Printf("\nTopic: %s\n", q.Explanation.Topic)
+			rendered, err := glamour.Render(q.Explanation.Explanation, "dark")
+			if err != nil {
+				fmt.Println(q.Explanation.Explanation)
+			} else {
+				fmt.Println(rendered)
+			}
+		}
+
+		fmt.Print("\nPress Enter to continue ('q' to quit): ")
+		line, _ := stdin.ReadString('\n')
+		if strings.EqualFold(strings.TrimSpace(line), "q") {
+			break
+		}
+	}
+	return nil
+}
+
+// answerLabel returns the correct answer letter for display purposes,
+// mirroring the precedence gradeAnswer uses for grading (core.gradeAnswer).
+func answerLabel(q *core.Question) string {
+	if q.SimpleAnswer != "" {
+		return q.SimpleAnswer
+	}
+	if len(q.SubAnswers) > 0 {
+		return q.SubAnswers[0].Answer
+	}
+	return "(unknown)"
 }
 
 func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([]*core.Question, error) {
