@@ -129,9 +129,16 @@ questionLoop:
 
 		answerCh := make(chan string, 1)
 		go func() {
-			fmt.Print("Your answer ('q' to quit, '?' if you don't know): ")
-			line, _ := stdin.ReadString('\n')
-			answerCh <- strings.TrimSpace(line)
+			for {
+				fmt.Print("Your answer ('q' to quit, '?' if you don't know): ")
+				line, _ := stdin.ReadString('\n')
+				a := strings.TrimSpace(line)
+				if a == "" {
+					continue
+				}
+				answerCh <- a
+				return
+			}
 		}()
 
 		var timers []<-chan time.Time
