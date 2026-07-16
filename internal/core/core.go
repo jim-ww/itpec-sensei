@@ -32,6 +32,28 @@ func New(bank *Bank, store *sql.DB) *Core {
 func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Question, error) {
 	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
 	if len(pool) == 0 {
+		// Topic and examId each narrow the pool independently, but topics are
+		// NOT shared across all exams (e.g. AM/subject-A exams use topics like
+		// "Software Development"; PM/subject-B exams use a different taxonomy
+		// like "Linked List", "Graph Traversal") — combining a topic with an
+		// exam that doesn't use it is a common, silent way to end up here.
+		// Report which topics that exam DOES have, so the caller doesn't have
+		// to guess-and-check.
+		if filter.Topic != "" && filter.ExamID != "" {
+			examOnly := c.Bank.Questions("", filter.ExamID)
+			if len(examOnly) > 0 {
+				topics := make(map[string]struct{})
+				for _, q := range examOnly {
+					topics[q.Topic()] = struct{}{}
+				}
+				var list []string
+				for t := range topics {
+					list = append(list, t)
+				}
+				sort.Strings(list)
+				return nil, fmt.Errorf("no questions match filter: exam %q has no %q questions; its topics are: %s", filter.ExamID, filter.Topic, strings.Join(list, ", "))
+			}
+		}
 		return nil, fmt.Errorf("no questions match filter")
 	}
 
