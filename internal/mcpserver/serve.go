@@ -1,7 +1,6 @@
 package mcpserver
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"flag"
@@ -10,6 +9,7 @@ import (
 	"image/png"
 	"io/fs"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"strings"
@@ -35,29 +35,45 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	sess := &sessionState{}
 	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-sensei", Version: "0.1.0"}, nil)
 
-	if !*remote {
-		// stdio clients get the question image embedded directly in the tool
-		// result (see encodeQuestionImage) — there's no HTTP server to serve a
-		// URL from in this transport.
-		registerTools(server, c, sess, nil)
-		err := server.Run(ctx, &mcp.StdioTransport{})
-		endMCPSession(c, sess)
-		return err
-	}
-
-	// Remote clients additionally get an "imageUrl" pointing at /images/,
-	// since some MCP clients (e.g. Claude web) don't render embedded image
-	// content blocks to the user even though the model can read them — a
-	// plain URL the model can put in a markdown image link actually renders.
-	var baseURL atomic.Pointer[string]
-	local := "http://" + *addr
-	baseURL.Store(&local)
-	registerTools(server, c, sess, &baseURL)
-
 	imgFS, err := c.Bank.ImagesFS()
 	if err != nil {
 		return fmt.Errorf("images fs: %w", err)
 	}
+
+	if !*remote {
+		// Question images are always served as a URL, never embedded as base64
+		// tool content — some MCP clients (e.g. Claude web) don't render
+		// embedded image blocks to the user even though the model can read
+		// them, but a plain URL in a markdown image link does. Over stdio
+		// there's no existing HTTP server to point at, so spin up a
+		// local-only one (OS-assigned port) just for images.
+		ln, err := net.Listen("tcp", "127.0.0.1:0")
+		if err != nil {
+			return fmt.Errorf("listen for image server: %w", err)
+		}
+		defer ln.Close()
+		imgMux := http.NewServeMux()
+		imgMux.Handle("/images/", http.StripPrefix("/images/", imageHandler(imgFS)))
+		go func() {
+			if err := http.Serve(ln, imgMux); err != nil && err != http.ErrServerClosed {
+				log.Printf("local image server stopped: %v", err)
+			}
+		}()
+
+		var baseURL atomic.Pointer[string]
+		local := "http://" + ln.Addr().String()
+		baseURL.Store(&local)
+		registerTools(server, c, sess, &baseURL)
+
+		err = server.Run(ctx, &mcp.StdioTransport{})
+		endMCPSession(c, sess)
+		return err
+	}
+
+	var baseURL atomic.Pointer[string]
+	local := "http://" + *addr
+	baseURL.Store(&local)
+	registerTools(server, c, sess, &baseURL)
 
 	// The SDK's default DNS-rebinding protection rejects any request whose
 	// Host header isn't localhost, since the server binds to a loopback
@@ -135,28 +151,6 @@ func imageHandler(imgFS fs.FS) http.Handler {
 	})
 }
 
-// encodeQuestionImage decodes the question's embedded image, inverts it
-// unless lightMode is set (dark mode is the default everywhere a question
-// image is shown, matching the CLI's --dark default), and re-encodes it as
-// PNG image content for direct embedding in a tool result. This is used for
-// both stdio and --remote transports, so image delivery works identically
-// regardless of how the MCP client connected — no separate HTTP image route
-// or base URL needed.
-func encodeQuestionImage(c *core.Core, q *core.Question, lightMode bool) (*mcp.ImageContent, error) {
-	img, err := c.Bank.Image(q)
-	if err != nil {
-		return nil, fmt.Errorf("load image: %w", err)
-	}
-	if !lightMode {
-		img = core.InvertImage(img)
-	}
-	var buf bytes.Buffer
-	if err := png.Encode(&buf, img); err != nil {
-		return nil, fmt.Errorf("encode image: %w", err)
-	}
-	return &mcp.ImageContent{Data: buf.Bytes(), MIMEType: "image/png"}, nil
-}
-
 // sessionState tracks the single lazily-started progress-DB session shared by
 // all tool calls in this server process (see get_next_question below).
 type sessionState struct {
@@ -193,7 +187,7 @@ type getNextQuestionIn struct {
 type getNextQuestionOut struct {
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
-	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly (remote transport only); put this in a markdown image link so the user can actually see it"`
+	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
 }
 
 type submitAnswerIn struct {
@@ -258,7 +252,7 @@ type getQuestionIn struct {
 type getQuestionOut struct {
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
-	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly (remote transport only); put this in a markdown image link so the user can actually see it"`
+	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
 	Topic        string           `json:"topic,omitempty"`
 	Answer       json.RawMessage  `json:"answer,omitempty"`
 	SimpleAnswer string           `json:"simpleAnswer,omitempty"`
@@ -363,7 +357,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_next_question",
-		Description: "Return the next practice question (embedded image + id + topic), filtered by topic/exam/mode. Never includes the answer.",
+		Description: "Return the next practice question (id + topic + an imageUrl to render), filtered by topic/exam/mode. Never includes the answer.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
 		if !sess.started {
 			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
@@ -377,32 +371,20 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
-		imgContent, err := encodeQuestionImage(c, q, in.LightMode)
-		if err != nil {
-			return nil, getNextQuestionOut{}, err
-		}
 		result := &mcp.CallToolResult{
-			Content: []mcp.Content{
-				&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)},
-				imgContent,
-			},
+			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)}},
 		}
 		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns the embedded image. Set revealAnswer=true to also return the correct answer and explanation.",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
 			return nil, getQuestionOut{}, err
 		}
-		imgContent, err := encodeQuestionImage(c, q, in.LightMode)
-		if err != nil {
-			return nil, getQuestionOut{}, err
-		}
-		result := &mcp.CallToolResult{Content: []mcp.Content{imgContent}}
 		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}
 		if q.Explanation != nil {
 			out.Topic = q.Explanation.Topic
@@ -411,7 +393,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		out.Answer = q.Answer
 		out.SimpleAnswer = q.SimpleAnswer
 		out.SubAnswers = q.SubAnswers
-		return result, out, nil
+		return nil, out, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
