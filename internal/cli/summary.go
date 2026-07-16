@@ -21,27 +21,52 @@ func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	if err != nil {
 		return fmt.Errorf("get progress summary: %w", err)
 	}
-	stats, err := c.GetTopicStats(ctx, core.Scope(*scope))
+	topicStats, err := c.GetTopicStats(ctx, core.Scope(*scope))
 	if err != nil {
 		return fmt.Errorf("get topic stats: %w", err)
+	}
+	examStats, err := c.GetExamStats(ctx, core.Scope(*scope))
+	if err != nil {
+		return fmt.Errorf("get exam stats: %w", err)
 	}
 
 	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", *scope, *period)
 	fmt.Printf("Answered:      %d\n", summary.Answered)
-	fmt.Printf("Correct:       %d (%.0f%%)\n", summary.Correct, summary.Accuracy*100)
-	fmt.Printf("Streak:        %d day(s)\n", summary.Streak)
-	fmt.Printf("Review queue:  %d question(s)\n", summary.ReviewQueue)
-	if summary.AvgTimeMs > 0 {
-		fmt.Printf("Answer time:   avg %.1fs, median %.1fs\n\n", summary.AvgTimeMs/1000, summary.MedianTimeMs/1000)
-	} else {
-		fmt.Println()
+	fmt.Printf("Streak:        %d day(s) (best: %d)\n", summary.Streak, summary.MaxStreak)
+	fmt.Printf("Review queue:  %d question(s) — most recent attempt was wrong, due for another pass\n", summary.ReviewQueue)
+	fmt.Println()
+
+	fmt.Println("By part (AM and PM test different material, so they're never blended):")
+	if len(summary.PartStats) == 0 {
+		fmt.Println("  (no attempts yet)")
+	}
+	for _, p := range summary.PartStats {
+		line := fmt.Sprintf("  %-6s %d/%d (%.0f%%)", partLabel(p.Part), p.Correct, p.Answered, p.Accuracy*100)
+		if p.AvgTimeMs > 0 {
+			line += fmt.Sprintf("  avg %.1fs, median %.1fs", p.AvgTimeMs/1000, p.MedianTimeMs/1000)
+		}
+		fmt.Println(line)
 	}
 
-	fmt.Println("Activity (last 12 weeks):")
+	fmt.Println("\nActivity (last 12 weeks):")
 	printHeatmap(summary.Heatmap)
 
 	fmt.Println("\nPer-topic accuracy:")
-	printTopicBars(stats)
+	printTopicBars(topicStats)
+
+	fmt.Println("\nPer-exam accuracy:")
+	printExamBars(examStats)
 
 	return nil
+}
+
+func partLabel(part string) string {
+	switch part {
+	case "am":
+		return "AM"
+	case "pm":
+		return "PM"
+	default:
+		return "Other"
+	}
 }

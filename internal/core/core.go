@@ -161,7 +161,7 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 		args = append(args, periodArgs...)
 	}
 
-	query := `SELECT answer, correct, answered_at, time_taken_ms FROM attempts`
+	query := `SELECT question_id, correct, answered_at, time_taken_ms FROM attempts`
 	if where != "" {
 		query += " WHERE " + where
 	}
@@ -172,33 +172,60 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 	defer rows.Close()
 
 	summary := &ProgressSummary{Heatmap: make(map[string]int)}
-	var times []int
+	type partAcc struct {
+		answered, correct int
+		times             []int
+	}
+	byPart := make(map[string]*partAcc)
 	for rows.Next() {
-		var answer string
+		var questionID string
 		var correct bool
 		var answeredAt time.Time
 		var timeTakenMs int
-		if err := rows.Scan(&answer, &correct, &answeredAt, &timeTakenMs); err != nil {
+		if err := rows.Scan(&questionID, &correct, &answeredAt, &timeTakenMs); err != nil {
 			return nil, fmt.Errorf("scan attempt: %w", err)
 		}
 		summary.Answered++
-		if correct {
-			summary.Correct++
-		}
 		day := answeredAt.Format("2006-01-02")
 		summary.Heatmap[day]++
+
+		part := "other"
+		if q := c.Bank.Question(questionID); q != nil {
+			if p := ExamPart(q.ExamID); p != "" {
+				part = p
+			}
+		}
+		a := byPart[part]
+		if a == nil {
+			a = &partAcc{}
+			byPart[part] = a
+		}
+		a.answered++
+		if correct {
+			a.correct++
+		}
 		if timeTakenMs > 0 {
-			times = append(times, timeTakenMs)
+			a.times = append(a.times, timeTakenMs)
 		}
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterate attempts: %w", err)
 	}
-	if summary.Answered > 0 {
-		summary.Accuracy = float64(summary.Correct) / float64(summary.Answered)
-	}
 	summary.Streak = computeStreak(summary.Heatmap)
-	summary.AvgTimeMs, summary.MedianTimeMs = timeStats(times)
+	summary.MaxStreak = computeMaxStreak(summary.Heatmap)
+
+	for _, part := range []string{"am", "pm", "other"} {
+		a := byPart[part]
+		if a == nil {
+			continue
+		}
+		ps := PartStat{Part: part, Answered: a.answered, Correct: a.correct}
+		if a.answered > 0 {
+			ps.Accuracy = float64(a.correct) / float64(a.answered)
+		}
+		ps.AvgTimeMs, ps.MedianTimeMs = timeStats(a.times)
+		summary.PartStats = append(summary.PartStats, ps)
+	}
 
 	reviewIDs, err := c.reviewQueueIDs(ctx)
 	if err != nil {
@@ -259,6 +286,40 @@ func computeStreak(heatmap map[string]int) int {
 	return streak
 }
 
+// computeMaxStreak returns the longest run of consecutive days with any
+// recorded activity, over the entire heatmap — unlike computeStreak, this
+// isn't anchored to "today" and doesn't reset once the current streak breaks.
+func computeMaxStreak(heatmap map[string]int) int {
+	if len(heatmap) == 0 {
+		return 0
+	}
+	days := make([]time.Time, 0, len(heatmap))
+	for k, count := range heatmap {
+		if count == 0 {
+			continue
+		}
+		t, err := time.Parse("2006-01-02", k)
+		if err != nil {
+			continue
+		}
+		days = append(days, t)
+	}
+	sort.Slice(days, func(i, j int) bool { return days[i].Before(days[j]) })
+
+	max, cur := 0, 0
+	for i, d := range days {
+		if i == 0 || d.Sub(days[i-1]) != 24*time.Hour {
+			cur = 1
+		} else {
+			cur++
+		}
+		if cur > max {
+			max = cur
+		}
+	}
+	return max
+}
+
 func periodWhere(period Period) (string, []any) {
 	switch period {
 	case PeriodWeek:
@@ -317,6 +378,60 @@ func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, err
 	var stats []TopicStat
 	for topic, a := range byTopic {
 		s := TopicStat{Topic: topic, Answered: a.answered, Correct: a.correct}
+		if a.answered > 0 {
+			s.Accuracy = float64(a.correct) / float64(a.answered)
+		}
+		stats = append(stats, s)
+	}
+	return stats, nil
+}
+
+// GetExamStats returns per-exam answered/correct/accuracy for scope, mirroring GetTopicStats.
+func (c *Core) GetExamStats(ctx context.Context, scope Scope) ([]ExamStat, error) {
+	ids, err := c.scopeQuestionIDs(scope)
+	if err != nil {
+		return nil, err
+	}
+	where, args := c.scopeWhere(ids)
+	query := `SELECT question_id, correct FROM attempts`
+	if where != "" {
+		query += " WHERE " + where
+	}
+	rows, err := c.Store.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("query attempts: %w", err)
+	}
+	defer rows.Close()
+
+	type acc struct{ answered, correct int }
+	byExam := make(map[string]*acc)
+	for rows.Next() {
+		var qid string
+		var correct bool
+		if err := rows.Scan(&qid, &correct); err != nil {
+			return nil, fmt.Errorf("scan attempt: %w", err)
+		}
+		examID := "Unknown"
+		if q := c.Bank.Question(qid); q != nil {
+			examID = q.ExamID
+		}
+		a := byExam[examID]
+		if a == nil {
+			a = &acc{}
+			byExam[examID] = a
+		}
+		a.answered++
+		if correct {
+			a.correct++
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate attempts: %w", err)
+	}
+
+	var stats []ExamStat
+	for examID, a := range byExam {
+		s := ExamStat{ExamID: examID, Answered: a.answered, Correct: a.correct}
 		if a.answered > 0 {
 			s.Accuracy = float64(a.correct) / float64(a.answered)
 		}

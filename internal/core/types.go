@@ -102,6 +102,26 @@ type TopicStat struct {
 	Accuracy float64 `json:"accuracy"`
 }
 
+// ExamStat is one row of per-exam aggregate stats, mirroring TopicStat.
+type ExamStat struct {
+	ExamID   string  `json:"examId"`
+	Answered int     `json:"answered"`
+	Correct  int     `json:"correct"`
+	Accuracy float64 `json:"accuracy"`
+}
+
+// PartStat is per-part (AM/PM, or "other" for exams with no AM/PM split, e.g.
+// IT Passport) aggregate accuracy and timing. AM and PM sections test very
+// different material, so they're never blended into one combined number.
+type PartStat struct {
+	Part         string  `json:"part"` // "am" | "pm" | "other"
+	Answered     int     `json:"answered"`
+	Correct      int     `json:"correct"`
+	Accuracy     float64 `json:"accuracy"`
+	AvgTimeMs    float64 `json:"avgTimeMs,omitempty"`
+	MedianTimeMs float64 `json:"medianTimeMs,omitempty"`
+}
+
 // AttemptRecord is one past attempt, joined with question metadata, for history views.
 type AttemptRecord struct {
 	QuestionID  string    `json:"questionId"`
@@ -131,14 +151,14 @@ type SessionRecord struct {
 	Correct                  int        `json:"correct"`
 }
 
-// ProgressSummary is the aggregate progress view.
+// ProgressSummary is the aggregate progress view. Per-part correctness and
+// timing live in PartStats (see PartStat) rather than as blended totals here,
+// since AM and PM sections test very different material.
 type ProgressSummary struct {
-	Answered     int            `json:"answered"`
-	Correct      int            `json:"correct"`
-	Accuracy     float64        `json:"accuracy"`
-	Streak       int            `json:"streak"`
-	ReviewQueue  int            `json:"reviewQueue"`
-	AvgTimeMs    float64        `json:"avgTimeMs"`    // mean answer time across attempts with recorded timing
-	MedianTimeMs float64        `json:"medianTimeMs"` // median answer time across attempts with recorded timing
-	Heatmap      map[string]int `json:"heatmap"`      // date (YYYY-MM-DD) -> answers that day
+	Answered    int            `json:"answered"`
+	Streak      int            `json:"streak"`
+	MaxStreak   int            `json:"maxStreak"`
+	ReviewQueue int            `json:"reviewQueue"`
+	PartStats   []PartStat     `json:"partStats"`
+	Heatmap     map[string]int `json:"heatmap"` // date (YYYY-MM-DD) -> answers that day
 }

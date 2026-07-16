@@ -160,14 +160,37 @@ type getProgressSummaryIn struct {
 	Period string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
 }
 
-type getProgressSummaryOut struct {
+type partStatOut struct {
+	Part         string  `json:"part"` // "am" | "pm" | "other"
 	Answered     int     `json:"answered"`
 	Correct      int     `json:"correct"`
 	Accuracy     float64 `json:"accuracy"`
-	Streak       int     `json:"streak"`
-	ReviewQueue  int     `json:"reviewQueue"`
 	AvgTimeMs    float64 `json:"avgTimeMs,omitempty"`
 	MedianTimeMs float64 `json:"medianTimeMs,omitempty"`
+}
+
+type topicStatOut struct {
+	Topic    string  `json:"topic"`
+	Answered int     `json:"answered"`
+	Correct  int     `json:"correct"`
+	Accuracy float64 `json:"accuracy"`
+}
+
+type examStatOut struct {
+	ExamID   string  `json:"examId"`
+	Answered int     `json:"answered"`
+	Correct  int     `json:"correct"`
+	Accuracy float64 `json:"accuracy"`
+}
+
+type getProgressSummaryOut struct {
+	Answered    int            `json:"answered"`
+	Streak      int            `json:"streak"`
+	MaxStreak   int            `json:"maxStreak"`
+	ReviewQueue int            `json:"reviewQueue"`
+	PartStats   []partStatOut  `json:"partStats"`
+	TopicStats  []topicStatOut `json:"topicStats,omitempty"`
+	ExamStats   []examStatOut  `json:"examStats,omitempty"`
 }
 
 type getQuestionIn struct {
@@ -318,7 +341,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_progress_summary",
-		Description: "Return accuracy/streak/review-queue so the AI can meaningfully reference progress in conversation.",
+		Description: "Return accuracy/streak/review-queue plus per-part (AM/PM), per-topic, and per-exam breakdowns, so the AI can meaningfully reference progress in conversation. AM and PM are never blended into one accuracy/timing number since they test very different material.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getProgressSummaryIn) (*mcp.CallToolResult, getProgressSummaryOut, error) {
 		scope := core.Scope(orDefault(in.Scope, "all"))
 		period := core.Period(orDefault(in.Period, "all"))
@@ -326,15 +349,38 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 		if err != nil {
 			return nil, getProgressSummaryOut{}, err
 		}
-		return nil, getProgressSummaryOut{
-			Answered:     s.Answered,
-			Correct:      s.Correct,
-			Accuracy:     s.Accuracy,
-			Streak:       s.Streak,
-			ReviewQueue:  s.ReviewQueue,
-			AvgTimeMs:    s.AvgTimeMs,
-			MedianTimeMs: s.MedianTimeMs,
-		}, nil
+		topicStats, err := c.GetTopicStats(ctx, scope)
+		if err != nil {
+			return nil, getProgressSummaryOut{}, err
+		}
+		examStats, err := c.GetExamStats(ctx, scope)
+		if err != nil {
+			return nil, getProgressSummaryOut{}, err
+		}
+
+		out := getProgressSummaryOut{
+			Answered:    s.Answered,
+			Streak:      s.Streak,
+			MaxStreak:   s.MaxStreak,
+			ReviewQueue: s.ReviewQueue,
+		}
+		for _, p := range s.PartStats {
+			out.PartStats = append(out.PartStats, partStatOut{
+				Part: p.Part, Answered: p.Answered, Correct: p.Correct, Accuracy: p.Accuracy,
+				AvgTimeMs: p.AvgTimeMs, MedianTimeMs: p.MedianTimeMs,
+			})
+		}
+		for _, t := range topicStats {
+			out.TopicStats = append(out.TopicStats, topicStatOut{
+				Topic: t.Topic, Answered: t.Answered, Correct: t.Correct, Accuracy: t.Accuracy,
+			})
+		}
+		for _, e := range examStats {
+			out.ExamStats = append(out.ExamStats, examStatOut{
+				ExamID: e.ExamID, Answered: e.Answered, Correct: e.Correct, Accuracy: e.Accuracy,
+			})
+		}
+		return nil, out, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
