@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"math/rand"
+	"sort"
 	"strings"
 	"time"
 )
@@ -144,7 +145,7 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 		args = append(args, periodArgs...)
 	}
 
-	query := `SELECT answer, correct, answered_at FROM attempts`
+	query := `SELECT answer, correct, answered_at, time_taken_ms FROM attempts`
 	if where != "" {
 		query += " WHERE " + where
 	}
@@ -155,11 +156,13 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 	defer rows.Close()
 
 	summary := &ProgressSummary{Heatmap: make(map[string]int)}
+	var times []int
 	for rows.Next() {
 		var answer string
 		var correct bool
 		var answeredAt time.Time
-		if err := rows.Scan(&answer, &correct, &answeredAt); err != nil {
+		var timeTakenMs int
+		if err := rows.Scan(&answer, &correct, &answeredAt, &timeTakenMs); err != nil {
 			return nil, fmt.Errorf("scan attempt: %w", err)
 		}
 		summary.Answered++
@@ -168,6 +171,9 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 		}
 		day := answeredAt.Format("2006-01-02")
 		summary.Heatmap[day]++
+		if timeTakenMs > 0 {
+			times = append(times, timeTakenMs)
+		}
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterate attempts: %w", err)
@@ -176,6 +182,7 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 		summary.Accuracy = float64(summary.Correct) / float64(summary.Answered)
 	}
 	summary.Streak = computeStreak(summary.Heatmap)
+	summary.AvgTimeMs, summary.MedianTimeMs = timeStats(times)
 
 	reviewIDs, err := c.reviewQueueIDs(ctx)
 	if err != nil {
@@ -194,6 +201,28 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 	}
 
 	return summary, nil
+}
+
+// timeStats returns the mean and median of ms, or (0, 0) if ms is empty.
+func timeStats(ms []int) (avg, median float64) {
+	if len(ms) == 0 {
+		return 0, 0
+	}
+	sum := 0
+	for _, v := range ms {
+		sum += v
+	}
+	avg = float64(sum) / float64(len(ms))
+
+	sorted := append([]int(nil), ms...)
+	sort.Ints(sorted)
+	mid := len(sorted) / 2
+	if len(sorted)%2 == 0 {
+		median = float64(sorted[mid-1]+sorted[mid]) / 2
+	} else {
+		median = float64(sorted[mid])
+	}
+	return avg, median
 }
 
 func computeStreak(heatmap map[string]int) int {

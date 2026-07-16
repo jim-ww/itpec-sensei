@@ -116,11 +116,13 @@ type getProgressSummaryIn struct {
 }
 
 type getProgressSummaryOut struct {
-	Answered    int     `json:"answered"`
-	Correct     int     `json:"correct"`
-	Accuracy    float64 `json:"accuracy"`
-	Streak      int     `json:"streak"`
-	ReviewQueue int     `json:"reviewQueue"`
+	Answered     int     `json:"answered"`
+	Correct      int     `json:"correct"`
+	Accuracy     float64 `json:"accuracy"`
+	Streak       int     `json:"streak"`
+	ReviewQueue  int     `json:"reviewQueue"`
+	AvgTimeMs    float64 `json:"avgTimeMs,omitempty"`
+	MedianTimeMs float64 `json:"medianTimeMs,omitempty"`
 }
 
 func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
@@ -197,11 +199,13 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 			return nil, getProgressSummaryOut{}, err
 		}
 		return nil, getProgressSummaryOut{
-			Answered:    s.Answered,
-			Correct:     s.Correct,
-			Accuracy:    s.Accuracy,
-			Streak:      s.Streak,
-			ReviewQueue: s.ReviewQueue,
+			Answered:     s.Answered,
+			Correct:      s.Correct,
+			Accuracy:     s.Accuracy,
+			Streak:       s.Streak,
+			ReviewQueue:  s.ReviewQueue,
+			AvgTimeMs:    s.AvgTimeMs,
+			MedianTimeMs: s.MedianTimeMs,
 		}, nil
 	})
 }

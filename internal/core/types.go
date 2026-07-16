@@ -103,10 +103,12 @@ type TopicStat struct {
 
 // ProgressSummary is the aggregate progress view.
 type ProgressSummary struct {
-	Answered    int            `json:"answered"`
-	Correct     int            `json:"correct"`
-	Accuracy    float64        `json:"accuracy"`
-	Streak      int            `json:"streak"`
-	ReviewQueue int            `json:"reviewQueue"`
-	Heatmap     map[string]int `json:"heatmap"` // date (YYYY-MM-DD) -> answers that day
+	Answered     int            `json:"answered"`
+	Correct      int            `json:"correct"`
+	Accuracy     float64        `json:"accuracy"`
+	Streak       int            `json:"streak"`
+	ReviewQueue  int            `json:"reviewQueue"`
+	AvgTimeMs    float64        `json:"avgTimeMs"`    // mean answer time across attempts with recorded timing
+	MedianTimeMs float64        `json:"medianTimeMs"` // median answer time across attempts with recorded timing
+	Heatmap      map[string]int `json:"heatmap"`      // date (YYYY-MM-DD) -> answers that day
 }

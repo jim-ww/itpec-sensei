@@ -30,7 +30,12 @@ func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	fmt.Printf("Answered:      %d\n", summary.Answered)
 	fmt.Printf("Correct:       %d (%.0f%%)\n", summary.Correct, summary.Accuracy*100)
 	fmt.Printf("Streak:        %d day(s)\n", summary.Streak)
-	fmt.Printf("Review queue:  %d question(s)\n\n", summary.ReviewQueue)
+	fmt.Printf("Review queue:  %d question(s)\n", summary.ReviewQueue)
+	if summary.AvgTimeMs > 0 {
+		fmt.Printf("Answer time:   avg %.1fs, median %.1fs\n\n", summary.AvgTimeMs/1000, summary.MedianTimeMs/1000)
+	} else {
+		fmt.Println()
+	}
 
 	fmt.Println("Activity (last 12 weeks):")
 	printHeatmap(summary.Heatmap)
