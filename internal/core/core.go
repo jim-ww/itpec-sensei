@@ -50,6 +50,22 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 	return stripAnswer(pick), nil
 }
 
+// GetQuestion looks up one question by exam ID + question number. When
+// revealAnswer is false, the answer/explanation are stripped, same as
+// GetNextQuestion. When true, the full question (including the correct
+// answer and explanation) is returned — a deliberate, explicit escape hatch
+// for reference lookups, not used by the normal practice/grading flow.
+func (c *Core) GetQuestion(ctx context.Context, examID string, number int, revealAnswer bool) (*Question, error) {
+	q := c.Bank.QuestionByExamAndNumber(examID, number)
+	if q == nil {
+		return nil, fmt.Errorf("question %s#%d not found", examID, number)
+	}
+	if revealAnswer {
+		return q, nil
+	}
+	return stripAnswer(q), nil
+}
+
 func stripAnswer(q *Question) *Question {
 	cp := *q
 	cp.Answer = nil

@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -92,6 +93,13 @@ func LoadBank() (*Bank, error) {
 // or nil if not found.
 func (b *Bank) Question(globalID string) *Question {
 	return b.byID[globalID]
+}
+
+// QuestionByExamAndNumber looks up a question by its exam ID and per-exam
+// question number (as printed to users, e.g. "q34"), rather than by the
+// opaque GlobalID.
+func (b *Bank) QuestionByExamAndNumber(examID string, number int) *Question {
+	return b.byID[examID+"#"+strconv.Itoa(number)]
 }
 
 // Exams returns all known exam IDs, sorted.

@@ -1,0 +1,1 @@
+- markdown rendered should block, until user press enter
