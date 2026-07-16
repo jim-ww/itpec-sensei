@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"golang.ngrok.com/ngrok/v2"
@@ -16,22 +18,31 @@ import (
 // Run implements `itpec-sensei serve [--remote]`.
 func Run(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("serve", flag.ExitOnError)
-	remote := fs.Bool("remote", false, "expose over Streamable HTTP + an ngrok tunnel instead of stdio")
+	remote := fs.Bool("remote", false, "expose over Streamable HTTP instead of stdio")
 	addr := fs.String("addr", "127.0.0.1:8790", "local listen address for --remote")
+	useNgrok := fs.Bool("ngrok", false, "also forward a public ngrok tunnel to the --remote server")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
 
+	var imageBaseURL string
 	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-sensei", Version: "0.1.0"}, nil)
-	registerTools(server, c)
+	registerTools(server, c, &imageBaseURL)
 
 	if !*remote {
 		return server.Run(ctx, &mcp.StdioTransport{})
 	}
 
-	handler := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, nil)
+	imagesFS, err := c.Bank.ImagesFS()
+	if err != nil {
+		return fmt.Errorf("serve: images fs: %w", err)
+	}
 
-	httpServer := &http.Server{Addr: *addr, Handler: handler}
+	mux := http.NewServeMux()
+	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServerFS(imagesFS)))
+	mux.Handle("/", mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, nil))
+
+	httpServer := &http.Server{Addr: *addr, Handler: mux}
 	go func() {
 		log.Printf("MCP server listening on http://%s", *addr)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -39,16 +50,29 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		}
 	}()
 
+	if !*useNgrok {
+		imageBaseURL = "http://" + *addr
+		<-ctx.Done()
+		return httpServer.Close()
+	}
+
 	// Forward a public ngrok endpoint to the local server, using the ngrok-go
 	// SDK (NGROK_AUTHTOKEN env var) rather than shelling out to the ngrok binary.
-	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream(*addr))
+	// NGROK_RESERVED_URL pins this to our reserved domain instead of a random one.
+	var endpointOpts []ngrok.EndpointOption
+	if reservedURL := os.Getenv("NGROK_RESERVED_URL"); reservedURL != "" {
+		endpointOpts = append(endpointOpts, ngrok.WithURL(reservedURL))
+	}
+	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream(*addr), endpointOpts...)
 	if err != nil {
 		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, *addr)
+		imageBaseURL = "http://" + *addr
 		<-ctx.Done()
 		return httpServer.Close()
 	}
 	defer fwd.Close()
-	log.Printf("MCP server publicly reachable at %s", fwd.URL())
+	imageBaseURL = fwd.URL().String()
+	log.Printf("MCP server publicly reachable at %s", imageBaseURL)
 
 	<-ctx.Done()
 	fwd.Close()
@@ -99,7 +123,7 @@ type getProgressSummaryOut struct {
 	ReviewQueue int     `json:"reviewQueue"`
 }
 
-func registerTools(server *mcp.Server, c *core.Core) {
+func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 	// A single session is created lazily on first get_next_question call per server
 	// process, since MCP tool calls within one conversation share this process.
 	var sessionID int64
@@ -139,7 +163,11 @@ func registerTools(server *mcp.Server, c *core.Core) {
 		result := &mcp.CallToolResult{
 			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sessionID)}},
 		}
-		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: q.ImageURL}, nil
+		imageURL := "/images/" + q.ImageRelPath()
+		if *imageBaseURL != "" {
+			imageURL = strings.TrimSuffix(*imageBaseURL, "/") + imageURL
+		}
+		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURL}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{

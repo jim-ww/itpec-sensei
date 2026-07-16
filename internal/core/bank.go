@@ -171,9 +171,16 @@ func (b *Bank) ExamsByPart(part string) []string {
 	return matched
 }
 
+// ImageRelPath returns the question's image path relative to the "images"
+// directory (e.g. "2018A_FE-AM/q1.png"), suitable for both local embedded-FS
+// lookups and as a URL path segment when serving images over HTTP.
+func (q *Question) ImageRelPath() string {
+	return path.Join(q.ExamID, path.Base(q.ImageURL))
+}
+
 // Image lazily decodes and returns the image for a question.
 func (b *Bank) Image(q *Question) (image.Image, error) {
-	name := path.Join("images", q.ExamID, path.Base(q.ImageURL))
+	name := path.Join("images", q.ImageRelPath())
 	f, err := b.fsys.Open(name)
 	if err != nil {
 		return nil, fmt.Errorf("bank: open image %s: %w", name, err)
@@ -184,4 +191,10 @@ func (b *Bank) Image(q *Question) (image.Image, error) {
 		return nil, fmt.Errorf("bank: decode image %s: %w", name, err)
 	}
 	return img, nil
+}
+
+// ImagesFS returns the embedded "images" subtree, for serving question images
+// over HTTP (e.g. to remote MCP clients that can't read the embedded binary).
+func (b *Bank) ImagesFS() (fs.FS, error) {
+	return fs.Sub(b.fsys, "images")
 }
