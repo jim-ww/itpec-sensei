@@ -28,11 +28,14 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	}
 
 	var imageBaseURL string
+	sess := &sessionState{}
 	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-sensei", Version: "0.1.0"}, nil)
-	registerTools(server, c, &imageBaseURL)
+	registerTools(server, c, &imageBaseURL, sess)
 
 	if !*remote {
-		return server.Run(ctx, &mcp.StdioTransport{})
+		err := server.Run(ctx, &mcp.StdioTransport{})
+		endMCPSession(c, sess)
+		return err
 	}
 
 	imagesFS, err := c.Bank.ImagesFS()
@@ -55,6 +58,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	if !*useNgrok {
 		imageBaseURL = "http://" + *addr
 		<-ctx.Done()
+		endMCPSession(c, sess)
 		return httpServer.Close()
 	}
 
@@ -70,6 +74,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, *addr)
 		imageBaseURL = "http://" + *addr
 		<-ctx.Done()
+		endMCPSession(c, sess)
 		return httpServer.Close()
 	}
 	defer fwd.Close()
@@ -78,7 +83,29 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 
 	<-ctx.Done()
 	fwd.Close()
+	endMCPSession(c, sess)
 	return httpServer.Close()
+}
+
+// sessionState tracks the single lazily-started progress-DB session shared by
+// all tool calls in this server process (see get_next_question below).
+type sessionState struct {
+	id      int64
+	started bool
+}
+
+// endMCPSession closes out the session row on graceful server shutdown, if
+// one was ever started. Uses a fresh context since ctx is typically already
+// done by the time this runs. There's no "interrupted" case to distinguish
+// here (unlike CLI practice) — this only runs on graceful shutdown; a crash
+// or kill -9 just leaves exit_reason NULL, same as before this existed.
+func endMCPSession(c *core.Core, sess *sessionState) {
+	if !sess.started {
+		return
+	}
+	if err := c.EndSession(context.Background(), sess.id, "completed"); err != nil {
+		log.Printf("end session: %v", err)
+	}
 }
 
 type listTopicsOut struct {
@@ -165,12 +192,7 @@ type getHistoryOut struct {
 	Attempts []historyAttempt `json:"attempts"`
 }
 
-func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
-	// A single session is created lazily on first get_next_question call per server
-	// process, since MCP tool calls within one conversation share this process.
-	var sessionID int64
-	var sessionStarted bool
-
+func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string, sess *sessionState) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_topics",
 		Description: "List available topics and exam IDs, so the AI can offer filtering rather than guessing.",
@@ -190,20 +212,20 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 		Name:        "get_next_question",
 		Description: "Return the next practice question (image + id + topic), filtered by topic/exam/mode. Never includes the answer.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
-		if !sessionStarted {
+		if !sess.started {
 			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
 			if err != nil {
 				return nil, getNextQuestionOut{}, err
 			}
-			sessionID = id
-			sessionStarted = true
+			sess.id = id
+			sess.started = true
 		}
 		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: in.Topic, ExamID: in.ExamID, Mode: orDefault(in.Mode, "random")})
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
 		result := &mcp.CallToolResult{
-			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sessionID)}},
+			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)}},
 		}
 		imageURL := "/images/" + q.ImageRelPath()
 		if *imageBaseURL != "" {
