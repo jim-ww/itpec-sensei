@@ -210,7 +210,7 @@ type getNextQuestionOut struct {
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
 	Number     int    `json:"number" jsonschema:"question number within examId; pass both to get_question to look this exact question back up (e.g. to re-fetch, toggle lightMode, or reveal the answer)"`
-	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering; also put this in a markdown image link so the user can see it (if they report they can't, use open_question_image to show it to them locally instead)"`
+	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering, and transcribe it to the user as-is (don't reword/paraphrase unless asked); also put this in a markdown image link so the user can see it"`
 	ImageMode  string `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl/embedded image actually is"`
 }
 
@@ -278,7 +278,7 @@ type getQuestionOut struct {
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
 	Number       int              `json:"number"`
-	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering; also put this in a markdown image link so the user can see it (if they report they can't, use open_question_image to show it to them locally instead)"`
+	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering, and transcribe it to the user as-is (don't reword/paraphrase unless asked); also put this in a markdown image link so the user can see it"`
 	ImageMode    string           `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl actually is"`
 	Topic        string           `json:"topic,omitempty"`
 	Answer       json.RawMessage  `json:"answer,omitempty"`
@@ -418,7 +418,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_next_question",
-		Description: "Return the next practice question, filtered by topic/exam/mode. The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself. You must fetch/view that image yourself to know what's actually being asked before answering or discussing it. If the user says they can't see the image, call open_question_image to open it directly for THEM on their machine — that tool is for the user's benefit, not a substitute for you reading imageUrl. Never includes the answer. The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
+		Description: "Return the next practice question, filtered by topic/exam/mode. The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself. You must fetch/view that image yourself to know what's actually being asked before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Never includes the answer. The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
 		if !sess.started {
 			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
@@ -451,7 +451,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself; fetch/view that image yourself before answering or discussing it. If the user says they can't see the image, call open_question_image to open it directly for THEM on their machine — that tool is for the user's benefit, not a substitute for you reading imageUrl. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded). The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself; fetch/view that image yourself before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded). The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
@@ -496,7 +496,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "open_question_image",
-		Description: "Open a question's image in a local image viewer for the USER to look at — not for you to read; you already have imageUrl for that. Use this only when the user says they can't see the image via imageUrl (e.g. the chat client doesn't render it), and only when the server is running on the SAME machine the user is looking at (e.g. local stdio) — it opens a window there, not in the chat, so it's useless over a headless/remote connection with no display. Uses xdg-open by default, configurable via --image-viewer on `serve`.",
+		Description: "Display this question's image, with its answer options, to the user directly, exactly as it is. Call this when the question has visuals — diagrams, charts, tables, code — that can't be reliably described in text alone.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in openQuestionImageIn) (*mcp.CallToolResult, openQuestionImageOut, error) {
 		q := c.Bank.QuestionByExamAndNumber(in.ExamID, in.Number)
 		if q == nil {
@@ -520,7 +520,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 		killPreviousViewer(sess)
 		if err := exec.Command(imageViewerCmd, tmp.Name()).Start(); err != nil {
-			return nil, openQuestionImageOut{}, fmt.Errorf("%s %s: %w (this only works when the server and the user share a display — it won't work over a headless/remote connection)", imageViewerCmd, tmp.Name(), err)
+			return nil, openQuestionImageOut{}, fmt.Errorf("%s %s: %w", imageViewerCmd, tmp.Name(), err)
 		}
 		sess.lastExternalImage = tmp.Name()
 
