@@ -436,11 +436,17 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
-		result := &mcp.CallToolResult{Content: []mcp.Content{imgContent}}
-		return result, getNextQuestionOut{
+		out := getNextQuestionOut{
 			SessionID: sess.id, QuestionID: q.GlobalID(), ExamID: q.ExamID, Number: q.ID,
 			ImageURL: imageURLFor(q, in.LightMode), ImageMode: imageModeFor(in.LightMode),
-		}, nil
+		}
+		// structuredContent isn't reliably surfaced to the model by every MCP
+		// client, so also spell out sessionId/questionId as plain text —
+		// submit_answer needs both verbatim and they must not get lost.
+		summary := fmt.Sprintf("sessionId=%d questionId=%s examId=%s number=%d imageMode=%s",
+			out.SessionID, out.QuestionID, out.ExamID, out.Number, out.ImageMode)
+		result := &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: summary}, imgContent}}
+		return result, out, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
@@ -477,7 +483,14 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, getQuestionOut{}, err
 		}
-		result := &mcp.CallToolResult{Content: []mcp.Content{imgContent}}
+		// structuredContent isn't reliably surfaced to the model by every MCP
+		// client, so also spell out sessionId/questionId as plain text —
+		// submit_answer needs both verbatim and they must not get lost.
+		summary := fmt.Sprintf("questionId=%s examId=%s number=%d imageMode=%s", out.QuestionID, out.ExamID, out.Number, out.ImageMode)
+		if out.SessionID != 0 {
+			summary = fmt.Sprintf("sessionId=%d %s", out.SessionID, summary)
+		}
+		result := &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: summary}, imgContent}}
 		return result, out, nil
 	})
 
