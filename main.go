@@ -124,9 +124,12 @@ Flags for reset:
   --yes                                       skip the confirmation prompt
 
 Flags for serve:
-  --remote   expose over Streamable HTTP instead of stdio
-  --addr     listen address for --remote      default "127.0.0.1:8790"
-  --ngrok    also forward a public ngrok tunnel
+  --remote         expose over Streamable HTTP instead of stdio
+  --addr           listen address for --remote      default "127.0.0.1:8790"
+  --ngrok          also forward a public ngrok tunnel
+  --image-viewer   local command the MCP open_question_image tool uses to open
+                   images on the machine running the server (bypasses the MCP
+                   client's own image rendering)                default "xdg-open"
 
 Examples:
   itpec-sensei

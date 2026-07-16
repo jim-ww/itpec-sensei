@@ -12,6 +12,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -28,6 +29,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	remote := fs.Bool("remote", false, "expose over Streamable HTTP instead of stdio")
 	addr := fs.String("addr", "127.0.0.1:8790", "local listen address for --remote")
 	useNgrok := fs.Bool("ngrok", false, "also forward a public ngrok tunnel to the --remote server")
+	imageViewer := fs.String("image-viewer", "xdg-open", "local command the open_question_image MCP tool uses to open images on the machine running this server")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -63,7 +65,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		var baseURL atomic.Pointer[string]
 		local := "http://" + ln.Addr().String()
 		baseURL.Store(&local)
-		registerTools(server, c, sess, &baseURL)
+		registerTools(server, c, sess, &baseURL, *imageViewer)
 
 		err = server.Run(ctx, &mcp.StdioTransport{})
 		endMCPSession(c, sess)
@@ -73,7 +75,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	var baseURL atomic.Pointer[string]
 	local := "http://" + *addr
 	baseURL.Store(&local)
-	registerTools(server, c, sess, &baseURL)
+	registerTools(server, c, sess, &baseURL, *imageViewer)
 
 	// The SDK's default DNS-rebinding protection rejects any request whose
 	// Host header isn't localhost, since the server binds to a loopback
@@ -152,10 +154,27 @@ func imageHandler(imgFS fs.FS) http.Handler {
 }
 
 // sessionState tracks the single lazily-started progress-DB session shared by
-// all tool calls in this server process (see get_next_question below).
+// all tool calls in this server process (see get_next_question below), plus
+// the path of the last image opened via open_question_image.
 type sessionState struct {
-	id      int64
-	started bool
+	id                int64
+	started           bool
+	lastExternalImage string
+}
+
+// killPreviousViewer best-effort kills whatever process opened the last
+// externally-viewed image (the viewer command itself has already exited by
+// the time we'd want to close it, so this matches on the temp file path in
+// the target process's argv instead — catches viewers that take the path as
+// a literal argument, e.g. feh/eog/sxiv, not browser- or portal-based
+// handlers). No-op if nothing was opened yet.
+func killPreviousViewer(sess *sessionState) {
+	if sess.lastExternalImage == "" {
+		return
+	}
+	_ = exec.Command("pkill", "-f", sess.lastExternalImage).Run()
+	_ = os.Remove(sess.lastExternalImage)
+	sess.lastExternalImage = ""
 }
 
 // endMCPSession closes out the session row on graceful server shutdown, if
@@ -266,6 +285,18 @@ type getQuestionOut struct {
 	Explanation  string           `json:"explanation,omitempty"`
 }
 
+type openQuestionImageIn struct {
+	ExamID    string `json:"examId" jsonschema:"exam id, e.g. 2025A_FE-A"`
+	Number    int    `json:"number" jsonschema:"question number within the exam"`
+	LightMode bool   `json:"lightMode,omitempty" jsonschema:"if true, open the original (light) colors instead of the default inverted (dark) version"`
+}
+
+type openQuestionImageOut struct {
+	Opened    bool   `json:"opened"`
+	Viewer    string `json:"viewer" jsonschema:"the local command used to open the image"`
+	ImageMode string `json:"imageMode" jsonschema:"\"dark\" or \"light\" — which one was opened"`
+}
+
 type getHistoryIn struct {
 	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
 	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
@@ -330,7 +361,7 @@ type getSessionsOut struct {
 // server to serve images from); for --remote it holds the server's current
 // public base URL (ngrok URL once the tunnel is up, else the local address),
 // used to build an imageUrl alongside the embedded image content.
-func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL *atomic.Pointer[string]) {
+func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL *atomic.Pointer[string], imageViewerCmd string) {
 	imageURLFor := func(q *core.Question, lightMode bool) string {
 		if baseURL == nil {
 			return ""
@@ -420,6 +451,39 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		out.SimpleAnswer = q.SimpleAnswer
 		out.SubAnswers = q.SubAnswers
 		return nil, out, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "open_question_image",
+		Description: "Open a question's image directly in a local image viewer (xdg-open by default, configurable via --image-viewer on `serve`) on the machine running this MCP server, bypassing the chat client entirely. Use this when imageUrl/embedded images from get_next_question or get_question aren't rendering for the user — but only when the server is running on the SAME machine the user is looking at (e.g. local stdio); it opens a window there, not in the chat, so it's useless over a headless/remote connection with no display.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in openQuestionImageIn) (*mcp.CallToolResult, openQuestionImageOut, error) {
+		q := c.Bank.QuestionByExamAndNumber(in.ExamID, in.Number)
+		if q == nil {
+			return nil, openQuestionImageOut{}, fmt.Errorf("question %s#%d not found", in.ExamID, in.Number)
+		}
+		img, err := c.Bank.Image(q)
+		if err != nil {
+			return nil, openQuestionImageOut{}, err
+		}
+		if !in.LightMode {
+			img = core.InvertImage(img)
+		}
+		tmp, err := os.CreateTemp("", "itpec-sensei-*.png")
+		if err != nil {
+			return nil, openQuestionImageOut{}, err
+		}
+		defer tmp.Close()
+		if err := png.Encode(tmp, img); err != nil {
+			return nil, openQuestionImageOut{}, err
+		}
+
+		killPreviousViewer(sess)
+		if err := exec.Command(imageViewerCmd, tmp.Name()).Start(); err != nil {
+			return nil, openQuestionImageOut{}, fmt.Errorf("%s %s: %w (this only works when the server and the user share a display — it won't work over a headless/remote connection)", imageViewerCmd, tmp.Name(), err)
+		}
+		sess.lastExternalImage = tmp.Name()
+
+		return nil, openQuestionImageOut{Opened: true, Viewer: imageViewerCmd, ImageMode: imageModeFor(in.LightMode)}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
