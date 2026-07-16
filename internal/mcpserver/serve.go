@@ -217,7 +217,7 @@ type getNextQuestionOut struct {
 type submitAnswerIn struct {
 	SessionID   int64  `json:"sessionId" jsonschema:"session id from a prior get_next_question call in this conversation"`
 	QuestionID  string `json:"questionId" jsonschema:"the opaque questionId returned by get_next_question"`
-	Answer      string `json:"answer" jsonschema:"the answer letter stated by the user"`
+	Answer      string `json:"answer" jsonschema:"the answer letter stated by the user. If they say (in any wording) that they don't know, pass the literal string \"idk\" — don't relay their exact words and don't guess a letter for them; \"idk\" is graded as incorrect but recorded distinctly from a wrong guess"`
 	TimedOut    bool   `json:"timedOut,omitempty"`
 	TimeTakenMs int    `json:"timeTakenMs,omitempty"`
 }

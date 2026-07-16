@@ -157,6 +157,7 @@ func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID str
 		return nil, fmt.Errorf("unknown question id %q", questionID)
 	}
 
+	answer = normalizeIdk(answer)
 	correct := gradeAnswer(q, answer)
 
 	_, err := c.Store.ExecContext(ctx,
@@ -169,6 +170,20 @@ func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID str
 	}
 
 	return &AnswerResult{Correct: correct, Explanation: q.Explanation}, nil
+}
+
+// normalizeIdk maps the two "I don't know" sentinels callers are asked to
+// send — "?" (CLI keypress) and "idk" (both CLI and, per the MCP tool's
+// documented contract, what the AI must pass when the user doesn't know,
+// rather than relaying the user's raw wording, which is too open-ended to
+// pattern-match reliably) — onto a single canonical value, so it's recorded
+// consistently in the attempts log (distinguishable from a wrong guess) and
+// always grades as incorrect.
+func normalizeIdk(answer string) string {
+	if answer == "?" || strings.EqualFold(answer, "idk") {
+		return "idk"
+	}
+	return answer
 }
 
 func gradeAnswer(q *Question, answer string) bool {
