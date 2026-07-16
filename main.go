@@ -95,6 +95,7 @@ Flags for practice:
   --question-time-limit <duration>                                per-question limit, e.g. 90s
   --image-viewer <sixel|xdg-open>                                  default "sixel"
   --answer                                                        reveal each answer/explanation immediately, no grading, no DB writes
+  --dark                                                          invert question image colors, on by default (--dark=false for originals)
 
 Flags for history:
   --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"image"
+	"image/color"
 	_ "image/png"
 	"io/fs"
 	"path"
@@ -199,6 +200,27 @@ func (b *Bank) Image(q *Question) (image.Image, error) {
 		return nil, fmt.Errorf("bank: decode image %s: %w", name, err)
 	}
 	return img, nil
+}
+
+// InvertImage flips every pixel's RGB channels (alpha untouched), turning a
+// light-background question image into a dark one. Shared by the CLI's
+// sixel/xdg-open rendering and the MCP server's embedded image content, so
+// "dark mode" behaves identically everywhere a question image is displayed.
+func InvertImage(img image.Image) image.Image {
+	b := img.Bounds()
+	dst := image.NewRGBA(b)
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			r, g, bl, a := img.At(x, y).RGBA()
+			dst.Set(x, y, color.RGBA{
+				R: 255 - uint8(r>>8),
+				G: 255 - uint8(g>>8),
+				B: 255 - uint8(bl>>8),
+				A: uint8(a >> 8),
+			})
+		}
+	}
+	return dst
 }
 
 // ImagesFS returns the embedded "images" subtree, for serving question images

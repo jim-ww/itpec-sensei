@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"image"
+	"image/png"
 	"io"
 	"os"
 	"os/exec"
@@ -36,6 +37,7 @@ type practiceFlags struct {
 	questionTimeLimit time.Duration
 	imageViewer       string
 	showAnswer        bool
+	dark              bool
 }
 
 // RunPractice implements `itpec-sensei practice ...`.
@@ -52,6 +54,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	questionTimeLimit := fs.Duration("question-time-limit", 0, "per-question time limit, e.g. 90s")
 	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
 	showAnswer := fs.Bool("answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
+	dark := fs.Bool("dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -88,6 +91,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		questionTimeLimit: *questionTimeLimit,
 		imageViewer:       *imageViewer,
 		showAnswer:        *showAnswer,
+		dark:              *dark,
 	}
 	return runPracticeSession(ctx, c, pf)
 }
@@ -167,7 +171,7 @@ questionLoop:
 			color.New(color.FgGreen, color.Bold).Sprintf("%d✓", correct),
 			color.New(color.FgRed, color.Bold).Sprintf("%d✗", answered-correct))
 		killExternalViewer(&lastExternalImage)
-		if err := renderImage(c, q, pf.imageViewer, &lastExternalImage); err != nil {
+		if err := renderImage(c, q, pf.imageViewer, pf.dark, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)
 		}
 
@@ -318,7 +322,7 @@ func runAnswerReveal(c *core.Core, pf practiceFlags, ordered []*core.Question) e
 	for i, q := range ordered {
 		fmt.Printf("\nQuestion %d of %d  (%s, q%d)\n", i+1, len(ordered), q.ExamID, q.ID)
 		killExternalViewer(&lastExternalImage)
-		if err := renderImage(c, q, pf.imageViewer, &lastExternalImage); err != nil {
+		if err := renderImage(c, q, pf.imageViewer, pf.dark, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)
 		}
 
@@ -423,9 +427,9 @@ func pseudoRand(n int) int {
 	return int(randState % uint64(n))
 }
 
-func renderImage(c *core.Core, q *core.Question, viewer string, lastExternalImage *string) error {
+func renderImage(c *core.Core, q *core.Question, viewer string, dark bool, lastExternalImage *string) error {
 	if viewer == "xdg-open" {
-		return openImageExternally(c, q, lastExternalImage)
+		return openImageExternally(c, q, dark, lastExternalImage)
 	}
 
 	if !isatty.IsTerminal(os.Stdout.Fd()) {
@@ -440,6 +444,9 @@ func renderImage(c *core.Core, q *core.Question, viewer string, lastExternalImag
 	if maxW, maxH, ok := terminalPixelBudget(); ok {
 		img = fitImage(img, maxW, maxH)
 	}
+	if dark {
+		img = core.InvertImage(img)
+	}
 
 	enc := sixel.NewEncoder(os.Stdout)
 	if err := enc.Encode(img); err != nil {
@@ -452,28 +459,40 @@ func renderImage(c *core.Core, q *core.Question, viewer string, lastExternalImag
 	return nil
 }
 
-// openImageExternally copies the question's embedded image to a temp file and
-// hands it to the user's xdg-open handler, for terminals without sixel support.
-// lastExternalImage is updated so the caller can later kill whatever process
-// picked it up (see killExternalViewer).
-func openImageExternally(c *core.Core, q *core.Question, lastExternalImage *string) error {
-	imagesFS, err := c.Bank.ImagesFS()
-	if err != nil {
-		return err
-	}
-	src, err := imagesFS.Open(q.ImageRelPath())
-	if err != nil {
-		return err
-	}
-	defer src.Close()
-
+// openImageExternally hands the question's image to the user's xdg-open
+// handler, for terminals without sixel support. When dark is false, the
+// embedded PNG is copied to a temp file as-is; when true, it's decoded,
+// inverted, and re-encoded, since there's no external-viewer equivalent of
+// sixel's in-memory image.Image path. lastExternalImage is updated so the
+// caller can later kill whatever process picked it up (see killExternalViewer).
+func openImageExternally(c *core.Core, q *core.Question, dark bool, lastExternalImage *string) error {
 	tmp, err := os.CreateTemp("", "itpec-sensei-*.png")
 	if err != nil {
 		return err
 	}
 	defer tmp.Close()
-	if _, err := io.Copy(tmp, src); err != nil {
-		return err
+
+	if dark {
+		img, err := c.Bank.Image(q)
+		if err != nil {
+			return err
+		}
+		if err := png.Encode(tmp, core.InvertImage(img)); err != nil {
+			return err
+		}
+	} else {
+		imagesFS, err := c.Bank.ImagesFS()
+		if err != nil {
+			return err
+		}
+		src, err := imagesFS.Open(q.ImageRelPath())
+		if err != nil {
+			return err
+		}
+		defer src.Close()
+		if _, err := io.Copy(tmp, src); err != nil {
+			return err
+		}
 	}
 
 	if err := exec.Command("xdg-open", tmp.Name()).Start(); err != nil {
