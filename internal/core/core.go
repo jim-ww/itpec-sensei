@@ -384,6 +384,115 @@ func (c *Core) GetHistory(ctx context.Context, scope Scope, order HistoryOrder, 
 	return records, nil
 }
 
+// GetSessions returns past practice sessions (newest/oldest first per order),
+// each with its aggregate answered/correct count joined from attempts. scope
+// supports "all", "exam:<id>", and "part:am|pm" (matched against a session's
+// own exam_id) — unlike GetHistory/GetTopicStats, "topic:<name>" isn't
+// supported here, since a session isn't inherently scoped to one topic.
+func (c *Core) GetSessions(ctx context.Context, scope Scope, order HistoryOrder, limit int) ([]SessionRecord, error) {
+	if err := validateSessionScope(scope); err != nil {
+		return nil, err
+	}
+
+	query := `
+		SELECT s.id, s.started_at, s.ended_at, s.exam_type, s.exam_id, s.mode, s.order_strategy,
+		       s.time_limit_seconds, s.question_time_limit_seconds, s.exit_reason,
+		       COUNT(a.id), COALESCE(SUM(CASE WHEN a.correct THEN 1 ELSE 0 END), 0)
+		FROM sessions s
+		LEFT JOIN attempts a ON a.session_id = s.id
+		GROUP BY s.id`
+	if order == HistoryOldestFirst {
+		query += " ORDER BY s.started_at ASC"
+	} else {
+		query += " ORDER BY s.started_at DESC"
+	}
+
+	rows, err := c.Store.QueryContext(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("query sessions: %w", err)
+	}
+	defer rows.Close()
+
+	var records []SessionRecord
+	for rows.Next() {
+		var r SessionRecord
+		var examID, mode, orderStrategy, exitReason sql.NullString
+		var endedAt sql.NullTime
+		var timeLimitSec, qTimeLimitSec sql.NullInt64
+		if err := rows.Scan(&r.ID, &r.StartedAt, &endedAt, &r.ExamType, &examID, &mode, &orderStrategy,
+			&timeLimitSec, &qTimeLimitSec, &exitReason, &r.Answered, &r.Correct); err != nil {
+			return nil, fmt.Errorf("scan session: %w", err)
+		}
+		r.ExamID = examID.String
+		r.Mode = mode.String
+		r.OrderStrategy = orderStrategy.String
+		r.ExitReason = exitReason.String
+		if endedAt.Valid {
+			t := endedAt.Time
+			r.EndedAt = &t
+		}
+		if timeLimitSec.Valid {
+			v := int(timeLimitSec.Int64)
+			r.TimeLimitSeconds = &v
+		}
+		if qTimeLimitSec.Valid {
+			v := int(qTimeLimitSec.Int64)
+			r.QuestionTimeLimitSeconds = &v
+		}
+		records = append(records, r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate sessions: %w", err)
+	}
+
+	records = filterSessionsByScope(records, scope)
+	if limit > 0 && limit < len(records) {
+		records = records[:limit]
+	}
+	return records, nil
+}
+
+func validateSessionScope(scope Scope) error {
+	s := string(scope)
+	if s == "" || Scope(s) == ScopeAll {
+		return nil
+	}
+	kind, _, ok := strings.Cut(s, ":")
+	if !ok {
+		return fmt.Errorf("invalid scope %q, expected all|exam:<id>|part:<am|pm>", scope)
+	}
+	switch kind {
+	case "exam", "part":
+		return nil
+	case "topic":
+		return fmt.Errorf("topic scope is not supported for sessions (a session isn't scoped to one topic)")
+	default:
+		return fmt.Errorf("invalid scope kind %q, expected exam or part", kind)
+	}
+}
+
+func filterSessionsByScope(records []SessionRecord, scope Scope) []SessionRecord {
+	s := string(scope)
+	if s == "" || Scope(s) == ScopeAll {
+		return records
+	}
+	kind, value, _ := strings.Cut(s, ":")
+	var filtered []SessionRecord
+	for _, r := range records {
+		switch kind {
+		case "exam":
+			if r.ExamID == value {
+				filtered = append(filtered, r)
+			}
+		case "part":
+			if ExamPart(r.ExamID) == strings.ToLower(value) {
+				filtered = append(filtered, r)
+			}
+		}
+	}
+	return filtered
+}
+
 // ListTopics returns all topics present in the question bank.
 func (c *Core) ListTopics(ctx context.Context) ([]string, error) {
 	return c.Bank.Topics(), nil

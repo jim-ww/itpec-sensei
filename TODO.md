@@ -1,2 +1,1 @@
-- add dark mode option, that inverts colors on images
 - see previous sessions data? mcp+cli

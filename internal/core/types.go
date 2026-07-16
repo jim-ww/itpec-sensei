@@ -114,6 +114,23 @@ type AttemptRecord struct {
 	AnsweredAt  time.Time `json:"answeredAt"`
 }
 
+// SessionRecord is one past practice session, with its aggregate score
+// computed by joining back to its attempts.
+type SessionRecord struct {
+	ID                       int64      `json:"id"`
+	StartedAt                time.Time  `json:"startedAt"`
+	EndedAt                  *time.Time `json:"endedAt,omitempty"`
+	ExamType                 string     `json:"examType"`
+	ExamID                   string     `json:"examId,omitempty"`
+	Mode                     string     `json:"mode"`
+	OrderStrategy            string     `json:"orderStrategy"`
+	TimeLimitSeconds         *int       `json:"timeLimitSeconds,omitempty"`
+	QuestionTimeLimitSeconds *int       `json:"questionTimeLimitSeconds,omitempty"`
+	ExitReason               string     `json:"exitReason,omitempty"`
+	Answered                 int        `json:"answered"`
+	Correct                  int        `json:"correct"`
+}
+
 // ProgressSummary is the aggregate progress view.
 type ProgressSummary struct {
 	Answered     int            `json:"answered"`
