@@ -1,0 +1,25 @@
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = inputs @ {
+    nixpkgs,
+    flake-parts,
+    flake-utils,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = flake-utils.lib.defaultSystems;
+      perSystem = {pkgs, ...}: {
+        packages.default = pkgs.buildGoModule {
+          pname = "itpec-sensei";
+          version = "1.0";
+          src = pkgs.lib.cleanSource ./.;
+          vendorHash = "sha256-k3KTOTZi5r9hv9djRzskn+1fK3uVg0zk73hucedwQEM=";
+        };
+      };
+    };
+}

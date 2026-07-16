@@ -1,0 +1,5 @@
+output
+/cmd/scraper/
+/.gocache/
+/.gomodcache/
+/spec.md
