@@ -332,7 +332,14 @@ func renderImage(c *core.Core, q *core.Question) error {
 	}
 
 	enc := sixel.NewEncoder(os.Stdout)
-	return enc.Encode(img)
+	if err := enc.Encode(img); err != nil {
+		return err
+	}
+	// Some terminals don't reliably move the cursor below the sixel image, so
+	// force a couple of blank rows to keep the answer prompt from overlapping it.
+	fmt.Println()
+	fmt.Println()
+	return nil
 }
 
 // terminalPixelBudget returns the usable pixel area of the controlling terminal,
