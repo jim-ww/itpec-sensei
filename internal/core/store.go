@@ -50,7 +50,7 @@ func DefaultDBPath() (string, error) {
 		}
 		dataHome = filepath.Join(home, ".local", "share")
 	}
-	return filepath.Join(dataHome, "itpec-trainer", "progress.db"), nil
+	return filepath.Join(dataHome, "itpec-sensei", "progress.db"), nil
 }
 
 // OpenStore opens (creating if absent) the progress database at path, in WAL mode,

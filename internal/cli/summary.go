@@ -8,7 +8,7 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
 
-// RunSummary implements `itpec-trainer [--scope=...] [--period=...]`.
+// RunSummary implements `itpec-sensei [--scope=...] [--period=...]`.
 func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("summary", flag.ExitOnError)
 	scope := fs.String("scope", "all", "all | topic:<name> | exam:<id> | part:am | part:pm")
@@ -26,7 +26,7 @@ func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 		return fmt.Errorf("get topic stats: %w", err)
 	}
 
-	fmt.Printf("itpec-trainer — progress summary (scope=%s, period=%s)\n\n", *scope, *period)
+	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", *scope, *period)
 	fmt.Printf("Answered:      %d\n", summary.Answered)
 	fmt.Printf("Correct:       %d (%.0f%%)\n", summary.Correct, summary.Accuracy*100)
 	fmt.Printf("Streak:        %d day(s)\n", summary.Streak)

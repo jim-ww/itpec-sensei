@@ -10,7 +10,7 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
 
-// RunReset implements `itpec-trainer reset <scope>`.
+// RunReset implements `itpec-sensei reset <scope>`.
 func RunReset(ctx context.Context, c *core.Core, args []string) error {
 	// --yes may appear before or after the positional scope argument, so scan
 	// for it manually rather than relying on flag.Parse's positional-args-stop
@@ -27,7 +27,7 @@ func RunReset(ctx context.Context, c *core.Core, args []string) error {
 	yes := &yesVal
 
 	if len(rest) != 1 {
-		return fmt.Errorf("usage: itpec-trainer reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]")
+		return fmt.Errorf("usage: itpec-sensei reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]")
 	}
 	scope := core.Scope(rest[0])
 

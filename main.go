@@ -1,4 +1,4 @@
-// Command itpec-trainer is a local-first CLI + MCP server for ITPEC exam
+// Command itpec-sensei is a local-first CLI + MCP server for ITPEC exam
 // practice. See spec.md for the full architecture.
 package main
 
@@ -65,13 +65,13 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Println(`itpec-trainer — local-first ITPEC exam practice
+	fmt.Println(`itpec-sensei — local-first ITPEC exam practice
 
 Usage:
-  itpec-trainer [--scope=all|topic:<name>|exam:<id>|part:am|part:pm] [--period=week|month|all]
-  itpec-trainer practice [--exam-type=fe|itpassport] [--exam=<id>] [--part=am|pm|all]
+  itpec-sensei [--scope=all|topic:<name>|exam:<id>|part:am|part:pm] [--period=week|month|all]
+  itpec-sensei practice [--exam-type=fe|itpassport] [--exam=<id>] [--part=am|pm|all]
                           [--mode=normal|review] [--order=sequential|random|fail-count|fail-rate]
                           [--time-limit=<duration>] [--question-time-limit=<duration>]
-  itpec-trainer reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]
-  itpec-trainer serve [--remote]`)
+  itpec-sensei reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]
+  itpec-sensei serve [--remote]`)
 }

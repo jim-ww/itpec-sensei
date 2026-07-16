@@ -29,7 +29,7 @@ type practiceFlags struct {
 	questionTimeLimit   time.Duration
 }
 
-// RunPractice implements `itpec-trainer practice ...`.
+// RunPractice implements `itpec-sensei practice ...`.
 func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("practice", flag.ExitOnError)
 	examType := fs.String("exam-type", "fe", "fe | itpassport")

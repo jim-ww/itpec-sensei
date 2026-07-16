@@ -13,7 +13,7 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
 
-// Run implements `itpec-trainer serve [--remote]`.
+// Run implements `itpec-sensei serve [--remote]`.
 func Run(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("serve", flag.ExitOnError)
 	remote := fs.Bool("remote", false, "expose over Streamable HTTP + an ngrok tunnel instead of stdio")
@@ -22,7 +22,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		return err
 	}
 
-	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-trainer", Version: "0.1.0"}, nil)
+	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-sensei", Version: "0.1.0"}, nil)
 	registerTools(server, c)
 
 	if !*remote {
