@@ -33,10 +33,10 @@ func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", *scope, *period)
 	fmt.Printf("Answered:      %d\n", summary.Answered)
 	fmt.Printf("Streak:        %d day(s) (best: %d)\n", summary.Streak, summary.MaxStreak)
-	fmt.Printf("Review queue:  %d question(s) — most recent attempt was wrong, due for another pass\n", summary.ReviewQueue)
+	fmt.Printf("Review queue:  %d question(s)\n", summary.ReviewQueue)
 	fmt.Println()
 
-	fmt.Println("By part (AM and PM test different material, so they're never blended):")
+	fmt.Println("By part:")
 	if len(summary.PartStats) == 0 {
 		fmt.Println("  (no attempts yet)")
 	}
