@@ -440,6 +440,35 @@ func (c *Core) GetExamStats(ctx context.Context, scope Scope) ([]ExamStat, error
 	return stats, nil
 }
 
+// GetExam returns readable metadata (name, date, duration, question count)
+// for one exam ID plus the user's own progress on it, or an error if the
+// exam ID is unknown.
+func (c *Core) GetExam(ctx context.Context, examID string) (*ExamDetail, error) {
+	info, ok := c.Bank.ExamInfo(examID)
+	if !ok {
+		return nil, fmt.Errorf("exam %q not found", examID)
+	}
+	detail := &ExamDetail{
+		ExamID:          examID,
+		Name:            info.Exam,
+		Date:            info.Date,
+		Part:            ExamPart(examID),
+		DurationMinutes: info.DurationMinutes,
+		TotalQuestions:  info.TotalQuestions,
+	}
+
+	stats, err := c.GetExamStats(ctx, Scope("exam:"+examID))
+	if err != nil {
+		return nil, err
+	}
+	if len(stats) > 0 {
+		detail.Answered = stats[0].Answered
+		detail.Correct = stats[0].Correct
+		detail.Accuracy = stats[0].Accuracy
+	}
+	return detail, nil
+}
+
 // HistoryOrder selects chronological direction for GetHistory.
 type HistoryOrder string
 

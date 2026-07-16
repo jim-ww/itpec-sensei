@@ -19,12 +19,13 @@ var embeddedData embed.FS
 
 // Bank is the in-memory, read-only index over the embedded question set.
 type Bank struct {
-	fsys    fs.FS
-	byID    map[string]*Question // keyed by Question.GlobalID()
-	byExam  map[string][]*Question
-	byTopic map[string][]*Question
-	exams   []string
-	topics  []string
+	fsys     fs.FS
+	byID     map[string]*Question // keyed by Question.GlobalID()
+	byExam   map[string][]*Question
+	byTopic  map[string][]*Question
+	examInfo map[string]ExamInfo
+	exams    []string
+	topics   []string
 }
 
 // LoadBank parses every embedded exam JSON file into memory and builds lookup indexes.
@@ -35,10 +36,11 @@ func LoadBank() (*Bank, error) {
 	}
 
 	b := &Bank{
-		fsys:    sub,
-		byID:    make(map[string]*Question),
-		byExam:  make(map[string][]*Question),
-		byTopic: make(map[string][]*Question),
+		fsys:     sub,
+		byID:     make(map[string]*Question),
+		byExam:   make(map[string][]*Question),
+		byTopic:  make(map[string][]*Question),
+		examInfo: make(map[string]ExamInfo),
 	}
 
 	entries, err := fs.ReadDir(sub, ".")
@@ -66,6 +68,7 @@ func LoadBank() (*Bank, error) {
 			examID = strings.TrimSuffix(e.Name(), ".json")
 		}
 		examSet[examID] = struct{}{}
+		b.examInfo[examID] = data.ExamInfo
 
 		for i := range data.Questions {
 			q := &data.Questions[i]
@@ -101,6 +104,13 @@ func (b *Bank) Question(globalID string) *Question {
 // opaque GlobalID.
 func (b *Bank) QuestionByExamAndNumber(examID string, number int) *Question {
 	return b.byID[examID+"#"+strconv.Itoa(number)]
+}
+
+// ExamInfo returns the scraped metadata (name, date, duration, question
+// count) for one exam ID, or false if the exam ID is unknown.
+func (b *Bank) ExamInfo(examID string) (ExamInfo, bool) {
+	info, ok := b.examInfo[examID]
+	return info, ok
 }
 
 // Exams returns all known exam IDs, sorted.

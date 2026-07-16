@@ -231,6 +231,22 @@ type getHistoryOut struct {
 	Attempts []historyAttempt `json:"attempts"`
 }
 
+type getExamIn struct {
+	ExamID string `json:"examId" jsonschema:"exam id, e.g. 2025A_FE-A"`
+}
+
+type getExamOut struct {
+	ExamID          string  `json:"examId"`
+	Name            string  `json:"name,omitempty"`
+	Date            string  `json:"date,omitempty"`
+	Part            string  `json:"part,omitempty"`
+	DurationMinutes int     `json:"durationMinutes,omitempty"`
+	TotalQuestions  int     `json:"totalQuestions"`
+	Answered        int     `json:"answered"`
+	Correct         int     `json:"correct"`
+	Accuracy        float64 `json:"accuracy"`
+}
+
 type getSessionsIn struct {
 	Scope string `json:"scope,omitempty" jsonschema:"all | exam:<id> | part:am | part:pm, default all (topic scope not supported)"`
 	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
@@ -448,6 +464,27 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 			out.Sessions[i] = s
 		}
 		return nil, out, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "get_exam",
+		Description: "Return readable metadata (name, date, duration, question count) for one exam plus the user's own progress on it.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in getExamIn) (*mcp.CallToolResult, getExamOut, error) {
+		detail, err := c.GetExam(ctx, in.ExamID)
+		if err != nil {
+			return nil, getExamOut{}, err
+		}
+		return nil, getExamOut{
+			ExamID:          detail.ExamID,
+			Name:            detail.Name,
+			Date:            detail.Date,
+			Part:            detail.Part,
+			DurationMinutes: detail.DurationMinutes,
+			TotalQuestions:  detail.TotalQuestions,
+			Answered:        detail.Answered,
+			Correct:         detail.Correct,
+			Accuracy:        detail.Accuracy,
+		}, nil
 	})
 }
 

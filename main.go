@@ -52,6 +52,10 @@ func main() {
 		err = cli.RunHistory(ctx, c, rest)
 	case "sessions":
 		err = cli.RunSessions(ctx, c, rest)
+	case "exams":
+		err = cli.RunExams(ctx, c, rest)
+	case "exam":
+		err = cli.RunExam(ctx, c, rest)
 	case "serve":
 		err = mcpserver.Run(ctx, c, rest)
 	case "-h", "--help", "help":
@@ -79,6 +83,8 @@ Commands:
   practice   Answer practice questions
   history    List past attempts (newest first)
   sessions   List past practice sessions (newest first)
+  exams      List known exam IDs
+  exam       Show readable metadata + your progress for one exam
   reset      Clear progress for a scope
   serve      Run the MCP server (stdio or --remote)
 
@@ -110,6 +116,9 @@ Flags for sessions:
   --order <newest|oldest>                 default "newest"
   --limit <n>                             default 20, 0 = all
 
+Flags for exam:
+  itpec-sensei exam <examID>   positional exam id arg, e.g. 2025A_FE-A
+
 Flags for reset:
   <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg
   --yes                                       skip the confirmation prompt
@@ -128,6 +137,8 @@ Examples:
   itpec-sensei practice --exam=2025A_FE-A --q=34
   itpec-sensei practice --exam=2025A_FE-A --limit=5
   itpec-sensei practice --exam=2025A_FE-A --q=34 --answer
+  itpec-sensei exams
+  itpec-sensei exam 2025A_FE-A
   itpec-sensei reset exam:2025A_FE-A --yes
   itpec-sensei serve --remote --ngrok`)
 }

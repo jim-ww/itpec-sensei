@@ -110,6 +110,20 @@ type ExamStat struct {
 	Accuracy float64 `json:"accuracy"`
 }
 
+// ExamDetail is the readable "get_exam" view: scraped exam metadata plus the
+// user's own progress on it.
+type ExamDetail struct {
+	ExamID          string  `json:"examId"`
+	Name            string  `json:"name,omitempty"`
+	Date            string  `json:"date,omitempty"`
+	Part            string  `json:"part,omitempty"` // "am" | "pm" | ""
+	DurationMinutes int     `json:"durationMinutes,omitempty"`
+	TotalQuestions  int     `json:"totalQuestions"`
+	Answered        int     `json:"answered"`
+	Correct         int     `json:"correct"`
+	Accuracy        float64 `json:"accuracy"`
+}
+
 // PartStat is per-part (AM/PM, or "other" for exams with no AM/PM split, e.g.
 // IT Passport) aggregate accuracy and timing. AM and PM sections test very
 // different material, so they're never blended into one combined number.
