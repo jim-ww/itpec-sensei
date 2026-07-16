@@ -5,6 +5,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"image"
 	"os"
 	"os/signal"
 	"sort"
@@ -15,6 +16,8 @@ import (
 	"github.com/fatih/color"
 	"github.com/mattn/go-isatty"
 	sixel "github.com/mattn/go-sixel"
+	"golang.org/x/image/draw"
+	"golang.org/x/sys/unix"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
@@ -316,6 +319,47 @@ func renderImage(c *core.Core, q *core.Question) error {
 	if err != nil {
 		return err
 	}
+
+	if maxW, maxH, ok := terminalPixelBudget(); ok {
+		img = fitImage(img, maxW, maxH)
+	}
+
 	enc := sixel.NewEncoder(os.Stdout)
 	return enc.Encode(img)
+}
+
+// terminalPixelBudget returns the usable pixel area of the controlling terminal,
+// leaving a couple of text rows free for the prompt/feedback printed around the
+// image. Returns ok=false if the terminal doesn't report pixel dimensions (e.g.
+// some terminal emulators leave ws_xpixel/ws_ypixel at 0).
+func terminalPixelBudget() (w, h int, ok bool) {
+	ws, err := unix.IoctlGetWinsize(int(os.Stdout.Fd()), unix.TIOCGWINSZ)
+	if err != nil || ws.Xpixel == 0 || ws.Ypixel == 0 || ws.Row == 0 {
+		return 0, 0, false
+	}
+	cellHeight := float64(ws.Ypixel) / float64(ws.Row)
+	const reservedRows = 3 // room for the question header/prompt lines
+	budgetH := float64(ws.Ypixel) - cellHeight*reservedRows
+	if budgetH < cellHeight {
+		budgetH = float64(ws.Ypixel)
+	}
+	return int(ws.Xpixel), int(budgetH), true
+}
+
+// fitImage scales img down (never up) to fit within maxW x maxH, preserving
+// aspect ratio.
+func fitImage(img image.Image, maxW, maxH int) image.Image {
+	b := img.Bounds()
+	srcW, srcH := b.Dx(), b.Dy()
+	if srcW <= 0 || srcH <= 0 || (srcW <= maxW && srcH <= maxH) {
+		return img
+	}
+
+	scale := min(float64(maxW)/float64(srcW), float64(maxH)/float64(srcH))
+	dstW := max(1, int(float64(srcW)*scale))
+	dstH := max(1, int(float64(srcH)*scale))
+
+	dst := image.NewRGBA(image.Rect(0, 0, dstW, dstH))
+	draw.CatmullRom.Scale(dst, dst.Bounds(), img, b, draw.Over, nil)
+	return dst
 }
