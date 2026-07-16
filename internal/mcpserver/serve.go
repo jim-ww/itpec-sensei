@@ -1,14 +1,15 @@
 package mcpserver
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"image/png"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
@@ -27,10 +28,9 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		return err
 	}
 
-	var imageBaseURL string
 	sess := &sessionState{}
 	server := mcp.NewServer(&mcp.Implementation{Name: "itpec-sensei", Version: "0.1.0"}, nil)
-	registerTools(server, c, &imageBaseURL, sess)
+	registerTools(server, c, sess)
 
 	if !*remote {
 		err := server.Run(ctx, &mcp.StdioTransport{})
@@ -38,13 +38,10 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		return err
 	}
 
-	imagesFS, err := c.Bank.ImagesFS()
-	if err != nil {
-		return fmt.Errorf("serve: images fs: %w", err)
-	}
-
+	// Question images are embedded directly in tool results (see
+	// encodeQuestionImage), so the HTTP server here only needs to expose the
+	// Streamable HTTP MCP endpoint itself, not a separate image route.
 	mux := http.NewServeMux()
-	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServerFS(imagesFS)))
 	mux.Handle("/", mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, nil))
 
 	httpServer := &http.Server{Addr: *addr, Handler: mux}
@@ -56,7 +53,6 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	}()
 
 	if !*useNgrok {
-		imageBaseURL = "http://" + *addr
 		<-ctx.Done()
 		endMCPSession(c, sess)
 		return httpServer.Close()
@@ -72,19 +68,39 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream("http://"+*addr), endpointOpts...)
 	if err != nil {
 		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, *addr)
-		imageBaseURL = "http://" + *addr
 		<-ctx.Done()
 		endMCPSession(c, sess)
 		return httpServer.Close()
 	}
 	defer fwd.Close()
-	imageBaseURL = fwd.URL().String()
-	log.Printf("MCP server publicly reachable at %s", imageBaseURL)
+	log.Printf("MCP server publicly reachable at %s", fwd.URL())
 
 	<-ctx.Done()
 	fwd.Close()
 	endMCPSession(c, sess)
 	return httpServer.Close()
+}
+
+// encodeQuestionImage decodes the question's embedded image, inverts it
+// unless lightMode is set (dark mode is the default everywhere a question
+// image is shown, matching the CLI's --dark default), and re-encodes it as
+// PNG image content for direct embedding in a tool result. This is used for
+// both stdio and --remote transports, so image delivery works identically
+// regardless of how the MCP client connected — no separate HTTP image route
+// or base URL needed.
+func encodeQuestionImage(c *core.Core, q *core.Question, lightMode bool) (*mcp.ImageContent, error) {
+	img, err := c.Bank.Image(q)
+	if err != nil {
+		return nil, fmt.Errorf("load image: %w", err)
+	}
+	if !lightMode {
+		img = core.InvertImage(img)
+	}
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, img); err != nil {
+		return nil, fmt.Errorf("encode image: %w", err)
+	}
+	return &mcp.ImageContent{Data: buf.Bytes(), MIMEType: "image/png"}, nil
 }
 
 // sessionState tracks the single lazily-started progress-DB session shared by
@@ -114,15 +130,15 @@ type listTopicsOut struct {
 }
 
 type getNextQuestionIn struct {
-	Topic  string `json:"topic,omitempty" jsonschema:"filter by topic"`
-	ExamID string `json:"examId,omitempty" jsonschema:"filter by exam id"`
-	Mode   string `json:"mode,omitempty" jsonschema:"random or review, default random"`
+	Topic     string `json:"topic,omitempty" jsonschema:"filter by topic"`
+	ExamID    string `json:"examId,omitempty" jsonschema:"filter by exam id"`
+	Mode      string `json:"mode,omitempty" jsonschema:"random or review, default random"`
+	LightMode bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
 }
 
 type getNextQuestionOut struct {
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
-	ImageURL   string `json:"imageUrl"`
 }
 
 type submitAnswerIn struct {
@@ -158,12 +174,12 @@ type getQuestionIn struct {
 	ExamID       string `json:"examId" jsonschema:"exam id, e.g. 2025A_FE-A"`
 	Number       int    `json:"number" jsonschema:"question number within the exam"`
 	RevealAnswer bool   `json:"revealAnswer,omitempty" jsonschema:"if true, include the correct answer and explanation"`
+	LightMode    bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
 }
 
 type getQuestionOut struct {
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
-	ImageURL     string           `json:"imageUrl"`
 	Topic        string           `json:"topic,omitempty"`
 	Answer       json.RawMessage  `json:"answer,omitempty"`
 	SimpleAnswer string           `json:"simpleAnswer,omitempty"`
@@ -192,7 +208,7 @@ type getHistoryOut struct {
 	Attempts []historyAttempt `json:"attempts"`
 }
 
-func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string, sess *sessionState) {
+func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_topics",
 		Description: "List available topics and exam IDs, so the AI can offer filtering rather than guessing.",
@@ -210,7 +226,7 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string, sess 
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_next_question",
-		Description: "Return the next practice question (image + id + topic), filtered by topic/exam/mode. Never includes the answer.",
+		Description: "Return the next practice question (embedded image + id + topic), filtered by topic/exam/mode. Never includes the answer.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
 		if !sess.started {
 			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
@@ -224,29 +240,33 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string, sess 
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
+		imgContent, err := encodeQuestionImage(c, q, in.LightMode)
+		if err != nil {
+			return nil, getNextQuestionOut{}, err
+		}
 		result := &mcp.CallToolResult{
-			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)}},
+			Content: []mcp.Content{
+				&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)},
+				imgContent,
+			},
 		}
-		imageURL := "/images/" + q.ImageRelPath()
-		if *imageBaseURL != "" {
-			imageURL = strings.TrimSuffix(*imageBaseURL, "/") + imageURL
-		}
-		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURL}, nil
+		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Set revealAnswer=true to also return the correct answer and explanation.",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns the embedded image. Set revealAnswer=true to also return the correct answer and explanation.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
 			return nil, getQuestionOut{}, err
 		}
-		imageURL := "/images/" + q.ImageRelPath()
-		if *imageBaseURL != "" {
-			imageURL = strings.TrimSuffix(*imageBaseURL, "/") + imageURL
+		imgContent, err := encodeQuestionImage(c, q, in.LightMode)
+		if err != nil {
+			return nil, getQuestionOut{}, err
 		}
-		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURL}
+		result := &mcp.CallToolResult{Content: []mcp.Content{imgContent}}
+		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID}
 		if q.Explanation != nil {
 			out.Topic = q.Explanation.Topic
 			out.Explanation = q.Explanation.Explanation
@@ -254,7 +274,7 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string, sess 
 		out.Answer = q.Answer
 		out.SimpleAnswer = q.SimpleAnswer
 		out.SubAnswers = q.SubAnswers
-		return nil, out, nil
+		return result, out, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
