@@ -141,10 +141,8 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 		qTimeLimitSec = &v
 	}
 
-	sessionID, err := c.StartSession(ctx, pf.examType, pf.examID, pf.mode, pf.order, timeLimitSec, qTimeLimitSec)
-	if err != nil {
-		return err
-	}
+	var sessionID int64
+	var sessionStarted bool
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt)
@@ -226,7 +224,7 @@ questionLoop:
 		}
 
 		if strings.EqualFold(answer, "q") {
-			exitReason = "user_quit"
+			exitReason = "interrupted"
 			break questionLoop
 		}
 
@@ -236,6 +234,16 @@ questionLoop:
 			// wrong guess in the attempts log, but still grades as incorrect and
 			// still counts as an answered question (the user did respond).
 			answer = "idk"
+		}
+
+		if !sessionStarted {
+			id, err := c.StartSession(ctx, pf.examType, pf.examID, pf.mode, pf.order, timeLimitSec, qTimeLimitSec)
+			if err != nil {
+				fmt.Printf("error starting session: %v\n", err)
+				continue
+			}
+			sessionID = id
+			sessionStarted = true
 		}
 
 		elapsed := time.Since(start)
@@ -272,8 +280,10 @@ questionLoop:
 		}
 	}
 
-	if err := c.EndSession(ctx, sessionID, exitReason); err != nil {
-		return err
+	if sessionStarted {
+		if err := c.EndSession(ctx, sessionID, exitReason); err != nil {
+			return err
+		}
 	}
 
 	fmt.Println()
