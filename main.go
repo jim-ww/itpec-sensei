@@ -68,10 +68,42 @@ func printUsage() {
 	fmt.Println(`itpec-sensei — local-first ITPEC exam practice
 
 Usage:
-  itpec-sensei [--scope=all|topic:<name>|exam:<id>|part:am|part:pm] [--period=week|month|all]
-  itpec-sensei practice [--exam-type=fe|itpassport] [--exam=<id>] [--part=am|pm|all]
-                          [--mode=normal|review] [--order=sequential|random|fail-count|fail-rate]
-                          [--time-limit=<duration>] [--question-time-limit=<duration>]
-  itpec-sensei reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]
-  itpec-sensei serve [--remote]`)
+  itpec-sensei [<command>] [flags]
+
+Commands:
+  (none)     Show progress summary (same as "summary")
+  practice   Answer practice questions
+  reset      Clear progress for a scope
+  serve      Run the MCP server (stdio or --remote)
+
+Flags for summary (default command):
+  --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"
+  --period <week|month|all>                          default "all"
+
+Flags for practice:
+  --exam-type <fe|itpassport>                                     default "fe"
+  --exam <id>                                                     e.g. 2025A_FE-A
+  --part <am|pm|all>                                              ignored if --exam is set
+  --mode <normal|review>                                          default "normal"
+  --order <sequential|random|fail-count|fail-rate>                default "random"
+  --time-limit <duration>                                         whole-session limit, e.g. 150m
+  --question-time-limit <duration>                                per-question limit, e.g. 90s
+
+Flags for reset:
+  <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg
+  --yes                                       skip the confirmation prompt
+
+Flags for serve:
+  --remote   expose over Streamable HTTP instead of stdio
+  --addr     listen address for --remote      default "127.0.0.1:8790"
+  --ngrok    also forward a public ngrok tunnel
+
+Examples:
+  itpec-sensei
+  itpec-sensei --scope=exam:2025A_FE-A --period=week
+  itpec-sensei practice --exam=2025A_FE-A
+  itpec-sensei practice --exam-type=fe --part=pm --mode=review
+  itpec-sensei practice --exam=2025A_FE-A --time-limit=150m --question-time-limit=90s
+  itpec-sensei reset exam:2025A_FE-A --yes
+  itpec-sensei serve --remote --ngrok`)
 }
