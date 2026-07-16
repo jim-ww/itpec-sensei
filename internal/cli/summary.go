@@ -11,7 +11,7 @@ import (
 // RunSummary implements `itpec-trainer [--scope=...] [--period=...]`.
 func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	fs := flag.NewFlagSet("summary", flag.ExitOnError)
-	scope := fs.String("scope", "all", "all | topic:<name> | exam:<id>")
+	scope := fs.String("scope", "all", "all | topic:<name> | exam:<id> | part:am | part:pm")
 	period := fs.String("period", "all", "week | month | all")
 	if err := fs.Parse(args); err != nil {
 		return err

@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 CREATE TABLE IF NOT EXISTS attempts (
   id             INTEGER PRIMARY KEY,
   session_id     INTEGER NOT NULL REFERENCES sessions(id),
-  question_id    INTEGER NOT NULL,
+  question_id    TEXT NOT NULL,
   answer         TEXT NOT NULL,
   correct        BOOLEAN NOT NULL,
   timed_out      BOOLEAN NOT NULL DEFAULT FALSE,

@@ -68,10 +68,10 @@ func printUsage() {
 	fmt.Println(`itpec-trainer — local-first ITPEC exam practice
 
 Usage:
-  itpec-trainer [--scope=all|topic:<name>|exam:<id>] [--period=week|month|all]
+  itpec-trainer [--scope=all|topic:<name>|exam:<id>|part:am|part:pm] [--period=week|month|all]
   itpec-trainer practice [--exam-type=fe|itpassport] [--exam=<id>] [--part=am|pm|all]
                           [--mode=normal|review] [--order=sequential|random|fail-count|fail-rate]
                           [--time-limit=<duration>] [--question-time-limit=<duration>]
-  itpec-trainer reset <all|topic:<name>|exam:<id>> [--yes]
+  itpec-trainer reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]
   itpec-trainer serve [--remote]`)
 }

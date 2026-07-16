@@ -27,7 +27,7 @@ func RunReset(ctx context.Context, c *core.Core, args []string) error {
 	yes := &yesVal
 
 	if len(rest) != 1 {
-		return fmt.Errorf("usage: itpec-trainer reset <all|topic:<name>|exam:<id>> [--yes]")
+		return fmt.Errorf("usage: itpec-trainer reset <all|topic:<name>|exam:<id>|part:am|part:pm> [--yes]")
 	}
 	scope := core.Scope(rest[0])
 

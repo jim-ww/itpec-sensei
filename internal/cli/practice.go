@@ -183,7 +183,7 @@ questionLoop:
 		}
 
 		elapsed := time.Since(start)
-		result, err := c.SubmitAnswer(ctx, sessionID, q.ID, answer, lateFired, int(elapsed.Milliseconds()))
+		result, err := c.SubmitAnswer(ctx, sessionID, q.GlobalID(), answer, lateFired, int(elapsed.Milliseconds()))
 		if err != nil {
 			fmt.Printf("error submitting answer: %v\n", err)
 			continue
@@ -239,9 +239,9 @@ questionLoop:
 }
 
 func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([]*core.Question, error) {
-	ids := make([]int, len(pool))
+	ids := make([]string, len(pool))
 	for i, q := range pool {
-		ids[i] = q.ID
+		ids[i] = q.GlobalID()
 	}
 	failCounts, err := c.FailCounts(ctx, ids)
 	if err != nil {
@@ -249,7 +249,7 @@ func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([
 	}
 	var filtered []*core.Question
 	for _, q := range pool {
-		if failCounts[q.ID] > 0 {
+		if failCounts[q.GlobalID()] > 0 {
 			filtered = append(filtered, q)
 		}
 	}
@@ -262,20 +262,25 @@ func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, or
 
 	switch order {
 	case "sequential":
-		sort.Slice(ordered, func(i, j int) bool { return ordered[i].ID < ordered[j].ID })
+		sort.Slice(ordered, func(i, j int) bool {
+			if ordered[i].ExamID != ordered[j].ExamID {
+				return ordered[i].ExamID < ordered[j].ExamID
+			}
+			return ordered[i].ID < ordered[j].ID
+		})
 	case "random":
 		shuffle(ordered)
 	case "fail-count", "fail-rate":
-		ids := make([]int, len(ordered))
+		ids := make([]string, len(ordered))
 		for i, q := range ordered {
-			ids[i] = q.ID
+			ids[i] = q.GlobalID()
 		}
 		failCounts, err := c.FailCounts(ctx, ids)
 		if err != nil {
 			return nil, err
 		}
 		sort.Slice(ordered, func(i, j int) bool {
-			return failCounts[ordered[i].ID] > failCounts[ordered[j].ID]
+			return failCounts[ordered[i].GlobalID()] > failCounts[ordered[j].GlobalID()]
 		})
 	default:
 		return nil, fmt.Errorf("unknown order strategy %q", order)

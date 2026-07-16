@@ -35,7 +35,7 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 		}
 		var filtered []*Question
 		for _, q := range pool {
-			if reviewIDs[q.ID] {
+			if reviewIDs[q.GlobalID()] {
 				filtered = append(filtered, q)
 			}
 		}
@@ -58,12 +58,13 @@ func stripAnswer(q *Question) *Question {
 	return &cp
 }
 
-// SubmitAnswer grades answer against the embedded correct answer for questionID,
-// records the attempt, and returns correctness + explanation.
-func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID int, answer string, timedOut bool, timeTakenMs int) (*AnswerResult, error) {
+// SubmitAnswer grades answer against the embedded correct answer for questionID
+// (a Question.GlobalID(), as returned by GetNextQuestion), records the attempt,
+// and returns correctness + explanation.
+func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID string, answer string, timedOut bool, timeTakenMs int) (*AnswerResult, error) {
 	q := c.Bank.Question(questionID)
 	if q == nil {
-		return nil, fmt.Errorf("unknown question id %d", questionID)
+		return nil, fmt.Errorf("unknown question id %q", questionID)
 	}
 
 	correct := gradeAnswer(q, answer)
@@ -244,7 +245,7 @@ func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, err
 	type acc struct{ answered, correct int }
 	byTopic := make(map[string]*acc)
 	for rows.Next() {
-		var qid int
+		var qid string
 		var correct bool
 		if err := rows.Scan(&qid, &correct); err != nil {
 			return nil, fmt.Errorf("scan attempt: %w", err)
@@ -321,16 +322,16 @@ func (c *Core) ResetProgress(ctx context.Context, scope Scope) error {
 	return nil
 }
 
-// scopeQuestionIDs resolves a Scope to the set of matching question IDs.
+// scopeQuestionIDs resolves a Scope to the set of matching question global IDs.
 // Returns nil for ScopeAll (meaning "no filter").
-func (c *Core) scopeQuestionIDs(scope Scope) (map[int]struct{}, error) {
+func (c *Core) scopeQuestionIDs(scope Scope) (map[string]struct{}, error) {
 	s := string(scope)
 	if s == "" || Scope(s) == ScopeAll {
 		return nil, nil
 	}
 	parts := strings.SplitN(s, ":", 2)
 	if len(parts) != 2 {
-		return nil, fmt.Errorf("invalid scope %q, expected all|topic:<name>|exam:<id>", scope)
+		return nil, fmt.Errorf("invalid scope %q, expected all|topic:<name>|exam:<id>|part:<am|pm>", scope)
 	}
 	kind, value := parts[0], parts[1]
 	var pool []*Question
@@ -339,17 +340,23 @@ func (c *Core) scopeQuestionIDs(scope Scope) (map[int]struct{}, error) {
 		pool = c.Bank.Questions(value, "")
 	case "exam":
 		pool = c.Bank.Questions("", value)
+	case "part":
+		value = strings.ToLower(value)
+		if value != "am" && value != "pm" {
+			return nil, fmt.Errorf("invalid part %q, expected am or pm", value)
+		}
+		pool = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(value))
 	default:
-		return nil, fmt.Errorf("invalid scope kind %q, expected topic or exam", kind)
+		return nil, fmt.Errorf("invalid scope kind %q, expected topic, exam, or part", kind)
 	}
-	ids := make(map[int]struct{}, len(pool))
+	ids := make(map[string]struct{}, len(pool))
 	for _, q := range pool {
-		ids[q.ID] = struct{}{}
+		ids[q.GlobalID()] = struct{}{}
 	}
 	return ids, nil
 }
 
-func (c *Core) scopeWhere(ids map[int]struct{}) (string, []any) {
+func (c *Core) scopeWhere(ids map[string]struct{}) (string, []any) {
 	if ids == nil {
 		return "", nil
 	}
@@ -365,8 +372,8 @@ func (c *Core) scopeWhere(ids map[int]struct{}) (string, []any) {
 	return fmt.Sprintf("question_id IN (%s)", strings.Join(placeholders, ",")), args
 }
 
-// reviewQueueIDs returns the set of question IDs whose most recent attempt was incorrect.
-func (c *Core) reviewQueueIDs(ctx context.Context) (map[int]bool, error) {
+// reviewQueueIDs returns the set of question global IDs whose most recent attempt was incorrect.
+func (c *Core) reviewQueueIDs(ctx context.Context) (map[string]bool, error) {
 	rows, err := c.Store.QueryContext(ctx, `
 		SELECT a.question_id
 		FROM attempts a
@@ -379,9 +386,9 @@ func (c *Core) reviewQueueIDs(ctx context.Context) (map[int]bool, error) {
 	}
 	defer rows.Close()
 
-	ids := make(map[int]bool)
+	ids := make(map[string]bool)
 	for rows.Next() {
-		var id int
+		var id string
 		if err := rows.Scan(&id); err != nil {
 			return nil, fmt.Errorf("scan review queue: %w", err)
 		}
@@ -393,9 +400,9 @@ func (c *Core) reviewQueueIDs(ctx context.Context) (map[int]bool, error) {
 	return ids, nil
 }
 
-// FailCounts returns, for the given question IDs, how many times each has been
-// answered incorrectly (used by the fail-count order strategy).
-func (c *Core) FailCounts(ctx context.Context, ids []int) (map[int]int, error) {
+// FailCounts returns, for the given question global IDs, how many times each has
+// been answered incorrectly (used by the fail-count order strategy).
+func (c *Core) FailCounts(ctx context.Context, ids []string) (map[string]int, error) {
 	if len(ids) == 0 {
 		return nil, nil
 	}
@@ -413,9 +420,10 @@ func (c *Core) FailCounts(ctx context.Context, ids []int) (map[int]int, error) {
 	}
 	defer rows.Close()
 
-	counts := make(map[int]int)
+	counts := make(map[string]int)
 	for rows.Next() {
-		var id, n int
+		var id string
+		var n int
 		if err := rows.Scan(&id, &n); err != nil {
 			return nil, fmt.Errorf("scan fail count: %w", err)
 		}

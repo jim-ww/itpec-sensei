@@ -67,14 +67,14 @@ type getNextQuestionIn struct {
 }
 
 type getNextQuestionOut struct {
-	QuestionID int    `json:"questionId"`
+	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
 	ImageURL   string `json:"imageUrl"`
 }
 
 type submitAnswerIn struct {
 	SessionID   int64  `json:"sessionId" jsonschema:"session id from a prior get_next_question call in this conversation"`
-	QuestionID  int    `json:"questionId"`
+	QuestionID  string `json:"questionId" jsonschema:"the opaque questionId returned by get_next_question"`
 	Answer      string `json:"answer" jsonschema:"the answer letter stated by the user"`
 	TimedOut    bool   `json:"timedOut,omitempty"`
 	TimeTakenMs int    `json:"timeTakenMs,omitempty"`
@@ -87,7 +87,7 @@ type submitAnswerOut struct {
 }
 
 type getProgressSummaryIn struct {
-	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id>, default all"`
+	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
 	Period string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
 }
 
@@ -139,7 +139,7 @@ func registerTools(server *mcp.Server, c *core.Core) {
 		result := &mcp.CallToolResult{
 			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sessionID)}},
 		}
-		return result, getNextQuestionOut{QuestionID: q.ID, ExamID: q.ExamID, ImageURL: q.ImageURL}, nil
+		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: q.ImageURL}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{

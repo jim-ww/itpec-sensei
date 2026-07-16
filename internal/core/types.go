@@ -1,6 +1,9 @@
 package core
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 // SubAnswer represents one sub-part answer for multi-part exams (e.g. old FE-PM format).
 type SubAnswer struct {
@@ -36,6 +39,14 @@ func (q *Question) Topic() string {
 	return q.Explanation.Topic
 }
 
+// GlobalID returns a globally unique identifier for this question. Question.ID
+// alone is only unique within a single exam (every exam's first question is
+// id 1), so anything that needs to address a question across exams — the
+// progress DB, MCP tool calls, cross-exam ordering — must use this instead.
+func (q *Question) GlobalID() string {
+	return q.ExamID + "#" + strconv.Itoa(q.ID)
+}
+
 // ExamInfo describes exam-level metadata.
 type ExamInfo struct {
 	Exam            string `json:"exam"`
@@ -59,7 +70,8 @@ type QuestionFilter struct {
 	Mode   string // "random" | "review"
 }
 
-// Scope narrows progress queries / resets: "all", "topic:<name>", or "exam:<id>".
+// Scope narrows progress queries / resets: "all", "topic:<name>", "exam:<id>",
+// or "part:am" / "part:pm" (FE-AM/FE-A vs FE-PM/FE-B exam session).
 type Scope string
 
 const (

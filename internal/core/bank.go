@@ -18,7 +18,7 @@ var embeddedData embed.FS
 // Bank is the in-memory, read-only index over the embedded question set.
 type Bank struct {
 	fsys    fs.FS
-	byID    map[int]*Question
+	byID    map[string]*Question // keyed by Question.GlobalID()
 	byExam  map[string][]*Question
 	byTopic map[string][]*Question
 	exams   []string
@@ -34,7 +34,7 @@ func LoadBank() (*Bank, error) {
 
 	b := &Bank{
 		fsys:    sub,
-		byID:    make(map[int]*Question),
+		byID:    make(map[string]*Question),
 		byExam:  make(map[string][]*Question),
 		byTopic: make(map[string][]*Question),
 	}
@@ -68,7 +68,7 @@ func LoadBank() (*Bank, error) {
 		for i := range data.Questions {
 			q := &data.Questions[i]
 			q.ExamID = examID
-			b.byID[q.ID] = q
+			b.byID[q.GlobalID()] = q
 			b.byExam[examID] = append(b.byExam[examID], q)
 			topic := q.Topic()
 			topicSet[topic] = struct{}{}
@@ -88,9 +88,10 @@ func LoadBank() (*Bank, error) {
 	return b, nil
 }
 
-// Question returns the question with the given ID, or nil if not found.
-func (b *Bank) Question(id int) *Question {
-	return b.byID[id]
+// Question returns the question with the given global ID (Question.GlobalID()),
+// or nil if not found.
+func (b *Bank) Question(globalID string) *Question {
+	return b.byID[globalID]
 }
 
 // Exams returns all known exam IDs, sorted.
@@ -123,7 +124,7 @@ func (b *Bank) Questions(topic, examID string) []*Question {
 			pool = append(pool, q)
 		}
 	}
-	sort.Slice(pool, func(i, j int) bool { return pool[i].ID < pool[j].ID })
+	sort.Slice(pool, func(i, j int) bool { return pool[i].GlobalID() < pool[j].GlobalID() })
 	return pool
 }
 
@@ -133,7 +134,7 @@ func (b *Bank) QuestionsForExams(examIDs []string) []*Question {
 	for _, id := range examIDs {
 		pool = append(pool, b.byExam[id]...)
 	}
-	sort.Slice(pool, func(i, j int) bool { return pool[i].ID < pool[j].ID })
+	sort.Slice(pool, func(i, j int) bool { return pool[i].GlobalID() < pool[j].GlobalID() })
 	return pool
 }
 
