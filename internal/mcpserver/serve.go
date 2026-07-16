@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"golang.ngrok.com/ngrok/v2"
@@ -125,6 +126,27 @@ type getProgressSummaryOut struct {
 	MedianTimeMs float64 `json:"medianTimeMs,omitempty"`
 }
 
+type getHistoryIn struct {
+	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
+	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
+	Limit int    `json:"limit,omitempty" jsonschema:"max attempts to return, default 20"`
+}
+
+type historyAttempt struct {
+	QuestionID  string `json:"questionId"`
+	ExamID      string `json:"examId"`
+	Topic       string `json:"topic"`
+	Answer      string `json:"answer"`
+	Correct     bool   `json:"correct"`
+	TimedOut    bool   `json:"timedOut"`
+	TimeTakenMs int    `json:"timeTakenMs,omitempty"`
+	AnsweredAt  string `json:"answeredAt"`
+}
+
+type getHistoryOut struct {
+	Attempts []historyAttempt `json:"attempts"`
+}
+
 func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 	// A single session is created lazily on first get_next_question call per server
 	// process, since MCP tool calls within one conversation share this process.
@@ -207,6 +229,36 @@ func registerTools(server *mcp.Server, c *core.Core, imageBaseURL *string) {
 			AvgTimeMs:    s.AvgTimeMs,
 			MedianTimeMs: s.MedianTimeMs,
 		}, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "get_history",
+		Description: "List past attempts (newest first), so the AI can reference specific questions the user already answered.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in getHistoryIn) (*mcp.CallToolResult, getHistoryOut, error) {
+		scope := core.Scope(orDefault(in.Scope, "all"))
+		order := core.HistoryOrder(orDefault(in.Order, "newest"))
+		limit := in.Limit
+		if limit <= 0 {
+			limit = 20
+		}
+		records, err := c.GetHistory(ctx, scope, order, limit)
+		if err != nil {
+			return nil, getHistoryOut{}, err
+		}
+		out := getHistoryOut{Attempts: make([]historyAttempt, len(records))}
+		for i, r := range records {
+			out.Attempts[i] = historyAttempt{
+				QuestionID:  r.QuestionID,
+				ExamID:      r.ExamID,
+				Topic:       r.Topic,
+				Answer:      r.Answer,
+				Correct:     r.Correct,
+				TimedOut:    r.TimedOut,
+				TimeTakenMs: r.TimeTakenMs,
+				AnsweredAt:  r.AnsweredAt.Format(time.RFC3339),
+			}
+		}
+		return nil, out, nil
 	})
 }
 

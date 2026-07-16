@@ -48,6 +48,8 @@ func main() {
 		err = cli.RunPractice(ctx, c, rest)
 	case "reset":
 		err = cli.RunReset(ctx, c, rest)
+	case "history":
+		err = cli.RunHistory(ctx, c, rest)
 	case "serve":
 		err = mcpserver.Run(ctx, c, rest)
 	case "-h", "--help", "help":
@@ -73,6 +75,7 @@ Usage:
 Commands:
   (none)     Show progress summary (same as "summary")
   practice   Answer practice questions
+  history    List past attempts (newest first)
   reset      Clear progress for a scope
   serve      Run the MCP server (stdio or --remote)
 
@@ -89,6 +92,11 @@ Flags for practice:
   --time-limit <duration>                                         whole-session limit, e.g. 150m
   --question-time-limit <duration>                                per-question limit, e.g. 90s
   --image-viewer <sixel|xdg-open>                                  default "sixel"
+
+Flags for history:
+  --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"
+  --order <newest|oldest>                             default "newest"
+  --limit <n>                                        default 20, 0 = all
 
 Flags for reset:
   <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg

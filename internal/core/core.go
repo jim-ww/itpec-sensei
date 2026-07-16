@@ -309,6 +309,65 @@ func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, err
 	return stats, nil
 }
 
+// HistoryOrder selects chronological direction for GetHistory.
+type HistoryOrder string
+
+const (
+	HistoryNewestFirst HistoryOrder = "newest"
+	HistoryOldestFirst HistoryOrder = "oldest"
+)
+
+// GetHistory returns attempts matching scope, ordered by order (newest or
+// oldest first), capped at limit (0 means no cap). Each record is joined with
+// question metadata (topic, examId) at query time, since attempts only store
+// the raw question id.
+func (c *Core) GetHistory(ctx context.Context, scope Scope, order HistoryOrder, limit int) ([]AttemptRecord, error) {
+	ids, err := c.scopeQuestionIDs(scope)
+	if err != nil {
+		return nil, err
+	}
+	where, args := c.scopeWhere(ids)
+
+	query := `SELECT question_id, answer, correct, timed_out, time_taken_ms, answered_at FROM attempts`
+	if where != "" {
+		query += " WHERE " + where
+	}
+	if order == HistoryOldestFirst {
+		query += " ORDER BY answered_at ASC"
+	} else {
+		query += " ORDER BY answered_at DESC"
+	}
+	if limit > 0 {
+		query += " LIMIT ?"
+		args = append(args, limit)
+	}
+
+	rows, err := c.Store.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("query attempts: %w", err)
+	}
+	defer rows.Close()
+
+	var records []AttemptRecord
+	for rows.Next() {
+		var r AttemptRecord
+		var timeTakenMs int
+		if err := rows.Scan(&r.QuestionID, &r.Answer, &r.Correct, &r.TimedOut, &timeTakenMs, &r.AnsweredAt); err != nil {
+			return nil, fmt.Errorf("scan attempt: %w", err)
+		}
+		r.TimeTakenMs = timeTakenMs
+		if q := c.Bank.Question(r.QuestionID); q != nil {
+			r.ExamID = q.ExamID
+			r.Topic = q.Topic()
+		}
+		records = append(records, r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate attempts: %w", err)
+	}
+	return records, nil
+}
+
 // ListTopics returns all topics present in the question bank.
 func (c *Core) ListTopics(ctx context.Context) ([]string, error) {
 	return c.Bank.Topics(), nil

@@ -3,6 +3,7 @@ package core
 import (
 	"encoding/json"
 	"strconv"
+	"time"
 )
 
 // SubAnswer represents one sub-part answer for multi-part exams (e.g. old FE-PM format).
@@ -99,6 +100,18 @@ type TopicStat struct {
 	Answered int     `json:"answered"`
 	Correct  int     `json:"correct"`
 	Accuracy float64 `json:"accuracy"`
+}
+
+// AttemptRecord is one past attempt, joined with question metadata, for history views.
+type AttemptRecord struct {
+	QuestionID  string    `json:"questionId"`
+	ExamID      string    `json:"examId"`
+	Topic       string    `json:"topic"`
+	Answer      string    `json:"answer"`
+	Correct     bool      `json:"correct"`
+	TimedOut    bool      `json:"timedOut"`
+	TimeTakenMs int       `json:"timeTakenMs,omitempty"`
+	AnsweredAt  time.Time `json:"answeredAt"`
 }
 
 // ProgressSummary is the aggregate progress view.
