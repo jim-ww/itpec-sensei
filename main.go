@@ -88,6 +88,7 @@ Flags for practice:
   --order <sequential|random|fail-count|fail-rate>                default "random"
   --time-limit <duration>                                         whole-session limit, e.g. 150m
   --question-time-limit <duration>                                per-question limit, e.g. 90s
+  --image-viewer <sixel|xdg-open>                                  default "sixel"
 
 Flags for reset:
   <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg

@@ -6,7 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"image"
+	"io"
 	"os"
+	"os/exec"
 	"os/signal"
 	"sort"
 	"strings"
@@ -30,6 +32,7 @@ type practiceFlags struct {
 	order             string
 	timeLimit         time.Duration
 	questionTimeLimit time.Duration
+	imageViewer       string
 }
 
 // RunPractice implements `itpec-sensei practice ...`.
@@ -42,8 +45,15 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate")
 	timeLimit := fs.Duration("time-limit", 0, "whole-session time limit, e.g. 150m")
 	questionTimeLimit := fs.Duration("question-time-limit", 0, "per-question time limit, e.g. 90s")
+	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
 	if err := fs.Parse(args); err != nil {
 		return err
+	}
+
+	switch *imageViewer {
+	case "sixel", "xdg-open":
+	default:
+		return fmt.Errorf("invalid --image-viewer %q, expected sixel or xdg-open", *imageViewer)
 	}
 
 	partVal := strings.ToLower(*part)
@@ -64,6 +74,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		order:             *order,
 		timeLimit:         *timeLimit,
 		questionTimeLimit: *questionTimeLimit,
+		imageViewer:       *imageViewer,
 	}
 	return runPracticeSession(ctx, c, pf)
 }
@@ -120,10 +131,14 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 	exitReason := "completed"
 	stdin := bufio.NewReader(os.Stdin)
 
+	var lastExternalImage string
+	defer killExternalViewer(&lastExternalImage)
+
 questionLoop:
 	for i, q := range ordered {
 		fmt.Printf("\nQuestion %d of %d  (%s, q%d)\n", i+1, len(ordered), q.ExamID, q.ID)
-		if err := renderImage(c, q); err != nil {
+		killExternalViewer(&lastExternalImage)
+		if err := renderImage(c, q, pf.imageViewer, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)
 		}
 
@@ -317,7 +332,11 @@ func pseudoRand(n int) int {
 	return int(randState % uint64(n))
 }
 
-func renderImage(c *core.Core, q *core.Question) error {
+func renderImage(c *core.Core, q *core.Question, viewer string, lastExternalImage *string) error {
+	if viewer == "xdg-open" {
+		return openImageExternally(c, q, lastExternalImage)
+	}
+
 	if !isatty.IsTerminal(os.Stdout.Fd()) {
 		fmt.Println("[image rendering skipped: not a terminal]")
 		return nil
@@ -340,6 +359,52 @@ func renderImage(c *core.Core, q *core.Question) error {
 	fmt.Println()
 	fmt.Println()
 	return nil
+}
+
+// openImageExternally copies the question's embedded image to a temp file and
+// hands it to the user's xdg-open handler, for terminals without sixel support.
+// lastExternalImage is updated so the caller can later kill whatever process
+// picked it up (see killExternalViewer).
+func openImageExternally(c *core.Core, q *core.Question, lastExternalImage *string) error {
+	imagesFS, err := c.Bank.ImagesFS()
+	if err != nil {
+		return err
+	}
+	src, err := imagesFS.Open(q.ImageRelPath())
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	tmp, err := os.CreateTemp("", "itpec-sensei-*.png")
+	if err != nil {
+		return err
+	}
+	defer tmp.Close()
+	if _, err := io.Copy(tmp, src); err != nil {
+		return err
+	}
+
+	if err := exec.Command("xdg-open", tmp.Name()).Start(); err != nil {
+		return fmt.Errorf("xdg-open: %w", err)
+	}
+	fmt.Printf("[image opened externally: %s]\n", tmp.Name())
+	*lastExternalImage = tmp.Name()
+	return nil
+}
+
+// killExternalViewer best-effort kills whatever process opened the previous
+// externally-viewed image (xdg-open itself has already exited, so we match on
+// the temp file path in the target process's argv instead — this only catches
+// viewers that take the path as a literal argument, e.g. feh/eog/sxiv, not
+// browser- or portal-based handlers). No-op if nothing was opened.
+func killExternalViewer(lastExternalImage *string) {
+	if *lastExternalImage == "" {
+		return
+	}
+	_ = exec.Command("pkill", "-f", *lastExternalImage).Run()
+	_ = os.Remove(*lastExternalImage)
+	*lastExternalImage = ""
 }
 
 // terminalPixelBudget returns the usable pixel area of the controlling terminal,
