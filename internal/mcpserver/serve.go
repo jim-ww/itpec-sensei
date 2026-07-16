@@ -63,7 +63,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	if reservedURL := os.Getenv("NGROK_RESERVED_URL"); reservedURL != "" {
 		endpointOpts = append(endpointOpts, ngrok.WithURL(reservedURL))
 	}
-	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream(*addr), endpointOpts...)
+	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream("http://"+*addr), endpointOpts...)
 	if err != nil {
 		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, *addr)
 		imageBaseURL = "http://" + *addr
