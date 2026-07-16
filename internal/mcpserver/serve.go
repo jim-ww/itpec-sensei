@@ -185,6 +185,7 @@ type getNextQuestionIn struct {
 }
 
 type getNextQuestionOut struct {
+	SessionID  int64  `json:"sessionId" jsonschema:"pass verbatim to submit_answer"`
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
 	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
@@ -250,6 +251,7 @@ type getQuestionIn struct {
 }
 
 type getQuestionOut struct {
+	SessionID    int64            `json:"sessionId,omitempty" jsonschema:"pass verbatim to submit_answer; only set when revealAnswer is false, since a revealed answer isn't meant to be graded"`
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
 	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
@@ -371,21 +373,29 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
-		result := &mcp.CallToolResult{
-			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("sessionId=%d", sess.id)}},
-		}
-		return result, getNextQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}, nil
+		return nil, getNextQuestionOut{SessionID: sess.id, QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation.",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A. Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded).",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
 			return nil, getQuestionOut{}, err
 		}
 		out := getQuestionOut{QuestionID: q.GlobalID(), ExamID: q.ExamID, ImageURL: imageURLFor(q, in.LightMode)}
+		if !in.RevealAnswer {
+			if !sess.started {
+				id, err := c.StartSession(ctx, "fe", in.ExamID, "lookup", "direct", nil, nil)
+				if err != nil {
+					return nil, getQuestionOut{}, err
+				}
+				sess.id = id
+				sess.started = true
+			}
+			out.SessionID = sess.id
+		}
 		if q.Explanation != nil {
 			out.Topic = q.Explanation.Topic
 			out.Explanation = q.Explanation.Explanation
