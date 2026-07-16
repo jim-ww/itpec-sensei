@@ -23,13 +23,13 @@ import (
 )
 
 type practiceFlags struct {
-	examType            string
-	examID              string
-	part                string
-	mode                string
-	order               string
-	timeLimit           time.Duration
-	questionTimeLimit   time.Duration
+	examType          string
+	examID            string
+	part              string
+	mode              string
+	order             string
+	timeLimit         time.Duration
+	questionTimeLimit time.Duration
 }
 
 // RunPractice implements `itpec-sensei practice ...`.
@@ -198,7 +198,7 @@ questionLoop:
 			correct++
 			color.New(color.FgGreen, color.Bold).Println("✓ Correct!")
 		case dontKnow:
-			color.New(color.FgYellow, color.Bold).Println("○ Marked as unknown — recorded as incorrect.")
+			color.New(color.FgYellow, color.Bold).Println("○ Marked as unknown")
 		default:
 			color.New(color.FgRed, color.Bold).Println("✗ Incorrect.")
 		}
