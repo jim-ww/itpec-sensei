@@ -208,7 +208,7 @@ type getNextQuestionOut struct {
 	QuestionID string `json:"questionId" jsonschema:"opaque id, pass verbatim to submit_answer"`
 	ExamID     string `json:"examId"`
 	Number     int    `json:"number" jsonschema:"question number within examId; pass both to get_question to look this exact question back up (e.g. to re-fetch, toggle lightMode, or reveal the answer)"`
-	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
+	ImageURL   string `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering; also use open_question_image to show it to them locally, unless user asked not to)"`
 	ImageMode  string `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl/embedded image actually is"`
 }
 
@@ -276,7 +276,7 @@ type getQuestionOut struct {
 	QuestionID   string           `json:"questionId"`
 	ExamID       string           `json:"examId"`
 	Number       int              `json:"number"`
-	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"URL to fetch/render the question image directly; put this in a markdown image link so the user can actually see it"`
+	ImageURL     string           `json:"imageUrl,omitempty" jsonschema:"the question text/diagrams/choices live ONLY in this image, not in any other field — YOU must fetch/view it before answering; also use open_question_image to show it to them locally, unless user asked not to)"`
 	ImageMode    string           `json:"imageMode" jsonschema:"\"dark\" (colors inverted, the default) or \"light\" (original colors) — which one the imageUrl actually is"`
 	Topic        string           `json:"topic,omitempty"`
 	Answer       json.RawMessage  `json:"answer,omitempty"`
@@ -400,7 +400,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_next_question",
-		Description: "Return the next practice question (id + topic + an imageUrl to render), filtered by topic/exam/mode. Never includes the answer.",
+		Description: "Return the next practice question, filtered by topic/exam/mode. The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself. You must fetch/view that image yourself to know what's actually being asked before answering or discussing it. Call open_question_image to open it directly for THEM on their machine — that tool is for the user's benefit, not a substitute for you reading imageUrl. Never includes the answer.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
 		if !sess.started {
 			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
@@ -422,7 +422,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). Returns an imageUrl to render. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded).",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself; fetch/view that image yourself before answering or discussing it. Call open_question_image to open it directly for THEM on their machine — that tool is for the user's benefit, not a substitute for you reading imageUrl. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded).",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
@@ -455,7 +455,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "open_question_image",
-		Description: "Open a question's image directly in a local image viewer (xdg-open by default, configurable via --image-viewer on `serve`) on the machine running this MCP server, bypassing the chat client entirely. Use this when imageUrl/embedded images from get_next_question or get_question aren't rendering for the user — but only when the server is running on the SAME machine the user is looking at (e.g. local stdio); it opens a window there, not in the chat, so it's useless over a headless/remote connection with no display.",
+		Description: "Open a question's image in a local image viewer for the USER to look at — not for you to read; you already have imageUrl for that. Use this tool to show question content to user, every time you parse question for them, unless stated not to do it",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in openQuestionImageIn) (*mcp.CallToolResult, openQuestionImageOut, error) {
 		q := c.Bank.QuestionByExamAndNumber(in.ExamID, in.Number)
 		if q == nil {
