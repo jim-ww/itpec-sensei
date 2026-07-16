@@ -208,6 +208,29 @@ type getHistoryOut struct {
 	Attempts []historyAttempt `json:"attempts"`
 }
 
+type getSessionsIn struct {
+	Scope string `json:"scope,omitempty" jsonschema:"all | exam:<id> | part:am | part:pm, default all (topic scope not supported)"`
+	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
+	Limit int    `json:"limit,omitempty" jsonschema:"max sessions to return, default 20"`
+}
+
+type sessionSummary struct {
+	ID               int64  `json:"id"`
+	StartedAt        string `json:"startedAt"`
+	EndedAt          string `json:"endedAt,omitempty"`
+	ExamID           string `json:"examId,omitempty"`
+	Mode             string `json:"mode"`
+	OrderStrategy    string `json:"orderStrategy"`
+	TimeLimitSeconds int    `json:"timeLimitSeconds,omitempty"`
+	ExitReason       string `json:"exitReason,omitempty"`
+	Answered         int    `json:"answered"`
+	Correct          int    `json:"correct"`
+}
+
+type getSessionsOut struct {
+	Sessions []sessionSummary `json:"sessions"`
+}
+
 func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_topics",
@@ -340,6 +363,43 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState) {
 				TimeTakenMs: r.TimeTakenMs,
 				AnsweredAt:  r.AnsweredAt.Format(time.RFC3339),
 			}
+		}
+		return nil, out, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "get_sessions",
+		Description: "List past practice sessions (newest first) with their score and completion status, so the AI can reference how a study run went (e.g. a timed mock exam that was completed vs interrupted), not just individual answers.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in getSessionsIn) (*mcp.CallToolResult, getSessionsOut, error) {
+		scope := core.Scope(orDefault(in.Scope, "all"))
+		order := core.HistoryOrder(orDefault(in.Order, "newest"))
+		limit := in.Limit
+		if limit <= 0 {
+			limit = 20
+		}
+		records, err := c.GetSessions(ctx, scope, order, limit)
+		if err != nil {
+			return nil, getSessionsOut{}, err
+		}
+		out := getSessionsOut{Sessions: make([]sessionSummary, len(records))}
+		for i, r := range records {
+			s := sessionSummary{
+				ID:            r.ID,
+				StartedAt:     r.StartedAt.Format(time.RFC3339),
+				ExamID:        r.ExamID,
+				Mode:          r.Mode,
+				OrderStrategy: r.OrderStrategy,
+				ExitReason:    r.ExitReason,
+				Answered:      r.Answered,
+				Correct:       r.Correct,
+			}
+			if r.EndedAt != nil {
+				s.EndedAt = r.EndedAt.Format(time.RFC3339)
+			}
+			if r.TimeLimitSeconds != nil {
+				s.TimeLimitSeconds = *r.TimeLimitSeconds
+			}
+			out.Sessions[i] = s
 		}
 		return nil, out, nil
 	})
