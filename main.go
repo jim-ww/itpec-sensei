@@ -50,6 +50,8 @@ func main() {
 		err = cli.RunReset(ctx, c, rest)
 	case "history":
 		err = cli.RunHistory(ctx, c, rest)
+	case "sessions":
+		err = cli.RunSessions(ctx, c, rest)
 	case "serve":
 		err = mcpserver.Run(ctx, c, rest)
 	case "-h", "--help", "help":
@@ -76,6 +78,7 @@ Commands:
   (none)     Show progress summary (same as "summary")
   practice   Answer practice questions
   history    List past attempts (newest first)
+  sessions   List past practice sessions (newest first)
   reset      Clear progress for a scope
   serve      Run the MCP server (stdio or --remote)
 
@@ -101,6 +104,11 @@ Flags for history:
   --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"
   --order <newest|oldest>                             default "newest"
   --limit <n>                                        default 20, 0 = all
+
+Flags for sessions:
+  --scope <all|exam:ID|part:am|part:pm>   default "all" (topic scope not supported — a session isn't scoped to one topic)
+  --order <newest|oldest>                 default "newest"
+  --limit <n>                             default 20, 0 = all
 
 Flags for reset:
   <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg
