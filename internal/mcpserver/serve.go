@@ -223,9 +223,8 @@ type submitAnswerIn struct {
 }
 
 type submitAnswerOut struct {
-	Correct     bool   `json:"correct"`
-	Topic       string `json:"topic,omitempty"`
-	Explanation string `json:"explanation,omitempty"`
+	Correct bool   `json:"correct"`
+	Topic   string `json:"topic,omitempty"`
 }
 
 type getProgressSummaryIn struct {
@@ -269,7 +268,7 @@ type getProgressSummaryOut struct {
 type getQuestionIn struct {
 	ExamID       string `json:"examId" jsonschema:"exam id, e.g. 2025A_FE-A"`
 	Number       int    `json:"number" jsonschema:"question number within the exam"`
-	RevealAnswer bool   `json:"revealAnswer,omitempty" jsonschema:"if true, include the correct answer and explanation"`
+	RevealAnswer bool   `json:"revealAnswer,omitempty" jsonschema:"if true, include the correct answer (topic is also included, but not a canned explanation — explain it yourself)"`
 	LightMode    bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
 }
 
@@ -284,7 +283,6 @@ type getQuestionOut struct {
 	Answer       json.RawMessage  `json:"answer,omitempty"`
 	SimpleAnswer string           `json:"simpleAnswer,omitempty"`
 	SubAnswers   []core.SubAnswer `json:"subAnswers,omitempty"`
-	Explanation  string           `json:"explanation,omitempty"`
 }
 
 type openQuestionImageIn struct {
@@ -451,7 +449,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_question",
-		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself; fetch/view that image yourself before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Set revealAnswer=true to also return the correct answer and explanation (in which case the question isn't submittable — there's no sessionId — since a revealed answer isn't meant to be graded). The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
+		Description: "Look up one specific question by exam id + question number, e.g. question 34 of 2025A_FE-A — the same examId+number get_next_question returns, so you can look a question back up later (re-fetch, toggle lightMode, or reveal the answer). The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself; fetch/view that image yourself before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Set revealAnswer=true to also return the correct answer (no canned explanation text — explain it yourself) — in which case the question isn't submittable, there's no sessionId, since a revealed answer isn't meant to be graded. The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getQuestionIn) (*mcp.CallToolResult, getQuestionOut, error) {
 		q, err := c.GetQuestion(ctx, in.ExamID, in.Number, in.RevealAnswer)
 		if err != nil {
@@ -474,7 +472,6 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		}
 		if q.Explanation != nil {
 			out.Topic = q.Explanation.Topic
-			out.Explanation = q.Explanation.Explanation
 		}
 		out.Answer = q.Answer
 		out.SimpleAnswer = q.SimpleAnswer
@@ -529,7 +526,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "submit_answer",
-		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness.",
+		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness. Returns only correct/topic, no canned explanation — explain why yourself using your own knowledge of the topic.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in submitAnswerIn) (*mcp.CallToolResult, submitAnswerOut, error) {
 		res, err := c.SubmitAnswer(ctx, in.SessionID, in.QuestionID, in.Answer, in.TimedOut, in.TimeTakenMs)
 		if err != nil {
@@ -538,7 +535,6 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		out := submitAnswerOut{Correct: res.Correct}
 		if res.Explanation != nil {
 			out.Topic = res.Explanation.Topic
-			out.Explanation = res.Explanation.Explanation
 		}
 		return nil, out, nil
 	})
