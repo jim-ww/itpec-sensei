@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"math/rand"
 	"sort"
@@ -170,6 +171,43 @@ func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID str
 	}
 
 	return &AnswerResult{Correct: correct, Explanation: q.Explanation}, nil
+}
+
+// UndoLastAnswer deletes the most recently recorded attempt and returns what
+// it deleted, so a mis-stated or accidentally submitted answer can be
+// retracted. If sessionID is nonzero, only that session's attempts are
+// considered; otherwise the single most recent attempt across all sessions
+// is undone.
+func (c *Core) UndoLastAnswer(ctx context.Context, sessionID int64) (*AttemptRecord, error) {
+	query := `SELECT id, question_id, answer, correct, timed_out, time_taken_ms, answered_at FROM attempts`
+	var args []any
+	if sessionID != 0 {
+		query += " WHERE session_id = ?"
+		args = append(args, sessionID)
+	}
+	query += " ORDER BY id DESC LIMIT 1"
+
+	var id int64
+	var r AttemptRecord
+	var timeTakenMs int
+	err := c.Store.QueryRowContext(ctx, query, args...).
+		Scan(&id, &r.QuestionID, &r.Answer, &r.Correct, &r.TimedOut, &timeTakenMs, &r.AnsweredAt)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, fmt.Errorf("no attempts to undo")
+	}
+	if err != nil {
+		return nil, fmt.Errorf("find last attempt: %w", err)
+	}
+	r.TimeTakenMs = timeTakenMs
+	if q := c.Bank.Question(r.QuestionID); q != nil {
+		r.ExamID = q.ExamID
+		r.Topic = q.Topic()
+	}
+
+	if _, err := c.Store.ExecContext(ctx, `DELETE FROM attempts WHERE id = ?`, id); err != nil {
+		return nil, fmt.Errorf("delete attempt: %w", err)
+	}
+	return &r, nil
 }
 
 // normalizeIdk maps the two "I don't know" sentinels callers are asked to

@@ -227,6 +227,19 @@ type submitAnswerOut struct {
 	Topic   string `json:"topic,omitempty"`
 }
 
+type undoLastAnswerIn struct {
+	SessionID int64 `json:"sessionId,omitempty" jsonschema:"if set, only undo within this session; default 0 = the most recent attempt across all sessions"`
+}
+
+type undoLastAnswerOut struct {
+	QuestionID string `json:"questionId"`
+	ExamID     string `json:"examId"`
+	Topic      string `json:"topic"`
+	Answer     string `json:"answer"`
+	Correct    bool   `json:"correct"`
+	AnsweredAt string `json:"answeredAt"`
+}
+
 type getProgressSummaryIn struct {
 	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
 	Period string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
@@ -537,6 +550,24 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 			out.Topic = res.Explanation.Topic
 		}
 		return nil, out, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "undo_last_answer",
+		Description: "Delete the most recently recorded attempt, undoing its grading. Use only when the user explicitly asks to undo/retract/redo their last answer — e.g. they mis-stated it or it was submitted by mistake.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in undoLastAnswerIn) (*mcp.CallToolResult, undoLastAnswerOut, error) {
+		r, err := c.UndoLastAnswer(ctx, in.SessionID)
+		if err != nil {
+			return nil, undoLastAnswerOut{}, err
+		}
+		return nil, undoLastAnswerOut{
+			QuestionID: r.QuestionID,
+			ExamID:     r.ExamID,
+			Topic:      r.Topic,
+			Answer:     r.Answer,
+			Correct:    r.Correct,
+			AnsweredAt: r.AnsweredAt.Format(time.RFC3339),
+		}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{

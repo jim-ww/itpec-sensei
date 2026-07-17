@@ -110,6 +110,8 @@ Flags for history:
   --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"
   --order <newest|oldest>                             default "newest"
   --limit <n>                                        default 20, 0 = all
+  --undo                                              delete the most recent attempt instead of listing history
+  --session <id>                                      with --undo, only consider this session id, default 0 = most recent across all sessions
 
 Flags for sessions:
   --scope <all|exam:ID|part:am|part:pm>   default "all" (topic scope not supported — a session isn't scoped to one topic)
@@ -142,6 +144,7 @@ Examples:
   itpec-sensei practice --exam=2025A_FE-A --q=34 --answer
   itpec-sensei exams
   itpec-sensei exam 2025A_FE-A
+  itpec-sensei history --undo
   itpec-sensei reset exam:2025A_FE-A --yes
   itpec-sensei serve --remote --ngrok`)
 }
