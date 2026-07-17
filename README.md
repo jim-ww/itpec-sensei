@@ -45,8 +45,13 @@ Show progress summary: streaks, review-queue count, per-topic/per-exam accuracy.
     itpec-sensei practice
     itpec-sensei practice --part am --limit 5   # practice 5 FE questions (Morning part)
     itpec-sensei practice --exam 2025A_FE-A --order sequential --time-limit 90m   # simulate the real exam, in order, under a time limit
+    itpec-sensei practice --topic "Databases" --limit 10   # drill just one topic
 
 Start a practice session — default, a quick drill, or a full timed mock exam.
+
+    itpec-sensei topics
+
+List all known topics (valid values for `--topic`).
 
     itpec-sensei history
     itpec-sensei sessions
