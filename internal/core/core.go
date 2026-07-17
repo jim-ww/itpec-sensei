@@ -807,6 +807,14 @@ func (c *Core) ListTopics(ctx context.Context) ([]string, error) {
 	return c.Bank.Topics(), nil
 }
 
+// ListTopicsByPart returns all topics present in the question bank, grouped
+// by exam part (AM vs PM), so callers can present a filterable list without
+// grouping unrelated AM/PM topics together. See Bank.TopicsByPart.
+func (c *Core) ListTopicsByPart(ctx context.Context) (am, pm, other []string, err error) {
+	am, pm, other = c.Bank.TopicsByPart()
+	return am, pm, other, nil
+}
+
 // ListExams returns all exam IDs present in the question bank.
 func (c *Core) ListExams(ctx context.Context) ([]string, error) {
 	return c.Bank.Exams(), nil

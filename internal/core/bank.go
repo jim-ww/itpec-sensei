@@ -23,6 +23,11 @@ type Bank struct {
 	examInfo map[string]ExamInfo
 	exams    []string
 	topics   []string
+	// topicParts maps each topic to the exam part ("am"/"pm") all of its
+	// questions come from. Topics whose questions span more than one part (or
+	// come from a part-less exam like IT Passport) map to "", grouped as
+	// "other" by TopicsByPart.
+	topicParts map[string]string
 }
 
 // LoadBank parses every exam JSON file under dataDir (the "questions" directory
@@ -46,6 +51,7 @@ func LoadBank(dataDir string) (*Bank, error) {
 
 	examSet := make(map[string]struct{})
 	topicSet := make(map[string]struct{})
+	topicPartSet := make(map[string]map[string]struct{})
 
 	for _, e := range entries {
 		if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
@@ -74,6 +80,10 @@ func LoadBank(dataDir string) (*Bank, error) {
 			topic := q.Topic()
 			topicSet[topic] = struct{}{}
 			b.byTopic[topic] = append(b.byTopic[topic], q)
+			if topicPartSet[topic] == nil {
+				topicPartSet[topic] = make(map[string]struct{})
+			}
+			topicPartSet[topic][ExamPart(examID)] = struct{}{}
 		}
 	}
 
@@ -85,6 +95,15 @@ func LoadBank(dataDir string) (*Bank, error) {
 		b.topics = append(b.topics, t)
 	}
 	sort.Strings(b.topics)
+
+	b.topicParts = make(map[string]string, len(topicPartSet))
+	for t, parts := range topicPartSet {
+		if len(parts) == 1 {
+			for p := range parts {
+				b.topicParts[t] = p
+			}
+		}
+	}
 
 	return b, nil
 }
@@ -117,6 +136,24 @@ func (b *Bank) Exams() []string {
 // Topics returns all known topics, sorted.
 func (b *Bank) Topics() []string {
 	return b.topics
+}
+
+// TopicsByPart groups all known topics (each already sorted, since b.topics
+// is sorted) by the exam part their questions come from. Topics with no
+// single-part association — e.g. IT Passport-only topics, or ones spanning
+// both AM and PM — are grouped under other.
+func (b *Bank) TopicsByPart() (am, pm, other []string) {
+	for _, t := range b.topics {
+		switch b.topicParts[t] {
+		case "am":
+			am = append(am, t)
+		case "pm":
+			pm = append(pm, t)
+		default:
+			other = append(other, t)
+		}
+	}
+	return am, pm, other
 }
 
 // Questions returns questions matching the given filter (topic and/or exam ID; empty = no filter).

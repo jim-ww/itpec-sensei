@@ -194,8 +194,10 @@ func endMCPSession(c *core.Core, sess *sessionState) {
 }
 
 type listTopicsOut struct {
-	Topics []string `json:"topics"`
-	Exams  []string `json:"exams"`
+	TopicsAM    []string `json:"topicsAm,omitempty"`
+	TopicsPM    []string `json:"topicsPm,omitempty"`
+	TopicsOther []string `json:"topicsOther,omitempty"`
+	Exams       []string `json:"exams"`
 }
 
 type getNextQuestionIn struct {
@@ -415,9 +417,9 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_topics",
-		Description: "List available topics and exam IDs, so the AI can offer filtering rather than guessing.",
+		Description: "List available topics (grouped by AM/PM exam session, since AM and PM topics are unrelated) and exam IDs, so the AI can offer filtering rather than guessing.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in struct{}) (*mcp.CallToolResult, listTopicsOut, error) {
-		topics, err := c.ListTopics(ctx)
+		am, pm, other, err := c.ListTopicsByPart(ctx)
 		if err != nil {
 			return nil, listTopicsOut{}, err
 		}
@@ -425,7 +427,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		if err != nil {
 			return nil, listTopicsOut{}, err
 		}
-		return nil, listTopicsOut{Topics: topics, Exams: exams}, nil
+		return nil, listTopicsOut{TopicsAM: am, TopicsPM: pm, TopicsOther: other, Exams: exams}, nil
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
