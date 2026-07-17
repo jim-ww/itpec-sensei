@@ -3,3 +3,4 @@ output
 /.gocache/
 /.gomodcache/
 /spec.md
+dist/
