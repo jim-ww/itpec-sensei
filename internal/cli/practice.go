@@ -29,6 +29,7 @@ type practiceFlags struct {
 	examType          string
 	examID            string
 	part              string
+	topic             string
 	question          int
 	limit             int
 	mode              string
@@ -46,6 +47,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	examType := fs.String("exam-type", "fe", "fe | itpassport")
 	examID := fs.String("exam", "", "scope to one exam id")
 	part := fs.String("part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
+	topic := fs.String("topic", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
 	question := fs.Int("q", 0, "practice only this specific question number within --exam")
 	limit := fs.Int("limit", 0, "max number of questions this session (0 = no limit)")
 	mode := fs.String("mode", "normal", "normal | review")
@@ -69,6 +71,10 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		return fmt.Errorf("-q requires --exam")
 	}
 
+	if *topic != "" && !contains(c.Bank.Topics(), *topic) {
+		return fmt.Errorf("invalid --topic %q; known topics are: %s", *topic, strings.Join(c.Bank.Topics(), ", "))
+	}
+
 	partVal := strings.ToLower(*part)
 	switch partVal {
 	case "am", "pm":
@@ -83,6 +89,7 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 		examType:          *examType,
 		examID:            *examID,
 		part:              partVal,
+		topic:             *topic,
 		question:          *question,
 		limit:             *limit,
 		mode:              *mode,
@@ -109,6 +116,9 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 		planned = c.Bank.Questions("", pf.examID)
 	default:
 		planned = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(pf.part))
+	}
+	if pf.topic != "" {
+		planned = filterByTopic(planned, pf.topic)
 	}
 	if pf.mode == "review" && pf.question == 0 {
 		var err error
@@ -374,6 +384,25 @@ func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([
 		}
 	}
 	return filtered, nil
+}
+
+func filterByTopic(pool []*core.Question, topic string) []*core.Question {
+	var filtered []*core.Question
+	for _, q := range pool {
+		if q.Topic() == topic {
+			filtered = append(filtered, q)
+		}
+	}
+	return filtered
+}
+
+func contains(list []string, s string) bool {
+	for _, v := range list {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }
 
 func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, order string) ([]*core.Question, error) {

@@ -56,6 +56,8 @@ func main() {
 		err = cli.RunExams(ctx, c, rest)
 	case "exam":
 		err = cli.RunExam(ctx, c, rest)
+	case "topics":
+		err = cli.RunTopics(ctx, c, rest)
 	case "serve":
 		err = mcpserver.Run(ctx, c, rest)
 	case "-h", "--help", "help":
@@ -85,6 +87,7 @@ Commands:
   sessions   List past practice sessions (newest first)
   exams      List known exam IDs
   exam       Show readable metadata + your progress for one exam
+  topics     List known topics
   reset      Clear progress for a scope
   serve      Run the MCP server (stdio or --remote)
 
@@ -96,6 +99,7 @@ Flags for practice:
   --exam-type <fe|itpassport>                                     default "fe"
   --exam <id>                                                     e.g. 2025A_FE-A
   --part <am|pm|all>                                              ignored if --exam is set
+  --topic <name>                                                  filter to one topic; combines with --exam/--part (see "itpec-sensei topics")
   --q <n>                                                         practice only this question number within --exam
   --limit <n>                                                     max questions this session, default 0 (no limit)
   --mode <normal|review>                                          default "normal"
@@ -142,8 +146,10 @@ Examples:
   itpec-sensei practice --exam=2025A_FE-A --q=34
   itpec-sensei practice --exam=2025A_FE-A --limit=5
   itpec-sensei practice --exam=2025A_FE-A --q=34 --answer
+  itpec-sensei practice --topic="Networks" --part=am
   itpec-sensei exams
   itpec-sensei exam 2025A_FE-A
+  itpec-sensei topics
   itpec-sensei history --undo
   itpec-sensei reset exam:2025A_FE-A --yes
   itpec-sensei serve --remote --ngrok`)
