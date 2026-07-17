@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
+	"github.com/jim-ww/itpec-sensei/pkg/termui"
 )
 
 // RunSummary implements `itpec-sensei [--scope=...] [--period=...]`.
@@ -49,7 +50,7 @@ func RunSummary(ctx context.Context, c *core.Core, args []string) error {
 	}
 
 	fmt.Println("\nActivity (last 12 weeks):")
-	printHeatmap(summary.Heatmap)
+	termui.PrintHeatmap(summary.Heatmap, 12)
 
 	fmt.Println("\nPer-topic accuracy:")
 	printTopicBars(topicStats)

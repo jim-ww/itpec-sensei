@@ -12,6 +12,7 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/cli"
 	"github.com/jim-ww/itpec-sensei/internal/core"
 	"github.com/jim-ww/itpec-sensei/internal/mcpserver"
+	"github.com/jim-ww/itpec-sensei/internal/repository/sqlite"
 )
 
 func main() {
@@ -57,13 +58,13 @@ func main() {
 	if err != nil {
 		log.Fatalf("resolve progress db path: %v", err)
 	}
-	store, err := core.OpenStore(ctx, dbPath)
+	store, err := sqlite.Open(ctx, dbPath)
 	if err != nil {
 		log.Fatalf("open progress store: %v", err)
 	}
 	defer store.Close()
 
-	c := core.New(bank, store)
+	c := core.New(bank, sqlite.NewRepository(store))
 
 	if len(args) == 0 {
 		if err := cli.RunSummary(ctx, c, nil); err != nil {

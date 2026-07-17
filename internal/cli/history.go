@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
+	"github.com/jim-ww/itpec-sensei/pkg/termui"
 )
 
 // RunHistory implements `itpec-sensei history [--scope=...] [--limit=N]` and,
@@ -49,8 +50,8 @@ func RunHistory(ctx context.Context, c *core.Core, args []string) error {
 		return nil
 	}
 
-	fmt.Printf("%-19s  %-16s  %-22s  %-6s  %-7s  %s\n", "Answered At", "Exam", "Topic", "Answer", "Result", "Question")
-	for _, r := range records {
+	rows := make([][]string, len(records))
+	for i, r := range records {
 		result := "correct"
 		if !r.Correct {
 			result = "wrong"
@@ -58,10 +59,12 @@ func RunHistory(ctx context.Context, c *core.Core, args []string) error {
 		if r.TimedOut {
 			result += "*"
 		}
-		fmt.Printf("%-19s  %-16s  %-22s  %-6s  %-7s  %s\n",
+		rows[i] = []string{
 			r.AnsweredAt.Local().Format("2006-01-02 15:04:05"),
-			r.ExamID, r.Topic, r.Answer, result, r.QuestionID)
+			r.ExamID, r.Topic, r.Answer, result, r.QuestionID,
+		}
 	}
+	termui.PrintTable([]string{"Answered At", "Exam", "Topic", "Answer", "Result", "Question"}, rows)
 	fmt.Println("\n(* = answered after the per-question time limit)")
 
 	return nil

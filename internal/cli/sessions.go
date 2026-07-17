@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
+	"github.com/jim-ww/itpec-sensei/pkg/termui"
 )
 
 // RunSessions implements `itpec-sensei sessions [--scope=...] [--limit=N]`.
@@ -50,17 +51,18 @@ func RunSessions(ctx context.Context, c *core.Core, args []string) error {
 		return nil
 	}
 
-	fmt.Printf("%-6s  %-19s  %-16s  %-8s  %-11s  %-6s  %-9s  %s\n",
-		"ID", "Started At", "Exam", "Mode", "Order", "Score", "Answered", "Exit")
-	for _, r := range records {
+	rows := make([][]string, len(records))
+	for i, r := range records {
 		score := "—"
 		if r.Answered > 0 {
 			score = fmt.Sprintf("%d%%", r.Correct*100/r.Answered)
 		}
-		fmt.Printf("%-6d  %-19s  %-16s  %-8s  %-11s  %-6s  %-9d  %s\n",
-			r.ID, r.StartedAt.Local().Format("2006-01-02 15:04:05"),
-			orDash(r.ExamID), r.Mode, r.OrderStrategy, score, r.Answered, orDash(r.ExitReason))
+		rows[i] = []string{
+			fmt.Sprintf("%d", r.ID), r.StartedAt.Local().Format("2006-01-02 15:04:05"),
+			orDash(r.ExamID), r.Mode, r.OrderStrategy, score, fmt.Sprintf("%d", r.Answered), orDash(r.ExitReason),
+		}
 	}
+	termui.PrintTable([]string{"ID", "Started At", "Exam", "Mode", "Order", "Score", "Answered", "Exit"}, rows)
 
 	return nil
 }
