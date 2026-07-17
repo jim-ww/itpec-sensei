@@ -217,7 +217,7 @@ type getNextQuestionOut struct {
 type submitAnswerIn struct {
 	SessionID   int64  `json:"sessionId" jsonschema:"session id from a prior get_next_question call in this conversation"`
 	QuestionID  string `json:"questionId" jsonschema:"the opaque questionId returned by get_next_question"`
-	Answer      string `json:"answer" jsonschema:"the answer letter stated by the user. If they say (in any wording) that they don't know, pass the literal string \"idk\" — don't relay their exact words and don't guess a letter for them; \"idk\" is graded as incorrect but recorded distinctly from a wrong guess"`
+	Answer      string `json:"answer" jsonschema:"ONLY the answer letter the user themself just stated for this exact question — never call this tool with a letter the AI picked, guessed, or recalled from earlier context. If the user says (in any wording) that they don't know, or hasn't actually answered yet, pass the literal string \"idk\" instead of guessing on their behalf or relaying their exact words; \"idk\" is graded as incorrect but recorded distinctly from a wrong guess"`
 	TimedOut    bool   `json:"timedOut,omitempty"`
 	TimeTakenMs int    `json:"timeTakenMs,omitempty"`
 }
@@ -540,7 +540,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "submit_answer",
-		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness. Returns correct/correctAnswer/topic, no canned explanation — explain why yourself using your own knowledge of the topic.",
+		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness — never invoke this with a letter the AI chose, guessed, or inferred instead of asking the user. If the user hasn't given an answer, or says they don't know, pass \"idk\" rather than guessing for them. Returns correct/correctAnswer/topic, no canned explanation — explain why yourself using your own knowledge of the topic.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in submitAnswerIn) (*mcp.CallToolResult, submitAnswerOut, error) {
 		res, err := c.SubmitAnswer(ctx, in.SessionID, in.QuestionID, in.Answer, in.TimedOut, in.TimeTakenMs)
 		if err != nil {
