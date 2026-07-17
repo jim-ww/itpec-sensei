@@ -223,8 +223,9 @@ type submitAnswerIn struct {
 }
 
 type submitAnswerOut struct {
-	Correct bool   `json:"correct"`
-	Topic   string `json:"topic,omitempty"`
+	Correct       bool   `json:"correct"`
+	CorrectAnswer string `json:"correctAnswer,omitempty" jsonschema:"the correct answer letter — tell the user this when they got it wrong or didn't know"`
+	Topic         string `json:"topic,omitempty"`
 }
 
 type undoLastAnswerIn struct {
@@ -539,13 +540,13 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "submit_answer",
-		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness. Returns only correct/topic, no canned explanation — explain why yourself using your own knowledge of the topic.",
+		Description: "Submit the user's stated answer letter for grading. Grading happens server-side; the AI is a conduit for the user's stated answer, not the judge of correctness. Returns correct/correctAnswer/topic, no canned explanation — explain why yourself using your own knowledge of the topic.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in submitAnswerIn) (*mcp.CallToolResult, submitAnswerOut, error) {
 		res, err := c.SubmitAnswer(ctx, in.SessionID, in.QuestionID, in.Answer, in.TimedOut, in.TimeTakenMs)
 		if err != nil {
 			return nil, submitAnswerOut{}, err
 		}
-		out := submitAnswerOut{Correct: res.Correct}
+		out := submitAnswerOut{Correct: res.Correct, CorrectAnswer: res.CorrectAnswer}
 		if res.Explanation != nil {
 			out.Topic = res.Explanation.Topic
 		}

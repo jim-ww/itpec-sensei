@@ -170,7 +170,20 @@ func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID str
 		return nil, fmt.Errorf("record attempt: %w", err)
 	}
 
-	return &AnswerResult{Correct: correct, Explanation: q.Explanation}, nil
+	return &AnswerResult{Correct: correct, CorrectAnswer: correctAnswerLabel(q), Explanation: q.Explanation}, nil
+}
+
+// correctAnswerLabel returns the answer letter callers should be told is
+// correct, mirroring gradeAnswer's notion of "the" answer for multi-part
+// questions (the first sub-answer's expected letter).
+func correctAnswerLabel(q *Question) string {
+	if q.SimpleAnswer != "" {
+		return q.SimpleAnswer
+	}
+	if len(q.SubAnswers) > 0 {
+		return q.SubAnswers[0].Answer
+	}
+	return ""
 }
 
 // UndoLastAnswer deletes the most recently recorded attempt and returns what
@@ -225,16 +238,11 @@ func normalizeIdk(answer string) string {
 }
 
 func gradeAnswer(q *Question, answer string) bool {
-	answer = strings.TrimSpace(strings.ToLower(answer))
-	if q.SimpleAnswer != "" {
-		return strings.EqualFold(q.SimpleAnswer, answer)
-	}
-	if len(q.SubAnswers) > 0 {
-		// Simple exams only submit a single letter; for multi-part questions,
-		// treat the submission as matching the first sub-answer's expected letter.
-		return strings.EqualFold(q.SubAnswers[0].Answer, answer)
-	}
-	return false
+	// Simple exams only submit a single letter; for multi-part questions,
+	// treat the submission as matching the first sub-answer's expected letter
+	// (see correctAnswerLabel).
+	want := correctAnswerLabel(q)
+	return want != "" && strings.EqualFold(want, strings.TrimSpace(answer))
 }
 
 // StartSession creates a new sessions row and returns its ID.

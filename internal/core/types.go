@@ -90,8 +90,9 @@ const (
 
 // AnswerResult is returned by SubmitAnswer.
 type AnswerResult struct {
-	Correct     bool         `json:"correct"`
-	Explanation *Explanation `json:"explanation,omitempty"`
+	Correct       bool         `json:"correct"`
+	CorrectAnswer string       `json:"correctAnswer,omitempty"`
+	Explanation   *Explanation `json:"explanation,omitempty"`
 }
 
 // TopicStat is one row of per-topic aggregate stats.

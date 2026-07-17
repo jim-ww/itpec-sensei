@@ -263,9 +263,9 @@ questionLoop:
 			correct++
 			color.New(color.FgGreen, color.Bold).Println("✓ Correct!")
 		case dontKnow:
-			color.New(color.FgYellow, color.Bold).Println("○ Marked as unknown")
+			color.New(color.FgYellow, color.Bold).Printf("○ Marked as unknown. Correct answer: %s\n", result.CorrectAnswer)
 		default:
-			color.New(color.FgRed, color.Bold).Println("✗ Incorrect.")
+			color.New(color.FgRed, color.Bold).Printf("✗ Incorrect. Correct answer: %s\n", result.CorrectAnswer)
 		}
 		if lateFired {
 			timedOut++
