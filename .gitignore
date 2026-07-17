@@ -3,4 +3,6 @@ output
 /.gocache/
 /.gomodcache/
 /spec.md
+/data/
+/.data-archive/
 dist/

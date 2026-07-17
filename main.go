@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/jim-ww/itpec-sensei/internal/cli"
 	"github.com/jim-ww/itpec-sensei/internal/core"
@@ -16,7 +17,38 @@ import (
 func main() {
 	ctx := context.Background()
 
-	bank, err := core.LoadBank()
+	dataDir, err := core.DefaultDataDir()
+	if err != nil {
+		log.Fatalf("resolve data dir: %v", err)
+	}
+
+	args := os.Args[1:]
+	sub, rest := "", args
+	if len(args) > 0 {
+		sub, rest = args[0], args[1:]
+	}
+
+	if sub == "-h" || sub == "--help" || sub == "help" {
+		printUsage()
+		return
+	}
+
+	// "data" manages dataDir itself, so it must work even before data is
+	// installed — everything else needs the bank, which needs data present.
+	if sub == "data" {
+		if err := cli.RunData(ctx, dataDir, rest); err != nil {
+			fmt.Fprintln(os.Stderr, "error:", err)
+			os.Exit(1)
+		}
+		return
+	}
+
+	if err := cli.EnsureData(ctx, dataDir); err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
+
+	bank, err := core.LoadBank(filepath.Join(dataDir, "questions"))
 	if err != nil {
 		log.Fatalf("load question bank: %v", err)
 	}
@@ -33,7 +65,6 @@ func main() {
 
 	c := core.New(bank, store)
 
-	args := os.Args[1:]
 	if len(args) == 0 {
 		if err := cli.RunSummary(ctx, c, nil); err != nil {
 			fmt.Fprintln(os.Stderr, "error:", err)
@@ -42,7 +73,6 @@ func main() {
 		return
 	}
 
-	sub, rest := args[0], args[1:]
 	switch sub {
 	case "practice":
 		err = cli.RunPractice(ctx, c, rest)
@@ -60,9 +90,6 @@ func main() {
 		err = cli.RunTopics(ctx, c, rest)
 	case "serve":
 		err = mcpserver.Run(ctx, c, rest)
-	case "-h", "--help", "help":
-		printUsage()
-		return
 	default:
 		// Unknown first arg: treat as flags for the summary command.
 		err = cli.RunSummary(ctx, c, args)
@@ -89,6 +116,7 @@ Commands:
   exam       Show readable metadata + your progress for one exam
   topics     List known topics
   reset      Clear progress for a scope
+  data       Check/install question data (auto-prompted on first run)
   serve      Run the MCP server (stdio or --remote)
 
 Flags for summary (default command):
@@ -129,6 +157,9 @@ Flags for reset:
   <all|topic:NAME|exam:ID|part:am|part:pm>   positional scope arg
   --yes                                       skip the confirmation prompt
 
+Flags for data:
+  --yes   skip the confirmation prompt before downloading
+
 Flags for serve:
   --remote         expose over Streamable HTTP instead of stdio
   --addr           listen address for --remote      default "127.0.0.1:8790"
@@ -152,5 +183,6 @@ Examples:
   itpec-sensei topics
   itpec-sensei history --undo
   itpec-sensei reset exam:2025A_FE-A --yes
+  itpec-sensei data
   itpec-sensei serve --remote --ngrok`)
 }

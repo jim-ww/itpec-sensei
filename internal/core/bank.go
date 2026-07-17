@@ -1,23 +1,20 @@
 package core
 
 import (
-	"embed"
 	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
 	_ "image/png"
 	"io/fs"
+	"os"
 	"path"
 	"sort"
 	"strconv"
 	"strings"
 )
 
-//go:embed all:data/questions
-var embeddedData embed.FS
-
-// Bank is the in-memory, read-only index over the embedded question set.
+// Bank is the in-memory, read-only index over the downloaded question set.
 type Bank struct {
 	fsys     fs.FS
 	byID     map[string]*Question // keyed by Question.GlobalID()
@@ -28,12 +25,11 @@ type Bank struct {
 	topics   []string
 }
 
-// LoadBank parses every embedded exam JSON file into memory and builds lookup indexes.
-func LoadBank() (*Bank, error) {
-	sub, err := fs.Sub(embeddedData, "data/questions")
-	if err != nil {
-		return nil, fmt.Errorf("bank: sub fs: %w", err)
-	}
+// LoadBank parses every exam JSON file under dataDir (the "questions" directory
+// produced by extracting the downloaded data archive, see DefaultDataDir) into
+// memory and builds lookup indexes.
+func LoadBank(dataDir string) (*Bank, error) {
+	sub := os.DirFS(dataDir)
 
 	b := &Bank{
 		fsys:     sub,

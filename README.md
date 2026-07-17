@@ -32,6 +32,10 @@ or add it to your profile / flake inputs and run `itpec-sensei` directly:
 
     go install github.com/jim-ww/itpec-sensei@latest
 
+On first run, itpec-sensei asks for consent to download the question bank
+(~350MB) from this repo's GitHub releases into your local data directory. Run
+`itpec-sensei data` any time to check for and pull updates.
+
 ## CLI Usage
 
     itpec-sensei
