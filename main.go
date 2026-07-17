@@ -137,6 +137,8 @@ Flags for practice:
   --image-viewer <sixel|xdg-open>                                  default "sixel"
   --answer                                                        reveal each answer/explanation immediately, no grading, no DB writes
   --dark                                                          invert question image colors, on by default (--dark=false for originals)
+  --continue[=<id>]                                               resume a not-completed session exactly where it left off; bare --continue resumes the most recent not-completed one, or pass --continue=<id> for a specific one (see "itpec-sensei sessions --incomplete"); can't be combined with the pool flags above
+  --repeat <id>                                                   start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh draw; can't be combined with the pool flags above
 
 Flags for history:
   --scope <all|topic:NAME|exam:ID|part:am|part:pm>   default "all"
@@ -149,6 +151,9 @@ Flags for sessions:
   --scope <all|exam:ID|part:am|part:pm>   default "all" (topic scope not supported — a session isn't scoped to one topic)
   --order <newest|oldest>                 default "newest"
   --limit <n>                             default 20, 0 = all
+  --incomplete                            only show sessions that never finished cleanly; ignores --scope/--order
+  --delete <id>                           permanently delete this session and its attempts, instead of listing
+  --yes                                   with --delete, skip the confirmation prompt
 
 Flags for exam:
   itpec-sensei exam <examID>   positional exam id arg, e.g. 2025A_FE-A
@@ -181,6 +186,11 @@ Examples:
   itpec-sensei exams
   itpec-sensei exam 2025A_FE-A
   itpec-sensei topics
+  itpec-sensei sessions --incomplete
+  itpec-sensei practice --continue
+  itpec-sensei practice --continue=42
+  itpec-sensei sessions --delete=42
+  itpec-sensei practice --repeat=42
   itpec-sensei history --undo
   itpec-sensei reset exam:2025A_FE-A --yes
   itpec-sensei data

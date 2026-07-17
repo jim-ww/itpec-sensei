@@ -168,6 +168,24 @@ type SessionRecord struct {
 	Correct                  int        `json:"correct"`
 }
 
+// SessionParams is the full set of parameters a practice session was planned
+// with, plus the exact ordered question list drawn for it. Stored at session
+// start so a session can later be resumed exactly (--continue) or repeated
+// with a fresh draw of the same filters (--repeat).
+type SessionParams struct {
+	ExamType                 string
+	ExamID                   string
+	Topic                    string
+	Part                     string
+	Mode                     string
+	OrderStrategy            string
+	QuestionLimit            int // 0 = no limit
+	QuestionNumber           int // 0 = not a single-question session
+	TimeLimitSeconds         *int
+	QuestionTimeLimitSeconds *int
+	PlannedQuestions         []string // ordered Question.GlobalID()s
+}
+
 // ProgressSummary is the aggregate progress view. Per-part correctness and
 // timing live in PartStats (see PartStat) rather than as blended totals here,
 // since AM and PM sections test very different material.

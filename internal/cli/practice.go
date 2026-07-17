@@ -12,6 +12,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -24,6 +25,38 @@ import (
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
+
+// optionalSessionID backs --continue: usable bare as `--continue` (resume the
+// most recent not-completed session) or with an explicit id as
+// `--continue=42`. It implements the flag.Value + IsBoolFlag interfaces so
+// the flag package treats a bare `--continue` as "set with no value" rather
+// than demanding a following argument, the same trick bool flags use.
+type optionalSessionID struct {
+	set   bool
+	value int64
+}
+
+func (o *optionalSessionID) String() string {
+	if o == nil || !o.set {
+		return ""
+	}
+	return strconv.FormatInt(o.value, 10)
+}
+
+func (o *optionalSessionID) Set(s string) error {
+	if s == "" || s == "true" {
+		o.set, o.value = true, 0
+		return nil
+	}
+	v, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid session id %q", s)
+	}
+	o.set, o.value = true, v
+	return nil
+}
+
+func (o *optionalSessionID) IsBoolFlag() bool { return true }
 
 type practiceFlags struct {
 	examType          string
@@ -57,6 +90,9 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
 	showAnswer := fs.Bool("answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
 	dark := fs.Bool("dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
+	var continueFlag optionalSessionID
+	fs.Var(&continueFlag, "continue", "resume a not-completed session exactly where it left off: bare `--continue` resumes the most recent not-completed session, or pass `--continue=<id>` for a specific one (see \"itpec-sensei sessions --incomplete\")")
+	repeatID := fs.Int64("repeat", 0, "start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh question draw")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -65,6 +101,30 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	case "sixel", "xdg-open":
 	default:
 		return fmt.Errorf("invalid --image-viewer %q, expected sixel or xdg-open", *imageViewer)
+	}
+
+	if continueFlag.set && *repeatID > 0 {
+		return fmt.Errorf("--continue and --repeat are mutually exclusive")
+	}
+	if continueFlag.set || *repeatID > 0 {
+		var conflicting []string
+		fs.Visit(func(f *flag.Flag) {
+			switch f.Name {
+			case "exam-type", "exam", "part", "topic", "q", "limit", "mode", "order", "time-limit", "question-time-limit":
+				conflicting = append(conflicting, "--"+f.Name)
+			}
+		})
+		if len(conflicting) > 0 {
+			return fmt.Errorf("--continue/--repeat reuse the session's original params; don't combine with %s", strings.Join(conflicting, ", "))
+		}
+		if continueFlag.set {
+			id, err := resolveContinueSessionID(ctx, c, continueFlag.value)
+			if err != nil {
+				return err
+			}
+			return runContinueSession(ctx, c, id, *imageViewer, *showAnswer, *dark)
+		}
+		return runRepeatSession(ctx, c, *repeatID, *imageViewer, *showAnswer, *dark)
 	}
 
 	if *question > 0 && *examID == "" {
@@ -103,13 +163,126 @@ func RunPractice(ctx context.Context, c *core.Core, args []string) error {
 	return runPracticeSession(ctx, c, pf)
 }
 
+// resolveContinueSessionID returns explicitID if given (>0), otherwise looks
+// up the most recent not-completed session — this backs bare `--continue`
+// (no id) auto-resuming whatever was last left incomplete.
+func resolveContinueSessionID(ctx context.Context, c *core.Core, explicitID int64) (int64, error) {
+	if explicitID > 0 {
+		return explicitID, nil
+	}
+	incomplete, err := c.IncompleteSessions(ctx, 1)
+	if err != nil {
+		return 0, err
+	}
+	if len(incomplete) == 0 {
+		return 0, fmt.Errorf("no incomplete session to continue")
+	}
+	return incomplete[0].ID, nil
+}
+
+// runContinueSession resumes a not-completed session exactly where it left
+// off: the same session row (no new StartSession call), the same planned
+// question order, minus whatever was already answered in it.
+func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark bool) error {
+	incomplete, err := c.IncompleteSessions(ctx, 0)
+	if err != nil {
+		return err
+	}
+	found := false
+	for _, s := range incomplete {
+		if s.ID == sessionID {
+			found = true
+			break
+		}
+	}
+	if !found {
+		return fmt.Errorf("session %d is not resumable (already completed, or doesn't exist) — see \"itpec-sensei sessions --incomplete\"", sessionID)
+	}
+
+	params, err := c.GetSessionParams(ctx, sessionID)
+	if err != nil {
+		return err
+	}
+	answered, err := c.AnsweredQuestionIDs(ctx, sessionID)
+	if err != nil {
+		return err
+	}
+
+	var remaining []*core.Question
+	for _, gid := range params.PlannedQuestions {
+		if answered[gid] {
+			continue
+		}
+		if q := c.Bank.Question(gid); q != nil {
+			remaining = append(remaining, q)
+		}
+	}
+	if len(remaining) == 0 {
+		fmt.Println("No remaining questions in this session — marking it completed.")
+		return c.EndSession(ctx, sessionID, "completed")
+	}
+
+	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
+	fmt.Printf("Continuing session %d — %d question(s) remaining.\n", sessionID, len(remaining))
+	return executeSession(ctx, c, pf, remaining, sessionID)
+}
+
+// runRepeatSession starts a brand-new session reusing another session's
+// filter params (exam/topic/part/mode/order/limits), with a fresh draw —
+// unlike --continue, the source session need not be incomplete.
+func runRepeatSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark bool) error {
+	params, err := c.GetSessionParams(ctx, sessionID)
+	if err != nil {
+		return err
+	}
+	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
+	return runPracticeSession(ctx, c, pf)
+}
+
+func practiceFlagsFromParams(p core.SessionParams, imageViewer string, showAnswer, dark bool) practiceFlags {
+	pf := practiceFlags{
+		examType:    p.ExamType,
+		examID:      p.ExamID,
+		part:        p.Part,
+		topic:       p.Topic,
+		question:    p.QuestionNumber,
+		limit:       p.QuestionLimit,
+		mode:        p.Mode,
+		order:       p.OrderStrategy,
+		imageViewer: imageViewer,
+		showAnswer:  showAnswer,
+		dark:        dark,
+	}
+	if p.TimeLimitSeconds != nil {
+		pf.timeLimit = time.Duration(*p.TimeLimitSeconds) * time.Second
+	}
+	if p.QuestionTimeLimitSeconds != nil {
+		pf.questionTimeLimit = time.Duration(*p.QuestionTimeLimitSeconds) * time.Second
+	}
+	return pf
+}
+
 func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) error {
+	ordered, err := planQuestions(ctx, c, pf)
+	if err != nil {
+		return err
+	}
+	if len(ordered) == 0 {
+		fmt.Println("No questions match this filter.")
+		return nil
+	}
+	return executeSession(ctx, c, pf, ordered, 0)
+}
+
+// planQuestions builds the ordered, limit-applied question pool for a fresh
+// session, per pf's filters.
+func planQuestions(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Question, error) {
 	var planned []*core.Question
 	switch {
 	case pf.question > 0:
 		q := c.Bank.QuestionByExamAndNumber(pf.examID, pf.question)
 		if q == nil {
-			return fmt.Errorf("question %s#%d not found", pf.examID, pf.question)
+			return nil, fmt.Errorf("question %s#%d not found", pf.examID, pf.question)
 		}
 		planned = []*core.Question{q}
 	case pf.examID != "":
@@ -124,23 +297,30 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 		var err error
 		planned, err = reviewFiltered(ctx, c, planned)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 	if len(planned) == 0 {
-		fmt.Println("No questions match this filter.")
-		return nil
+		return nil, nil
 	}
 
 	ordered, err := orderQuestions(ctx, c, planned, pf.order)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if pf.limit > 0 && pf.limit < len(ordered) {
 		ordered = ordered[:pf.limit]
 	}
+	return ordered, nil
+}
 
+// executeSession runs the answer loop over ordered. If existingSessionID is 0,
+// a new sessions row (with ordered's global IDs as planned_questions) is
+// created lazily on the first submitted answer, as before; otherwise the
+// caller is resuming an already-started session (--continue), so that id is
+// used directly and no new row is created.
+func executeSession(ctx context.Context, c *core.Core, pf practiceFlags, ordered []*core.Question, existingSessionID int64) error {
 	if pf.showAnswer {
 		return runAnswerReveal(c, pf, ordered)
 	}
@@ -155,8 +335,8 @@ func runPracticeSession(ctx context.Context, c *core.Core, pf practiceFlags) err
 		qTimeLimitSec = &v
 	}
 
-	var sessionID int64
-	var sessionStarted bool
+	sessionID := existingSessionID
+	sessionStarted := existingSessionID > 0
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt)
@@ -251,7 +431,19 @@ questionLoop:
 		}
 
 		if !sessionStarted {
-			id, err := c.StartSession(ctx, pf.examType, pf.examID, pf.mode, pf.order, timeLimitSec, qTimeLimitSec)
+			id, err := c.StartSession(ctx, core.SessionParams{
+				ExamType:                 pf.examType,
+				ExamID:                   pf.examID,
+				Topic:                    pf.topic,
+				Part:                     pf.part,
+				Mode:                     pf.mode,
+				OrderStrategy:            pf.order,
+				QuestionLimit:            pf.limit,
+				QuestionNumber:           pf.question,
+				TimeLimitSeconds:         timeLimitSec,
+				QuestionTimeLimitSeconds: qTimeLimitSec,
+				PlannedQuestions:         globalIDs(ordered),
+			})
 			if err != nil {
 				fmt.Printf("error starting session: %v\n", err)
 				continue
@@ -394,6 +586,14 @@ func filterByTopic(pool []*core.Question, topic string) []*core.Question {
 		}
 	}
 	return filtered
+}
+
+func globalIDs(qs []*core.Question) []string {
+	ids := make([]string, len(qs))
+	for i, q := range qs {
+		ids[i] = q.GlobalID()
+	}
+	return ids
 }
 
 func contains(list []string, s string) bool {

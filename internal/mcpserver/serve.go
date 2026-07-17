@@ -201,10 +201,12 @@ type listTopicsOut struct {
 }
 
 type getNextQuestionIn struct {
-	Topic     string `json:"topic,omitempty" jsonschema:"filter by topic"`
-	ExamID    string `json:"examId,omitempty" jsonschema:"filter by exam id"`
-	Mode      string `json:"mode,omitempty" jsonschema:"random | review (only questions you most recently got wrong) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet), default random"`
-	LightMode bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
+	Topic             string `json:"topic,omitempty" jsonschema:"filter by topic"`
+	ExamID            string `json:"examId,omitempty" jsonschema:"filter by exam id"`
+	Mode              string `json:"mode,omitempty" jsonschema:"random | review (only questions you most recently got wrong) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet), default random"`
+	LightMode         bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
+	ContinueSessionID int64  `json:"continueSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation (once a session is active, further calls just keep using it): attach to this not-completed session id instead of starting a new one, so answers keep accumulating in it — get its id from get_sessions with incompleteOnly=true. Its stored topic/examId become the defaults for this and later calls unless overridden."`
+	RepeatSessionID   int64  `json:"repeatSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation: start a brand-new session reusing another session's topic/examId/mode (get its id from get_sessions) — that session need not be incomplete. Mutually exclusive with continueSessionId."`
 }
 
 type getNextQuestionOut struct {
@@ -351,9 +353,10 @@ type getExamOut struct {
 }
 
 type getSessionsIn struct {
-	Scope string `json:"scope,omitempty" jsonschema:"all | exam:<id> | part:am | part:pm, default all (topic scope not supported)"`
-	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
-	Limit int    `json:"limit,omitempty" jsonschema:"max sessions to return, default 20"`
+	Scope          string `json:"scope,omitempty" jsonschema:"all | exam:<id> | part:am | part:pm, default all (topic scope not supported); ignored when incompleteOnly is true"`
+	Order          string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
+	Limit          int    `json:"limit,omitempty" jsonschema:"max sessions to return, default 20"`
+	IncompleteOnly bool   `json:"incompleteOnly,omitempty" jsonschema:"only return sessions that never finished cleanly (interrupted, or the process was killed before it could mark completion) — use to find a session id to pass as continueSessionId to get_next_question"`
 }
 
 type sessionSummary struct {
@@ -434,15 +437,72 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		Name:        "get_next_question",
 		Description: "Return the next practice question, filtered by topic/exam/mode. The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself. You must fetch/view that image yourself to know what's actually being asked before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Never includes the answer. The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
-		if !sess.started {
-			id, err := c.StartSession(ctx, "fe", in.ExamID, orDefault(in.Mode, "normal"), "random", nil, nil)
-			if err != nil {
-				return nil, getNextQuestionOut{}, err
-			}
-			sess.id = id
-			sess.started = true
+		if in.ContinueSessionID != 0 && in.RepeatSessionID != 0 {
+			return nil, getNextQuestionOut{}, fmt.Errorf("continueSessionId and repeatSessionId are mutually exclusive")
 		}
-		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: in.Topic, ExamID: in.ExamID, Mode: orDefault(in.Mode, "random")})
+		topic, examID := in.Topic, in.ExamID
+		if !sess.started {
+			switch {
+			case in.ContinueSessionID != 0:
+				incomplete, err := c.IncompleteSessions(ctx, 0)
+				if err != nil {
+					return nil, getNextQuestionOut{}, err
+				}
+				found := false
+				for _, s := range incomplete {
+					if s.ID == in.ContinueSessionID {
+						found = true
+						break
+					}
+				}
+				if !found {
+					return nil, getNextQuestionOut{}, fmt.Errorf("session %d is not resumable (already completed, or doesn't exist)", in.ContinueSessionID)
+				}
+				params, err := c.GetSessionParams(ctx, in.ContinueSessionID)
+				if err != nil {
+					return nil, getNextQuestionOut{}, err
+				}
+				if topic == "" {
+					topic = params.Topic
+				}
+				if examID == "" {
+					examID = params.ExamID
+				}
+				sess.id = in.ContinueSessionID
+				sess.started = true
+			case in.RepeatSessionID != 0:
+				params, err := c.GetSessionParams(ctx, in.RepeatSessionID)
+				if err != nil {
+					return nil, getNextQuestionOut{}, err
+				}
+				if topic == "" {
+					topic = params.Topic
+				}
+				if examID == "" {
+					examID = params.ExamID
+				}
+				id, err := c.StartSession(ctx, core.SessionParams{
+					ExamType: "fe", ExamID: examID, Topic: topic,
+					Mode: orDefault(in.Mode, params.Mode), OrderStrategy: "random",
+				})
+				if err != nil {
+					return nil, getNextQuestionOut{}, err
+				}
+				sess.id = id
+				sess.started = true
+			default:
+				id, err := c.StartSession(ctx, core.SessionParams{
+					ExamType: "fe", ExamID: examID, Topic: topic,
+					Mode: orDefault(in.Mode, "normal"), OrderStrategy: "random",
+				})
+				if err != nil {
+					return nil, getNextQuestionOut{}, err
+				}
+				sess.id = id
+				sess.started = true
+			}
+		}
+		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Mode: orDefault(in.Mode, "random")})
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
@@ -477,7 +537,7 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		}
 		if !in.RevealAnswer {
 			if !sess.started {
-				id, err := c.StartSession(ctx, "fe", in.ExamID, "lookup", "direct", nil, nil)
+				id, err := c.StartSession(ctx, core.SessionParams{ExamType: "fe", ExamID: in.ExamID, Mode: "lookup", OrderStrategy: "direct"})
 				if err != nil {
 					return nil, getQuestionOut{}, err
 				}
@@ -651,13 +711,19 @@ func registerTools(server *mcp.Server, c *core.Core, sess *sessionState, baseURL
 		Name:        "get_sessions",
 		Description: "List past practice sessions (newest first) with their score and completion status, so the AI can reference how a study run went (e.g. a timed mock exam that was completed vs interrupted), not just individual answers.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getSessionsIn) (*mcp.CallToolResult, getSessionsOut, error) {
-		scope := core.Scope(orDefault(in.Scope, "all"))
-		order := core.HistoryOrder(orDefault(in.Order, "newest"))
 		limit := in.Limit
 		if limit <= 0 {
 			limit = 20
 		}
-		records, err := c.GetSessions(ctx, scope, order, limit)
+		var records []core.SessionRecord
+		var err error
+		if in.IncompleteOnly {
+			records, err = c.IncompleteSessions(ctx, limit)
+		} else {
+			scope := core.Scope(orDefault(in.Scope, "all"))
+			order := core.HistoryOrder(orDefault(in.Order, "newest"))
+			records, err = c.GetSessions(ctx, scope, order, limit)
+		}
 		if err != nil {
 			return nil, getSessionsOut{}, err
 		}

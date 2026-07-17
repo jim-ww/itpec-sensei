@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -245,12 +246,22 @@ func gradeAnswer(q *Question, answer string) bool {
 	return want != "" && strings.EqualFold(want, strings.TrimSpace(answer))
 }
 
-// StartSession creates a new sessions row and returns its ID.
-func (c *Core) StartSession(ctx context.Context, examType, examID, mode, orderStrategy string, timeLimitSec, questionTimeLimitSec *int) (int64, error) {
+// StartSession creates a new sessions row — storing the full param set and
+// exact ordered question draw (p.PlannedQuestions) so the session can later
+// be resumed exactly (see GetSessionParams, AnsweredQuestionIDs) or repeated
+// with a fresh draw of the same filters — and returns its ID.
+func (c *Core) StartSession(ctx context.Context, p SessionParams) (int64, error) {
+	plannedJSON, err := json.Marshal(p.PlannedQuestions)
+	if err != nil {
+		return 0, fmt.Errorf("encode planned questions: %w", err)
+	}
 	res, err := c.Store.ExecContext(ctx,
-		`INSERT INTO sessions (started_at, exam_type, exam_id, mode, order_strategy, time_limit_seconds, question_time_limit_seconds)
-		 VALUES (?, ?, ?, ?, ?, ?, ?)`,
-		time.Now().UTC(), examType, nullableString(examID), mode, orderStrategy, timeLimitSec, questionTimeLimitSec,
+		`INSERT INTO sessions (started_at, exam_type, exam_id, topic, part, mode, order_strategy,
+		                        time_limit_seconds, question_time_limit_seconds, question_limit, question_number, planned_questions)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		time.Now().UTC(), p.ExamType, nullableString(p.ExamID), nullableString(p.Topic), nullableString(p.Part),
+		p.Mode, p.OrderStrategy, p.TimeLimitSeconds, p.QuestionTimeLimitSeconds,
+		nullableInt(p.QuestionLimit), nullableInt(p.QuestionNumber), string(plannedJSON),
 	)
 	if err != nil {
 		return 0, fmt.Errorf("start session: %w", err)
@@ -270,11 +281,129 @@ func (c *Core) EndSession(ctx context.Context, sessionID int64, exitReason strin
 	return nil
 }
 
+// DeleteSession permanently deletes one session and all of its attempts.
+// Returns an error if the session doesn't exist.
+func (c *Core) DeleteSession(ctx context.Context, sessionID int64) error {
+	tx, err := c.Store.BeginTx(ctx, nil)
+	if err != nil {
+		return fmt.Errorf("delete session: %w", err)
+	}
+	defer tx.Rollback()
+
+	if _, err := tx.ExecContext(ctx, `DELETE FROM attempts WHERE session_id = ?`, sessionID); err != nil {
+		return fmt.Errorf("delete session attempts: %w", err)
+	}
+	res, err := tx.ExecContext(ctx, `DELETE FROM sessions WHERE id = ?`, sessionID)
+	if err != nil {
+		return fmt.Errorf("delete session: %w", err)
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("delete session: %w", err)
+	}
+	if n == 0 {
+		return fmt.Errorf("session %d not found", sessionID)
+	}
+	return tx.Commit()
+}
+
+// IncompleteSessions returns sessions that never finished cleanly — either
+// explicitly interrupted (user quit) or abandoned (process killed before
+// EndSession ran, leaving exit_reason unset) — newest first, so the CLI can
+// offer to resume them via --continue. Sessions that ran to completion have
+// exit_reason "completed" and are excluded.
+func (c *Core) IncompleteSessions(ctx context.Context, limit int) ([]SessionRecord, error) {
+	all, err := c.GetSessions(ctx, ScopeAll, HistoryNewestFirst, 0)
+	if err != nil {
+		return nil, err
+	}
+	var out []SessionRecord
+	for _, s := range all {
+		if s.ExitReason == "completed" {
+			continue
+		}
+		out = append(out, s)
+		if limit > 0 && len(out) >= limit {
+			break
+		}
+	}
+	return out, nil
+}
+
+// GetSessionParams loads one session's stored parameters and exact planned
+// question order, for --continue (resume) and --repeat (fresh draw, same
+// filters).
+func (c *Core) GetSessionParams(ctx context.Context, sessionID int64) (SessionParams, error) {
+	var p SessionParams
+	var examID, topic, part sql.NullString
+	var timeLimitSec, qTimeLimitSec, questionLimit, questionNumber sql.NullInt64
+	var plannedJSON sql.NullString
+
+	row := c.Store.QueryRowContext(ctx, `
+		SELECT exam_type, exam_id, topic, part, mode, order_strategy,
+		       time_limit_seconds, question_time_limit_seconds,
+		       question_limit, question_number, planned_questions
+		FROM sessions WHERE id = ?`, sessionID)
+	if err := row.Scan(&p.ExamType, &examID, &topic, &part, &p.Mode, &p.OrderStrategy,
+		&timeLimitSec, &qTimeLimitSec, &questionLimit, &questionNumber, &plannedJSON); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return SessionParams{}, fmt.Errorf("session %d not found", sessionID)
+		}
+		return SessionParams{}, fmt.Errorf("get session params: %w", err)
+	}
+	p.ExamID = examID.String
+	p.Topic = topic.String
+	p.Part = part.String
+	if timeLimitSec.Valid {
+		v := int(timeLimitSec.Int64)
+		p.TimeLimitSeconds = &v
+	}
+	if qTimeLimitSec.Valid {
+		v := int(qTimeLimitSec.Int64)
+		p.QuestionTimeLimitSeconds = &v
+	}
+	p.QuestionLimit = int(questionLimit.Int64)
+	p.QuestionNumber = int(questionNumber.Int64)
+	if plannedJSON.Valid && plannedJSON.String != "" {
+		if err := json.Unmarshal([]byte(plannedJSON.String), &p.PlannedQuestions); err != nil {
+			return SessionParams{}, fmt.Errorf("decode planned questions: %w", err)
+		}
+	}
+	return p, nil
+}
+
+// AnsweredQuestionIDs returns the set of question GlobalIDs already answered
+// within one session, so --continue can skip them when resuming.
+func (c *Core) AnsweredQuestionIDs(ctx context.Context, sessionID int64) (map[string]bool, error) {
+	rows, err := c.Store.QueryContext(ctx, `SELECT DISTINCT question_id FROM attempts WHERE session_id = ?`, sessionID)
+	if err != nil {
+		return nil, fmt.Errorf("query answered questions: %w", err)
+	}
+	defer rows.Close()
+
+	out := make(map[string]bool)
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err != nil {
+			return nil, fmt.Errorf("scan answered question: %w", err)
+		}
+		out[id] = true
+	}
+	return out, rows.Err()
+}
+
 func nullableString(s string) any {
 	if s == "" {
 		return nil
 	}
 	return s
+}
+
+func nullableInt(n int) any {
+	if n == 0 {
+		return nil
+	}
+	return n
 }
 
 // GetProgressSummary computes overall accuracy/streak/heatmap/review-queue for scope+period.

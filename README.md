@@ -49,6 +49,17 @@ Show progress summary: streaks, review-queue count, per-topic/per-exam accuracy.
 
 Start a practice session — default, a quick drill, or a full timed mock exam.
 
+    itpec-sensei sessions --incomplete
+    itpec-sensei practice --continue      # resume the most recent not-completed session, exactly where it left off
+    itpec-sensei practice --continue=42   # resume session 42 specifically
+    itpec-sensei practice --repeat 42     # start a new session with the same exam/topic/mode/limits as session 42
+
+List sessions that never finished cleanly, then resume or repeat one.
+
+    itpec-sensei sessions --delete 42
+
+Permanently delete a session and its attempts (prompts for confirmation; pass `--yes` to skip it).
+
     itpec-sensei topics
 
 List all known topics (valid values for `--topic`).

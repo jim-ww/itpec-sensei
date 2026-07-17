@@ -21,7 +21,12 @@ CREATE TABLE IF NOT EXISTS sessions (
   order_strategy                TEXT NOT NULL,
   time_limit_seconds            INTEGER,
   question_time_limit_seconds  INTEGER,
-  exit_reason                  TEXT
+  exit_reason                  TEXT,
+  planned_questions            TEXT,
+  topic                        TEXT,
+  part                         TEXT,
+  question_limit               INTEGER,
+  question_number              INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS attempts (
