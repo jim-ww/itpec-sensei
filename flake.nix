@@ -16,7 +16,7 @@
       perSystem = {pkgs, ...}: {
         packages.default = pkgs.buildGoModule {
           pname = "itpec-sensei";
-          version = "1.0";
+          version = "0.2.0";
           src = pkgs.lib.cleanSource ./.;
           vendorHash = "sha256-/j4b/XP0qz8qOoI7fWhEcdyqFVmGq0ffS7pQJONyT9Y=";
         };
