@@ -8,6 +8,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20
 	github.com/mattn/go-sixel v0.0.12
 	github.com/modelcontextprotocol/go-sdk v1.6.1
+	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	golang.ngrok.com/ngrok/v2 v2.1.4
 	golang.org/x/image v0.44.0
@@ -46,7 +47,6 @@ require (
 	github.com/segmentio/asm v1.1.3 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
 	github.com/soniakeys/quant v1.0.0 // indirect
-	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
