@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"strings"
+
 	"github.com/spf13/cobra"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
@@ -18,6 +20,12 @@ func NewRootCmd() *cobra.Command {
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			// cobra's auto-generated "completion" subcommand (used by
+			// installShellCompletion at build time) shouldn't require
+			// question data to be installed.
+			if strings.HasPrefix(cmd.CommandPath(), "itpec-sensei completion") {
+				return nil
+			}
 			return app.setup(cmd.Context())
 		},
 		PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
