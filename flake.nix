@@ -18,7 +18,7 @@
           pname = "itpec-sensei";
           version = "1.0";
           src = pkgs.lib.cleanSource ./.;
-          vendorHash = "sha256-jAALQ+quJ1huwbzMttF1RryBNiCBC411q6wYsZhMupM=";
+          vendorHash = "sha256-/j4b/XP0qz8qOoI7fWhEcdyqFVmGq0ffS7pQJONyT9Y=";
         };
       };
     };
