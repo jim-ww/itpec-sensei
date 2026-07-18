@@ -5,6 +5,8 @@
 // interface, translating between sqlc's generated types and package
 // repository's types, and orchestrating the one operation (DeleteSession)
 // that needs a transaction across two generated queries.
+//
+//go:generate sqlc generate
 package sqlite
 
 import (
