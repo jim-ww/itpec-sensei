@@ -2,46 +2,14 @@ package cli
 
 import (
 	"context"
-	"flag"
 	"fmt"
-	"strconv"
 	"strings"
 	"time"
 
+	"github.com/spf13/cobra"
+
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
-
-// optionalSessionID backs --continue: usable bare as `--continue` (resume the
-// most recent not-completed session) or with an explicit id as
-// `--continue=42`. It implements the flag.Value + IsBoolFlag interfaces so
-// the flag package treats a bare `--continue` as "set with no value" rather
-// than demanding a following argument, the same trick bool flags use.
-type optionalSessionID struct {
-	set   bool
-	value int64
-}
-
-func (o *optionalSessionID) String() string {
-	if o == nil || !o.set {
-		return ""
-	}
-	return strconv.FormatInt(o.value, 10)
-}
-
-func (o *optionalSessionID) Set(s string) error {
-	if s == "" || s == "true" {
-		o.set, o.value = true, 0
-		return nil
-	}
-	v, err := strconv.ParseInt(s, 10, 64)
-	if err != nil {
-		return fmt.Errorf("invalid session id %q", s)
-	}
-	o.set, o.value = true, v
-	return nil
-}
-
-func (o *optionalSessionID) IsBoolFlag() bool { return true }
 
 type practiceFlags struct {
 	examType          string
@@ -59,93 +27,122 @@ type practiceFlags struct {
 	dark              bool
 }
 
-// RunPractice implements `itpec-sensei practice ...`.
-func RunPractice(ctx context.Context, c *core.Core, args []string) error {
-	fs := flag.NewFlagSet("practice", flag.ExitOnError)
-	examType := fs.String("exam-type", "fe", "fe | itpassport")
-	examID := fs.String("exam", "", "scope to one exam id")
-	part := fs.String("part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
-	topic := fs.String("topic", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
-	question := fs.Int("q", 0, "practice only this specific question number within --exam")
-	limit := fs.Int("limit", 0, "max number of questions this session (0 = no limit)")
-	mode := fs.String("mode", "normal", "normal | review")
-	order := fs.String("order", "random", "sequential | random | fail-count | fail-rate | weak (weighted towards low-accuracy topics)")
-	timeLimit := fs.Duration("time-limit", 0, "whole-session time limit, e.g. 150m")
-	questionTimeLimit := fs.Duration("question-time-limit", 0, "per-question time limit, e.g. 90s")
-	imageViewer := fs.String("image-viewer", "sixel", "sixel | xdg-open — how to display question images")
-	showAnswer := fs.Bool("answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
-	dark := fs.Bool("dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
-	var continueFlag optionalSessionID
-	fs.Var(&continueFlag, "continue", "resume a not-completed session exactly where it left off: bare `--continue` resumes the most recent not-completed session, or pass `--continue=<id>` for a specific one (see \"itpec-sensei sessions --incomplete\")")
-	repeatID := fs.Int64("repeat", 0, "start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh question draw")
-	if err := fs.Parse(args); err != nil {
-		return err
-	}
+// poolFlagNames are the flags that plan a fresh question pool — they're
+// meaningless (and rejected) alongside --continue/--repeat, which instead
+// reuse an existing session's params.
+var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "q", "limit", "mode", "order", "time-limit", "question-time-limit"}
 
-	switch *imageViewer {
-	case "sixel", "xdg-open":
-	default:
-		return fmt.Errorf("invalid --image-viewer %q, expected sixel or xdg-open", *imageViewer)
-	}
+// newPracticeCmd implements `itpec-sensei practice ...`.
+func newPracticeCmd(app *App) *cobra.Command {
+	var examType, examID, part, topic, mode, order, imageViewer string
+	var question, limit int
+	var timeLimit, questionTimeLimit time.Duration
+	var showAnswer, dark bool
+	var continueID, repeatID int64
 
-	if continueFlag.set && *repeatID > 0 {
-		return fmt.Errorf("--continue and --repeat are mutually exclusive")
-	}
-	if continueFlag.set || *repeatID > 0 {
-		var conflicting []string
-		fs.Visit(func(f *flag.Flag) {
-			switch f.Name {
-			case "exam-type", "exam", "part", "topic", "q", "limit", "mode", "order", "time-limit", "question-time-limit":
-				conflicting = append(conflicting, "--"+f.Name)
+	cmd := &cobra.Command{
+		Use:   "practice",
+		Short: "Answer practice questions",
+		Args:  cobra.NoArgs,
+		Example: `  itpec-sensei practice --exam=2025A_FE-A
+  itpec-sensei practice --exam-type=fe --part=pm --mode=review
+  itpec-sensei practice --exam=2025A_FE-A --time-limit=150m --question-time-limit=90s
+  itpec-sensei practice --exam=2025A_FE-A --q=34
+  itpec-sensei practice --exam=2025A_FE-A --limit=5
+  itpec-sensei practice --exam=2025A_FE-A --q=34 --answer
+  itpec-sensei practice --topic="Networks" --part=am
+  itpec-sensei practice --continue
+  itpec-sensei practice --continue=42
+  itpec-sensei practice --repeat=42`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := cmd.Context()
+			c := app.Core
+
+			switch imageViewer {
+			case "sixel", "xdg-open":
+			default:
+				return fmt.Errorf("invalid --image-viewer %q, expected sixel or xdg-open", imageViewer)
 			}
-		})
-		if len(conflicting) > 0 {
-			return fmt.Errorf("--continue/--repeat reuse the session's original params; don't combine with %s", strings.Join(conflicting, ", "))
-		}
-		if continueFlag.set {
-			id, err := resolveContinueSessionID(ctx, c, continueFlag.value)
-			if err != nil {
-				return err
+
+			continueSet := cmd.Flags().Changed("continue")
+			repeatSet := cmd.Flags().Changed("repeat")
+			if continueSet || repeatSet {
+				var conflicting []string
+				for _, name := range poolFlagNames {
+					if cmd.Flags().Changed(name) {
+						conflicting = append(conflicting, "--"+name)
+					}
+				}
+				if len(conflicting) > 0 {
+					return fmt.Errorf("--continue/--repeat reuse the session's original params; don't combine with %s", strings.Join(conflicting, ", "))
+				}
+				if continueSet {
+					id, err := resolveContinueSessionID(ctx, c, continueID)
+					if err != nil {
+						return err
+					}
+					return runContinueSession(ctx, c, id, imageViewer, showAnswer, dark)
+				}
+				return runRepeatSession(ctx, c, repeatID, imageViewer, showAnswer, dark)
 			}
-			return runContinueSession(ctx, c, id, *imageViewer, *showAnswer, *dark)
-		}
-		return runRepeatSession(ctx, c, *repeatID, *imageViewer, *showAnswer, *dark)
+
+			if question > 0 && examID == "" {
+				return fmt.Errorf("-q requires --exam")
+			}
+
+			if topic != "" && !contains(c.Bank.Topics(), topic) {
+				return fmt.Errorf("invalid --topic %q; known topics are: %s", topic, strings.Join(c.Bank.Topics(), ", "))
+			}
+
+			partVal := strings.ToLower(part)
+			switch partVal {
+			case "am", "pm":
+				// valid
+			case "all", "":
+				partVal = ""
+			default:
+				return fmt.Errorf("invalid --part %q, expected am, pm, or all", part)
+			}
+
+			pf := practiceFlags{
+				examType:          examType,
+				examID:            examID,
+				part:              partVal,
+				topic:             topic,
+				question:          question,
+				limit:             limit,
+				mode:              mode,
+				order:             order,
+				timeLimit:         timeLimit,
+				questionTimeLimit: questionTimeLimit,
+				imageViewer:       imageViewer,
+				showAnswer:        showAnswer,
+				dark:              dark,
+			}
+			return runPracticeSession(ctx, c, pf)
+		},
 	}
 
-	if *question > 0 && *examID == "" {
-		return fmt.Errorf("-q requires --exam")
-	}
+	flags := cmd.Flags()
+	flags.StringVar(&examType, "exam-type", "fe", "fe | itpassport")
+	flags.StringVar(&examID, "exam", "", "scope to one exam id")
+	flags.StringVar(&part, "part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
+	flags.StringVar(&topic, "topic", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
+	flags.IntVar(&question, "q", 0, "practice only this specific question number within --exam")
+	flags.IntVar(&limit, "limit", 0, "max number of questions this session (0 = no limit)")
+	flags.StringVar(&mode, "mode", "normal", "normal | review")
+	flags.StringVar(&order, "order", "random", "sequential | random | fail-count | fail-rate | weak (weighted towards low-accuracy topics)")
+	flags.DurationVar(&timeLimit, "time-limit", 0, "whole-session time limit, e.g. 150m")
+	flags.DurationVar(&questionTimeLimit, "question-time-limit", 0, "per-question time limit, e.g. 90s")
+	flags.StringVar(&imageViewer, "image-viewer", "sixel", "sixel | xdg-open — how to display question images")
+	flags.BoolVar(&showAnswer, "answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
+	flags.BoolVar(&dark, "dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
+	flags.Int64Var(&continueID, "continue", 0, "resume a not-completed session exactly where it left off: bare --continue resumes the most recent not-completed session, or pass --continue=<id> for a specific one (see \"itpec-sensei sessions --incomplete\")")
+	flags.Lookup("continue").NoOptDefVal = "0" // makes a bare --continue (no =value) valid, same trick bool flags use
+	flags.Int64Var(&repeatID, "repeat", 0, "start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh question draw")
+	cmd.MarkFlagsMutuallyExclusive("continue", "repeat")
 
-	if *topic != "" && !contains(c.Bank.Topics(), *topic) {
-		return fmt.Errorf("invalid --topic %q; known topics are: %s", *topic, strings.Join(c.Bank.Topics(), ", "))
-	}
-
-	partVal := strings.ToLower(*part)
-	switch partVal {
-	case "am", "pm":
-		// valid
-	case "all", "":
-		partVal = ""
-	default:
-		return fmt.Errorf("invalid --part %q, expected am, pm, or all", *part)
-	}
-
-	pf := practiceFlags{
-		examType:          *examType,
-		examID:            *examID,
-		part:              partVal,
-		topic:             *topic,
-		question:          *question,
-		limit:             *limit,
-		mode:              *mode,
-		order:             *order,
-		timeLimit:         *timeLimit,
-		questionTimeLimit: *questionTimeLimit,
-		imageViewer:       *imageViewer,
-		showAnswer:        *showAnswer,
-		dark:              *dark,
-	}
-	return runPracticeSession(ctx, c, pf)
+	return cmd
 }
 
 // resolveContinueSessionID returns explicitID if given (>0), otherwise looks

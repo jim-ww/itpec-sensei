@@ -3,49 +3,64 @@ package cli
 import (
 	"bufio"
 	"context"
-	"flag"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/mattn/go-isatty"
+	"github.com/spf13/cobra"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
 
-// RunData implements `itpec-sensei data [--yes]`: reports the installed data
-// version, checks GitHub for a newer release, and offers to download it.
-func RunData(ctx context.Context, dataDir string, args []string) error {
-	fs := flag.NewFlagSet("data", flag.ExitOnError)
-	yes := fs.Bool("yes", false, "skip the confirmation prompt")
-	if err := fs.Parse(args); err != nil {
-		return err
+// newDataCmd implements `itpec-sensei data [--yes]`: reports the installed
+// data version, checks GitHub for a newer release, and offers to download
+// it. Unlike every other subcommand, it manages the data directory itself,
+// so its PersistentPreRunE only resolves the data dir — it must work even
+// before data is installed, and skips loading the (not-yet-existent) bank.
+func newDataCmd(app *App) *cobra.Command {
+	var yes bool
+
+	cmd := &cobra.Command{
+		Use:   "data",
+		Short: "Check/install question data (auto-prompted on first run)",
+		Args:  cobra.NoArgs,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return app.resolveDataDir()
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := cmd.Context()
+			dataDir := app.DataDir
+
+			current, installed := core.InstalledVersion(dataDir)
+			if installed {
+				fmt.Printf("Installed data version: %s\n", current)
+			} else {
+				fmt.Println("Question data is not installed.")
+			}
+
+			fmt.Println("Checking github.com/jim-ww/itpec-sensei for the latest release...")
+			_, latest, hasUpdate, err := core.CheckUpdate(ctx, dataDir)
+			if err != nil {
+				return fmt.Errorf("check for update: %w", err)
+			}
+
+			if installed && !hasUpdate {
+				fmt.Println("Already up to date.")
+				return nil
+			}
+
+			if installed {
+				fmt.Printf("Update available: %s -> %s\n", current, latest)
+			} else {
+				fmt.Printf("Latest available version: %s\n", latest)
+			}
+			return promptAndDownload(ctx, dataDir, latest, yes, false)
+		},
 	}
 
-	current, installed := core.InstalledVersion(dataDir)
-	if installed {
-		fmt.Printf("Installed data version: %s\n", current)
-	} else {
-		fmt.Println("Question data is not installed.")
-	}
-
-	fmt.Println("Checking github.com/jim-ww/itpec-sensei for the latest release...")
-	_, latest, hasUpdate, err := core.CheckUpdate(ctx, dataDir)
-	if err != nil {
-		return fmt.Errorf("check for update: %w", err)
-	}
-
-	if installed && !hasUpdate {
-		fmt.Println("Already up to date.")
-		return nil
-	}
-
-	if installed {
-		fmt.Printf("Update available: %s -> %s\n", current, latest)
-	} else {
-		fmt.Printf("Latest available version: %s\n", latest)
-	}
-	return promptAndDownload(ctx, dataDir, latest, *yes, false)
+	cmd.Flags().BoolVar(&yes, "yes", false, "skip the confirmation prompt before downloading")
+	return cmd
 }
 
 // confirm prints prompt and reports whether the user answered y/yes.

@@ -2,7 +2,6 @@ package mcpserver
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"image"
 	"image/png"
@@ -21,15 +20,24 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/core"
 )
 
+// Options configures Run. ImageViewer defaults to "xdg-open" and Addr to
+// "127.0.0.1:8790" if left zero-valued.
+type Options struct {
+	Remote      bool   // expose over Streamable HTTP instead of stdio
+	Addr        string // local listen address for Remote
+	UseNgrok    bool   // also forward a public ngrok tunnel to the Remote server
+	ImageViewer string // local command open_question_image uses to open images on the machine running this server
+}
+
 // Run implements `itpec-sensei serve [--remote]`.
-func Run(ctx context.Context, c *core.Core, args []string) error {
-	fs := flag.NewFlagSet("serve", flag.ExitOnError)
-	remote := fs.Bool("remote", false, "expose over Streamable HTTP instead of stdio")
-	addr := fs.String("addr", "127.0.0.1:8790", "local listen address for --remote")
-	useNgrok := fs.Bool("ngrok", false, "also forward a public ngrok tunnel to the --remote server")
-	imageViewer := fs.String("image-viewer", "xdg-open", "local command the open_question_image MCP tool uses to open images on the machine running this server")
-	if err := fs.Parse(args); err != nil {
-		return err
+func Run(ctx context.Context, c *core.Core, opts Options) error {
+	addr := opts.Addr
+	if addr == "" {
+		addr = "127.0.0.1:8790"
+	}
+	imageViewer := opts.ImageViewer
+	if imageViewer == "" {
+		imageViewer = "xdg-open"
 	}
 
 	sess := &sessionState{}
@@ -40,7 +48,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		return fmt.Errorf("images fs: %w", err)
 	}
 
-	if !*remote {
+	if !opts.Remote {
 		// Question images are always served as a URL too (get_next_question
 		// and get_question also embed them as base64 tool content, but some
 		// MCP clients, e.g. Claude web, don't render embedded image blocks to
@@ -64,7 +72,7 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 		var baseURL atomic.Pointer[string]
 		local := "http://" + ln.Addr().String()
 		baseURL.Store(&local)
-		registerTools(server, c, sess, &baseURL, *imageViewer)
+		registerTools(server, c, sess, &baseURL, imageViewer)
 
 		err = server.Run(ctx, &mcp.StdioTransport{})
 		endMCPSession(c, sess)
@@ -72,9 +80,9 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	}
 
 	var baseURL atomic.Pointer[string]
-	local := "http://" + *addr
+	local := "http://" + addr
 	baseURL.Store(&local)
-	registerTools(server, c, sess, &baseURL, *imageViewer)
+	registerTools(server, c, sess, &baseURL, imageViewer)
 
 	// The SDK's default DNS-rebinding protection rejects any request whose
 	// Host header isn't localhost, since the server binds to a loopback
@@ -83,18 +91,18 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	// disabled in that case — the tunnel itself is the intentional exposure.
 	mux := http.NewServeMux()
 	mux.Handle("/", mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server },
-		&mcp.StreamableHTTPOptions{DisableLocalhostProtection: *useNgrok}))
+		&mcp.StreamableHTTPOptions{DisableLocalhostProtection: opts.UseNgrok}))
 	mux.Handle("/images/", http.StripPrefix("/images/", imageHandler(imgFS)))
 
-	httpServer := &http.Server{Addr: *addr, Handler: mux}
+	httpServer := &http.Server{Addr: addr, Handler: mux}
 	go func() {
-		log.Printf("MCP server listening on http://%s", *addr)
+		log.Printf("MCP server listening on http://%s", addr)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Printf("local HTTP server stopped: %v", err)
 		}
 	}()
 
-	if !*useNgrok {
+	if !opts.UseNgrok {
 		<-ctx.Done()
 		endMCPSession(c, sess)
 		return httpServer.Close()
@@ -107,9 +115,9 @@ func Run(ctx context.Context, c *core.Core, args []string) error {
 	if reservedURL := os.Getenv("NGROK_RESERVED_URL"); reservedURL != "" {
 		endpointOpts = append(endpointOpts, ngrok.WithURL(reservedURL))
 	}
-	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream("http://"+*addr), endpointOpts...)
+	fwd, err := ngrok.Forward(ctx, ngrok.WithUpstream("http://"+addr), endpointOpts...)
 	if err != nil {
-		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, *addr)
+		log.Printf("ngrok tunnel not started: %v (serving locally on %s only)", err, addr)
 		<-ctx.Done()
 		endMCPSession(c, sess)
 		return httpServer.Close()

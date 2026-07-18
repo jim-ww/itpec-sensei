@@ -2,36 +2,29 @@ package cli
 
 import (
 	"context"
-	"flag"
 	"fmt"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
 	"github.com/jim-ww/itpec-sensei/pkg/termui"
 )
 
-// RunSummary implements `itpec-sensei [--scope=...] [--period=...]`.
-func RunSummary(ctx context.Context, c *core.Core, args []string) error {
-	fs := flag.NewFlagSet("summary", flag.ExitOnError)
-	scope := fs.String("scope", "all", "all | topic:<name> | exam:<id> | part:am | part:pm")
-	period := fs.String("period", "all", "week | month | all")
-	if err := fs.Parse(args); err != nil {
-		return err
-	}
-
-	summary, err := c.GetProgressSummary(ctx, core.Scope(*scope), core.Period(*period))
+// runSummary implements the root command's default action:
+// `itpec-sensei [--scope=...] [--period=...]`.
+func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core.Period) error {
+	summary, err := c.GetProgressSummary(ctx, scope, period)
 	if err != nil {
 		return fmt.Errorf("get progress summary: %w", err)
 	}
-	topicStats, err := c.GetTopicStats(ctx, core.Scope(*scope))
+	topicStats, err := c.GetTopicStats(ctx, scope)
 	if err != nil {
 		return fmt.Errorf("get topic stats: %w", err)
 	}
-	examStats, err := c.GetExamStats(ctx, core.Scope(*scope))
+	examStats, err := c.GetExamStats(ctx, scope)
 	if err != nil {
 		return fmt.Errorf("get exam stats: %w", err)
 	}
 
-	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", *scope, *period)
+	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", scope, period)
 	fmt.Printf("Answered:      %d\n", summary.Answered)
 	fmt.Printf("Streak:        %d day(s) (best: %d)\n", summary.Streak, summary.MaxStreak)
 	fmt.Printf("Review queue:  %d question(s)\n", summary.ReviewQueue)
