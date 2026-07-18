@@ -1,6 +1,10 @@
 package cli
 
 import (
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/spf13/cobra"
 
 	"github.com/jim-ww/itpec-sensei/internal/mcpserver"
@@ -17,7 +21,12 @@ func newServeCmd(app *App) *cobra.Command {
 		Args:    cobra.NoArgs,
 		Example: "  itpec-sensei serve --remote --ngrok",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return mcpserver.Run(cmd.Context(), app.Core, mcpserver.Options{
+			// mcpserver.Run waits on ctx.Done() to tear down the ngrok tunnel
+			// and HTTP server cleanly (see Options.Remote/UseNgrok); without
+			// this, only an OS kill would stop it, skipping that cleanup.
+			ctx, stop := signal.NotifyContext(cmd.Context(), os.Interrupt, syscall.SIGTERM)
+			defer stop()
+			return mcpserver.Run(ctx, app.Core, mcpserver.Options{
 				Remote:      remote,
 				Addr:        addr,
 				UseNgrok:    useNgrok,
