@@ -58,9 +58,10 @@ type SessionRecord struct {
 }
 
 // SessionParams is the full set of parameters a practice session was planned
-// with, plus the exact ordered question list drawn for it. Stored at session
-// start so a session can later be resumed exactly (--continue) or repeated
-// with a fresh draw of the same filters (--repeat).
+// with. Stored at session start so its pool can later be recomputed
+// identically-scoped, either to resume exactly where it left off
+// (--continue, minus whatever's already answered) or to draw fresh
+// (--repeat). The pool itself is never stored — see cli.planPool.
 type SessionParams struct {
 	ExamType                 string
 	ExamID                   string
@@ -72,7 +73,6 @@ type SessionParams struct {
 	QuestionNumber           int // 0 = not a single-question session
 	TimeLimitSeconds         *int
 	QuestionTimeLimitSeconds *int
-	PlannedQuestions         []string // ordered Question.GlobalID()s
 }
 
 // Repository is the progress store's persistence boundary: every SQL

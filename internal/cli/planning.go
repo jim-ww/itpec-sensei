@@ -10,8 +10,26 @@ import (
 )
 
 // planQuestions builds the ordered, limit-applied question pool for a fresh
-// session, per pf's filters.
+// session, per pf's filters. Nothing here is persisted — it's recomputed
+// from pf (and current DB state, for review/weak/fail-count ordering) every
+// time a session needs its pool, whether starting fresh or resuming via
+// --continue (see planPool).
 func planQuestions(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Question, error) {
+	ordered, err := planPool(ctx, c, pf)
+	if err != nil {
+		return nil, err
+	}
+	if pf.limit > 0 && pf.limit < len(ordered) {
+		ordered = ordered[:pf.limit]
+	}
+	return ordered, nil
+}
+
+// planPool builds the ordered question pool per pf's filters, without
+// applying pf.limit — the caller decides how much of it to take (a fresh
+// session takes the first pf.limit; --continue takes enough more to reach
+// pf.limit given what's already been answered).
+func planPool(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Question, error) {
 	var planned []*core.Question
 	switch {
 	case pf.question > 0:
@@ -38,16 +56,7 @@ func planQuestions(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core
 	if len(planned) == 0 {
 		return nil, nil
 	}
-
-	ordered, err := orderQuestions(ctx, c, planned, pf.order)
-	if err != nil {
-		return nil, err
-	}
-
-	if pf.limit > 0 && pf.limit < len(ordered) {
-		ordered = ordered[:pf.limit]
-	}
-	return ordered, nil
+	return orderQuestions(ctx, c, planned, pf.order)
 }
 
 // reviewFiltered narrows pool to questions currently due under the
@@ -74,14 +83,6 @@ func filterByTopic(pool []*core.Question, topic string) []*core.Question {
 		}
 	}
 	return filtered
-}
-
-func globalIDs(qs []*core.Question) []string {
-	ids := make([]string, len(qs))
-	for i, q := range qs {
-		ids[i] = q.GlobalID()
-	}
-	return ids
 }
 
 func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, order string) ([]*core.Question, error) {

@@ -297,8 +297,8 @@ func (q *Queries) InsertAttempt(ctx context.Context, arg InsertAttemptParams) er
 const insertSession = `-- name: InsertSession :one
 
 INSERT INTO sessions (started_at, exam_type, exam_id, topic, part, mode, order_strategy,
-                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number, planned_questions)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 RETURNING id
 `
 
@@ -314,7 +314,6 @@ type InsertSessionParams struct {
 	QuestionTimeLimitSeconds sql.NullInt64
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
-	PlannedQuestions         sql.NullString
 }
 
 // Sessions --
@@ -331,7 +330,6 @@ func (q *Queries) InsertSession(ctx context.Context, arg InsertSessionParams) (i
 		arg.QuestionTimeLimitSeconds,
 		arg.QuestionLimit,
 		arg.QuestionNumber,
-		arg.PlannedQuestions,
 	)
 	var id int64
 	err := row.Scan(&id)
@@ -612,7 +610,7 @@ func (q *Queries) ListSessions(ctx context.Context) ([]ListSessionsRow, error) {
 const sessionParamsByID = `-- name: SessionParamsByID :one
 SELECT exam_type, exam_id, topic, part, mode, order_strategy,
        time_limit_seconds, question_time_limit_seconds,
-       question_limit, question_number, planned_questions
+       question_limit, question_number
 FROM sessions WHERE id = ?
 `
 
@@ -627,7 +625,6 @@ type SessionParamsByIDRow struct {
 	QuestionTimeLimitSeconds sql.NullInt64
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
-	PlannedQuestions         sql.NullString
 }
 
 func (q *Queries) SessionParamsByID(ctx context.Context, id int64) (SessionParamsByIDRow, error) {
@@ -644,7 +641,6 @@ func (q *Queries) SessionParamsByID(ctx context.Context, id int64) (SessionParam
 		&i.QuestionTimeLimitSeconds,
 		&i.QuestionLimit,
 		&i.QuestionNumber,
-		&i.PlannedQuestions,
 	)
 	return i, err
 }

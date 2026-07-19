@@ -140,10 +140,3 @@ func TestReviewFiltered(t *testing.T) {
 	require.Len(t, got, 1)
 	assert.Equal(t, q1.GlobalID(), got[0].GlobalID())
 }
-
-func TestGlobalIDs(t *testing.T) {
-	bank := newPlanningTestBank(t)
-	q1 := bank.QuestionByExamAndNumber("2020A_FE-A", 1)
-	q2 := bank.QuestionByExamAndNumber("2020A_FE-A", 2)
-	assert.Equal(t, []string{q1.GlobalID(), q2.GlobalID()}, globalIDs([]*core.Question{q1, q2}))
-}

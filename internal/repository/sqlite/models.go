@@ -38,7 +38,6 @@ type Session struct {
 	TimeLimitSeconds         sql.NullInt64
 	QuestionTimeLimitSeconds sql.NullInt64
 	ExitReason               sql.NullString
-	PlannedQuestions         sql.NullString
 	Topic                    sql.NullString
 	Part                     sql.NullString
 	QuestionLimit            sql.NullInt64

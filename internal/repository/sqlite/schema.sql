@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS sessions (
   time_limit_seconds           INTEGER,
   question_time_limit_seconds  INTEGER,
   exit_reason                  TEXT,
-  planned_questions            TEXT,
   topic                        TEXT,
   part                         TEXT,
   question_limit               INTEGER,

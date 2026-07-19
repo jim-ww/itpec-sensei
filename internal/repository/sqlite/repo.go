@@ -12,7 +12,6 @@ package sqlite
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"sort"
@@ -173,10 +172,6 @@ func (r *Repository) FailCounts(ctx context.Context, questionIDs []string) (map[
 }
 
 func (r *Repository) InsertSession(ctx context.Context, p repository.SessionParams) (int64, error) {
-	plannedJSON, err := json.Marshal(p.PlannedQuestions)
-	if err != nil {
-		return 0, fmt.Errorf("encode planned questions: %w", err)
-	}
 	id, err := r.q.InsertSession(ctx, InsertSessionParams{
 		StartedAt:                time.Now().UTC(),
 		ExamType:                 p.ExamType,
@@ -189,7 +184,6 @@ func (r *Repository) InsertSession(ctx context.Context, p repository.SessionPara
 		QuestionTimeLimitSeconds: nullableInt64Ptr(p.QuestionTimeLimitSeconds),
 		QuestionLimit:            nullableInt64(p.QuestionLimit),
 		QuestionNumber:           nullableInt64(p.QuestionNumber),
-		PlannedQuestions:         sql.NullString{String: string(plannedJSON), Valid: true},
 	})
 	if err != nil {
 		return 0, fmt.Errorf("start session: %w", err)
@@ -252,11 +246,6 @@ func (r *Repository) SessionParamsByID(ctx context.Context, sessionID int64) (re
 	if row.QuestionTimeLimitSeconds.Valid {
 		v := int(row.QuestionTimeLimitSeconds.Int64)
 		p.QuestionTimeLimitSeconds = &v
-	}
-	if row.PlannedQuestions.Valid && row.PlannedQuestions.String != "" {
-		if err := json.Unmarshal([]byte(row.PlannedQuestions.String), &p.PlannedQuestions); err != nil {
-			return repository.SessionParams{}, fmt.Errorf("decode planned questions: %w", err)
-		}
 	}
 	return p, nil
 }

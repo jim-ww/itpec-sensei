@@ -7,10 +7,10 @@ import (
 	"github.com/jim-ww/itpec-sensei/internal/repository"
 )
 
-// StartSession creates a new sessions row — storing the full param set and
-// exact ordered question draw (p.PlannedQuestions) so the session can later
-// be resumed exactly (see GetSessionParams, AnsweredQuestionIDs) or repeated
-// with a fresh draw of the same filters — and returns its ID.
+// StartSession creates a new sessions row — storing the full param set so
+// its pool can later be recomputed to resume where it left off (see
+// GetSessionParams, AnsweredQuestionIDs) or drawn fresh with the same
+// filters (--repeat) — and returns its ID.
 func (c *Core) StartSession(ctx context.Context, p SessionParams) (int64, error) {
 	return c.Repo.InsertSession(ctx, p)
 }

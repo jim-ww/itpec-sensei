@@ -163,8 +163,10 @@ func resolveContinueSessionID(ctx context.Context, c *core.Core, explicitID int6
 }
 
 // runContinueSession resumes a not-completed session exactly where it left
-// off: the same session row (no new StartSession call), the same planned
-// question order, minus whatever was already answered in it.
+// off: the same session row (no new StartSession call), same filters and
+// order strategy re-run against current data, minus whatever was already
+// answered in it. Nothing about the original pool is persisted — it's
+// recomputed here (see planPool) rather than read back from storage.
 func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark bool) error {
 	incomplete, err := c.IncompleteSessions(ctx, 0)
 	if err != nil {
@@ -190,13 +192,25 @@ func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imag
 		return err
 	}
 
+	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
+	pool, err := planPool(ctx, c, pf)
+	if err != nil {
+		return err
+	}
+
 	var remaining []*core.Question
-	for _, gid := range params.PlannedQuestions {
-		if answered[gid] {
-			continue
-		}
-		if q := c.Bank.Question(gid); q != nil {
+	for _, q := range pool {
+		if !answered[q.GlobalID()] {
 			remaining = append(remaining, q)
+		}
+	}
+	if pf.limit > 0 {
+		budget := pf.limit - len(answered)
+		if budget < 0 {
+			budget = 0
+		}
+		if budget < len(remaining) {
+			remaining = remaining[:budget]
 		}
 	}
 	if len(remaining) == 0 {
@@ -204,7 +218,6 @@ func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imag
 		return c.EndSession(ctx, sessionID, "completed")
 	}
 
-	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
 	fmt.Printf("Continuing session %d — %d question(s) remaining.\n", sessionID, len(remaining))
 	return executeSession(ctx, c, pf, remaining, sessionID)
 }

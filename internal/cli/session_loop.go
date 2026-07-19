@@ -16,10 +16,10 @@ import (
 )
 
 // executeSession runs the answer loop over ordered. If existingSessionID is 0,
-// a new sessions row (with ordered's global IDs as planned_questions) is
-// created lazily on the first submitted answer, as before; otherwise the
-// caller is resuming an already-started session (--continue), so that id is
-// used directly and no new row is created.
+// a new sessions row is created lazily on the first submitted answer, as
+// before; otherwise the caller is resuming an already-started session
+// (--continue), so that id is used directly and no new row is created.
+// ordered itself is never persisted — see planQuestions/planPool.
 func executeSession(ctx context.Context, c *core.Core, pf practiceFlags, ordered []*core.Question, existingSessionID int64) error {
 	if pf.showAnswer {
 		return runAnswerReveal(c, pf, ordered)
@@ -142,7 +142,6 @@ questionLoop:
 				QuestionNumber:           pf.question,
 				TimeLimitSeconds:         timeLimitSec,
 				QuestionTimeLimitSeconds: qTimeLimitSec,
-				PlannedQuestions:         globalIDs(ordered),
 			})
 			if err != nil {
 				fmt.Printf("error starting session: %v\n", err)

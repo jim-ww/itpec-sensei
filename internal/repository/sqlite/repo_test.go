@@ -195,7 +195,6 @@ func TestSessionLifecycle(t *testing.T) {
 		Mode: "normal", OrderStrategy: "random",
 		QuestionLimit: 5, QuestionNumber: 0,
 		TimeLimitSeconds: &tl, QuestionTimeLimitSeconds: &qtl,
-		PlannedQuestions: []string{"examA#1", "examA#2"},
 	}
 
 	id, err := repo.InsertSession(ctx, params)
