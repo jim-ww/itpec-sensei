@@ -56,8 +56,8 @@ func executeSession(ctx context.Context, c *core.Core, pf practiceFlags, ordered
 
 questionLoop:
 	for i, q := range ordered {
-		fmt.Printf("\nQuestion %d of %d  (%s, q%d)  [%s %s]\n",
-			i+1, len(ordered), q.ExamID, q.ID,
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s)  [%s %s]\n",
+			i+1, len(ordered), q.ExamID, q.ID, q.Topic(),
 			color.New(color.FgGreen, color.Bold).Sprintf("%d✓", correct),
 			color.New(color.FgRed, color.Bold).Sprintf("%d✗", answered-correct))
 		killExternalViewer(&lastExternalImage)
@@ -175,7 +175,7 @@ questionLoop:
 		}
 
 		if pf.explanations && result.Explanation != nil {
-			fmt.Printf("\nTopic: %s\n", result.Explanation.Topic)
+			fmt.Println()
 			rendered, err := glamour.Render(result.Explanation.Explanation, "dark")
 			if err != nil {
 				fmt.Println(result.Explanation.Explanation)
@@ -221,7 +221,7 @@ func runAnswerReveal(c *core.Core, pf practiceFlags, ordered []*core.Question) e
 	defer killExternalViewer(&lastExternalImage)
 
 	for i, q := range ordered {
-		fmt.Printf("\nQuestion %d of %d  (%s, q%d)\n", i+1, len(ordered), q.ExamID, q.ID)
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s)\n", i+1, len(ordered), q.ExamID, q.ID, q.Topic())
 		killExternalViewer(&lastExternalImage)
 		if err := renderImage(c, q, pf.imageViewer, pf.dark, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)
@@ -229,7 +229,7 @@ func runAnswerReveal(c *core.Core, pf practiceFlags, ordered []*core.Question) e
 
 		fmt.Printf("Correct answer: %s\n", answerLabel(q))
 		if q.Explanation != nil {
-			fmt.Printf("\nTopic: %s\n", q.Explanation.Topic)
+			fmt.Println()
 			rendered, err := glamour.Render(q.Explanation.Explanation, "dark")
 			if err != nil {
 				fmt.Println(q.Explanation.Explanation)
