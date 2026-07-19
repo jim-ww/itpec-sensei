@@ -18,7 +18,6 @@ type practiceFlags struct {
 	topic             string
 	question          int
 	limit             int
-	mode              string
 	order             string
 	timeLimit         time.Duration
 	questionTimeLimit time.Duration
@@ -31,11 +30,11 @@ type practiceFlags struct {
 // poolFlagNames are the flags that plan a fresh question pool — they're
 // meaningless (and rejected) alongside --continue/--repeat, which instead
 // reuse an existing session's params.
-var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "q", "limit", "mode", "order", "time-limit", "question-time-limit"}
+var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "q", "limit", "order", "time-limit", "question-time-limit"}
 
 // newPracticeCmd implements `itpec-sensei practice ...`.
 func newPracticeCmd(app *App) *cobra.Command {
-	var examType, examID, part, topic, mode, order, imageViewer string
+	var examType, examID, part, topic, order, imageViewer string
 	var question, limit int
 	var timeLimit, questionTimeLimit time.Duration
 	var showAnswer, dark, explanations bool
@@ -46,7 +45,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 		Short: "Answer practice questions",
 		Args:  cobra.NoArgs,
 		Example: `  itpec-sensei practice --exam=2025A_FE-A
-  itpec-sensei practice --exam-type=fe --part=pm --mode=review
+  itpec-sensei practice --exam-type=fe --part=pm --order=review
   itpec-sensei practice --exam=2025A_FE-A --time-limit=150m --question-time-limit=90s
   itpec-sensei practice --exam=2025A_FE-A --q=34
   itpec-sensei practice --exam=2025A_FE-A --limit=5
@@ -112,7 +111,6 @@ func newPracticeCmd(app *App) *cobra.Command {
 				topic:             topic,
 				question:          question,
 				limit:             limit,
-				mode:              mode,
 				order:             order,
 				timeLimit:         timeLimit,
 				questionTimeLimit: questionTimeLimit,
@@ -132,8 +130,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 	flags.StringVar(&topic, "topic", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
 	flags.IntVar(&question, "q", 0, "practice only this specific question number within --exam")
 	flags.IntVar(&limit, "limit", 0, "max number of questions this session (0 = no limit)")
-	flags.StringVar(&mode, "mode", "normal", "normal | review (spaced repetition: only questions due under the Leitner-box schedule)")
-	flags.StringVar(&order, "order", "random", "sequential | random | fail-count | weak (weighted towards low-accuracy topics)")
+	flags.StringVar(&order, "order", "random", "sequential | random | fail-count | weak (weighted towards low-accuracy topics) | review (spaced repetition: only questions due under the Leitner-box schedule)")
 	flags.DurationVar(&timeLimit, "time-limit", 0, "whole-session time limit, e.g. 150m")
 	flags.DurationVar(&questionTimeLimit, "question-time-limit", 0, "per-question time limit, e.g. 90s")
 	flags.StringVar(&imageViewer, "image-viewer", "sixel", "sixel | xdg-open — how to display question images")
@@ -245,7 +242,6 @@ func practiceFlagsFromParams(p core.SessionParams, imageViewer string, showAnswe
 		topic:        p.Topic,
 		question:     p.QuestionNumber,
 		limit:        p.QuestionLimit,
-		mode:         p.Mode,
 		order:        p.OrderStrategy,
 		imageViewer:  imageViewer,
 		showAnswer:   showAnswer,

@@ -25,6 +25,16 @@ func planQuestions(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core
 	return ordered, nil
 }
 
+// sessionMode reports the coarse "normal"/"review" label stored on a
+// session row for display/history purposes, derived from the single
+// --order flag ("review" is both the filter and the label).
+func sessionMode(pf practiceFlags) string {
+	if pf.order == "review" {
+		return "review"
+	}
+	return "normal"
+}
+
 // planPool builds the ordered question pool per pf's filters, without
 // applying pf.limit — the caller decides how much of it to take (a fresh
 // session takes the first pf.limit; --continue takes enough more to reach
@@ -46,17 +56,21 @@ func planPool(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Ques
 	if pf.topic != "" {
 		planned = filterByTopic(planned, pf.topic)
 	}
-	if pf.mode == "review" && pf.question == 0 {
+	// "review" is a filter (narrow to due questions), not a sort — once
+	// applied, order the resulting due-pool randomly like any other pool.
+	orderStrategy := pf.order
+	if pf.order == "review" && pf.question == 0 {
 		var err error
 		planned, err = reviewFiltered(ctx, c, planned)
 		if err != nil {
 			return nil, err
 		}
+		orderStrategy = "random"
 	}
 	if len(planned) == 0 {
 		return nil, nil
 	}
-	return orderQuestions(ctx, c, planned, pf.order)
+	return orderQuestions(ctx, c, planned, orderStrategy)
 }
 
 // reviewFiltered narrows pool to questions currently due under the

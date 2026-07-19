@@ -136,7 +136,7 @@ questionLoop:
 				ExamID:                   pf.examID,
 				Topic:                    pf.topic,
 				Part:                     pf.part,
-				Mode:                     pf.mode,
+				Mode:                     sessionMode(pf),
 				OrderStrategy:            pf.order,
 				QuestionLimit:            pf.limit,
 				QuestionNumber:           pf.question,
@@ -198,7 +198,7 @@ questionLoop:
 	if examLabel == "" {
 		examLabel = pf.examType
 	}
-	fmt.Printf("Session: %s · %s mode\n", examLabel, pf.mode)
+	fmt.Printf("Session: %s · %s mode\n", examLabel, sessionMode(pf))
 	fmt.Printf("Answered: %d / %d planned\n", answered, len(ordered))
 	if answered > 0 {
 		fmt.Printf("Correct:  %d (%.0f%%)\n", correct, float64(correct)/float64(answered)*100)
