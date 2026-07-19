@@ -174,7 +174,7 @@ questionLoop:
 			onTime++
 		}
 
-		if result.Explanation != nil {
+		if pf.explanations && result.Explanation != nil {
 			fmt.Printf("\nTopic: %s\n", result.Explanation.Topic)
 			rendered, err := glamour.Render(result.Explanation.Explanation, "dark")
 			if err != nil {

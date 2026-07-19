@@ -25,6 +25,7 @@ type practiceFlags struct {
 	imageViewer       string
 	showAnswer        bool
 	dark              bool
+	explanations      bool
 }
 
 // poolFlagNames are the flags that plan a fresh question pool — they're
@@ -37,7 +38,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 	var examType, examID, part, topic, mode, order, imageViewer string
 	var question, limit int
 	var timeLimit, questionTimeLimit time.Duration
-	var showAnswer, dark bool
+	var showAnswer, dark, explanations bool
 	var continueID, repeatID int64
 
 	cmd := &cobra.Command{
@@ -81,9 +82,9 @@ func newPracticeCmd(app *App) *cobra.Command {
 					if err != nil {
 						return err
 					}
-					return runContinueSession(ctx, c, id, imageViewer, showAnswer, dark)
+					return runContinueSession(ctx, c, id, imageViewer, showAnswer, dark, explanations)
 				}
-				return runRepeatSession(ctx, c, repeatID, imageViewer, showAnswer, dark)
+				return runRepeatSession(ctx, c, repeatID, imageViewer, showAnswer, dark, explanations)
 			}
 
 			if question > 0 && examID == "" {
@@ -118,6 +119,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 				imageViewer:       imageViewer,
 				showAnswer:        showAnswer,
 				dark:              dark,
+				explanations:      explanations,
 			}
 			return runPracticeSession(ctx, c, pf)
 		},
@@ -137,6 +139,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 	flags.StringVar(&imageViewer, "image-viewer", "sixel", "sixel | xdg-open — how to display question images")
 	flags.BoolVar(&showAnswer, "answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
 	flags.BoolVar(&dark, "dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
+	flags.BoolVar(&explanations, "explanations", true, "show topic + explanation after each graded answer (default on; pass --explanations=false to skip)")
 	flags.Int64Var(&continueID, "continue", 0, "resume a not-completed session exactly where it left off: bare --continue resumes the most recent not-completed session, or pass --continue=<id> for a specific one (see \"itpec-sensei sessions --incomplete\")")
 	flags.Lookup("continue").NoOptDefVal = "0" // makes a bare --continue (no =value) valid, same trick bool flags use
 	flags.Int64Var(&repeatID, "repeat", 0, "start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh question draw")
@@ -167,7 +170,7 @@ func resolveContinueSessionID(ctx context.Context, c *core.Core, explicitID int6
 // order strategy re-run against current data, minus whatever was already
 // answered in it. Nothing about the original pool is persisted — it's
 // recomputed here (see planPool) rather than read back from storage.
-func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark bool) error {
+func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark, explanations bool) error {
 	incomplete, err := c.IncompleteSessions(ctx, 0)
 	if err != nil {
 		return err
@@ -192,7 +195,7 @@ func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imag
 		return err
 	}
 
-	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
+	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark, explanations)
 	pool, err := planPool(ctx, c, pf)
 	if err != nil {
 		return err
@@ -225,28 +228,29 @@ func runContinueSession(ctx context.Context, c *core.Core, sessionID int64, imag
 // runRepeatSession starts a brand-new session reusing another session's
 // filter params (exam/topic/part/mode/order/limits), with a fresh draw —
 // unlike --continue, the source session need not be incomplete.
-func runRepeatSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark bool) error {
+func runRepeatSession(ctx context.Context, c *core.Core, sessionID int64, imageViewer string, showAnswer, dark, explanations bool) error {
 	params, err := c.GetSessionParams(ctx, sessionID)
 	if err != nil {
 		return err
 	}
-	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark)
+	pf := practiceFlagsFromParams(params, imageViewer, showAnswer, dark, explanations)
 	return runPracticeSession(ctx, c, pf)
 }
 
-func practiceFlagsFromParams(p core.SessionParams, imageViewer string, showAnswer, dark bool) practiceFlags {
+func practiceFlagsFromParams(p core.SessionParams, imageViewer string, showAnswer, dark, explanations bool) practiceFlags {
 	pf := practiceFlags{
-		examType:    p.ExamType,
-		examID:      p.ExamID,
-		part:        p.Part,
-		topic:       p.Topic,
-		question:    p.QuestionNumber,
-		limit:       p.QuestionLimit,
-		mode:        p.Mode,
-		order:       p.OrderStrategy,
-		imageViewer: imageViewer,
-		showAnswer:  showAnswer,
-		dark:        dark,
+		examType:     p.ExamType,
+		examID:       p.ExamID,
+		part:         p.Part,
+		topic:        p.Topic,
+		question:     p.QuestionNumber,
+		limit:        p.QuestionLimit,
+		mode:         p.Mode,
+		order:        p.OrderStrategy,
+		imageViewer:  imageViewer,
+		showAnswer:   showAnswer,
+		dark:         dark,
+		explanations: explanations,
 	}
 	if p.TimeLimitSeconds != nil {
 		pf.timeLimit = time.Duration(*p.TimeLimitSeconds) * time.Second
