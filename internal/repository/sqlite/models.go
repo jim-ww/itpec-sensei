@@ -20,6 +20,13 @@ type Attempt struct {
 	AnsweredAt  time.Time
 }
 
+type QuestionSr struct {
+	QuestionID     string
+	Box            int64
+	DueAt          time.Time
+	LastReviewedAt time.Time
+}
+
 type Session struct {
 	ID                       int64
 	StartedAt                time.Time

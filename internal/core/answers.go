@@ -21,8 +21,12 @@ func (c *Core) SubmitAnswer(ctx context.Context, sessionID int64, questionID str
 	answer = normalizeIdk(answer)
 	correct := gradeAnswer(q, answer)
 
-	if err := c.Repo.InsertAttempt(ctx, sessionID, questionID, answer, correct, timedOut, timeTakenMs, time.Now().UTC()); err != nil {
+	now := time.Now().UTC()
+	if err := c.Repo.InsertAttempt(ctx, sessionID, questionID, answer, correct, timedOut, timeTakenMs, now); err != nil {
 		return nil, fmt.Errorf("record attempt: %w", err)
+	}
+	if err := c.updateSRS(ctx, questionID, correct, now); err != nil {
+		return nil, fmt.Errorf("update srs: %w", err)
 	}
 
 	return &AnswerResult{Correct: correct, CorrectAnswer: correctAnswerLabel(q), Explanation: q.Explanation}, nil

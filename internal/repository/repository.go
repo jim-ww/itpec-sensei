@@ -85,9 +85,16 @@ type Repository interface {
 	ListAttempts(ctx context.Context, filter AttemptFilter, order HistoryOrder, limit int) ([]AttemptRow, error)
 	// DeleteAttempt deletes one attempt by its row id.
 	DeleteAttempt(ctx context.Context, id int64) error
-	// ReviewQueueQuestionIDs returns the set of question ids whose most recent
-	// attempt was incorrect.
-	ReviewQueueQuestionIDs(ctx context.Context) (map[string]bool, error)
+	// DueQuestionIDs returns the set of question ids whose SRS schedule
+	// (see QuestionSRS) has due_at <= asOf. Questions never answered have no
+	// SRS row and are never included, regardless of asOf.
+	DueQuestionIDs(ctx context.Context, asOf time.Time) (map[string]bool, error)
+	// GetQuestionSRS returns the SRS scheduling state for questionID, and
+	// found=false if it has never been answered (no state yet).
+	GetQuestionSRS(ctx context.Context, questionID string) (state QuestionSRS, found bool, err error)
+	// UpsertQuestionSRS creates or overwrites questionID's SRS scheduling
+	// state.
+	UpsertQuestionSRS(ctx context.Context, questionID string, state QuestionSRS) error
 	// FailCounts returns, for each of questionIDs, how many incorrect attempts
 	// it has.
 	FailCounts(ctx context.Context, questionIDs []string) (map[string]int, error)
@@ -108,9 +115,16 @@ type Repository interface {
 	// limiting are applied by the caller.
 	ListSessions(ctx context.Context, order HistoryOrder) ([]SessionRecord, error)
 
-	// ResetAllProgress deletes every attempt and session.
+	// ResetAllProgress deletes every attempt, session, and SRS state.
 	ResetAllProgress(ctx context.Context) error
-	// DeleteAttemptsForQuestions deletes every attempt against any of
-	// questionIDs.
+	// DeleteAttemptsForQuestions deletes every attempt, and any SRS state,
+	// against any of questionIDs.
 	DeleteAttemptsForQuestions(ctx context.Context, questionIDs []string) error
+}
+
+// QuestionSRS is one question's Leitner-box scheduling state.
+type QuestionSRS struct {
+	Box            int       // 1..maxBox (see core.srsMaxBox)
+	DueAt          time.Time // don't resurface before this time
+	LastReviewedAt time.Time
 }

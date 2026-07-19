@@ -16,7 +16,7 @@ type listTopicsOut struct {
 type getNextQuestionIn struct {
 	Topic             string `json:"topic,omitempty" jsonschema:"filter by topic"`
 	ExamID            string `json:"examId,omitempty" jsonschema:"filter by exam id"`
-	Mode              string `json:"mode,omitempty" jsonschema:"random | review (only questions you most recently got wrong) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet), default random"`
+	Mode              string `json:"mode,omitempty" jsonschema:"random | review (spaced repetition: questions due under a Leitner-box schedule based on your answer history) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet), default random"`
 	LightMode         bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
 	ContinueSessionID int64  `json:"continueSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation (once a session is active, further calls just keep using it): attach to this not-completed session id instead of starting a new one, so answers keep accumulating in it — get its id from get_sessions with incompleteOnly=true. Its stored topic/examId become the defaults for this and later calls unless overridden."`
 	RepeatSessionID   int64  `json:"repeatSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation: start a brand-new session reusing another session's topic/examId/mode (get its id from get_sessions) — that session need not be incomplete. Mutually exclusive with continueSessionId."`
@@ -90,7 +90,7 @@ type getProgressSummaryOut struct {
 	Answered    int            `json:"answered"`
 	Streak      int            `json:"streak"`
 	MaxStreak   int            `json:"maxStreak"`
-	ReviewQueue int            `json:"reviewQueue" jsonschema:"count of questions whose MOST RECENT attempt was wrong — a simple wrong-last-time list, not a spaced-repetition schedule; use mode=review on get_next_question to draw from it"`
+	ReviewQueue int            `json:"reviewQueue" jsonschema:"count of questions currently due under the spaced-repetition (Leitner-box) schedule; use mode=review on get_next_question to draw from it"`
 	PartStats   []partStatOut  `json:"partStats"`
 	TopicStats  []topicStatOut `json:"topicStats,omitempty"`
 	ExamStats   []examStatOut  `json:"examStats,omitempty"`

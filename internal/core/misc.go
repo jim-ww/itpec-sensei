@@ -1,6 +1,9 @@
 package core
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 // ListTopics returns all topics present in the question bank.
 func (c *Core) ListTopics(ctx context.Context) ([]string, error) {
@@ -40,4 +43,11 @@ func (c *Core) ResetProgress(ctx context.Context, scope Scope) error {
 // been answered incorrectly (used by the fail-count order strategy).
 func (c *Core) FailCounts(ctx context.Context, ids []string) (map[string]int, error) {
 	return c.Repo.FailCounts(ctx, ids)
+}
+
+// DueQuestionIDs returns the set of question global IDs currently due under
+// the spaced-repetition (Leitner-box) schedule (see srs.go). Questions never
+// answered are never included.
+func (c *Core) DueQuestionIDs(ctx context.Context) (map[string]bool, error) {
+	return c.Repo.DueQuestionIDs(ctx, time.Now().UTC())
 }

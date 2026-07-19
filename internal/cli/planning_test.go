@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
 	"github.com/jim-ww/itpec-sensei/internal/core"
@@ -130,8 +131,8 @@ func TestReviewFiltered(t *testing.T) {
 
 	repo := mocks.NewMockRepository(t)
 	repo.EXPECT().
-		FailCounts(context.Background(), []string{q1.GlobalID(), q2.GlobalID()}).
-		Return(map[string]int{q1.GlobalID(): 2}, nil)
+		DueQuestionIDs(context.Background(), mock.Anything).
+		Return(map[string]bool{q1.GlobalID(): true}, nil)
 
 	c := core.New(bank, repo)
 	got, err := reviewFiltered(context.Background(), c, pool)

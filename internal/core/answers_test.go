@@ -108,6 +108,8 @@ func TestSubmitAnswer(t *testing.T) {
 					recordedCorrect = correct
 					return nil
 				})
+			repo.EXPECT().GetQuestionSRS(context.Background(), q.GlobalID()).Return(repository.QuestionSRS{}, false, nil)
+			repo.EXPECT().UpsertQuestionSRS(context.Background(), q.GlobalID(), mock.Anything).Return(nil)
 
 			c := New(bank, repo)
 			res, err := c.SubmitAnswer(context.Background(), 1, q.GlobalID(), tt.answer, false, 0)

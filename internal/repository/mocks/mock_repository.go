@@ -210,6 +210,74 @@ func (_c *MockRepository_DeleteSession_Call) RunAndReturn(run func(ctx context.C
 	return _c
 }
 
+// DueQuestionIDs provides a mock function for the type MockRepository
+func (_mock *MockRepository) DueQuestionIDs(ctx context.Context, asOf time.Time) (map[string]bool, error) {
+	ret := _mock.Called(ctx, asOf)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DueQuestionIDs")
+	}
+
+	var r0 map[string]bool
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, time.Time) (map[string]bool, error)); ok {
+		return returnFunc(ctx, asOf)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, time.Time) map[string]bool); ok {
+		r0 = returnFunc(ctx, asOf)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(map[string]bool)
+		}
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, time.Time) error); ok {
+		r1 = returnFunc(ctx, asOf)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockRepository_DueQuestionIDs_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DueQuestionIDs'
+type MockRepository_DueQuestionIDs_Call struct {
+	*mock.Call
+}
+
+// DueQuestionIDs is a helper method to define mock.On call
+//   - ctx context.Context
+//   - asOf time.Time
+func (_e *MockRepository_Expecter) DueQuestionIDs(ctx interface{}, asOf interface{}) *MockRepository_DueQuestionIDs_Call {
+	return &MockRepository_DueQuestionIDs_Call{Call: _e.mock.On("DueQuestionIDs", ctx, asOf)}
+}
+
+func (_c *MockRepository_DueQuestionIDs_Call) Run(run func(ctx context.Context, asOf time.Time)) *MockRepository_DueQuestionIDs_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 time.Time
+		if args[1] != nil {
+			arg1 = args[1].(time.Time)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockRepository_DueQuestionIDs_Call) Return(stringToBool map[string]bool, err error) *MockRepository_DueQuestionIDs_Call {
+	_c.Call.Return(stringToBool, err)
+	return _c
+}
+
+func (_c *MockRepository_DueQuestionIDs_Call) RunAndReturn(run func(ctx context.Context, asOf time.Time) (map[string]bool, error)) *MockRepository_DueQuestionIDs_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // EndSession provides a mock function for the type MockRepository
 func (_mock *MockRepository) EndSession(ctx context.Context, sessionID int64, exitReason string) error {
 	ret := _mock.Called(ctx, sessionID, exitReason)
@@ -337,6 +405,78 @@ func (_c *MockRepository_FailCounts_Call) Return(stringToInt map[string]int, err
 }
 
 func (_c *MockRepository_FailCounts_Call) RunAndReturn(run func(ctx context.Context, questionIDs []string) (map[string]int, error)) *MockRepository_FailCounts_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetQuestionSRS provides a mock function for the type MockRepository
+func (_mock *MockRepository) GetQuestionSRS(ctx context.Context, questionID string) (repository.QuestionSRS, bool, error) {
+	ret := _mock.Called(ctx, questionID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetQuestionSRS")
+	}
+
+	var r0 repository.QuestionSRS
+	var r1 bool
+	var r2 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (repository.QuestionSRS, bool, error)); ok {
+		return returnFunc(ctx, questionID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) repository.QuestionSRS); ok {
+		r0 = returnFunc(ctx, questionID)
+	} else {
+		r0 = ret.Get(0).(repository.QuestionSRS)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) bool); ok {
+		r1 = returnFunc(ctx, questionID)
+	} else {
+		r1 = ret.Get(1).(bool)
+	}
+	if returnFunc, ok := ret.Get(2).(func(context.Context, string) error); ok {
+		r2 = returnFunc(ctx, questionID)
+	} else {
+		r2 = ret.Error(2)
+	}
+	return r0, r1, r2
+}
+
+// MockRepository_GetQuestionSRS_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetQuestionSRS'
+type MockRepository_GetQuestionSRS_Call struct {
+	*mock.Call
+}
+
+// GetQuestionSRS is a helper method to define mock.On call
+//   - ctx context.Context
+//   - questionID string
+func (_e *MockRepository_Expecter) GetQuestionSRS(ctx interface{}, questionID interface{}) *MockRepository_GetQuestionSRS_Call {
+	return &MockRepository_GetQuestionSRS_Call{Call: _e.mock.On("GetQuestionSRS", ctx, questionID)}
+}
+
+func (_c *MockRepository_GetQuestionSRS_Call) Run(run func(ctx context.Context, questionID string)) *MockRepository_GetQuestionSRS_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockRepository_GetQuestionSRS_Call) Return(state repository.QuestionSRS, found bool, err error) *MockRepository_GetQuestionSRS_Call {
+	_c.Call.Return(state, found, err)
+	return _c
+}
+
+func (_c *MockRepository_GetQuestionSRS_Call) RunAndReturn(run func(ctx context.Context, questionID string) (repository.QuestionSRS, bool, error)) *MockRepository_GetQuestionSRS_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -699,68 +839,6 @@ func (_c *MockRepository_ResetAllProgress_Call) RunAndReturn(run func(ctx contex
 	return _c
 }
 
-// ReviewQueueQuestionIDs provides a mock function for the type MockRepository
-func (_mock *MockRepository) ReviewQueueQuestionIDs(ctx context.Context) (map[string]bool, error) {
-	ret := _mock.Called(ctx)
-
-	if len(ret) == 0 {
-		panic("no return value specified for ReviewQueueQuestionIDs")
-	}
-
-	var r0 map[string]bool
-	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context) (map[string]bool, error)); ok {
-		return returnFunc(ctx)
-	}
-	if returnFunc, ok := ret.Get(0).(func(context.Context) map[string]bool); ok {
-		r0 = returnFunc(ctx)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(map[string]bool)
-		}
-	}
-	if returnFunc, ok := ret.Get(1).(func(context.Context) error); ok {
-		r1 = returnFunc(ctx)
-	} else {
-		r1 = ret.Error(1)
-	}
-	return r0, r1
-}
-
-// MockRepository_ReviewQueueQuestionIDs_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ReviewQueueQuestionIDs'
-type MockRepository_ReviewQueueQuestionIDs_Call struct {
-	*mock.Call
-}
-
-// ReviewQueueQuestionIDs is a helper method to define mock.On call
-//   - ctx context.Context
-func (_e *MockRepository_Expecter) ReviewQueueQuestionIDs(ctx interface{}) *MockRepository_ReviewQueueQuestionIDs_Call {
-	return &MockRepository_ReviewQueueQuestionIDs_Call{Call: _e.mock.On("ReviewQueueQuestionIDs", ctx)}
-}
-
-func (_c *MockRepository_ReviewQueueQuestionIDs_Call) Run(run func(ctx context.Context)) *MockRepository_ReviewQueueQuestionIDs_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 context.Context
-		if args[0] != nil {
-			arg0 = args[0].(context.Context)
-		}
-		run(
-			arg0,
-		)
-	})
-	return _c
-}
-
-func (_c *MockRepository_ReviewQueueQuestionIDs_Call) Return(stringToBool map[string]bool, err error) *MockRepository_ReviewQueueQuestionIDs_Call {
-	_c.Call.Return(stringToBool, err)
-	return _c
-}
-
-func (_c *MockRepository_ReviewQueueQuestionIDs_Call) RunAndReturn(run func(ctx context.Context) (map[string]bool, error)) *MockRepository_ReviewQueueQuestionIDs_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
 // SessionParamsByID provides a mock function for the type MockRepository
 func (_mock *MockRepository) SessionParamsByID(ctx context.Context, sessionID int64) (repository.SessionParams, error) {
 	ret := _mock.Called(ctx, sessionID)
@@ -823,6 +901,69 @@ func (_c *MockRepository_SessionParamsByID_Call) Return(sessionParams repository
 }
 
 func (_c *MockRepository_SessionParamsByID_Call) RunAndReturn(run func(ctx context.Context, sessionID int64) (repository.SessionParams, error)) *MockRepository_SessionParamsByID_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// UpsertQuestionSRS provides a mock function for the type MockRepository
+func (_mock *MockRepository) UpsertQuestionSRS(ctx context.Context, questionID string, state repository.QuestionSRS) error {
+	ret := _mock.Called(ctx, questionID, state)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UpsertQuestionSRS")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string, repository.QuestionSRS) error); ok {
+		r0 = returnFunc(ctx, questionID, state)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockRepository_UpsertQuestionSRS_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpsertQuestionSRS'
+type MockRepository_UpsertQuestionSRS_Call struct {
+	*mock.Call
+}
+
+// UpsertQuestionSRS is a helper method to define mock.On call
+//   - ctx context.Context
+//   - questionID string
+//   - state repository.QuestionSRS
+func (_e *MockRepository_Expecter) UpsertQuestionSRS(ctx interface{}, questionID interface{}, state interface{}) *MockRepository_UpsertQuestionSRS_Call {
+	return &MockRepository_UpsertQuestionSRS_Call{Call: _e.mock.On("UpsertQuestionSRS", ctx, questionID, state)}
+}
+
+func (_c *MockRepository_UpsertQuestionSRS_Call) Run(run func(ctx context.Context, questionID string, state repository.QuestionSRS)) *MockRepository_UpsertQuestionSRS_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 repository.QuestionSRS
+		if args[2] != nil {
+			arg2 = args[2].(repository.QuestionSRS)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
+	})
+	return _c
+}
+
+func (_c *MockRepository_UpsertQuestionSRS_Call) Return(err error) *MockRepository_UpsertQuestionSRS_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockRepository_UpsertQuestionSRS_Call) RunAndReturn(run func(ctx context.Context, questionID string, state repository.QuestionSRS) error) *MockRepository_UpsertQuestionSRS_Call {
 	_c.Call.Return(run)
 	return _c
 }

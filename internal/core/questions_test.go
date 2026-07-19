@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
 	"github.com/jim-ww/itpec-sensei/internal/repository"
@@ -50,7 +51,7 @@ func TestGetNextQuestionReviewMode(t *testing.T) {
 
 	repo := mocks.NewMockRepository(t)
 	repo.EXPECT().
-		ReviewQueueQuestionIDs(context.Background()).
+		DueQuestionIDs(context.Background(), mock.Anything).
 		Return(map[string]bool{q1.GlobalID(): true}, nil)
 
 	c := New(bank, repo)
@@ -63,7 +64,7 @@ func TestGetNextQuestionReviewMode(t *testing.T) {
 func TestGetNextQuestionReviewModeEmptyQueue(t *testing.T) {
 	bank := newTestBank(t)
 	repo := mocks.NewMockRepository(t)
-	repo.EXPECT().ReviewQueueQuestionIDs(context.Background()).Return(map[string]bool{}, nil)
+	repo.EXPECT().DueQuestionIDs(context.Background(), mock.Anything).Return(map[string]bool{}, nil)
 
 	c := New(bank, repo)
 	_, err := c.GetNextQuestion(context.Background(), QuestionFilter{ExamID: "2020A_FE-A", Mode: "review"})

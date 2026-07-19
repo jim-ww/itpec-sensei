@@ -46,13 +46,6 @@ SELECT id, session_id, question_id, answer, correct, timed_out, time_taken_ms, a
 -- name: ListAttemptsByQuestionIDsSince :many
 SELECT id, session_id, question_id, answer, correct, timed_out, time_taken_ms, answered_at FROM attempts WHERE question_id IN (sqlc.slice('question_ids')) AND answered_at >= ?;
 
--- name: ReviewQueueQuestionIDs :many
-SELECT DISTINCT a.question_id
-FROM attempts a
-WHERE a.answered_at = (
-	SELECT MAX(answered_at) FROM attempts WHERE question_id = a.question_id
-) AND a.correct = 0;
-
 -- name: FailCounts :many
 SELECT question_id, COUNT(*) AS n FROM attempts WHERE correct = 0 AND question_id IN (sqlc.slice('question_ids')) GROUP BY question_id;
 
@@ -97,3 +90,22 @@ GROUP BY s.id;
 
 -- name: DeleteAllSessions :exec
 DELETE FROM sessions;
+
+-- SRS (Leitner scheduling) --
+
+-- name: GetQuestionSRS :one
+SELECT question_id, box, due_at, last_reviewed_at FROM question_srs WHERE question_id = ?;
+
+-- name: UpsertQuestionSRS :exec
+INSERT INTO question_srs (question_id, box, due_at, last_reviewed_at)
+VALUES (?, ?, ?, ?)
+ON CONFLICT(question_id) DO UPDATE SET box = excluded.box, due_at = excluded.due_at, last_reviewed_at = excluded.last_reviewed_at;
+
+-- name: DueQuestionIDs :many
+SELECT question_id FROM question_srs WHERE due_at <= ?;
+
+-- name: DeleteQuestionSRSForQuestions :exec
+DELETE FROM question_srs WHERE question_id IN (sqlc.slice('question_ids'));
+
+-- name: DeleteAllQuestionSRS :exec
+DELETE FROM question_srs;

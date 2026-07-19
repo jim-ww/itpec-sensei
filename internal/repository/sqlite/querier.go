@@ -11,15 +11,20 @@ import (
 
 type Querier interface {
 	DeleteAllAttempts(ctx context.Context) error
+	DeleteAllQuestionSRS(ctx context.Context) error
 	DeleteAllSessions(ctx context.Context) error
 	DeleteAttempt(ctx context.Context, id int64) error
 	DeleteAttemptsBySession(ctx context.Context, sessionID int64) error
 	DeleteAttemptsForQuestions(ctx context.Context, questionIds []string) error
+	DeleteQuestionSRSForQuestions(ctx context.Context, questionIds []string) error
 	DeleteSessionByID(ctx context.Context, id int64) (int64, error)
+	DueQuestionIDs(ctx context.Context, dueAt time.Time) ([]string, error)
 	EndSession(ctx context.Context, arg EndSessionParams) error
 	FailCounts(ctx context.Context, questionIds []string) ([]FailCountsRow, error)
 	GetLastAttemptAny(ctx context.Context) (Attempt, error)
 	GetLastAttemptForSession(ctx context.Context, sessionID int64) (Attempt, error)
+	// SRS (Leitner scheduling) --
+	GetQuestionSRS(ctx context.Context, questionID string) (QuestionSr, error)
 	// Attempts --
 	//
 	// These return unordered rows; sorting by newest/oldest and applying a limit
@@ -45,8 +50,8 @@ type Querier interface {
 	// Not ordered here; ListSessions in repo.go sorts by StartedAt per the
 	// requested direction (see the Attempts comment above for why).
 	ListSessions(ctx context.Context) ([]ListSessionsRow, error)
-	ReviewQueueQuestionIDs(ctx context.Context) ([]string, error)
 	SessionParamsByID(ctx context.Context, id int64) (SessionParamsByIDRow, error)
+	UpsertQuestionSRS(ctx context.Context, arg UpsertQuestionSRSParams) error
 }
 
 var _ Querier = (*Queries)(nil)

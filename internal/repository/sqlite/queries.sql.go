@@ -21,6 +21,15 @@ func (q *Queries) DeleteAllAttempts(ctx context.Context) error {
 	return err
 }
 
+const deleteAllQuestionSRS = `-- name: DeleteAllQuestionSRS :exec
+DELETE FROM question_srs
+`
+
+func (q *Queries) DeleteAllQuestionSRS(ctx context.Context) error {
+	_, err := q.db.ExecContext(ctx, deleteAllQuestionSRS)
+	return err
+}
+
 const deleteAllSessions = `-- name: DeleteAllSessions :exec
 DELETE FROM sessions
 `
@@ -67,6 +76,25 @@ func (q *Queries) DeleteAttemptsForQuestions(ctx context.Context, questionIds []
 	return err
 }
 
+const deleteQuestionSRSForQuestions = `-- name: DeleteQuestionSRSForQuestions :exec
+DELETE FROM question_srs WHERE question_id IN (/*SLICE:question_ids*/?)
+`
+
+func (q *Queries) DeleteQuestionSRSForQuestions(ctx context.Context, questionIds []string) error {
+	query := deleteQuestionSRSForQuestions
+	var queryParams []interface{}
+	if len(questionIds) > 0 {
+		for _, v := range questionIds {
+			queryParams = append(queryParams, v)
+		}
+		query = strings.Replace(query, "/*SLICE:question_ids*/?", strings.Repeat(",?", len(questionIds))[1:], 1)
+	} else {
+		query = strings.Replace(query, "/*SLICE:question_ids*/?", "NULL", 1)
+	}
+	_, err := q.db.ExecContext(ctx, query, queryParams...)
+	return err
+}
+
 const deleteSessionByID = `-- name: DeleteSessionByID :execrows
 DELETE FROM sessions WHERE id = ?
 `
@@ -77,6 +105,33 @@ func (q *Queries) DeleteSessionByID(ctx context.Context, id int64) (int64, error
 		return 0, err
 	}
 	return result.RowsAffected()
+}
+
+const dueQuestionIDs = `-- name: DueQuestionIDs :many
+SELECT question_id FROM question_srs WHERE due_at <= ?
+`
+
+func (q *Queries) DueQuestionIDs(ctx context.Context, dueAt time.Time) ([]string, error) {
+	rows, err := q.db.QueryContext(ctx, dueQuestionIDs, dueAt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var question_id string
+		if err := rows.Scan(&question_id); err != nil {
+			return nil, err
+		}
+		items = append(items, question_id)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const endSession = `-- name: EndSession :exec
@@ -174,6 +229,24 @@ func (q *Queries) GetLastAttemptForSession(ctx context.Context, sessionID int64)
 		&i.TimedOut,
 		&i.TimeTakenMs,
 		&i.AnsweredAt,
+	)
+	return i, err
+}
+
+const getQuestionSRS = `-- name: GetQuestionSRS :one
+
+SELECT question_id, box, due_at, last_reviewed_at FROM question_srs WHERE question_id = ?
+`
+
+// SRS (Leitner scheduling) --
+func (q *Queries) GetQuestionSRS(ctx context.Context, questionID string) (QuestionSr, error) {
+	row := q.db.QueryRowContext(ctx, getQuestionSRS, questionID)
+	var i QuestionSr
+	err := row.Scan(
+		&i.QuestionID,
+		&i.Box,
+		&i.DueAt,
+		&i.LastReviewedAt,
 	)
 	return i, err
 }
@@ -536,37 +609,6 @@ func (q *Queries) ListSessions(ctx context.Context) ([]ListSessionsRow, error) {
 	return items, nil
 }
 
-const reviewQueueQuestionIDs = `-- name: ReviewQueueQuestionIDs :many
-SELECT DISTINCT a.question_id
-FROM attempts a
-WHERE a.answered_at = (
-	SELECT MAX(answered_at) FROM attempts WHERE question_id = a.question_id
-) AND a.correct = 0
-`
-
-func (q *Queries) ReviewQueueQuestionIDs(ctx context.Context) ([]string, error) {
-	rows, err := q.db.QueryContext(ctx, reviewQueueQuestionIDs)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []string
-	for rows.Next() {
-		var question_id string
-		if err := rows.Scan(&question_id); err != nil {
-			return nil, err
-		}
-		items = append(items, question_id)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const sessionParamsByID = `-- name: SessionParamsByID :one
 SELECT exam_type, exam_id, topic, part, mode, order_strategy,
        time_limit_seconds, question_time_limit_seconds,
@@ -605,4 +647,27 @@ func (q *Queries) SessionParamsByID(ctx context.Context, id int64) (SessionParam
 		&i.PlannedQuestions,
 	)
 	return i, err
+}
+
+const upsertQuestionSRS = `-- name: UpsertQuestionSRS :exec
+INSERT INTO question_srs (question_id, box, due_at, last_reviewed_at)
+VALUES (?, ?, ?, ?)
+ON CONFLICT(question_id) DO UPDATE SET box = excluded.box, due_at = excluded.due_at, last_reviewed_at = excluded.last_reviewed_at
+`
+
+type UpsertQuestionSRSParams struct {
+	QuestionID     string
+	Box            int64
+	DueAt          time.Time
+	LastReviewedAt time.Time
+}
+
+func (q *Queries) UpsertQuestionSRS(ctx context.Context, arg UpsertQuestionSRSParams) error {
+	_, err := q.db.ExecContext(ctx, upsertQuestionSRS,
+		arg.QuestionID,
+		arg.Box,
+		arg.DueAt,
+		arg.LastReviewedAt,
+	)
+	return err
 }

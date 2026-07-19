@@ -118,16 +118,43 @@ func (r *Repository) DeleteAttempt(ctx context.Context, id int64) error {
 	return r.q.DeleteAttempt(ctx, id)
 }
 
-func (r *Repository) ReviewQueueQuestionIDs(ctx context.Context) (map[string]bool, error) {
-	ids, err := r.q.ReviewQueueQuestionIDs(ctx)
+func (r *Repository) DueQuestionIDs(ctx context.Context, asOf time.Time) (map[string]bool, error) {
+	ids, err := r.q.DueQuestionIDs(ctx, asOf)
 	if err != nil {
-		return nil, fmt.Errorf("query review queue: %w", err)
+		return nil, fmt.Errorf("query due questions: %w", err)
 	}
 	out := make(map[string]bool, len(ids))
 	for _, id := range ids {
 		out[id] = true
 	}
 	return out, nil
+}
+
+func (r *Repository) GetQuestionSRS(ctx context.Context, questionID string) (repository.QuestionSRS, bool, error) {
+	row, err := r.q.GetQuestionSRS(ctx, questionID)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return repository.QuestionSRS{}, false, nil
+		}
+		return repository.QuestionSRS{}, false, fmt.Errorf("get question srs: %w", err)
+	}
+	return repository.QuestionSRS{
+		Box:            int(row.Box),
+		DueAt:          row.DueAt,
+		LastReviewedAt: row.LastReviewedAt,
+	}, true, nil
+}
+
+func (r *Repository) UpsertQuestionSRS(ctx context.Context, questionID string, state repository.QuestionSRS) error {
+	if err := r.q.UpsertQuestionSRS(ctx, UpsertQuestionSRSParams{
+		QuestionID:     questionID,
+		Box:            int64(state.Box),
+		DueAt:          state.DueAt,
+		LastReviewedAt: state.LastReviewedAt,
+	}); err != nil {
+		return fmt.Errorf("upsert question srs: %w", err)
+	}
+	return nil
 }
 
 func (r *Repository) FailCounts(ctx context.Context, questionIDs []string) (map[string]int, error) {
@@ -284,6 +311,9 @@ func (r *Repository) ResetAllProgress(ctx context.Context) error {
 	if err := r.q.DeleteAllSessions(ctx); err != nil {
 		return fmt.Errorf("reset sessions: %w", err)
 	}
+	if err := r.q.DeleteAllQuestionSRS(ctx); err != nil {
+		return fmt.Errorf("reset srs: %w", err)
+	}
 	return nil
 }
 
@@ -293,6 +323,9 @@ func (r *Repository) DeleteAttemptsForQuestions(ctx context.Context, questionIDs
 	}
 	if err := r.q.DeleteAttemptsForQuestions(ctx, questionIDs); err != nil {
 		return fmt.Errorf("reset scoped attempts: %w", err)
+	}
+	if err := r.q.DeleteQuestionSRSForQuestions(ctx, questionIDs); err != nil {
+		return fmt.Errorf("reset scoped srs: %w", err)
 	}
 	return nil
 }

@@ -30,3 +30,15 @@ CREATE TABLE IF NOT EXISTS attempts (
 CREATE INDEX IF NOT EXISTS idx_attempts_question ON attempts(question_id);
 CREATE INDEX IF NOT EXISTS idx_attempts_session ON attempts(session_id);
 CREATE INDEX IF NOT EXISTS idx_attempts_answered_at ON attempts(answered_at);
+
+-- question_srs holds one Leitner-box scheduling row per question that has
+-- been answered at least once. A question with no row here has never been
+-- attempted, so it's neither "due" nor "not due" - it's simply new.
+CREATE TABLE IF NOT EXISTS question_srs (
+  question_id      TEXT PRIMARY KEY,
+  box              INTEGER NOT NULL,
+  due_at           TIMESTAMP NOT NULL,
+  last_reviewed_at TIMESTAMP NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_question_srs_due_at ON question_srs(due_at);

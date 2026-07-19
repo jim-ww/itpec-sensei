@@ -125,23 +125,42 @@ func TestDeleteAttempt(t *testing.T) {
 	assert.Empty(t, rows)
 }
 
-func TestReviewQueueQuestionIDs(t *testing.T) {
+func TestQuestionSRS(t *testing.T) {
 	repo := newTestRepo(t)
 	ctx := context.Background()
-	sessionID, err := repo.InsertSession(ctx, repository.SessionParams{ExamType: "fe", Mode: "normal", OrderStrategy: "random"})
+
+	_, found, err := repo.GetQuestionSRS(ctx, "examA#1")
 	require.NoError(t, err)
+	assert.False(t, found, "never-scheduled question has no SRS state")
 
 	t0 := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
-	// examA#1: wrong then right -> most recent is correct -> not in review queue.
-	require.NoError(t, repo.InsertAttempt(ctx, sessionID, "examA#1", "B", false, false, 0, t0))
-	require.NoError(t, repo.InsertAttempt(ctx, sessionID, "examA#1", "A", true, false, 0, t0.Add(time.Minute)))
-	// examA#2: only ever wrong -> in review queue.
-	require.NoError(t, repo.InsertAttempt(ctx, sessionID, "examA#2", "X", false, false, 0, t0))
+	// examA#1 is due tomorrow -> not due as of t0.
+	require.NoError(t, repo.UpsertQuestionSRS(ctx, "examA#1", repository.QuestionSRS{
+		Box: 1, DueAt: t0.Add(24 * time.Hour), LastReviewedAt: t0,
+	}))
+	// examA#2 was due yesterday -> due as of t0.
+	require.NoError(t, repo.UpsertQuestionSRS(ctx, "examA#2", repository.QuestionSRS{
+		Box: 1, DueAt: t0.Add(-24 * time.Hour), LastReviewedAt: t0.Add(-48 * time.Hour),
+	}))
 
-	ids, err := repo.ReviewQueueQuestionIDs(ctx)
+	ids, err := repo.DueQuestionIDs(ctx, t0)
 	require.NoError(t, err)
 	assert.False(t, ids["examA#1"])
 	assert.True(t, ids["examA#2"])
+
+	state, found, err := repo.GetQuestionSRS(ctx, "examA#2")
+	require.NoError(t, err)
+	require.True(t, found)
+	assert.Equal(t, 1, state.Box)
+
+	// Upsert overwrites existing state.
+	require.NoError(t, repo.UpsertQuestionSRS(ctx, "examA#2", repository.QuestionSRS{
+		Box: 3, DueAt: t0.Add(7 * 24 * time.Hour), LastReviewedAt: t0,
+	}))
+	state, found, err = repo.GetQuestionSRS(ctx, "examA#2")
+	require.NoError(t, err)
+	require.True(t, found)
+	assert.Equal(t, 3, state.Box)
 }
 
 func TestFailCounts(t *testing.T) {

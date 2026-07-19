@@ -6,16 +6,18 @@ import (
 	"math/rand"
 	"sort"
 	"strings"
+	"time"
 )
 
 // GetNextQuestion returns a question matching filter. It never includes the
 // answer or explanation — those are only ever exposed via SubmitAnswer.
 //
-// filter.Mode is "random" (default), "review" (only questions whose most
-// recent attempt was wrong — see Repository.ReviewQueueQuestionIDs), or "weak" (any question in
+// filter.Mode is "random" (default), "review" (spaced repetition: only
+// questions due for review under a Leitner-box schedule — see
+// Repository.DueQuestionIDs and core.updateSRS), or "weak" (any question in
 // the pool, but topics with lower accuracy are picked more often — unlike
-// "review" this doesn't require a prior wrong attempt on that exact
-// question, so it also surfaces never-attempted questions in weak topics).
+// "review" this doesn't require a prior attempt on that exact question, so
+// it also surfaces never-attempted questions in weak topics).
 func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Question, error) {
 	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
 	if len(pool) == 0 {
@@ -46,19 +48,19 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 
 	switch {
 	case strings.EqualFold(filter.Mode, "review"):
-		reviewIDs, err := c.Repo.ReviewQueueQuestionIDs(ctx)
+		dueIDs, err := c.Repo.DueQuestionIDs(ctx, time.Now().UTC())
 		if err != nil {
 			return nil, err
 		}
 		var filtered []*Question
 		for _, q := range pool {
-			if reviewIDs[q.GlobalID()] {
+			if dueIDs[q.GlobalID()] {
 				filtered = append(filtered, q)
 			}
 		}
 		pool = filtered
 		if len(pool) == 0 {
-			return nil, fmt.Errorf("no questions in review queue for this filter")
+			return nil, fmt.Errorf("no questions due for review in this filter")
 		}
 		return stripAnswer(pool[rand.Intn(len(pool))]), nil
 

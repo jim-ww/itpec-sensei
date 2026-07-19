@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
 	"github.com/jim-ww/itpec-sensei/internal/repository"
@@ -153,7 +154,7 @@ func TestGetProgressSummary(t *testing.T) {
 			{ID: 1, QuestionID: amQ.GlobalID(), Correct: true, AnsweredAt: now, TimeTakenMs: 1000},
 			{ID: 2, QuestionID: pmQ.GlobalID(), Correct: false, AnsweredAt: now, TimeTakenMs: 2000},
 		}, nil)
-	repo.EXPECT().ReviewQueueQuestionIDs(context.Background()).Return(map[string]bool{pmQ.GlobalID(): true}, nil)
+	repo.EXPECT().DueQuestionIDs(context.Background(), mock.Anything).Return(map[string]bool{pmQ.GlobalID(): true}, nil)
 
 	c := New(bank, repo)
 	summary, err := c.GetProgressSummary(context.Background(), ScopeAll, PeriodAll)

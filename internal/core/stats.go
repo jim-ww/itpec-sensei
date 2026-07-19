@@ -71,7 +71,7 @@ func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Perio
 		summary.PartStats = append(summary.PartStats, ps)
 	}
 
-	reviewIDs, err := c.Repo.ReviewQueueQuestionIDs(ctx)
+	reviewIDs, err := c.Repo.DueQuestionIDs(ctx, time.Now().UTC())
 	if err != nil {
 		return nil, err
 	}

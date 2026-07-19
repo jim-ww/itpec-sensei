@@ -50,18 +50,16 @@ func planQuestions(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core
 	return ordered, nil
 }
 
+// reviewFiltered narrows pool to questions currently due under the
+// spaced-repetition (Leitner-box) schedule (see core.DueQuestionIDs).
 func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([]*core.Question, error) {
-	ids := make([]string, len(pool))
-	for i, q := range pool {
-		ids[i] = q.GlobalID()
-	}
-	failCounts, err := c.FailCounts(ctx, ids)
+	dueIDs, err := c.DueQuestionIDs(ctx)
 	if err != nil {
 		return nil, err
 	}
 	var filtered []*core.Question
 	for _, q := range pool {
-		if failCounts[q.GlobalID()] > 0 {
+		if dueIDs[q.GlobalID()] {
 			filtered = append(filtered, q)
 		}
 	}
@@ -100,7 +98,7 @@ func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, or
 		})
 	case "random":
 		shuffle(ordered)
-	case "fail-count", "fail-rate":
+	case "fail-count":
 		ids := make([]string, len(ordered))
 		for i, q := range ordered {
 			ids[i] = q.GlobalID()
@@ -115,7 +113,7 @@ func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, or
 	case "weak":
 		// Weight towards topics with lower accuracy, including ones never
 		// attempted yet (default weight below any known accuracy) — unlike
-		// fail-count/fail-rate this is topic-level, not tied to a specific
+		// fail-count this is topic-level, not tied to a specific
 		// question having been seen before.
 		topicStats, err := c.GetTopicStats(ctx, core.ScopeAll)
 		if err != nil {
