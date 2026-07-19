@@ -17,12 +17,13 @@ func TestNextSRSState(t *testing.T) {
 		wantBox   int
 		wantDueIn time.Duration
 	}{
-		{"first attempt, correct, advances to box 2", 1, true, 2, 3 * 24 * time.Hour},
-		{"box 2 correct advances to box 3", 2, true, 3, 7 * 24 * time.Hour},
-		{"box 4 correct advances to box 5", 4, true, 5, 60 * 24 * time.Hour},
-		{"box 5 correct stays at box 5 (max)", 5, true, 5, 60 * 24 * time.Hour},
-		{"any box wrong resets to box 1", 3, false, 1, 24 * time.Hour},
-		{"box 5 wrong resets to box 1", 5, false, 1, 24 * time.Hour},
+		{"first attempt, correct, advances to box 2", 1, true, 2, 24 * time.Hour},
+		{"box 2 correct advances to box 3", 2, true, 3, 3 * 24 * time.Hour},
+		{"box 4 correct advances to box 5", 4, true, 5, 14 * 24 * time.Hour},
+		{"box 5 correct advances to box 6", 5, true, 6, 21 * 24 * time.Hour},
+		{"box 6 correct stays at box 6 (max)", 6, true, 6, 21 * 24 * time.Hour},
+		{"any box wrong resets to box 1", 3, false, 1, 10 * time.Minute},
+		{"box 6 wrong resets to box 1", 6, false, 1, 10 * time.Minute},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

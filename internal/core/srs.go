@@ -8,18 +8,26 @@ import (
 )
 
 // srsMaxBox is the highest Leitner box a question can reach; box 1 is a
-// question that's due tomorrow (either new or just missed), srsMaxBox is one
-// that's been answered correctly srsMaxBox-1 times in a row.
-const srsMaxBox = 5
+// question that's new or was just missed, srsMaxBox is one that's been
+// answered correctly srsMaxBox-1 times in a row.
+//
+// Intervals are tuned for exam cram (weeks-to-months horizon, finite
+// ~3000-question bank), not indefinite retention: box 1 is minutes, not a
+// full day, so a fresh mistake can be immediately redrilled instead of
+// waiting until tomorrow; the ceiling is 21 days, not months, since the
+// exam itself is likely to happen well before a longer interval would ever
+// come due.
+const srsMaxBox = 6
 
 // srsBoxInterval is how long a question sits in each box before it's due
 // again. A wrong answer always resets to box 1, regardless of prior box.
 var srsBoxInterval = map[int]time.Duration{
-	1: 24 * time.Hour,
-	2: 3 * 24 * time.Hour,
-	3: 7 * 24 * time.Hour,
-	4: 21 * 24 * time.Hour,
-	5: 60 * 24 * time.Hour,
+	1: 10 * time.Minute,
+	2: 24 * time.Hour,
+	3: 3 * 24 * time.Hour,
+	4: 7 * 24 * time.Hour,
+	5: 14 * 24 * time.Hour,
+	6: 21 * 24 * time.Hour,
 }
 
 // nextSRSState computes questionID's new Leitner box and due date given its
