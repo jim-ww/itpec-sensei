@@ -14,10 +14,14 @@ import (
 //
 // filter.Mode is "random" (default), "review" (spaced repetition: only
 // questions due for review under a Leitner-box schedule — see
-// Repository.DueQuestionIDs and core.updateSRS), or "weak" (any question in
+// Repository.DueQuestionIDs and core.updateSRS), "weak" (any question in
 // the pool, but topics with lower accuracy are picked more often — unlike
 // "review" this doesn't require a prior attempt on that exact question, so
-// it also surfaces never-attempted questions in weak topics).
+// it also surfaces never-attempted questions in weak topics), or
+// "sequential" (the lowest-numbered question in the pool, ordered by
+// examID then question number — combine with filter.ExcludeIDs, e.g. the
+// caller's already-answered question IDs, to advance through a full pass
+// instead of getting the same first question every time).
 func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Question, error) {
 	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
 	if len(pool) == 0 {
@@ -46,7 +50,34 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 		return nil, fmt.Errorf("no questions match filter")
 	}
 
+	if len(filter.ExcludeIDs) > 0 {
+		exclude := make(map[string]bool, len(filter.ExcludeIDs))
+		for _, id := range filter.ExcludeIDs {
+			exclude[id] = true
+		}
+		var filtered []*Question
+		for _, q := range pool {
+			if !exclude[q.GlobalID()] {
+				filtered = append(filtered, q)
+			}
+		}
+		pool = filtered
+		if len(pool) == 0 {
+			return nil, fmt.Errorf("no remaining questions match filter (all already excluded)")
+		}
+	}
+
 	switch {
+	case strings.EqualFold(filter.Mode, "sequential"):
+		sorted := make([]*Question, len(pool))
+		copy(sorted, pool)
+		sort.Slice(sorted, func(i, j int) bool {
+			if sorted[i].ExamID != sorted[j].ExamID {
+				return sorted[i].ExamID < sorted[j].ExamID
+			}
+			return sorted[i].ID < sorted[j].ID
+		})
+		return stripAnswer(sorted[0]), nil
 	case strings.EqualFold(filter.Mode, "review"):
 		dueIDs, err := c.Repo.DueQuestionIDs(ctx, time.Now().UTC())
 		if err != nil {

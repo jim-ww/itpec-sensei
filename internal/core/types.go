@@ -23,7 +23,11 @@ type (
 type QuestionFilter struct {
 	Topic  string // optional
 	ExamID string // optional
-	Mode   string // "random" | "review"
+	Mode   string // "random" | "review" | "weak" | "sequential"
+	// ExcludeIDs are Question.GlobalID()s to skip, e.g. questions already
+	// answered in the caller's current session — so "sequential" can advance
+	// past them, and so repeats aren't handed back in other modes either.
+	ExcludeIDs []string
 }
 
 // Scope narrows progress queries / resets: "all", "topic:<name>", "exam:<id>",

@@ -71,6 +71,30 @@ func TestGetNextQuestionReviewModeEmptyQueue(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func TestGetNextQuestionSequentialMode(t *testing.T) {
+	bank := newTestBank(t)
+	q1 := bank.QuestionByExamAndNumber("2020A_FE-A", 1)
+	q2 := bank.QuestionByExamAndNumber("2020A_FE-A", 2)
+	c := New(bank, mocks.NewMockRepository(t))
+
+	got, err := c.GetNextQuestion(context.Background(), QuestionFilter{ExamID: "2020A_FE-A", Mode: "sequential"})
+	require.NoError(t, err)
+	assert.Equal(t, q1.GlobalID(), got.GlobalID())
+
+	got, err = c.GetNextQuestion(context.Background(), QuestionFilter{ExamID: "2020A_FE-A", Mode: "sequential", ExcludeIDs: []string{q1.GlobalID()}})
+	require.NoError(t, err)
+	assert.Equal(t, q2.GlobalID(), got.GlobalID())
+}
+
+func TestGetNextQuestionExcludeIDsExhausted(t *testing.T) {
+	bank := newTestBank(t)
+	q1 := bank.QuestionByExamAndNumber("2020A_FE-B", 1)
+	c := New(bank, mocks.NewMockRepository(t))
+
+	_, err := c.GetNextQuestion(context.Background(), QuestionFilter{ExamID: "2020A_FE-B", ExcludeIDs: []string{q1.GlobalID()}})
+	assert.Error(t, err)
+}
+
 func TestGetNextQuestionWeakMode(t *testing.T) {
 	bank := newTestBank(t)
 	repo := mocks.NewMockRepository(t)

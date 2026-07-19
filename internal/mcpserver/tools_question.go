@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
@@ -101,7 +102,18 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				sess.started = true
 			}
 		}
-		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Mode: orDefault(in.Mode, "random")})
+		mode := orDefault(in.Mode, "random")
+		var excludeIDs []string
+		if strings.EqualFold(mode, "sequential") {
+			answered, err := c.AnsweredQuestionIDs(ctx, sess.id)
+			if err != nil {
+				return nil, getNextQuestionOut{}, err
+			}
+			for id := range answered {
+				excludeIDs = append(excludeIDs, id)
+			}
+		}
+		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Mode: mode, ExcludeIDs: excludeIDs})
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
