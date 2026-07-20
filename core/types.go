@@ -30,8 +30,10 @@ type QuestionFilter struct {
 	ExcludeIDs []string
 }
 
-// Scope narrows progress queries / resets: "all", "topic:<name>", "exam:<id>",
-// or "part:am" / "part:pm" (FE-AM/FE-A vs FE-PM/FE-B exam session).
+// Scope narrows progress queries / resets: "all", "topic:<name>", "tag:<name>",
+// "exam:<id>", or "part:am" / "part:pm" (FE-AM/FE-A vs FE-PM/FE-B exam
+// session). GetSessions is the one exception — it rejects topic/tag scope,
+// since a session isn't inherently scoped to one (see validateSessionScope).
 type Scope string
 
 const (

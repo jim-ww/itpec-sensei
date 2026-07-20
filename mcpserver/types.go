@@ -64,7 +64,7 @@ type undoLastAnswerOut struct {
 }
 
 type getProgressSummaryIn struct {
-	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
+	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
 	Period string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
 }
 
@@ -135,7 +135,7 @@ type openQuestionImageOut struct {
 }
 
 type getHistoryIn struct {
-	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | exam:<id> | part:am | part:pm, default all"`
+	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
 	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
 	Limit int    `json:"limit,omitempty" jsonschema:"max attempts to return, default 20"`
 }

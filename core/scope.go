@@ -14,13 +14,15 @@ func (c *Core) scopeQuestionIDs(scope Scope) (map[string]struct{}, error) {
 	}
 	parts := strings.SplitN(s, ":", 2)
 	if len(parts) != 2 {
-		return nil, fmt.Errorf("invalid scope %q, expected all|topic:<name>|exam:<id>|part:<am|pm>", scope)
+		return nil, fmt.Errorf("invalid scope %q, expected all|topic:<name>|tag:<name>|exam:<id>|part:<am|pm>", scope)
 	}
 	kind, value := parts[0], parts[1]
 	var pool []*Question
 	switch kind {
 	case "topic":
 		pool = c.Bank.Questions(value, "")
+	case "tag":
+		pool = FilterByTags(c.Bank.Questions("", ""), []string{value})
 	case "exam":
 		pool = c.Bank.Questions("", value)
 	case "part":
@@ -30,7 +32,7 @@ func (c *Core) scopeQuestionIDs(scope Scope) (map[string]struct{}, error) {
 		}
 		pool = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(value))
 	default:
-		return nil, fmt.Errorf("invalid scope kind %q, expected topic, exam, or part", kind)
+		return nil, fmt.Errorf("invalid scope kind %q, expected topic, tag, exam, or part", kind)
 	}
 	ids := make(map[string]struct{}, len(pool))
 	for _, q := range pool {

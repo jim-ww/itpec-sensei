@@ -76,7 +76,7 @@ func newHistoryCmd(app *App) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&scope, "scope", "all", "all | topic:<name> | exam:<id> | part:am | part:pm")
+	cmd.Flags().StringVar(&scope, "scope", "all", "all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm")
 	cmd.Flags().StringVar(&order, "order", "newest", "newest | oldest")
 	cmd.Flags().IntVar(&limit, "limit", 20, "max attempts to show (0 = all)")
 	cmd.Flags().BoolVar(&undo, "undo", false, "delete the most recent attempt instead of listing history")

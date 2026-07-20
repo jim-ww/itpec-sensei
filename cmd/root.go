@@ -33,7 +33,7 @@ func NewRootCmd() *cobra.Command {
 		},
 	}
 
-	scope := root.Flags().String("scope", "all", "all | topic:<name> | exam:<id> | part:am | part:pm")
+	scope := root.Flags().String("scope", "all", "all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm")
 	period := root.Flags().String("period", "all", "week | month | all")
 	root.Example = `  itpec-sensei
   itpec-sensei --scope=exam:2025A_FE-A --period=week`

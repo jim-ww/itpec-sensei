@@ -73,8 +73,8 @@ func validateSessionScope(scope Scope) error {
 	switch kind {
 	case "exam", "part":
 		return nil
-	case "topic":
-		return fmt.Errorf("topic scope is not supported for sessions (a session isn't scoped to one topic)")
+	case "topic", "tag":
+		return fmt.Errorf("%s scope is not supported for sessions (a session isn't scoped to one %s)", kind, kind)
 	default:
 		return fmt.Errorf("invalid scope kind %q, expected exam or part", kind)
 	}

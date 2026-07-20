@@ -13,7 +13,7 @@ func newResetCmd(app *App) *cobra.Command {
 	var yes bool
 
 	cmd := &cobra.Command{
-		Use:     "reset <all|topic:<name>|exam:<id>|part:am|part:pm>",
+		Use:     "reset <all|topic:<name>|tag:<name>|exam:<id>|part:am|part:pm>",
 		Short:   "Clear progress for a scope",
 		Args:    cobra.ExactArgs(1),
 		Example: "  itpec-sensei reset exam:2025A_FE-A --yes",
