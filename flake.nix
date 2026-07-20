@@ -15,9 +15,9 @@
       perSystem = {pkgs, ...}: {
         packages.default = pkgs.buildGoModule {
           pname = "itpec-sensei";
-          version = "0.2.0";
+          version = "0.3.0";
           src = pkgs.lib.cleanSource ./.;
-          vendorHash = "sha256-/j4b/XP0qz8qOoI7fWhEcdyqFVmGq0ffS7pQJONyT9Y=";
+          vendorHash = "sha256-pFWc1rUGPL0KQyeshK79B7CkuzpbSRhHzt854JTfRb4=";
 
           nativeBuildInputs = [pkgs.installShellFiles];
 
