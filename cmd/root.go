@@ -35,10 +35,12 @@ func NewRootCmd() *cobra.Command {
 
 	scope := root.Flags().String("scope", "all", "all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm")
 	period := root.Flags().String("period", "all", "week | month | all")
+	weakestTags := root.Flags().Int("weakest-tags", 10, "how many of your weakest tags to show (by lowest accuracy, min. 3 attempts each); 0 hides this section")
 	root.Example = `  itpec-sensei
-  itpec-sensei --scope=exam:2025A_FE-A --period=week`
+  itpec-sensei --scope=exam:2025A_FE-A --period=week
+  itpec-sensei --weakest-tags=20`
 	root.RunE = func(cmd *cobra.Command, args []string) error {
-		return runSummary(cmd.Context(), app.Core, core.Scope(*scope), core.Period(*period))
+		return runSummary(cmd.Context(), app.Core, core.Scope(*scope), core.Period(*period), *weakestTags)
 	}
 
 	root.AddCommand(

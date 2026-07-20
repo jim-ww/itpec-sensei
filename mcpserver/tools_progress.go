@@ -33,6 +33,16 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 		if err != nil {
 			return nil, getProgressSummaryOut{}, err
 		}
+		tagStats, err := c.GetTagStats(ctx, scope)
+		if err != nil {
+			return nil, getProgressSummaryOut{}, err
+		}
+		weakestTagsLimit := in.WeakestTags
+		if weakestTagsLimit == 0 {
+			weakestTagsLimit = 10
+		} else if weakestTagsLimit < 0 {
+			weakestTagsLimit = 0 // core.WeakestTags treats <=0 as unlimited
+		}
 
 		out := getProgressSummaryOut{
 			Answered:    s.Answered,
@@ -54,6 +64,11 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 		for _, e := range examStats {
 			out.ExamStats = append(out.ExamStats, examStatOut{
 				ExamID: e.ExamID, Answered: e.Answered, Correct: e.Correct, Accuracy: e.Accuracy,
+			})
+		}
+		for _, tg := range core.WeakestTags(tagStats, weakestTagsLimit, core.MinTagAttempts) {
+			out.TagStats = append(out.TagStats, tagStatOut{
+				Tag: tg.Tag, Answered: tg.Answered, Correct: tg.Correct, Accuracy: tg.Accuracy,
 			})
 		}
 		return nil, out, nil

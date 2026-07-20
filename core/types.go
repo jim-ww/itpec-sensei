@@ -64,6 +64,16 @@ type TopicStat struct {
 	Accuracy float64 `json:"accuracy"`
 }
 
+// TagStat is one row of per-tag aggregate stats, mirroring TopicStat. Unlike
+// topic (one per question), a question can carry several tags, so a single
+// attempt contributes to every tag stat its question has (see GetTagStats).
+type TagStat struct {
+	Tag      string  `json:"tag"`
+	Answered int     `json:"answered"`
+	Correct  int     `json:"correct"`
+	Accuracy float64 `json:"accuracy"`
+}
+
 // ExamStat is one row of per-exam aggregate stats, mirroring TopicStat.
 type ExamStat struct {
 	ExamID   string  `json:"examId"`

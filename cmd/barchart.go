@@ -29,6 +29,18 @@ func printExamBars(stats []core.ExamStat) {
 	termui.PrintBars(items, "  (no attempts yet)")
 }
 
+// printTagBars renders a bar chart of tag accuracy, in the order given
+// (unlike printTopicBars/printExamBars, callers like the "weakest tags"
+// section already control the order — e.g. weakest-first — so this doesn't
+// re-sort).
+func printTagBars(stats []core.TagStat) {
+	items := make([]termui.BarItem, len(stats))
+	for i, s := range stats {
+		items[i] = termui.BarItem{Label: s.Tag, Fraction: s.Accuracy, Detail: countDetail(s.Correct, s.Answered)}
+	}
+	termui.PrintBars(items, "  (no tags with enough attempts yet)")
+}
+
 func countDetail(correct, answered int) string {
 	return fmt.Sprintf("(%d/%d)", correct, answered)
 }

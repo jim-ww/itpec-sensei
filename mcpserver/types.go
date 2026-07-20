@@ -64,8 +64,9 @@ type undoLastAnswerOut struct {
 }
 
 type getProgressSummaryIn struct {
-	Scope  string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
-	Period string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
+	Scope       string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
+	Period      string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
+	WeakestTags int    `json:"weakestTags,omitempty" jsonschema:"how many of the weakest tags to include in tagStats (by lowest accuracy, min. 3 attempts each), sorted weakest first; default (or 0) is 10, pass -1 for unlimited"`
 }
 
 type partStatOut struct {
@@ -79,6 +80,13 @@ type partStatOut struct {
 
 type topicStatOut struct {
 	Topic    string  `json:"topic"`
+	Answered int     `json:"answered"`
+	Correct  int     `json:"correct"`
+	Accuracy float64 `json:"accuracy"`
+}
+
+type tagStatOut struct {
+	Tag      string  `json:"tag"`
 	Answered int     `json:"answered"`
 	Correct  int     `json:"correct"`
 	Accuracy float64 `json:"accuracy"`
@@ -99,6 +107,7 @@ type getProgressSummaryOut struct {
 	PartStats   []partStatOut  `json:"partStats"`
 	TopicStats  []topicStatOut `json:"topicStats,omitempty"`
 	ExamStats   []examStatOut  `json:"examStats,omitempty"`
+	TagStats    []tagStatOut   `json:"tagStats,omitempty" jsonschema:"weakest tags only (see weakestTags input), not the full tag vocabulary"`
 }
 
 type getQuestionIn struct {

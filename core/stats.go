@@ -217,6 +217,80 @@ func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, err
 	return stats, nil
 }
 
+// GetTagStats returns per-tag answered/correct/accuracy for scope, mirroring
+// GetTopicStats — except an attempt whose question carries N tags
+// contributes to all N tag buckets, since tags aren't mutually exclusive the
+// way topics are. Questions with no tags contribute to none (no
+// "Uncategorized" bucket, unlike topic).
+func (c *Core) GetTagStats(ctx context.Context, scope Scope) ([]TagStat, error) {
+	ids, err := c.scopeQuestionIDs(scope)
+	if err != nil {
+		return nil, err
+	}
+	rows, err := c.Repo.ListAttempts(ctx, AttemptFilter{QuestionIDs: questionIDList(ids)}, "", 0)
+	if err != nil {
+		return nil, err
+	}
+
+	type acc struct{ answered, correct int }
+	byTag := make(map[string]*acc)
+	for _, a := range rows {
+		q := c.Bank.Question(a.QuestionID)
+		if q == nil {
+			continue
+		}
+		for _, tag := range q.Tags {
+			t := byTag[tag]
+			if t == nil {
+				t = &acc{}
+				byTag[tag] = t
+			}
+			t.answered++
+			if a.Correct {
+				t.correct++
+			}
+		}
+	}
+
+	var stats []TagStat
+	for tag, a := range byTag {
+		s := TagStat{Tag: tag, Answered: a.answered, Correct: a.correct}
+		if a.answered > 0 {
+			s.Accuracy = float64(a.correct) / float64(a.answered)
+		}
+		stats = append(stats, s)
+	}
+	return stats, nil
+}
+
+// MinTagAttempts is the minimum answered count a tag needs before it's
+// eligible for a "weakest tags" view — keeps a single unlucky guess on a
+// barely-seen tag from dominating the list. Shared by both the CLI and MCP
+// surfaces of WeakestTags so the threshold can't drift between them.
+const MinTagAttempts = 3
+
+// WeakestTags narrows stats to tags with at least minAttempts answered,
+// sorted by accuracy ascending (weakest first), capped to the first limit
+// entries (limit <= 0 means unlimited).
+func WeakestTags(stats []TagStat, limit, minAttempts int) []TagStat {
+	var eligible []TagStat
+	for _, s := range stats {
+		if s.Answered >= minAttempts {
+			eligible = append(eligible, s)
+		}
+	}
+	sort.Slice(eligible, func(i, j int) bool {
+		if eligible[i].Accuracy != eligible[j].Accuracy {
+			return eligible[i].Accuracy < eligible[j].Accuracy
+		}
+		return eligible[i].Tag < eligible[j].Tag
+	})
+	if limit > 0 && limit < len(eligible) {
+		eligible = eligible[:limit]
+	}
+	return eligible
+}
+
 // GetExamStats returns per-exam answered/correct/accuracy for scope, mirroring GetTopicStats.
 func (c *Core) GetExamStats(ctx context.Context, scope Scope) ([]ExamStat, error) {
 	ids, err := c.scopeQuestionIDs(scope)

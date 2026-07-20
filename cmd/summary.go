@@ -9,8 +9,8 @@ import (
 )
 
 // runSummary implements the root command's default action:
-// `itpec-sensei [--scope=...] [--period=...]`.
-func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core.Period) error {
+// `itpec-sensei [--scope=...] [--period=...] [--weakest-tags=N]`.
+func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core.Period, weakestTagsLimit int) error {
 	summary, err := c.GetProgressSummary(ctx, scope, period)
 	if err != nil {
 		return fmt.Errorf("get progress summary: %w", err)
@@ -22,6 +22,14 @@ func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core
 	examStats, err := c.GetExamStats(ctx, scope)
 	if err != nil {
 		return fmt.Errorf("get exam stats: %w", err)
+	}
+	var weakestTags []core.TagStat
+	if weakestTagsLimit != 0 {
+		tagStats, err := c.GetTagStats(ctx, scope)
+		if err != nil {
+			return fmt.Errorf("get tag stats: %w", err)
+		}
+		weakestTags = core.WeakestTags(tagStats, weakestTagsLimit, core.MinTagAttempts)
 	}
 
 	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", scope, period)
@@ -50,6 +58,15 @@ func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core
 
 	fmt.Println("\nPer-exam accuracy:")
 	printExamBars(examStats)
+
+	if weakestTagsLimit != 0 {
+		fmt.Printf("\nWeakest tags (min. %d attempts", core.MinTagAttempts)
+		if weakestTagsLimit > 0 {
+			fmt.Printf(", top %d", weakestTagsLimit)
+		}
+		fmt.Println("):")
+		printTagBars(weakestTags)
+	}
 
 	return nil
 }
