@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jim-ww/itpec-sensei/internal/cli"
+	"github.com/jim-ww/itpec-sensei/cmd"
 )
 
 func main() {
-	if err := cli.NewRootCmd().ExecuteContext(context.Background()); err != nil {
+	if err := cmd.NewRootCmd().ExecuteContext(context.Background()); err != nil {
 		fmt.Fprintln(os.Stderr, "error:", err)
 		os.Exit(1)
 	}
