@@ -94,6 +94,7 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 				QuestionID:  r.QuestionID,
 				ExamID:      r.ExamID,
 				Topic:       r.Topic,
+				Tags:        r.Tags,
 				Answer:      r.Answer,
 				Correct:     r.Correct,
 				TimedOut:    r.TimedOut,

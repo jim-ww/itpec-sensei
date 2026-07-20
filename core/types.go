@@ -115,6 +115,7 @@ type AttemptRecord struct {
 	QuestionID  string    `json:"questionId"`
 	ExamID      string    `json:"examId"`
 	Topic       string    `json:"topic"`
+	Tags        []string  `json:"tags,omitempty"`
 	Answer      string    `json:"answer"`
 	Correct     bool      `json:"correct"`
 	TimedOut    bool      `json:"timedOut"`

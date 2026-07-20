@@ -33,6 +33,7 @@ func (c *Core) GetHistory(ctx context.Context, scope Scope, order HistoryOrder, 
 		if q := c.Bank.Question(a.QuestionID); q != nil {
 			r.ExamID = q.ExamID
 			r.Topic = q.Topic()
+			r.Tags = q.Tags
 		}
 		records[i] = r
 	}

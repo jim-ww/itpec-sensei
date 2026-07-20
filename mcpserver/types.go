@@ -22,9 +22,9 @@ type getNextQuestionIn struct {
 	ExamID            string   `json:"examId,omitempty" jsonschema:"filter by exam id"`
 	Tags              []string `json:"tags,omitempty" jsonschema:"filter by tag(s) — matches a question carrying ANY of these tags, not all of them; see list_tags for known values"`
 	Mode              string   `json:"mode,omitempty" jsonschema:"random | review (spaced repetition: questions due under a Leitner-box schedule based on your answer history) | weak (weighted towards topics with lower accuracy, including ones you haven't tried yet) | sequential (lowest-numbered question first, skipping ones already answered this session — advances through the pool in order across calls), default random"`
-	LightMode         bool   `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
-	ContinueSessionID int64  `json:"continueSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation (once a session is active, further calls just keep using it): attach to this not-completed session id instead of starting a new one, so answers keep accumulating in it — get its id from get_sessions with incompleteOnly=true. Its stored topic/examId become the defaults for this and later calls unless overridden."`
-	RepeatSessionID   int64  `json:"repeatSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation: start a brand-new session reusing another session's topic/examId/mode (get its id from get_sessions) — that session need not be incomplete. Mutually exclusive with continueSessionId."`
+	LightMode         bool     `json:"lightMode,omitempty" jsonschema:"if true, return the image with its original (light) colors instead of the default inverted (dark) version"`
+	ContinueSessionID int64    `json:"continueSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation (once a session is active, further calls just keep using it): attach to this not-completed session id instead of starting a new one, so answers keep accumulating in it — get its id from get_sessions with incompleteOnly=true. Its stored topic/examId become the defaults for this and later calls unless overridden."`
+	RepeatSessionID   int64    `json:"repeatSessionId,omitempty" jsonschema:"only meaningful on the first get_next_question call of a conversation: start a brand-new session reusing another session's topic/examId/mode (get its id from get_sessions) — that session need not be incomplete. Mutually exclusive with continueSessionId."`
 }
 
 type getNextQuestionOut struct {
@@ -150,14 +150,15 @@ type getHistoryIn struct {
 }
 
 type historyAttempt struct {
-	QuestionID  string `json:"questionId"`
-	ExamID      string `json:"examId"`
-	Topic       string `json:"topic"`
-	Answer      string `json:"answer"`
-	Correct     bool   `json:"correct"`
-	TimedOut    bool   `json:"timedOut"`
-	TimeTakenMs int    `json:"timeTakenMs,omitempty"`
-	AnsweredAt  string `json:"answeredAt"`
+	QuestionID  string   `json:"questionId"`
+	ExamID      string   `json:"examId"`
+	Topic       string   `json:"topic"`
+	Tags        []string `json:"tags,omitempty"`
+	Answer      string   `json:"answer"`
+	Correct     bool     `json:"correct"`
+	TimedOut    bool     `json:"timedOut"`
+	TimeTakenMs int      `json:"timeTakenMs,omitempty"`
+	AnsweredAt  string   `json:"answeredAt"`
 }
 
 type getHistoryOut struct {

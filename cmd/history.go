@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -66,10 +67,10 @@ func newHistoryCmd(app *App) *cobra.Command {
 				}
 				rows[i] = []string{
 					r.AnsweredAt.Local().Format("2006-01-02 15:04:05"),
-					r.ExamID, r.Topic, r.Answer, result, r.QuestionID,
+					r.ExamID, r.Topic, strings.Join(r.Tags, ", "), r.Answer, result, r.QuestionID,
 				}
 			}
-			termui.PrintTable([]string{"Answered At", "Exam", "Topic", "Answer", "Result", "Question"}, rows)
+			termui.PrintTable([]string{"Answered At", "Exam", "Topic", "Tags", "Answer", "Result", "Question"}, rows)
 			fmt.Println("\n(* = answered after the per-question time limit)")
 
 			return nil
