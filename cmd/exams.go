@@ -17,7 +17,6 @@ func newExamsCmd(app *App) *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("list exams: %w", err)
 			}
-			fmt.Println("itpec-sensei — exams")
 			for _, id := range exams {
 				fmt.Println(" ", id)
 			}

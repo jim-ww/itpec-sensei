@@ -16,7 +16,6 @@ func newTagsCmd(app *App) *cobra.Command {
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			tags := app.Core.Bank.Tags()
-			fmt.Println("itpec-sensei — tags")
 			for _, tag := range tags {
 				fmt.Println("  ", tag)
 			}

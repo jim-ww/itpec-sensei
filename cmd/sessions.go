@@ -47,10 +47,10 @@ func newSessionsCmd(app *App) *cobra.Command {
 			}
 
 			if incomplete {
-				fmt.Println("itpec-sensei — resumable practice sessions")
+				fmt.Println("resumable practice sessions")
 				fmt.Println()
 			} else {
-				fmt.Printf("itpec-sensei — practice sessions (scope=%s, order=%s)\n\n", scope, order)
+				fmt.Printf("practice sessions (scope=%s, order=%s)\n\n", scope, order)
 			}
 			if len(records) == 0 {
 				fmt.Println("No sessions recorded yet.")

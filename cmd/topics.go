@@ -19,7 +19,6 @@ func newTopicsCmd(app *App) *cobra.Command {
 				return fmt.Errorf("list topics: %w", err)
 			}
 
-			fmt.Println("itpec-sensei — topics")
 			printGroup := func(label string, topics []string) {
 				if len(topics) == 0 {
 					return
