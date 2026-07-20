@@ -1,0 +1,1133 @@
+{
+  "examId": "2022A_FE_AM",
+  "source": "2022A_FE_AM_Question.pdf",
+  "questionCount": 79,
+  "questions": [
+    {
+      "globalId": "2022A_FE_AM#1",
+      "number": 1,
+      "stem": "For an 8-bit binary integer, which of the following sets the least significant bit to 1 while leaving the other bits unchanged?",
+      "options": {
+        "a": "Perform bitwise AND operation with 00000001.",
+        "b": "Perform bitwise NAND operation with 11111110.",
+        "c": "Perform bitwise OR operation with 00000001.",
+        "d": "Perform bitwise XOR operation with 00000001."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#2",
+      "number": 2,
+      "stem": "Which of the following is an appropriate explanation of the loss of significance?",
+      "options": {
+        "a": "It occurs when the result of an operation exceeds the maximum handle limit and raises an exception.",
+        "b": "It occurs when two nearly equal floating-point numbers are subtracted to produce a result of unacceptably reduced significant digits.",
+        "c": "It refers to a rounding error that occurs when the part smaller than the least significant digit of the result is rounded off, up, or down in floating-point operations.",
+        "d": "It refers to the case when two floating-point numbers are added, but the less significant digits of either one do not affect the result."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#3",
+      "number": 3,
+      "stem": "When two dice are rolled, what is the probability that the sum of the dice is 5? Here, the two dice are fair and independent.",
+      "options": {
+        "a": "1/18",
+        "b": "1/12",
+        "c": "1/9",
+        "d": "1/6"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#4",
+      "number": 4,
+      "stem": "What is the value of the following arithmetic expression in reverse Polish notation? 9 2 1 + – 3 ×",
+      "options": {
+        "a": "0",
+        "b": "4",
+        "c": "10",
+        "d": "18"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#5",
+      "number": 5,
+      "stem": "What is the Hamming distance of bit strings 10101 and 11110?",
+      "options": {
+        "a": "0",
+        "b": "2",
+        "c": "3",
+        "d": "5"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#6",
+      "number": 6,
+      "stem": "There are three (3) blue balls and four (4) green balls in a box. When two balls are randomly taken out from the box, what is the probability that both are blue?",
+      "options": {
+        "a": "2/49",
+        "b": "1/15",
+        "c": "1/7",
+        "d": "9/49"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#7",
+      "number": 7,
+      "stem": "Five (5) characters, A, C, K, S, and T, are input in this order. When using stacks, what is the minimum number of stacks required to rearrange the characters and output S, T, A, C, and K, in this order? Here, when a pop operation is performed for any stack, the popped character always becomes an output. Also, characters cannot be moved between stacks.",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#8",
+      "number": 8,
+      "stem": "When a two-dimensional array A(5,5) is mapped to computer memory (i.e. a one- dimensional array) in row-major (row-directional) order or column-major (column- directional) order, how many elements occupy the same memory addresses in both cases? Here, the first element A(1,1) is mapped to the same starting memory address in either case.",
+      "options": {
+        "a": "2",
+        "b": "3",
+        "c": "4",
+        "d": "5"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#9",
+      "number": 9,
+      "stem": "Which of the following characterizes the hash method in table search?",
+      "options": {
+        "a": "It determines the storage location using a function of a key.",
+        "b": "It is a method that avoids collisions among storage locations.",
+        "c": "It is one of the methods that use a binary tree.",
+        "d": "It takes time almost proportional to the table size for searching."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#10",
+      "number": 10,
+      "stem": "Which of the following is a technology used to provide dynamic UI contents without reloading the entire web page by using an asynchronous communication feature of JavaScript?",
+      "options": {
+        "a": "Ajax",
+        "b": "CSS",
+        "c": "RSS",
+        "d": "SNS"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#11",
+      "number": 11,
+      "stem": "There is a 32-bit microprocessor with 32-bit external data bus, driven by 64 MHz input clock, and the processor takes 8 input clock cycles to complete 1 bus cycle. What is the theoretical maximum data transfer rate in megabytes per second (MB/s) for the external data bus of the processor?",
+      "options": {
+        "a": "3",
+        "b": "32",
+        "c": "256",
+        "d": "320"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#12",
+      "number": 12,
+      "stem": "There is a computer that has an average instruction execution time of 20 nanoseconds. What is the performance of this computer in MIPS?",
+      "options": {
+        "a": "5",
+        "b": "10",
+        "c": "20",
+        "d": "50"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#13",
+      "number": 13,
+      "stem": "There is a disk drive that has a capacity of 8 GB. The drive has five (5) platters with two (2) surfaces: 10,000 tracks per surface and 200 sectors per track. How many bytes are in each sector? Here, 1 GB is 1,000,000,000 bytes.",
+      "options": {
+        "a": "100",
+        "b": "200",
+        "c": "400",
+        "d": "800"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#14",
+      "number": 14,
+      "stem": "Which of the following is a memory device that stores programs or data in factories and only has the read operation for the stored programs or data?",
+      "options": {
+        "a": "DRAM",
+        "b": "Flash memory",
+        "c": "Mask ROM",
+        "d": "SRAM"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#15",
+      "number": 15,
+      "stem": "An information processing system consists of a database and web server with the specifications shown in the table below. Server Type Upper Limit of CPU Utilization Transaction Processing Time required for a CPU (in milliseconds/transaction) Database 80 % 5 Web 90 % 4 When the throughput of an entire processing system is determined by the throughput of the server with the lowest throughput, what is the throughput of the entire processing system in TPS (transactions per second)? Here, the throughput of a server is calculated by multiplying the number of transactions in a second with the upper limit of CPU utilization. A database and web server perform the processing independently, and there is one CPU in each server.",
+      "options": {
+        "a": "160",
+        "b": "225",
+        "c": "250",
+        "d": "385"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#16",
+      "number": 16,
+      "stem": "Which of the following is the approximate availability of the entire system in the figure below? The availability is calculated by rounding off to two decimal places. The numeric value within parentheses is the availability of each device, and the system is available when two or more of the devices connected in parallel are operating in the left part (device 1 to 3) and one or more of the devices connected in parallel is operating in the right part (device 4 to 5). Device 1 (0.9) Device 4 (0.9) Device 2 (0.8) Device 5 (0.9) Device 3 (0.9)",
+      "options": {
+        "a": "0.65",
+        "b": "0.81",
+        "c": "0.94",
+        "d": "0.99"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#17",
+      "number": 17,
+      "stem": "On a computer with virtual memory, the number of blocks in real memory is three (3). One of the two (2) algorithms of FIFO and LFU (least frequently used) is used for selecting the page to be removed from real memory. When five (5) pages are referenced in the page- reference sequence shown below as a string, which of the following is an appropriate combination of the number of page fault operations for each algorithm? Here, the three (3) blocks in the real memory are initially empty. [Page reference string] 1, 3, 2, 1, 4, 5, 2, 3, 4, 5 FIFO LFU",
+      "options": {
+        "a": "3 2",
+        "b": "4 6",
+        "c": "5 3",
+        "d": "6 9"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#18",
+      "number": 18,
+      "stem": "In an OS, task scheduling is performed by the priority order method. The table below shows the priorities for three (3) tasks A to C and the execution sequence and execution time of the CPU and I/O device for the tasks when each task is executed individually. What is the idle time of the CPU in milliseconds from the time when the three (3) tasks are set to the ready state to the time when the execution of all of the tasks is finished? Here, there is one (1) CPU, the CPU consists of one (1) core, there is no I/O contention, and no overhead of the OS is considered. In the table below, the numbers in parentheses indicate the execution time for each operation. Tasks Priority Execution sequence and execution time (in milliseconds) when each task is executed individually A High CPU(3) → I/O(5) → CPU(2) B Medium CPU(2) → I/O(6) → CPU(2) C Low CPU(1) → I/O(5) → CPU(1)",
+      "options": {
+        "a": "2",
+        "b": "3",
+        "c": "4",
+        "d": "5"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#19",
+      "number": 19,
+      "stem": "Which of the following is the standard API (Application Programming Interface) used by a Java application to access a database?",
+      "options": {
+        "a": "HTML",
+        "b": "Java VM",
+        "c": "JDBC",
+        "d": "SQL"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#20",
+      "number": 20,
+      "stem": "A half adder is a logic circuit that performs the addition of two single-bit binary numbers and outputs the sum and carry. The truth table of a half adder is shown in the table below. Which of the following is an appropriate logic diagram of the half adder? Inputs Outputs A B C (Carry) S (Sum) 0 0 0 0 0 1 0 1 1 0 0 1 1 1 1 0",
+      "options": {
+        "a": "",
+        "b": "A A S S B B C C",
+        "c": "",
+        "d": "A A S S B B C C"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#21",
+      "number": 21,
+      "stem": "By using a sensor that detects changes in shape, the condition of infrastructure such as elevated highways can be monitored and maintained. Which of the following is a sensor that is used for this purpose?",
+      "options": {
+        "a": "Gyro",
+        "b": "Hall element",
+        "c": "Strain gage",
+        "d": "Thermistor"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#22",
+      "number": 22,
+      "stem": "Which of the following uses a flip-flop circuit in a memory cell?",
+      "options": {
+        "a": "DRAM",
+        "b": "EEPROM",
+        "c": "SDRAM",
+        "d": "SRAM"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#23",
+      "number": 23,
+      "stem": "For a given decimal data, the check digit is calculated with the method below and is appended to the original data. When the given data is 7394, what is the result? Here, the weight is 1234 and the base number is 11. (1) For each digit of the data, calculate the product with the digit at the same radix of the weight and calculate the sum of these products. (2) Calculate the remainder after the division of the sum by the base number. (3) Subtract the remainder from the base number and let the last digit of the result be the check digit.",
+      "options": {
+        "a": "73940",
+        "b": "73941",
+        "c": "73944",
+        "d": "73947"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#24",
+      "number": 24,
+      "stem": "Which of the following is the most appropriate explanation of augmented reality (AR)?",
+      "options": {
+        "a": "By appealing to the five senses through equipment, such as a head-mounted display, a person can experience locations or worlds that do not exist as if they were real.",
+        "b": "By constructing a 3D virtual space that is natural to humans and changing the virtual space in accordance with a person’s movement, he or she can feel as if he or she were in that place.",
+        "c": "By seamlessly interweaving computer-generated information with the physical world, the viewer can perceive it as an immersive aspect of the real environment.",
+        "d": "By viewing a video recorded in the past, the viewer can feel as if he or she were in that era and at that location."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#25",
+      "number": 25,
+      "stem": "Which of the following is an appropriate description of the mapping between a relational model and relational database as its implementation?",
+      "options": {
+        "a": "A domain is mapped to a character type or a character string type.",
+        "b": "A relation is mapped to a table.",
+        "c": "Attributes and columns are ordered from left to right.",
+        "d": "Neither tuples nor rows have duplicates."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#26",
+      "number": 26,
+      "stem": "In a relational database, which of the following is an appropriate purpose for defining a foreign key?",
+      "options": {
+        "a": "To prevent fragmentation in the record storage area due to the repeated deletion and insertion of records",
+        "b": "To provide a constraint to maintain referential consistency between the records of related tables",
+        "c": "To restore as many records as possible when they are damaged by failure, based on the mutual relationship between tables",
+        "d": "To speed up the searching and updating of related tables by storing them closer together"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#27",
+      "number": 27,
+      "stem": "In the process of table implementation, which of the following is an appropriate SQL statement that removes a column in an existing table?",
+      "options": {
+        "a": "To enable efficient access to the storage location of data so that the search speed can be improved",
+        "b": "To ensure that no value is duplicated in a column",
+        "c": "To match the value of the column of the foreign key with the value of the primary key of another table",
+        "d": "To save disk space when a single large table is distributed and saved on several disks"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#29",
+      "number": 29,
+      "stem": "In a company, the received-orders are monitored monthly based on the customer file, product file, person-in-charge file, and the current month’s received-orders file. When the items of each file are as shown in the table below, which of the following can be retrieved for the received orders of current month and the three (3) previous months using the four (4) files? File Items Remarks Customer code, name, person-in-charge code, amount of orders received in the There is one (1) Customer previous month, amount of orders received person in charge of two (2) months ago, amount of orders each customer received three (3) months ago Product code, name, amount of orders received in the previous month, amount of Product orders received two (2) months ago, amount of orders received three (3) months ago Person-in-charge Person-in-charge code, name of the person Total amount of Current month’s Customer code, product code, amount of orders received in received orders orders received the current month",
+      "options": {
+        "a": "Customer-wise received orders by product",
+        "b": "Customer-wise received orders by the person in charge",
+        "c": "Person-in-charge-wise received orders by product",
+        "d": "Product-wise received orders by customer"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#30",
+      "number": 30,
+      "stem": "In an IP network consisting of four (4) hosts, two (2) L2 switches, and a router shown below, a packet is transmitted from PC01 to PC03. Which of the following is an appropriate combination of the source and destination addresses of this packet when it leaves Switch1? Destination MAC Source MAC Destination IP Source IP",
+      "options": {
+        "a": "cc:cc:cc:cc:cc:cc aa:aa:aa:aa:aa:aa 192.168.1.11 192.168.1.31",
+        "b": "cc:cc:cc:cc:cc:cc aa:aa:aa:aa:aa:aa 192.168.2.31 192.168.1.31",
+        "c": "ee:ee:ee:ee:ee:ee aa:aa:aa:aa:aa:aa 192.168.1.11 192.168.1.31",
+        "d": "ee:ee:ee:ee:ee:ee aa:aa:aa:aa:aa:aa 192.168.2.31 192.168.1.31"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#31",
+      "number": 31,
+      "stem": "Which of the following is a TCP/IP protocol that is used to find the corresponding MAC address from an IP address?",
+      "options": {
+        "a": "ARP",
+        "b": "ICMP",
+        "c": "IP",
+        "d": "RARP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#32",
+      "number": 32,
+      "stem": "Which of the following is the subnet mask corresponding to an IP address in slash notation, 192.168.22.31/27?",
+      "options": {
+        "a": "255.255.255.192",
+        "b": "255.255.255.224",
+        "c": "255.255.255.248",
+        "d": "255.255.255.252"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#33",
+      "number": 33,
+      "stem": "Which of the following protocol supports the congestion control feature?",
+      "options": {
+        "a": "ARP",
+        "b": "ICMP",
+        "c": "TCP",
+        "d": "UDP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#34",
+      "number": 34,
+      "stem": "Which of the following is a global IPv4 address?",
+      "options": {
+        "a": "10.10.10.10",
+        "b": "129.10.9.7",
+        "c": "172.16.1.5",
+        "d": "192.168.20.3"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#35",
+      "number": 35,
+      "stem": "The three properties of information security are confidentiality, integrity, and availability. Which of the following is an attack on integrity?",
+      "options": {
+        "a": "DDoS",
+        "b": "Phishing",
+        "c": "Shoulder surfing",
+        "d": "Website defacement"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#36",
+      "number": 36,
+      "stem": "When a system with a database is being developed, a security requirement states that the data must be encrypted with a key before being saved to the database, and the same key is required for decryption when the data is being read. Which of the following is an appropriate algorithm that can be used to satisfy the security requirement?",
+      "options": {
+        "a": "AES",
+        "b": "Diffie-Hellman",
+        "c": "RSA",
+        "d": "SHA-256"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is a cyber-attack that redirects a victim to a fake website by manipulating DNS to obtain personal information from the victim?",
+      "options": {
+        "a": "Pharming",
+        "b": "Phishing",
+        "c": "Spamming",
+        "d": "Trojan horse"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#38",
+      "number": 38,
+      "stem": "When security risk management processes incorporate the approach of the PDCA (Plan, Do, Check, Act) cycle, which of the following is a process that belongs to Act?",
+      "options": {
+        "a": "Establish a security policy and develop a security risk management plan.",
+        "b": "Implement the security risk management plan.",
+        "c": "Maintain and improve the security risk management plan by learning from incidents.",
+        "d": "Monitor the security risks as planned in the risk management plan."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#39",
+      "number": 39,
+      "stem": "Which of the following is the protocol that is used together with HTTP in HTTPS?",
+      "options": {
+        "a": "SHA",
+        "b": "SSH",
+        "c": "TLS",
+        "d": "VPN"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#40",
+      "number": 40,
+      "stem": "Which of the following is an appropriate term associated with the fraudulent action of impersonating an authorized person?",
+      "options": {
+        "a": "Destruction",
+        "b": "Falsification",
+        "c": "Spoofing",
+        "d": "Tapping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#41",
+      "number": 41,
+      "stem": "An attacker calls a corporate help desk, masquerading as an employee who has forgotten his password. The help desk staff resets the password to the company default “password1. ” The attacker then uses this password to access the company network and information on the server. What is this type of attack called?",
+      "options": {
+        "a": "Buffer overflow attack",
+        "b": "Denial-of-Service attack",
+        "c": "Shoulder surfing",
+        "d": "Social engineering"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#42",
+      "number": 42,
+      "stem": "When a biometric authentication system is introduced, which of the following is the most appropriate point to be taken into account?",
+      "options": {
+        "a": "Adjusting the device by considering both the probability of incorrectly rejecting an authorized user and that of incorrectly accepting an unauthorized user",
+        "b": "Preventing the decrease in the probability of incorrectly rejecting an authorized user by using a product that frequently updates the malware definition file",
+        "c": "Requesting an entrusted third party to issue a digital certificate for the person to be authenticated",
+        "d": "Setting the appropriate amount of knowledge for authentication to balance the amounts of knowledge that cannot be easily guessed and that can be memorized by a person to be authenticated"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#43",
+      "number": 43,
+      "stem": "Which of the following is the purpose of using a message authentication code?",
+      "options": {
+        "a": "To check the encryption method of a message",
+        "b": "To check the overview of a message",
+        "c": "To confirm that there is no falsification of a message",
+        "d": "To secure the confidentiality of a message"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#44",
+      "number": 44,
+      "stem": "Which of the following is an explanation of WAF?",
+      "options": {
+        "a": "It centrally stores and manages operation logs from various systems to quickly detect and analyze an event that can be a security threat.",
+        "b": "It is a standard of encryption methods for wireless LAN, certified by the Wi-Fi Alliance, and supports AES encryption.",
+        "c": "It is equipped with firewall functions and has antivirus, intrusion detection, and other functions that work together to manage multiple security functions in an integrated manner.",
+        "d": "It monitors the accesses to a website, and when it detects a pattern that is likely from an attacker, it blocks those accesses."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#45",
+      "number": 45,
+      "stem": "Which of the following is an appropriate description of a UML use case diagram?",
+      "options": {
+        "a": "It shows the behavior during the object’s life cycle using finite state transitions.",
+        "b": "It shows the exchange of messages among objects and objects’ lifelines in a time series.",
+        "c": "It shows the flow from one activity to another activity in a system or business process.",
+        "d": "It shows the scenarios for how actors, i.e., external users or machines, interact with a system."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#46",
+      "number": 46,
+      "stem": "In UML 2.0, which of the following is a diagram that represents the interactions between objects in time series?",
+      "options": {
+        "a": "Activity diagram",
+        "b": "Component diagram",
+        "c": "Sequence diagram",
+        "d": "State transition diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#47",
+      "number": 47,
+      "stem": "Which of the following is a structural design pattern that allows classes with incompatible interfaces to work together?",
+      "options": {
+        "a": "Adapter",
+        "b": "Factory",
+        "c": "Iterator",
+        "d": "Singleton"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#48",
+      "number": 48,
+      "stem": "Which of the following is the most appropriate description of a stack trace that is used for debugging a program?",
+      "options": {
+        "a": "A trace of call stack methods/functions/subroutines",
+        "b": "Stacking/gathering the traces left by other programs",
+        "c": "The traces left in memory from a stack data structure",
+        "d": "Tracing stack data structure that is used in the program"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#49",
+      "number": 49,
+      "stem": "Among the software development activities, which of the following corresponds to refactoring that is emphasized in agile development?",
+      "options": {
+        "a": "To improve the maintainability of a program, the internal structure of a program is changed without any change in the external specifications.",
+        "b": "To improve the quality of a program, two (2) programmers cooperate and perform the coding of one (1) program.",
+        "c": "To obtain feedback from the users, a prototype of the software is created at an early stage.",
+        "d": "To promptly develop a program, test cases are set in advance, and then the program is coded."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#50",
+      "number": 50,
+      "stem": "In eXtreme Programming (XP), which of the following is advocated as a practice?",
+      "options": {
+        "a": "Inspection",
+        "b": "Pair programming",
+        "c": "Structured design",
+        "d": "Use case utilization"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#51",
+      "number": 51,
+      "stem": "A project consisting of several activities has a single critical path. Which of the following is an appropriate description of critical path activities for the project?",
+      "options": {
+        "a": "Critical path activities can be performed in parallel.",
+        "b": "Critical path activities have a non-zero total float time.",
+        "c": "For each critical path activity, the early start date equals the late start date.",
+        "d": "The activity with the longest duration in the project is one of the critical path activities."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#52",
+      "number": 52,
+      "stem": "Which of the following is an appropriate description of the Responsibility Assignment Matrix that is used for project human resource management?",
+      "options": {
+        "a": "Allocating work packages to those who are responsible for project work",
+        "b": "Defining the limits of the project sponsor’s responsibilities",
+        "c": "Defining the terms of reference of the project",
+        "d": "Monitoring the current engagement level of stakeholders"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#53",
+      "number": 53,
+      "stem": "Which of the following is an appropriate purpose for using a WBS (work breakdown structure) in a software development project?",
+      "options": {
+        "a": "To clarify the time sequence of activities and understand the critical path that should be intensively managed",
+        "b": "To decompose a development task into smaller sub-tasks with a manageable size and organize them into a hierarchical structure",
+        "c": "To optimize the total cost when there is a trade-off relationship between the number of days and the costs required for development",
+        "d": "To show the schedule of activities by using bars and clarify the start dates and end dates of the activities as well as the progress at the current point"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#54",
+      "number": 54,
+      "stem": "Which of the following is an appropriate description for group decision-making techniques used in the estimation process of an activity duration?",
+      "options": {
+        "a": "The estimates created using these techniques may include contingency reserves, sometimes referred to as time reserves or buffers, in the project schedule to account for schedule uncertainty.",
+        "b": "These are team-based approaches, such as brainstorming, the Delphi, or nominal group techniques, which are useful for engaged team members to improve their estimation accuracy and commit to the estimates.",
+        "c": "These techniques use statistical relationships between historical data and project parameters to calculate an estimate for project cost, budget, or duration.",
+        "d": "Using these techniques, a group of experts, guided by historical information, can provide duration estimate information or recommended maximum activity durations from prior similar projects."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#55",
+      "number": 55,
+      "stem": "Which of the following is an appropriate meaning of a mission-critical system?",
+      "options": {
+        "a": "As with an operating system, it is an indispensable system necessary for operating a business system.",
+        "b": "It is a system that has a significant impact on corporate activities and society when a failure occurs.",
+        "c": "It is a system that is first installed on a trial basis, and if successful, a full-scale installation is implemented.",
+        "d": "It is a system where the operating performance is close to the limit."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#56",
+      "number": 56,
+      "stem": "Which of the following is an appropriate description of the relationship between a record of an incident and a record of a problem in IT service management?",
+      "options": {
+        "a": "A cross-reference to the incident that triggered the record of the problem is included in the record of the problem.",
+        "b": "If known errors have been identified at the time of ending the record of the problem, the record of the incident that triggered the record of the problem is deleted.",
+        "c": "One (1) problem record is always associated with one (1) incident record.",
+        "d": "Problems are classified and recorded by a different criterion from the classification of incidents."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#57",
+      "number": 57,
+      "stem": "A system is planned to be operational 22 hours per day. However, there are two (2) failures with downtimes of 0.5 hours and 1.5 hours in 100 days. Which of the following is the approximate MTBF of this system during the period in hours?",
+      "options": {
+        "a": "0.00091",
+        "b": "1.0",
+        "c": "2.0",
+        "d": "1100"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#58",
+      "number": 58,
+      "stem": "When a business continuity plan (BCP) is developed given the possibility of a system failure, which of the following is the item that is implemented as part of business impact analysis?",
+      "options": {
+        "a": "Collectively educating the concerned persons about the alternate procedures and recovery procedures during an information system failure",
+        "b": "Determining the maximum allowable downtime for the information system",
+        "c": "Executing a test to verify the effectiveness of BCP",
+        "d": "Revising the contents of the BCP given changes in the internal and external environment of the information system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#59",
+      "number": 59,
+      "stem": "Which of the following is the most appropriate purpose for which a system auditor exchanges opinions with an audited department concerning the draft version of an audit report?",
+      "options": {
+        "a": "To confirm that there are no factual errors in the findings and recommendations to be described in the audit report",
+        "b": "To issue the audit report to the audited department before the audit report is submitted to the person who is requesting the audit",
+        "c": "To receive the approval of the responsible person of the audited department concerning the recommendations described in the audit report",
+        "d": "To substitute with additional auditing activities concerning the part of the audit report for which evidence is insufficient by orally confirming with the audited department"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#60",
+      "number": 60,
+      "stem": "Which of the following is the appropriate activity performed by a system auditor who audits access control?",
+      "options": {
+        "a": "Creating and storing the access control records for the software",
+        "b": "Establishing an access control policy for the network",
+        "c": "Implementing the access control procedures for hardware",
+        "d": "Viewing the access control rules for data"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#61",
+      "number": 61,
+      "stem": "Which of the following is a description of SOA?",
+      "options": {
+        "a": "It consists of four (4) main concepts; the business scheme, data scheme, application and processing scheme, and technical scheme, and it aims to optimize the business and the system.",
+        "b": "It makes it easier to address a change in the business by constructing software from components called services.",
+        "c": "It performs design at the component levels by using a combination of three (3) logical structures; a sequence, selection, and iteration.",
+        "d": "It uses a data flow diagram and simultaneously creates a model regarding information and a model regarding functions."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#62",
+      "number": 62,
+      "stem": "Which of the following is an appropriate description of BPR (Business Process Reengineering)?",
+      "options": {
+        "a": "BPR is a management practice used to provide the overall governance of an organization in a business process environment to improve agility and operational performance.",
+        "b": "BPR is a management strategy used to automate key business processes that helps in saving time, promoting efficiency, and ultimately reducing costs to enhance the value of an organization.",
+        "c": "BPR is a management system used in marketing and business to automate the sales activities, such as contact management, order taking and fulfillment, information sharing, inventory monitoring, and sales forecast analysis.",
+        "d": "BPR is a management technique used to redesign and restructure value-creating processes in an organization to gain significant benefits in productivity, profitability, service, and quality through maximizing the potential of individuals and teams."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#63",
+      "number": 63,
+      "stem": "Which of the following is a usage scenario for the adoption of UML as a technique for visualizing business processes?",
+      "options": {
+        "a": "Diagrams are shown by using a data-oriented approach where objects are handled as entities, their attributes, and the relationships among the entities.",
+        "b": "To represent processes by using data flows, sources and sinks of data, data stores, and data processes are connected with arrows that indicate data flow.",
+        "c": "To represent processes from multiple viewpoints, some purpose-specific modeling methods are used, and each model is depicted by using standardized notation rules for object modeling.",
+        "d": "To thoroughly represent the functions of a process, the events that occur in response to a single request are described by using the conditional branch format."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#64",
+      "number": 64,
+      "stem": "In computerization planning, which of the following is an activity that should be performed?",
+      "options": {
+        "a": "Clarifying what roles are assigned to the business and information-system departments when the organizational structure of system development is planned and clarifying the basis of cost calculation for the development, operation, and maintenance when considering the costs",
+        "b": "Determining interfaces, such as screens or forms, based on the requirements definition document and describing them in the design document",
+        "c": "Performing maintenance and management of the system so that it conforms to the business and environment and analyzing details and clarifying the potential impacts of modification requests",
+        "d": "Performing system startup and shutdown, monitoring, and file maintenance in a planned manner and verifying that business is being carried out smoothly"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#65",
+      "number": 65,
+      "stem": "When an information system is procured through the steps shown in the figure below, which of the following is a word or phrase that should be inserted in the blank B? The orderer indicates the purpose of the systemization and the details A of the business to a vendor, and requests provision of information. The orderer indicates the system that is the target of the procurement B and conditions of the procurement to a vendor, and requests submission of a proposal document. The orderer determines a procurement source on the basis of the C proposal document and capabilities of the vendor. The orderer and the procurement source mutually confirm their roles D and the assignment of responsibilities on a document.",
+      "options": {
+        "a": "Concluding a contract",
+        "b": "RFI",
+        "c": "RFP",
+        "d": "Selecting a provider"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#66",
+      "number": 66,
+      "stem": "In a growth matrix proposed by Ansoff, which of the following is a strategy for expanding a business with an existing product in an existing market?",
+      "options": {
+        "a": "Diversification",
+        "b": "Market development",
+        "c": "Market penetration",
+        "d": "Product development"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#67",
+      "number": 67,
+      "stem": "PEST analysis is used to analyze the external environment in determining a business strategy. Which of the following is an appropriate set of external environmental factors that PEST analysis analyzes?",
+      "options": {
+        "a": "Politics, Economics, Society, Technology",
+        "b": "Politics, Enterprises, Society, Time",
+        "c": "Price, Economics, Satisfaction, Technology",
+        "d": "Price, Enterprises, Safety, Time"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#68",
+      "number": 68,
+      "stem": "In a process that aims to produce ideal technology, technology follows an evolutionary process that progresses from the introduction stage, growth stage, maturity stage, and decline stage. Then, it transitions to the next technological phase. Which of the following is used to represent this technological evolution process?",
+      "options": {
+        "a": "Bathtub curve",
+        "b": "Demand curve",
+        "c": "Learning curve",
+        "d": "Technology S-curve"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#69",
+      "number": 69,
+      "stem": "When trial production is performed for components to be loaded into electrical appliances, which of the following is the least expensive development method? Here, the construction time of each process is six (6) months for the creation process, three (3) months for the modification process, and two (2) months for the evaluation process. The cost per one (1) person-month is 6,000 dollars for the creation process and 10,000 dollars for each of the modification and evaluation processes. Costs other than the purchase cost, outsourcing cost, and person-month cost shall not be considered. Purchase Outsourci Number of persons per month (persons) Development cost ng cost Creation Modification Evaluation method (dollars) (dollars) process process process Purchasing samples",
+      "options": {
+        "a": "200,000 0 0 4 1 and modifying them in-house Outsourcing in",
+        "b": "0 350,000 0 0 0 batches Modifying in-",
+        "c": "0 0 0 10 3 house assets Creating new",
+        "d": "products in- 0 0 10 0 2 house"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#70",
+      "number": 70,
+      "stem": "Which of the following is a characteristic of MRP?",
+      "options": {
+        "a": "The development, designing, and production preparation of a product are performed simultaneously in parallel.",
+        "b": "The number of required components is calculated on the basis of the standard production plan of a product.",
+        "c": "The production of a product is initiated after an order from a customer is received.",
+        "d": "Work instructions and transport instructions are provided by using a worksheet."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#71",
+      "number": 71,
+      "stem": "Which of the following is an explanation of the Kanban (just-in-time) system?",
+      "options": {
+        "a": "To improve work efficiency at each operation, parts and semi-finished products having unified specifications are procured.",
+        "b": "To minimize intermediate stock, parts required for the production line are procured from the previous process on the basis of a production plan.",
+        "c": "To procure parts efficiently, they are procured from affiliated companies.",
+        "d": "To procure parts of higher quality, parts are procured via competitive bidding among designated suppliers."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following is a description of Online-to-Offline in net business?",
+      "options": {
+        "a": "It is a business model that provides a basic service or product for free and charges a fee for advanced or special functions.",
+        "b": "It is a mechanism that can prevent trouble in electronic commerce, such as the case where the price is paid but the product is not delivered or the case where the product is sent but the price is not paid.",
+        "c": "It is a mechanism that leads a customer that uses mobile devices to purchase by guiding the customer from a virtual store to a real store or from a real store to a virtual store",
+        "d": "It is a scheme that starts production of the final product after receiving the order from a customer, in order to realize customization according to customer specifications."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#73",
+      "number": 73,
+      "stem": "A smart meter is a highly functional electricity meter with a function for communications and a function for the management of other devices. Which of the following is not appropriate as the purpose of installing a smart meter?",
+      "options": {
+        "a": "Continuing the power supply for a fixed amount of time by functioning as an auxiliary power source at the time of a power failure",
+        "b": "Improving the efficiency of meter reading work through automatic meter reading",
+        "c": "Increasing awareness of power-saving through visualization of the amount of power consumption",
+        "d": "Restraining peak power through control over power demand by using demand response"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is an explanation of a sharing economy?",
+      "options": {
+        "a": "It is a concept by which efficient management and operation of renewable energy and urban infrastructure are performed by using IT, which leads to an improvement in the quality of people’s lives and helps achieve continuous economic growth.",
+        "b": "It is a concept by which the productivity of an entire economy increases as a result of utilizing IT, and the demand-and-supply gap is eliminated via the progress of SCM, which leads to sustainable growth free from inflation.",
+        "c": "It is a mechanism by which over-the-counter and Internet sales are combined in a business transaction, and the strong points of both are utilized and linked to expanding overall sales.",
+        "d": "It is a mechanism mainly between individuals to share, lend, or borrow idle assets owned by individuals by utilizing the community functions of social media."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is a management organization that has the characteristic of both project and functional organizations being able to flexibly respond to changes in the business environment?",
+      "options": {
+        "a": "Divisional organization",
+        "b": "Hierarchical organization",
+        "c": "Line and staff organization",
+        "d": "Matrix organization"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is a process of discovering useful patterns and relationships by the analysis of large volumes of data?",
+      "options": {
+        "a": "Brainstorming",
+        "b": "Data mining",
+        "c": "Decision tree",
+        "d": "Document analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#77",
+      "number": 77,
+      "stem": "Which of the following is a chart that represents values over a period (frequently one year) and shows simultaneously monthly figures (or weekly or daily), cumulative totals, and the moving averages?",
+      "options": {
+        "a": "Pie intersection chart",
+        "b": "Radar chart",
+        "c": "SD chart",
+        "d": "Z chart (Z graph)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#78",
+      "number": 78,
+      "stem": "Company A purchased a machine for the original cost of $126,000. The salvage value after 6 years is $6,000. What is the annual depreciation expense (in dollars) by using the straight-line method?",
+      "options": {
+        "a": "12,000",
+        "b": "20,000",
+        "c": "21,000",
+        "d": "36,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2022A_FE_AM#79",
+      "number": 79,
+      "stem": "When the estimated probabilities for the number of units that are sold per day for a product are as listed in the table below and the profit per unit is 10 dollars, what is the number of purchased units where the expected value for profit becomes a maximum? Here, a disposal loss of 3 dollars per unit is incurred if the product remains unsold on the day it was purchased. Number of sold units 4 5 6 7 4 100% - - - Number of 5 30% 70% - - purchased units 6 30% 30% 40% - 7 30% 30% 30% 10%",
+      "options": {
+        "a": "4",
+        "b": "5",
+        "c": "6",
+        "d": "7"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2022A_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is an appropriate description of the scope of software protection under WTO’s Agreement on Trade-Related Aspects of Intellectual Property Rights (TRIPS)?",
+      "options": {
+        "a": "Algorithms and programming languages are protected.",
+        "b": "Application programs are protected but system programs such as an OS are not, as the value of the right is included in the hardware cost.",
+        "c": "Both source programs and object programs are protected.",
+        "d": "Documents that describe algorithms are protected, but programs created by using the algorithms are not."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

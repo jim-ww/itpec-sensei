@@ -1,0 +1,1164 @@
+{
+  "examId": "2021A_FE_AM",
+  "source": "2021A_FE_AM_Questions.pdf",
+  "questionCount": 80,
+  "questions": [
+    {
+      "globalId": "2021A_FE_AM#1",
+      "number": 1,
+      "stem": "What is the octal equivalent value of the hexadecimal number 7B5?",
+      "options": {
+        "a": "735",
+        "b": "3665",
+        "c": "7551",
+        "d": "7561"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#2",
+      "number": 2,
+      "stem": "For a non-negative integer x, which of the following gives the remainder after division of x by 8 as a result?",
+      "options": {
+        "a": "Performing a bitwise AND operation on x and 7",
+        "b": "Performing a bitwise AND operation on x and 248",
+        "c": "Performing a bitwise OR operation on x and 8",
+        "d": "Performing a bitwise OR operation on x and 15"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#3",
+      "number": 3,
+      "stem": "For three sets A, B and C, which of the following equalities holds? Here,  and  are the union and intersection symbols, respectively.",
+      "options": {
+        "a": "(A  B )  (A  C ) = B  (A  C)",
+        "b": "( A  B )  C = (A  C )  ( B  C )",
+        "c": "(A  C )  (B  A) = (A  B)  (B  C)",
+        "d": "(A  C )  (B  C) = (A  B)  C"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#4",
+      "number": 4,
+      "stem": "An adjacency matrix is used to indicate which vertices of a directed or undirected graph are adjacent to each other. Which of the following is an appropriate matrix that represents the directed graph below?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": "A B C A B C A B C A B C A 1 1 1 A 1 0 1 A 0 1 1 A 0 1 0 B 1 1 1 B 0 1 0 B 1 0 1 B 1 0 1 C 0 0 1 C 1 1 1 C 0 0 1 C 0 0 0"
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#5",
+      "number": 5,
+      "stem": "When sorting an array of n elements by using a randomized version of the quicksort algorithm, where the pivot is selected randomly, which of the following shows the average- case and the worst-case time complexities? Here, big-O notation, O(x), is used to denote the growth rate. Average-case time Worst-case time complexity complexity",
+      "options": {
+        "a": "O (n log n) O (n)",
+        "b": "O (n log n) O (n2)",
+        "c": "O (n2 log n) O (n)",
+        "d": "O (n2 log n) O (n2)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#6",
+      "number": 6,
+      "stem": "For an automaton with input and output symbols {0, 1} and a state transition diagram shown below, which of the following is the output string for the input string 0011001110? Here, S1 represents the initial state, and the label x/y on each arc indicates that if x is an input, then y is the corresponding output at the state transition. 0/0 1/1 1/0 1/1 S1 S2 S3 0/0 0/0",
+      "options": {
+        "a": "0001000110",
+        "b": "0001001110",
+        "c": "0010001000",
+        "d": "0011111110"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#7",
+      "number": 7,
+      "stem": "After the procedure shown below has been executed in the listed order, which value will be stored in variable y? Here, the stack and queue structures are initially empty, and the four types of operations are defined as shown below. [Operations] push(x): Add the value of x onto the top of the stack. pop(): Remove a value from the top of the stack, then return the value. enq(x): Add the value of x into the rear of the queue. deq(): Remove a value from the front of the queue, then return the value. [Procedure] enq(1) enq(2) push(3) push(deq()) enq(4) push(deq()) y ← pop()",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#8",
+      "number": 8,
+      "stem": "Which of the following is the name for the tree depicted below? Here, the number in each node represents the key of the node. 5 3 7 2 4 6 9 1 8 10",
+      "options": {
+        "a": "Balanced tree",
+        "b": "Binary search tree",
+        "c": "Max heap",
+        "d": "Min heap"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#9",
+      "number": 9,
+      "stem": "When the function M (n) is defined as shown below, what is the value of M (97)? n  10 ( n  100) M (n) = M ( M ( n  11 )) ( n  100 )",
+      "options": {
+        "a": "81",
+        "b": "86",
+        "c": "91",
+        "d": "96"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#10",
+      "number": 10,
+      "stem": "Which of the following is an appropriate description of XML?",
+      "options": {
+        "a": "An exclusive editor is required to produce XML documents.",
+        "b": "It is an integration of the logical structure and document style.",
+        "c": "It is based on HTML and offers more extended functions.",
+        "d": "The attributes and logical structure of a document can be defined with user-defined tags."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#11",
+      "number": 11,
+      "stem": "Which of the following is an appropriate term for a special register that contains the address of the next instruction to be fetched?",
+      "options": {
+        "a": "Accumulator",
+        "b": "Instruction register",
+        "c": "Program counter",
+        "d": "Status register"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#12",
+      "number": 12,
+      "stem": "In memory systems, when data is detected in the cache, it is known as a hit. When data is not detected in the cache, it is read from the main memory and is known as a miss. Which of the following is the approximate hit ratio for the specifications in the table below? Here, effective access time is calculated as the weighted average of hit time and miss time, and other overhead is ignored. Specifications Time (ns) Access time of the cache 100 Access time of the main memory 900 Effective access time of the processor 250",
+      "options": {
+        "a": "0.25",
+        "b": "0.35",
+        "c": "0.73",
+        "d": "0.81"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#13",
+      "number": 13,
+      "stem": "Which of the following is a computer architecture where each instruction is divided into multiple stages (e.g., fetch, decode, and execute) in the processor and multiple functional units execute two or more instructions in parallel by slightly shifting execution stages of the instructions?",
+      "options": {
+        "a": "Multicore",
+        "b": "Pipeline",
+        "c": "RISC",
+        "d": "VLIW"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#14",
+      "number": 14,
+      "stem": "Which of the following is a connection method that is referred to as a daisy chain?",
+      "options": {
+        "a": "A keyboard, a mouse, and a printer are connected to a USB hub, and the USB hub is connected to a PC.",
+        "b": "A PC and a measuring device are connected with RS-232C, and the PC and a printer are connected by USB.",
+        "c": "A PC is connected from its own Thunderbolt connection port with a cable to one of the two (2) 4K displays, each of which is equipped with two (2) Thunderbolt connection ports, and the display is connected to the other display with a cable.",
+        "d": "Several network cameras and PCs are connected to a network hub."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#15",
+      "number": 15,
+      "stem": "Which of the following is the appropriate description of RAID 5?",
+      "options": {
+        "a": "Bit-level striping with a dedicated parity disk",
+        "b": "Block-level striping with a dedicated parity disk",
+        "c": "Block-level striping with distributed parity disks",
+        "d": "Byte-level striping with a dedicated parity disk"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#16",
+      "number": 16,
+      "stem": "In the time-chart of a system shown below, the shaded parts represent the normal working hours of the system, and the white parts represent the time when the system is not available due to failure. The numbers inside each part indicate the start and end hours of each state. Which of the following is the availability of the system? 0~60 60~70 70~145 145~150 150~240 240~255 255~300",
+      "options": {
+        "a": "0.10",
+        "b": "0.82",
+        "c": "0.90",
+        "d": "0.98"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#17",
+      "number": 17,
+      "stem": "In Round Robin scheduling, the CPU-time is shared among processes on the basis of the predefined time slot. There are four processes, namely P1, P2, P3, and P4, and their corresponding CPU-execution times are shown in the table below. All four (4) processes arrive at time 0, in the given order, and waiting time is the total time for which a process has to wait before it obtains its time slice for execution. Each time slot is 10 milliseconds. Which of the following is the average waiting time in milliseconds for the processes to be executed in Round Robin? Process CPU-execution time P1 10 P2 23 P3 7 P4 3",
+      "options": {
+        "a": "10.75",
+        "b": "14.25",
+        "c": "15.00",
+        "d": "16.75"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#18",
+      "number": 18,
+      "stem": "There exist methods to obtain backup files for the purpose of recovering files and managing generations. Which of the following is an appropriate description for those methods or procedures?",
+      "options": {
+        "a": "A differential backup contains all files that are modified following the last full backup, while an incremental backup saves all files that are modified after the last full, differential, or incremental backup.",
+        "b": "A differential backup may take longer to restore files than an incremental backup, because the most recent versions of files are spread across a larger number of backup sets.",
+        "c": "A multiplexed backup is used as a mixed combination of a full backup, differential backup, and incremental backup.",
+        "d": "An incremental backup tends to take longer to backup files than a differential backup because more files are copied during each backup."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#19",
+      "number": 19,
+      "stem": "A processor takes 15 seconds to run an application compiled with an old compiler. A new compiler was released. The same application compiled with the new compiler executes fewer instructions by 40%, but the average clock cycles per instruction (CPI) is increased by 10%. How many seconds does it take for the same processor to run the same application compiled with the new compiler?",
+      "options": {
+        "a": "4.125",
+        "b": "6.6",
+        "c": "9.09",
+        "d": "9.9"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#20",
+      "number": 20,
+      "stem": "Which of the following is an appropriate explanation of an actuator?",
+      "options": {
+        "a": "It amplifies weak electrical signals sent from microphones, sensors, and so on.",
+        "b": "It compares a given target value and a controlled value obtained from a sensor and outputs an operation amount so that the controlled value is matched with the target value.",
+        "c": "It converts the power from an energy source into rotation, translational motion, or other movements based on the control signals.",
+        "d": "It detects position, angle, velocity, acceleration, force, temperature, and so on, and converts them into electric information."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#21",
+      "number": 21,
+      "stem": "Which of the following is a logical expression that is equivalent to the logic circuit shown below? A B",
+      "options": {
+        "a": "A AND B",
+        "b": "A AND (A OR B)",
+        "c": "A OR B",
+        "d": "B AND (A OR B)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#22",
+      "number": 22,
+      "stem": "A device, which operates using a 100V household power supply and through which a current of 10 A flows during operation, is operated from 0 minutes to 120 minutes as shown in the figure below. How much electrical energy, in watt-hour, is consumed during this time? Here, the value of the voltage and current is the effective value, no current flows when the device stops, and the power factor is 1. Operating Stopped 0 30 60 90 120 minutes",
+      "options": {
+        "a": "1,000",
+        "b": "1,200",
+        "c": "1,500",
+        "d": "2,000"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#23",
+      "number": 23,
+      "stem": "According to ISO 9241-11: 2018, which of the following is defined as the “extent to which a system, product, or service can be used by specified users to achieve specified goals with effectiveness, efficiency, and satisfaction in a specified context of use”?",
+      "options": {
+        "a": "Accessibility",
+        "b": "Adaptability",
+        "c": "Availability",
+        "d": "Usability"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#24",
+      "number": 24,
+      "stem": "Which of the following is an explanation of clipping in 3D graphics processing?",
+      "options": {
+        "a": "It is a process that applies shading to the surface of an object for a more 3D appearance.",
+        "b": "It is a process that defines a window within the image display area, removes the area outside the window, and cuts out the section visible within the window.",
+        "c": "It is a process that is performed in the last phase of CG video production and visualizes object data so that it can be rendered on the screen.",
+        "d": "It is a process to hide the jaggies that occur near the edge of a shape because of the limited number of pixels on the screen."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#25",
+      "number": 25,
+      "stem": "When the relationships between continent and country, and between country and city are shown in the class diagram below, which of the following is an appropriate combination of multiplicities that are to be inserted into blank A through blank D? Here, there are no cross continental countries. Each continent has at least one country, and each country has at least one city. A B C D",
+      "options": {
+        "a": "1..1 1..* 1..* 1..1",
+        "b": "1..1 1..* 1..1 1..*",
+        "c": "1..1 0..* 0..* 1..1",
+        "d": "1..1 0..* 1..1 0..*"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#26",
+      "number": 26,
+      "stem": "Tables Course and Section were created to record the course and section information of a university, respectively, as shown below; the primary keys are underlined. Course (cid, title, credits) Section (cid, secid, semester, year) The current status of those tables are shown below. Course Section cid title credits cid secid semester year CSE101 Discrete Mathematics 3 CSE101 1 Spring 2018 CSE102 Computer Prog. I 3 CSE101 1 Spring 2019 CSE103 Computer Prog. II 3 CSE101 2 Fall 2019 EEE101 Electrical Circuits I 4 CSE102 1 Fall 2018 EEE102 Electrical Circuits II 4 CSE102 2 Fall 2018 CSE103 1 Spring 2019 CSE103 2 Fall 2019 EEE101 1 Spring 2019 EEE102 1 Spring 2019 EEE102 1 Fall 2019 When the SQL shown below is executed, which of the following tables is obtained as the output? SELECT C.title FROM Course C WHERE 1 = (SELECT COUNT(cid) FROM Section S WHERE C.cid = S.cid AND S.year = 2019);",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": "Title title title title Computer Prog. II Discrete Mathematics Null Electrical Circuits I Electrical Circuits I Computer Prog. I Electrical Circuits II Electrical Circuits I Electrical Circuits II"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#27",
+      "number": 27,
+      "stem": "Which of the following is an appropriate explanation of an E-R diagram?",
+      "options": {
+        "a": "A relationship is expressed by describing the related entity name in the entity type.",
+        "b": "The relationship between entity types is expressed by an arrow from the referencing side in the direction of the referenced side.",
+        "c": "There are no attributes in the entity type, but the relationship type has attributes.",
+        "d": "There are several kinds of relationships between entity types such as one-to-many or many-to-many."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#28",
+      "number": 28,
+      "stem": "Which of the following is the main purpose of transaction support in a database management system?",
+      "options": {
+        "a": "To ensure that either all the updates corresponding to a given transaction are made or none of them are made",
+        "b": "To ensure that only authorized users can access the database",
+        "c": "To help users update data by providing a graphical user interface",
+        "d": "To provide an accessible catalog in which descriptions of data items are stored"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#29",
+      "number": 29,
+      "stem": "Which of the following is an appropriate description of distributed databases?",
+      "options": {
+        "a": "Access to a database server is shared among a globally distributed userbase so that everyone can access the database.",
+        "b": "It is a database that is distributed to all interested researchers and other users worldwide so that everyone can benefit.",
+        "c": "It is a NoSQL database instead of a Relational Database Management System (RDBMS).",
+        "d": "It stores different parts of a database in different locations, and its processing is distributed across those parts."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#30",
+      "number": 30,
+      "stem": "In the OSI basic reference model, which of the following is a network device that operates at the network layer?",
+      "options": {
+        "a": "Access point",
+        "b": "Bridge",
+        "c": "Repeater",
+        "d": "Router"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#31",
+      "number": 31,
+      "stem": "Which of the following is a mechanism that enables multiple terminals to have private addresses different from each other to connect to the Internet by sharing a single global IP address?",
+      "options": {
+        "a": "DHCP",
+        "b": "DNS",
+        "c": "NAPT",
+        "d": "RADIUS"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#32",
+      "number": 32,
+      "stem": "Which of the following is a data link layer function that enables a receiver to control the amount of data a sender transmits?",
+      "options": {
+        "a": "Congestion control",
+        "b": "Error control",
+        "c": "Flow control",
+        "d": "Media access control"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#33",
+      "number": 33,
+      "stem": "In TCP/IP, which of the following is an application layer protocol that enables a server to automatically configure its clients with network information such as IP addresses, the subnet mask, and the default gateway address?",
+      "options": {
+        "a": "ARP",
+        "b": "DHCP",
+        "c": "DNS",
+        "d": "NSLOOKUP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#34",
+      "number": 34,
+      "stem": "Which of the following is an appropriate explanation of Software-Defined Networking (SDN) that uses OpenFlow?",
+      "options": {
+        "a": "It is a network technology that logically separates data forwarding and network control, and it is implemented with a combination of network devices specialized for data forwarding function, and a network control software.",
+        "b": "It is a software technology for business operation analysis and visualization that uses data flow diagrams and activity diagrams to discover problems in business processes and make improvements.",
+        "c": "It is an Internet of Things (IoT) technology that uses RFID, and it is a software architecture that optimizes distribution networks.",
+        "d": "It is an optimum deployment method for servers on a network that was developed to efficiently stream a range of content over the Internet."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#35",
+      "number": 35,
+      "stem": "Which of the following is an appropriate description of a Trojan horse?",
+      "options": {
+        "a": "A brute force attack software tool",
+        "b": "A malicious computer program that presents itself as a legitimate one",
+        "c": "A malicious user that steals private information from a system",
+        "d": "A software tool to decrypt an encrypted password"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#36",
+      "number": 36,
+      "stem": "Which of the following properties for information security defined in ISO/IEC 27000:2018 refers to a guarantee that the message data received is the same as the message data sent?",
+      "options": {
+        "a": "Availability",
+        "b": "Confidentiality",
+        "c": "Integrity",
+        "d": "Non-repudiation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is an example of ransomware?",
+      "options": {
+        "a": "A range of different types of software including adware, spyware, and freeware",
+        "b": "Malicious software blocking access to a victimized computer and demanding money to unblock it",
+        "c": "Software that assigns randomized MAC addresses to PCs to ensure user privacy on the Internet",
+        "d": "Software that generates random numbers needed by computer security application software"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#38",
+      "number": 38,
+      "stem": "A typical example of security threats is information leakage when a sender sends data containing important information to a receiver. Which of the following is the most appropriate measure to prevent information leakage?",
+      "options": {
+        "a": "The data is encrypted with a private key before being sent to the receiver via email. In a separate email, the private key is sent to the receiver so that the receiver can decrypt the data.",
+        "b": "The data is password-locked, and it is attached in an email that includes the password in the text part of the email. Before the email is sent, the receiver address is checked to make sure that the email is sent to the correct address.",
+        "c": "The receiver creates a pair of public/private keys and sends the public key to the sender. The data is encrypted with the public key and sent to the receiver via email. The receiver then decrypts the data with the private key.",
+        "d": "The sender compresses the data on a USB memory as much as possible before giving the USB memory to the receiver so that the receiver can utilize the rest of the memory space effectively."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#39",
+      "number": 39,
+      "stem": "Which of the following is a type of malware that embeds itself within a program and inserts its copy into other programs?",
+      "options": {
+        "a": "Backdoor",
+        "b": "Trojan horse",
+        "c": "Virus",
+        "d": "Worm"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#40",
+      "number": 40,
+      "stem": "According to ISO/IEC 27000:2018 (Information security management systems - Overview and vocabulary), which of the following is the definition of “level of risk”?",
+      "options": {
+        "a": "Magnitude of a risk expressed in terms of the combination of consequences and their likelihood",
+        "b": "Terms of reference for evaluating the significance of a risk",
+        "c": "The priority order assigned to the risks to be handled",
+        "d": "Weakness of an asset or control that can be exploited by threats"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#41",
+      "number": 41,
+      "stem": "Which of the following is dynamic analysis of malware?",
+      "options": {
+        "a": "Malware is identified by calculating the hash value of the subject for analysis and cross- checking it against a list of known malware hash values that are registered in an online database.",
+        "b": "On the basis of the file extensions and content of file headers on a hard disk, malicious program files with false extensions are detected.",
+        "c": "The subject for analysis is extracted from communication data on a network and reverse compiled, and the functions of the subject for analysis are investigated from the code obtained.",
+        "d": "The subject for analysis is run in a sandbox, and its behavior and external communication are observed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#42",
+      "number": 42,
+      "stem": "Which of the following technologies is the most suitable to divide the whole company network into networks by department?",
+      "options": {
+        "a": "DMZ (DeMilitarized Zone)",
+        "b": "NAT (Network Address Translation)",
+        "c": "VLAN (Virtual Local Area Network)",
+        "d": "VPN (Virtual Private Network)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#43",
+      "number": 43,
+      "stem": "An SQL injection attack caused the SQL statement below to be executed. Which of the following does the SQL statement do? Here, the accounts table contains account information in each row. SELECT * FROM accounts WHERE username='1' or '1’='1'; DROP TABLE accounts;",
+      "options": {
+        "a": "It creates a new user ‘1’.",
+        "b": "It creates a pop-up box that shows the first username in the “accounts” table.",
+        "c": "It selects all the records in the “accounts” table and deletes the “accounts” table from the database.",
+        "d": "It selects one record from the “accounts” table and drops the rest of the records in the table."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#44",
+      "number": 44,
+      "stem": "To provide a guarantee to its online customers that all credit card information is protected when transferred between their PC and the web service over public networks, which of the following technologies should be used?",
+      "options": {
+        "a": "S/MIME",
+        "b": "SSH",
+        "c": "TLS",
+        "d": "VPN"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#45",
+      "number": 45,
+      "stem": "Which of the following UML diagrams is used to represent the user interactions with the system and the functions of the system?",
+      "options": {
+        "a": "Activity diagram",
+        "b": "Class diagram",
+        "c": "Sequence diagram",
+        "d": "Use case diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#46",
+      "number": 46,
+      "stem": "Which of the following is an appropriate description of an acceptance test?",
+      "options": {
+        "a": "It is conducted by developers to verify response time and other performance items.",
+        "b": "It is conducted by testers to ensure that the interfaces and linkages between different software parts work properly.",
+        "c": "It is conducted by the project manager to verify whether users’ functional requirements are met or not.",
+        "d": "It is conducted by users to confirm that the software is complete and meets the business needs that prompted the software to be developed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#47",
+      "number": 47,
+      "stem": "In the development process, which of the following is an activity that should be performed in software architectural design?",
+      "options": {
+        "a": "Analyzing the requirements in incremental steps by arranging them in the form of a chart",
+        "b": "Describing the specifications so that the program is clarified on a line-by-line basis",
+        "c": "Obtaining the opinion of the customer and deciding the specifications",
+        "d": "Transforming the requirements for the software into a design that describes its top-level structure and identifies the software components"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#48",
+      "number": 48,
+      "stem": "Which of the following is an appropriate description concerning test data for black box testing?",
+      "options": {
+        "a": "Test data is created based on branch coverage.",
+        "b": "Test data is created based on condition coverage.",
+        "c": "Test data is created based on external specifications.",
+        "d": "Test data is created based on program structures."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#49",
+      "number": 49,
+      "stem": "In an agile software development project, when can the customer review the first piece of working software?",
+      "options": {
+        "a": "After the completion of the first epic",
+        "b": "After the completion of the first few releases",
+        "c": "After the completion of the first iteration",
+        "d": "After the completion of the whole project"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#50",
+      "number": 50,
+      "stem": "According to the Capability Maturity Model Integration, which of the following is the final and highest level of maturity?",
+      "options": {
+        "a": "Auditable",
+        "b": "Custom",
+        "c": "Optimizing",
+        "d": "Quantitatively Managed"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#51",
+      "number": 51,
+      "stem": "Which of the following is one of the major responsibilities of a project manager?",
+      "options": {
+        "a": "Coding programs and debugging errors",
+        "b": "Evaluating the quality of project deliverables",
+        "c": "Organizing project members to achieve a planned result within a budget and schedule",
+        "d": "Providing the user requirements at the beginning of the project"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#52",
+      "number": 52,
+      "stem": "A project is planned to complete in 12 months and the budget for the completion of the project is $100,000. After six months, it is found that $60,000 was spent, but only 40% of the work has been completed. If the Cost Performance Index (CPI) is not changed, what is the estimated amount (in dollars) required to complete the remaining tasks of the project?",
+      "options": {
+        "a": "40,000",
+        "b": "60,000",
+        "c": "90,000",
+        "d": "150,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#53",
+      "number": 53,
+      "stem": "In project time management, which of the following is the amount of time that the start of a successor activity requires to be delayed after the finish of a predecessor activity?",
+      "options": {
+        "a": "Free float",
+        "b": "Lag",
+        "c": "Lead",
+        "d": "Total float"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#54",
+      "number": 54,
+      "stem": "The activities and nodes of a project are shown in the arrow diagram below. Which of the following is the effect of extending the duration of activity C by 3 days? D A 6 E 3 6 C H 5 1 B G 4 5 F 7 Legend: Node Activity name Activity Number of days required Dummy activity",
+      "options": {
+        "a": "The project duration is not affected.",
+        "b": "The project duration is extended by 1 day.",
+        "c": "The project duration is extended by 2 days.",
+        "d": "The project duration is extended by 3 days."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#55",
+      "number": 55,
+      "stem": "Which of the following corresponds to benchmarking in process improvement of service management?",
+      "options": {
+        "a": "The availability, reliability, and performance are measured at the service level, and a report is sent to the customers.",
+        "b": "The current status of IT service management is analyzed from the viewpoint of strengths, weaknesses, opportunities, and threats.",
+        "c": "The performance of IT services is measured from the viewpoint of finance, customers, internal processes, and learning and growth, and strategic activities are supported.",
+        "d": "The service quality and performance level are evaluated in comparison with the best practices within and outside the industry."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#56",
+      "number": 56,
+      "stem": "Which of the following is the appropriate description for a system migration plan?",
+      "options": {
+        "a": "A system migration plan must describe the decision criteria for restoring the old system in case the migration fails.",
+        "b": "Operating the new system and the old system in parallel reduces the cost of migration.",
+        "c": "Sharing a part of the environment between the new system and the old system makes it easier to verify the migration status.",
+        "d": "The greater the amount of data to be migrated, the more appropriate it would be to migrate the data in a single batch immediately before the system is switched."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#57",
+      "number": 57,
+      "stem": "For servers, the total cost of ownership (TCO) is calculated over a period of 5 years. The purchase price of the servers is $120,500 and the other annual costs are listed as below. What is the TCO of the servers (in dollars)? Area of cost Annual cost ($) Insurance 2,030 Maintenance 1,000 Repair (average) 700 Registration 270",
+      "options": {
+        "a": "28,100",
+        "b": "120,500",
+        "c": "140,500",
+        "d": "622,500"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#58",
+      "number": 58,
+      "stem": "In the event of a disk failure, which of the following is a method for recovering a database by restoring a full backup data onto a disk from a tape, and then reflecting, from logs, post- update copies after the full backup was taken?",
+      "options": {
+        "a": "Checkpoint restart",
+        "b": "Reboot",
+        "c": "Roll forward",
+        "d": "Rollback"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#59",
+      "number": 59,
+      "stem": "Which of the following is the most appropriate point to be checked in the audit of a system test?",
+      "options": {
+        "a": "The test cases were created comprehensively.",
+        "b": "The test plan was approved only by the responsible person on the user’s side.",
+        "c": "The test was performed in an environment where the actual business operations are performed.",
+        "d": "The test was performed only by the person in charge on the user’s side."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#60",
+      "number": 60,
+      "stem": "The director requested a system auditor to audit the operating status of an accounting system that was developed by the information systems department and is operated by the accounting department. Which of the following is the most appropriate description concerning the system auditor for this audit?",
+      "options": {
+        "a": "The system auditor must be a certified public accountant because the accounting system must conform to the various standards of business accounting.",
+        "b": "The system auditor must be a person who belongs to neither the information systems department nor the accounting department to guarantee independence.",
+        "c": "The system auditor must report directly to the accounting department manager because the accounting system handles highly confidential information.",
+        "d": "The system auditor must report directly to the information systems department manager to perform system audits efficiently."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#61",
+      "number": 61,
+      "stem": "Which of the following is an appropriate feasibility evaluation when checking whether the lifetime benefits of the proposed information system is greater than its lifetime costs?",
+      "options": {
+        "a": "Economic feasibility",
+        "b": "Operational feasibility",
+        "c": "Scheduling feasibility",
+        "d": "Technical feasibility"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#62",
+      "number": 62,
+      "stem": "In an evaluation of an IT investment, a preliminary evaluation, an interim evaluation, and a posteriori evaluation are conducted in accordance with the planning, execution, and completion of individual projects. Which of the following is a description of the preliminary evaluation?",
+      "options": {
+        "a": "A variance between the plan and results as well as its cause are analyzed in detail, and it is determined whether a change is required in the investment amount or the effect goal.",
+        "b": "An effect goal is set on the basis of the investment purpose, and the information that is required to make a decision on whether it is possible to execute is provided to higher- level management.",
+        "c": "Milestones when the investment effect should be attained and the data collection method that is required for the evaluation are planned in advance, and an evaluation is made at the times of those milestones.",
+        "d": "The achievement status of the effect goal that was set in advance is evaluated, and improvement measures for achieving the objective is considered when required."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#63",
+      "number": 63,
+      "stem": "Which of the following is a description of BPO?",
+      "options": {
+        "a": "It refers to a company not having its own server and operating a system by renting a part of the processing capability or the storage capacity of a server that is owned by a communication service provider.",
+        "b": "It refers to a company not having its own software and using functions of software that an external specialized vendor provides via a network.",
+        "c": "It refers to the outsourcing of a whole business process of a specific department of the company, such as the administration department or the call center, together with the operation of a business system to an external specialized vendor.",
+        "d": "It refers to utilizing employees from a staffing company with lower personnel expenditures than those of the company to reduce the cost of software development."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#64",
+      "number": 64,
+      "stem": "In computerization investment, which of the following is a technique that is used to create categories on the basis of the similarities of risks and investment values and perform optimum resource allocation?",
+      "options": {
+        "a": "3C analysis",
+        "b": "Benchmarking",
+        "c": "Enterprise architecture",
+        "d": "IT portfolio"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#65",
+      "number": 65,
+      "stem": "Which of the following is an activity that is performed when non-functional requirements are defined?",
+      "options": {
+        "a": "Clarifying the flows of information (i.e., data) between the functions that constitute business operations",
+        "b": "Creating technical requirements of development standard according to the programming language used in system development",
+        "c": "Defining the scope to be implemented as system functions",
+        "d": "Specifying the interface for exchanging information with other systems"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#66",
+      "number": 66,
+      "stem": "Which of the following is a technique that is used to identify and evaluate the internal and external factors that are helpful or harmful to the objectives of business organizations or projects?",
+      "options": {
+        "a": "Five forces analysis",
+        "b": "PPM analysis",
+        "c": "SWOT analysis",
+        "d": "Value chain analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#67",
+      "number": 67,
+      "stem": "The sales prices of products are decided according to different sales price setting methods. Which of the following approaches sets a high sales price by using the consumer psychology that high quality equals to high price?",
+      "options": {
+        "a": "Cost plus pricing",
+        "b": "Differential pricing",
+        "c": "Marketing price following pricing",
+        "d": "Prestige pricing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#68",
+      "number": 68,
+      "stem": "Company T sells three (3) products: A, B, and C. Currently, products A, B, and C have 10,000, 20,000, and 80,000 purchasers every month, respectively. There is a plan to change the product line and sell four (4) new products, P, Q, R, and S, from next year. Accordingly, a trial calculation was made on the proportion of existing customers that will purchase the new products and the number of new customers. Which of the following is an appropriate conclusion from the trial calculation? Here, numerical values up to one (1) decimal point in each line of the table below represent the proportion of people who will change to the new product from the corresponding old product. Number of P Q R S people A 10,000 0.5 0.3 0.1 0.1 B 20,000 0.1 0.6 0.1 0.1 C 80,000 0.1 0.1 0.3 0.3 Number of existing 15,000 23,000 27,000 27,000 customers Number of new 5,000 7,000 13,000 23,000 customers",
+      "options": {
+        "a": "Among the purchasers of product A, 1,000 people are estimated to purchase the new product Q.",
+        "b": "Of the prospective purchasers of the new product P, 50% are estimated to be purchasers of product A.",
+        "c": "The number of new customers of the new product S are estimated to be fewer than the number of people who will purchase the new product S among the purchasers of product C.",
+        "d": "The purchasers of product B are estimated to purchase any one (1) of the new products P, Q, R, and S."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#69",
+      "number": 69,
+      "stem": "Which of the following is the appropriate explanation for product innovation in the management of technology?",
+      "options": {
+        "a": "Acquiring business profits through achievements of the development of technology",
+        "b": "Developing new products or products that enable differentiation from other companies",
+        "c": "Making innovative reforms in business processes",
+        "d": "Strategically managing business with technology as the core"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#70",
+      "number": 70,
+      "stem": "Among the different business systems supported by technology, which of the following analyzes routes of distribution, tracking and load tendency?",
+      "options": {
+        "a": "LMS",
+        "b": "OMS",
+        "c": "TMS",
+        "d": "WMS"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#71",
+      "number": 71,
+      "stem": "Which of the following is a product that can take advantage of the cell production system?",
+      "options": {
+        "a": "A product that needs to be produced in large quantities to improve productivity",
+        "b": "A product that requires a division of labor on the basis of standardization, simplification, and specialization",
+        "c": "A product that requires a variety of types and needs flexible production",
+        "d": "A product whose specifications do not change over a long period of time"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following performs its processing according to steps (1) through (3)? (1) Based on the types, quantities, and the parts list of the product planned to be manufactured during a fixed period of time in the future, the required quantity of components is calculated. (2) The net order quantity of each component is calculated from the amount of inventory that can be allocated. (3) The ordering time of the components is determined while considering the manufacturing and procurement lead time.",
+      "options": {
+        "a": "CAD (Computer Aided Design)",
+        "b": "CRP (Capacity Requirements Planning)",
+        "c": "JIT (Just In Time)",
+        "d": "MRP (Material Requirements Planning)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#73",
+      "number": 73,
+      "stem": "Which of the following is an appropriate description of Initial Coin Offering (ICO)?",
+      "options": {
+        "a": "A crowd-funding method in which backers contribute money toward an idea or a startup and get rewards like physical products",
+        "b": "A fundraising method that is mainly used by a financially stable company which wants to expand and develop to the public",
+        "c": "A popular fundraising method that is used primarily by a startup, normally through utilizing cryptocurrency",
+        "d": "A process of offering shares of a private corporation to the public in a new stock issuance"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is an appropriate example of utilizing machine learning at a production site?",
+      "options": {
+        "a": "Instead of programming the working method for the production robot in the factory, the robot itself learns, thus improving the efficiency of work.",
+        "b": "The causes for the occurrence of defects in a factory are decomposed and arranged in a tree shape so that analysts can statistically look for the cause and solution.",
+        "c": "The production equipment in a factory is connected through high-speed communication so that the host computer can be controlled in real time.",
+        "d": "The productivity of employees in the factory improves each time the cumulative production volume doubles, and the unit cost reduces at a fixed percentage."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is a management organization that creates a cross-functional team between project and functional organizations to flexibly respond to changes in the business environment?",
+      "options": {
+        "a": "Divisional organization",
+        "b": "Line and staff organization",
+        "c": "Matrix organization",
+        "d": "Project organization"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is an example of Green IT?",
+      "options": {
+        "a": "Development of a powerful in-house data center",
+        "b": "Development of efficient in-house software",
+        "c": "Using a desktop PC instead of a thin client laptop",
+        "d": "Using web conferencing instead of travelling to meetings"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#77",
+      "number": 77,
+      "stem": "Which of the following is a description of a CIO?",
+      "options": {
+        "a": "The chief executive that governs the planning and execution of strategies in the area of finances, such as fund-raising or financial reporting",
+        "b": "The chief executive that governs the planning and execution of strategies regarding information management and information systems",
+        "c": "The chief executive that governs the planning and execution of technological strategies and R&D plans of the company",
+        "d": "The chief executive that governs the planning of business strategies and the execution of business"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#78",
+      "number": 78,
+      "stem": "Which of the following is the appropriate description concerning creation and operation of a Business Continuity Plan (BCP)?",
+      "options": {
+        "a": "In addition to natural disasters, device failure in information systems and malware infections are also included in the scope of examination.",
+        "b": "The planning contents are important matters related to the business strategy and therefore, only senior managers are notified.",
+        "c": "The planning contents are restricted to those activities performed by the company.",
+        "d": "The recovery of business processes dependent on IT is prioritized according to technical easiness of recovery."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2021A_FE_AM#79",
+      "number": 79,
+      "stem": "Company A has two media plans. One plan is for a series of 30-second radio advertisements (ads) and the other is for 60-second TV ads. Exposure is rated in points. The company is considering an exposure of at least 60 points in the city and at most 40 points outside the city. The table below shows the cost and exposure of both TV and radio ads. Which of the following is the set of expressions that can determine the number of media ads to minimize the total cost? Cost In the city Outside the city exposure (points) exposure (points) TV ads 2000 8 6 Radio ads 800 10 3",
+      "options": {
+        "a": "Conditions 8x + 6y ≤ 60, 10x + 3y ≤ 40, x ≥ 0, y≥0 Objective function 2000x + 800y  minimize",
+        "b": "Conditions 8x + 6y ≥ 60, 10x + 3y ≤ 40, x ≥ 0, y≥0 Objective function 2000x + 800y  minimize",
+        "c": "Conditions 8x + 10y ≤ 60, 6x + 3y ≤ 40, x ≥ 0, y≥0 Objective function 2000x + 800y  minimize",
+        "d": "Conditions 8x + 10y ≥ 60, 6x + 3y ≤ 40, x ≥ 0, y≥0 Objective function 2000x + 800y  minimize"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2021A_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is an appropriate description of the scope of software protection under WTO’s Agreement on Trade-Related Aspects of Intellectual Property Rights (TRIPS)?",
+      "options": {
+        "a": "Algorithms and programming languages are protected.",
+        "b": "Application programs are protected but system programs such as an OS are not, as the value of the right is included in the hardware cost.",
+        "c": "Both source programs and object programs are protected.",
+        "d": "Documents that describe algorithms are protected, but programs created by using the algorithms are not."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

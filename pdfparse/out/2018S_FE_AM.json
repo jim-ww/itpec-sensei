@@ -1,0 +1,1158 @@
+{
+  "examId": "2018S_FE_AM",
+  "source": "2018S_FE_AM_Question.pdf",
+  "questionCount": 80,
+  "questions": [
+    {
+      "globalId": "2018S_FE_AM#1",
+      "number": 1,
+      "stem": "There is a register where an integer value is stored in binary. Let x be a positive integer which is stored into the register, then perform the operations below. (1) Shift the content of the register to the left by 2 bits (2) Add x to the register. How many times larger than the integer x is the content of the register?",
+      "options": {
+        "a": "3",
+        "b": "4",
+        "c": "5",
+        "d": "6"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#2",
+      "number": 2,
+      "stem": "When three sets A, B and C are given, which of the following equalities holds? Here,  and  are union and intersection symbols, respectively.",
+      "options": {
+        "a": "(A  B )  (A  C ) = B  (A  C)",
+        "b": "( A  B )  C = (A  C )  ( B  C )",
+        "c": "(A  C )  (B  A) = (A  B)  (B  C)",
+        "d": "(A  C )  (B  C) = (A  B)  C"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#3",
+      "number": 3,
+      "stem": "For two logical variables X and Y, a logical operation X NAND Y is defined as a composite operation NOT (X AND Y) . Which of the following is equivalent to the logical operation X OR Y ?",
+      "options": {
+        "a": "((X NAND Y) NAND X) NAND Y",
+        "b": "(X NAND X) NAND (Y NAND Y)",
+        "c": "(X NAND Y) NAND (X NAND Y)",
+        "d": "X NAND (Y NAND (X NAND Y))"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#4",
+      "number": 4,
+      "stem": "Which of the following bit strings is accepted by the automaton described in the state transition diagram below? Here, each string is processed one bit at a time in sequence from the left. 0 1 0, 1 1 0",
+      "options": {
+        "a": "0000",
+        "b": "0111",
+        "c": "1010",
+        "d": "1111"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#5",
+      "number": 5,
+      "stem": "Which of the following is a binary search tree whose keys are numbers assigned to nodes in natural order?",
+      "options": {
+        "a": "16",
+        "b": "17 15 19 14 19 10 14 10 16 18",
+        "c": "18",
+        "d": "20 16 19 18 19 15 14 20 10 14 15 16"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#6",
+      "number": 6,
+      "stem": "There is a two-dimensional integer array A whose (i, j)-th element A[i, j] is 2 × i + j. What is the value of the element A[A[1, 1] × 2, A[2, 2] + 1]?",
+      "options": {
+        "a": "12",
+        "b": "13",
+        "c": "18",
+        "d": "19"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#7",
+      "number": 7,
+      "stem": "Function F(n) is a recursively defined integer function that calculates the factorial of n for any non-negative integer n. Which of the following is an appropriate expression for the blank A? F(0) = 1 F(n) = A (if n > 0)",
+      "options": {
+        "a": "n + F(n - 1)",
+        "b": "n - 1 + F(n)",
+        "c": "n × F(n - 1)",
+        "d": "(n - 1) × F(n)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#8",
+      "number": 8,
+      "stem": "What is the result of the procedure in the flowchart below, when x and y are positive integers? Start s←0 t ←x Yes t< y No t←t–y End s←s+1 Value of s Value of t",
+      "options": {
+        "a": "Remainder of x ÷ y Quotient of x ÷ y",
+        "b": "Quotient of x ÷ y Remainder of x ÷ y",
+        "c": "Remainder of y ÷ x Quotient of y ÷ x",
+        "d": "Quotient of y ÷ x Remainder of y ÷ x"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#9",
+      "number": 9,
+      "stem": "Which of the following addressing modes determines the effective address by adding the value of the instruction address register (program counter) to the value recorded in the address part of the instruction?",
+      "options": {
+        "a": "Absolute addressing",
+        "b": "Base addressing",
+        "c": "Indexed addressing",
+        "d": "Relative addressing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#10",
+      "number": 10,
+      "stem": "A computer has two levels of memories, cache memory and main memory, with an access time of 0.01 µs and 0.1 µs respectively. If the hit ratio of the cache memory is 90%, which of the following is the appropriate average memory access time for this system? In this scenario, if the data is in the cache memory, the processor accesses the data directly with an access time of 0.01 µs. However, if a cache miss occurs, the data is required to be transferred from the main memory to the cache memory first, and then subsequently accessed from the cache memory. Thus, the access time becomes 0.11 µs.",
+      "options": {
+        "a": "0.011 µs",
+        "b": "0.019 µs",
+        "c": "0.020 µs",
+        "d": "0.091 µs"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#11",
+      "number": 11,
+      "stem": "Which of the following is an output device for the computer?",
+      "options": {
+        "a": "Camera",
+        "b": "Mouse",
+        "c": "Printer",
+        "d": "Scanner"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#12",
+      "number": 12,
+      "stem": "What is the average rotational latency of a hard disk drive in milliseconds when its rotation speed is 2000 rotations per minute?",
+      "options": {
+        "a": "10",
+        "b": "15",
+        "c": "25",
+        "d": "30"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#13",
+      "number": 13,
+      "stem": "Which of the following is a method that increases the speed of data input/output by dividing logically sequential data and writing the divided data into multiple hard disks?",
+      "options": {
+        "a": "Disk cache",
+        "b": "Mirroring",
+        "c": "Striping",
+        "d": "Swapping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#14",
+      "number": 14,
+      "stem": "Which of the following is a characteristic of a HA (High Availability) cluster configuration based on a hot standby method when it is compared to a load distribution cluster configuration that uses a load balancer?",
+      "options": {
+        "a": "A server that has the same specifications is necessary as a secondary server, but since processes are taken over by the secondary server in the event of the primary failure, the throughput can be maintained even in the event of a failure.",
+        "b": "Given that processes are distributed to other servers in operation in the event of a failure, the load of servers in operation increases and the throughput decreases.",
+        "c": "Given that processes can be distributed uniformly, server machines can be utilized effectively and expandability is ensured even if the amount of processing increases in the future.",
+        "d": "Given that processes must be consistent among multiple servers in operation, it is necessary to share a database."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#15",
+      "number": 15,
+      "stem": "Which of the following is an appropriate description concerning system availability?",
+      "options": {
+        "a": "Even if the MTBF is different, the system availability is equal if the MTTR is equal.",
+        "b": "If the MTTR can be shortened without changing the MTBF, the system availability improves.",
+        "c": "If the MTTR does not change and the MTBF increases, the system availability deteriorates.",
+        "d": "If the sum of the MTBF and the MTTR is equal, the system availability is equal."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#16",
+      "number": 16,
+      "stem": "Which of the following is a page fault in a virtual memory system?",
+      "options": {
+        "a": "An access to a page that is mapped in the virtual memory, but not loaded in the physical memory",
+        "b": "A hardware error in the physical memory",
+        "c": "A program attempting to insert more data than it can hold in the physical memory",
+        "d": "A reference to a page that another program is currently using in the virtual memory"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#17",
+      "number": 17,
+      "stem": "In a direct organization file that has a range of storage addresses one (1) through six (6), the data is stored under the conditions below. Which of the following is the key value of the data that is stored in address one (1)? [Conditions] (1) Data is stored in the order of key values three (3), four (4), eight (8), 13, 14, and 18. (2) The storage address is the value that is the remainder obtained by dividing the key value of data by five (5) and then adding one (1) to it. (3) If the storage address is already occupied, the data is stored in the next address. This process is repeated until the data is stored. The next address of the last address is the first address. (4) In the initial status, nothing is stored in the file.",
+      "options": {
+        "a": "8",
+        "b": "13",
+        "c": "14",
+        "d": "18"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#18",
+      "number": 18,
+      "stem": "Which of the following is classified as a function of a static test tool?",
+      "options": {
+        "a": "Calculating the coverage from the paths executed by the test",
+        "b": "Detecting an error in a program by analyzing the source code",
+        "c": "Generating a driver or stub necessary for the module to be tested",
+        "d": "Generating the data to test a specific path of the program"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#19",
+      "number": 19,
+      "stem": "For a multiprogramming switching procedure of processes shown in the figure below, which of the following is an appropriate combination of OS processing for A through C? State of process I OS processing State of process II Running Interrupt state A Ready state B Ready state C Running state A B C Restoration of the running Saving of the running",
+      "options": {
+        "a": "Selection of the process state state Restoration of the running",
+        "b": "Saving of the running state Selection of the process state Restoration of the running",
+        "c": "Saving of the running state Selection of the process state Restoration of the running Saving of the running",
+        "d": "Selection of the process state state"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#20",
+      "number": 20,
+      "stem": "Which of the following is the appropriate function of a linker?",
+      "options": {
+        "a": "Creating a load module from multiple object modules, etc. by performing operations such as cross-reference resolution",
+        "b": "Loading a load module into main memory before execution",
+        "c": "Monitoring program execution and logging the execution result for each step",
+        "d": "Registering a created program to a library"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#21",
+      "number": 21,
+      "stem": "A D/A converter with a resolution of 8 bits generates an output voltage of 0 volts for a digital input value of 0, and an output voltage of 2.5 volts for a digital input value of 128. When the lowest 1 bit of the digital input value is changed, which of the following is the change (in volts) of the output voltage that is generated by the D/A converter?",
+      "options": {
+        "a": "2.5/128",
+        "b": "2.5/255",
+        "c": "2.5/256",
+        "d": "2.5/512"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#22",
+      "number": 22,
+      "stem": "The half adder in the diagram below adds two (2) single-digit binary numbers x and y, and produces z (the first digit of the sum) and c (the carry bit) as output. Which of the following is the appropriate combination of gate devices A and B? x z (First digit of the sum) y A B c (Carry bit) A B",
+      "options": {
+        "a": "Exclusive logical sum (XOR) Logical product (AND)",
+        "b": "Logical product (AND) Logical sum (OR)",
+        "c": "Negative logical product (NAND) Negative logical sum (NOR)",
+        "d": "Negative logical sum (NOR) Exclusive logical sum (XOR)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#23",
+      "number": 23,
+      "stem": "Which of the following is equivalent to the logic circuit shown below?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#24",
+      "number": 24,
+      "stem": "When ordering data in the format below is entered, which of the following is an appropriate check to examine whether the value of the Order date field is on a business day equal to or prior to the entering date? Ordering data Form number Order date Product code Quantity Customer code (Characters) (Characters) (Characters) (Numbers) (Characters)",
+      "options": {
+        "a": "Sequence check",
+        "b": "Duplication check",
+        "c": "Format check",
+        "d": "Logical check"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#25",
+      "number": 25,
+      "stem": "Which of the following is a process in PCM to capture analog values from audio signals at a regular interval?",
+      "options": {
+        "a": "Encoding",
+        "b": "Reverse quantization",
+        "c": "Quantization",
+        "d": "Sampling"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#26",
+      "number": 26,
+      "stem": "Which of the following properties of database transactions refers to the ability of the system to recover a committed transaction when either the system or the storage media fails?",
+      "options": {
+        "a": "Atomicity",
+        "b": "Consistency",
+        "c": "Durability",
+        "d": "Isolation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#27",
+      "number": 27,
+      "stem": "There is a “Delivery” table that has six (6) records. Which of the following is the functional dependency that is satisfied by this table? Here, “X → Y” indicates that X functionally determines Y. Delivery Delivery_ Department_ Department_ Delivery_ Component_ Quantity date ID name destination ID 2016-08-21 300 Production Chicago 1342 300 department 2 office 2016-08-21 300 Production Chicago 1342 300 department 2 office 2016-08-25 400 Production Boston 2346 300 department 1 factory 2016-08-25 400 Production Boston 2346 1,000 department 1 factory 2016-08-30 500 Research and Boston 2346 30 development factory department 2016-08-30 500 Research and New York 1342 30 development office department",
+      "options": {
+        "a": "Delivery_date → Component_ID",
+        "b": "Delivery_destination → Component_ID",
+        "c": "Department_ID → Component_ID",
+        "d": "Department_name → Delivery_destination"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#28",
+      "number": 28,
+      "stem": "Which of the following methods to join two (2) tables in an RDBMS is a description of the sort-merge join method?",
+      "options": {
+        "a": "All rows in the tables are re-ordered according to the values in the column to be joined, and they are joined in order from the top.",
+        "b": "If a column to be joined in one of the tables is included in the index, the column to be joined in the other table and the index value are used to join the tables.",
+        "c": "The values in a column to be joined in one of the tables are extracted in order, and they are joined with the column to be joined from the other table.",
+        "d": "The values in a column to be joined in one of the tables are used to create a hash table, and this is joined with the column to be joined from the other table."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#29",
+      "number": 29,
+      "stem": "When the SQL statement shown below is executed on the “Employee” table and the “Department” table, which of the following is the result? SELECT COUNT(*) FROM Employee, Department WHERE Employee.Department = Department.Department_name AND Department.Floor = 2 Employee Department Employee_number Department Department_name Floor 11001 Administration Planning 1 11002 Accounting Administration 1 11003 Sales Information systems 2 11004 Sales Sales 3 11005 Information systems Accounting 2 11006 Sales Legal affairs 2 11007 Planning Procurement 2 12001 Sales 12002 Information systems",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#30",
+      "number": 30,
+      "stem": "In a distributed database system, which of the following is a method for the finalization of update processing when an inquiry is made to multiple sites that perform a series of transaction processes as to whether finalization is possible or not and whether finalization is possible at all sites?",
+      "options": {
+        "a": "Exclusive control",
+        "b": "Roll back",
+        "c": "Roll forward",
+        "d": "Two-phase commitment"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#31",
+      "number": 31,
+      "stem": "Which of the following TCP/IP protocols is used to assign IP addresses dynamically?",
+      "options": {
+        "a": "ARP",
+        "b": "DHCP",
+        "c": "RIP",
+        "d": "SMTP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#32",
+      "number": 32,
+      "stem": "In a TCP/IP network hierarchical model, what is the name for Equipment A that connects two LAN segments at the Internet Layer? Node 1 Node 2 Application Layer Application Layer Transport Layer Equipment A Transport Layer Internet Layer Internet Layer Internet Layer Link Layer Link Layer Link Layer LAN segment 1 LAN segment 2 Data flow",
+      "options": {
+        "a": "Bridge",
+        "b": "Repeater hub",
+        "c": "Router",
+        "d": "Switching hub"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#33",
+      "number": 33,
+      "stem": "Which of the following is a pair of IP addresses belonging to the same subnet, when the subnet mask is 255.255.255.240?",
+      "options": {
+        "a": "192.168.1.14 and 192.168.1.17",
+        "b": "192.168.1.17 and 192.168.1.29",
+        "c": "192.168.1.29 and 192.168.1.33",
+        "d": "192.168.1.33 and 192.168.1.49"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#34",
+      "number": 34,
+      "stem": "Which of the following delivery models does an ARP response use?",
+      "options": {
+        "a": "Anycast",
+        "b": "Broadcast",
+        "c": "Multicast",
+        "d": "Unicast"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#35",
+      "number": 35,
+      "stem": "A PC and a web server are communicating via HTTP. When a request packet is sent from the PC to the web server, which of the following combinations of port numbers does the response packet have? Here, the source and the destination port numbers of the request packet are 50001 and 80 respectively. Destination (PC) Source (web server) port number port number",
+      "options": {
+        "a": "80 50001",
+        "b": "50001 80 A number allocated on the web server, other than 80 and",
+        "c": "80 50001 A number chosen by the web server other than 80 or",
+        "d": "50001 50001"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#36",
+      "number": 36,
+      "stem": "Which of the following is a technology that prevents automated input by a program by requiring input of characters from a warped image or an image some parts of which are hidden? The technology is based on the differences of recognition of those images between humans and programs.",
+      "options": {
+        "a": "CAPTCHA",
+        "b": "QR code",
+        "c": "Short URL",
+        "d": "Trackback ping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is an attack that threatens the “integrity” of information?",
+      "options": {
+        "a": "A DoS attack which sets the system to an overloaded state",
+        "b": "Falsification of a web page",
+        "c": "Tapping of communication content",
+        "d": "Unauthorized copying of data saved in a system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#38",
+      "number": 38,
+      "stem": "Which of the following is the name of an attack where manipulation is made to place a malicious website near the top of the results of a search website?",
+      "options": {
+        "a": "Cross-site scripting",
+        "b": "DNS cache poisoning",
+        "c": "SEO poisoning",
+        "d": "Social engineering"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#39",
+      "number": 39,
+      "stem": "Which of the following is an appropriate explanation of a SQL injection attack?",
+      "options": {
+        "a": "An attack in which a large volume of packets is sent to a website via another website in order to make the provision of services impossible due to the abnormally high network traffic",
+        "b": "An attack in which a program is forced to end abnormally, malicious code that is inserted into the data area is executed, or other such actions are performed by reading and writing data beyond the upper or lower limit of an area of memory that is secured for the buffer",
+        "c": "An attack in which if there is a defect in the way database is called from a web application, an attacker can perform unauthorized retrieval, modification, and deletion of data in a database by entering a malicious character string in the data manipulation language for the call",
+        "d": "An attack in which when a user views a website on which an attacker has placed a trap and clicks a link to another website that has a vulnerability, a character string that contains a malicious script is sent to the linked website, and when the malicious script that is embedded in the response is executed in the user’s browser, information leakage occurs"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#40",
+      "number": 40,
+      "stem": "In an e-commerce transaction that uses public key cryptography, which of the following is the role of a certificate agency (CA)?",
+      "options": {
+        "a": "To encode plain text with the public keys that are shared between the parties involved in the transaction",
+        "b": "To issue digital certificates for the public keys of the parties involved in the transaction",
+        "c": "To manage the passwords of the parties involved in the transaction",
+        "d": "To manage the private key that is shared between the parties involved in the transaction"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#41",
+      "number": 41,
+      "stem": "Which of the following is an appropriate purpose of using a hash value in digital forensics?",
+      "options": {
+        "a": "To convert a password with a one-way function so that recovery is not possible, then store it",
+        "b": "To prove the identicalness between the original and the duplicate copy of the data that can be used as evidence",
+        "c": "To restore altered data to its original form so that it can be used as evidence",
+        "d": "To verify whether password tapping occurred or not"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#42",
+      "number": 42,
+      "stem": "Which of the following is an appropriate operation for user authentication that uses an IC card and a PIN?",
+      "options": {
+        "a": "Given that each user can be identified by an IC card, a common PIN is set for all users in order to reduce the management workload.",
+        "b": "If an IC card is lost, a new IC card is issued, and after the PIN is reset, the lost IC card is deactivated.",
+        "c": "The PIN is set by combining the numeric information imprinted on the surface of the IC card.",
+        "d": "When an IC card is delivered, the PIN is not enclosed, but is notified to the user through another channel."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#43",
+      "number": 43,
+      "stem": "When malware that has made a successful intrusion into a PC communicates with a command-and-control server on the Internet, which of the following is a reason for using the TCP port number 80 as the destination port in most cases?",
+      "options": {
+        "a": "Given that this port is used for browsing websites, there is a high probability that communication is allowed by the firewall.",
+        "b": "Given that this port is used for browsing websites through HTTPS communication, there is a low probability that this port is detected by an intrusion detection system.",
+        "c": "Given that this port is used for the name resolution of a domain name, there is a low probability that this port is detected by an intrusion detection system.",
+        "d": "Given that this port is used in a DNS zone transfer, there is a high probability that communication is allowed by the firewall."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#44",
+      "number": 44,
+      "stem": "When a normally functioning hard disk of a PC on which confidential files are stored is handed over to an industrial waste disposal vendor, which of the following is an appropriate countermeasure against information leakage?",
+      "options": {
+        "a": "Changing the filename of each confidential file to a random character string multiple times",
+        "b": "Compressing the confidential files multiple times with different compression techniques",
+        "c": "Erasing the master boot record of the hard disk multiple times with a specialized erasing tool",
+        "d": "Overwriting all areas of the hard disk with a random bit string multiple times"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#45",
+      "number": 45,
+      "stem": "Which of the following is an appropriate reason why VLANs are used?",
+      "options": {
+        "a": "In order to obtain an IP address",
+        "b": "In order to reduce network traffic",
+        "c": "To remotely access the intranet from a public network",
+        "d": "To use a virtual memory system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#46",
+      "number": 46,
+      "stem": "Which of the following must be approved by the customer when the external design of a system is completed?",
+      "options": {
+        "a": "Physical database specification",
+        "b": "Program flowchart",
+        "c": "Screen layout",
+        "d": "System development plan"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#47",
+      "number": 47,
+      "stem": "Which of the following is the appropriate combination of the basic concept of object orientation?",
+      "options": {
+        "a": "Abstraction, encapsulation, inheritance, class",
+        "b": "Embodiment, structuring, continuation, class",
+        "c": "Normalization, encapsulation, division, class",
+        "d": "Virtualization, structuring, projection, class"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#48",
+      "number": 48,
+      "stem": "In order to increase module independence, the level of module coupling must be low. Which of the following methods of exchanging information between modules has the lowest level of module coupling?",
+      "options": {
+        "a": "Control parameters are passed as arguments in order to control the execution order of modules.",
+        "b": "Only data items that are required for input and output are passed as arguments between modules.",
+        "c": "Relevant module reference data that is defined in a common area.",
+        "d": "Required data is declared externally and shared."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#49",
+      "number": 49,
+      "stem": "The integration test for software composed of modules arranged in a hierarchical structure is performed from a high-level module. In such a case, which of the following is a test module that is used as a substitute for a low-level module?",
+      "options": {
+        "a": "Driver",
+        "b": "Emulator",
+        "c": "Simulator",
+        "d": "Stub"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#50",
+      "number": 50,
+      "stem": "Which of the following is the method that uses a modeling tool to create a design document described with E-R diagrams or other representations from the definition information in an active database?",
+      "options": {
+        "a": "Concurrent engineering",
+        "b": "Forward engineering",
+        "c": "Reverse engineering",
+        "d": "Social engineering"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#51",
+      "number": 51,
+      "stem": "Which of the following is an appropriate description of the Responsibility Assignment Matrix that is used for project human resource management?",
+      "options": {
+        "a": "Allocating the current engagement level of the stakeholders.",
+        "b": "Allocating work packages to those who are responsible for project work.",
+        "c": "Defining the limits of the project sponsor’s responsibilities.",
+        "d": "Defining the terms of reference of the project manager."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#52",
+      "number": 52,
+      "stem": "Which of the following is the structure that illustrates the relationship between project activity and the units of project that will perform those activities?",
+      "options": {
+        "a": "Organizational Breakdown Structure",
+        "b": "Product Breakdown Structure",
+        "c": "Responsibility Assignment Matrix",
+        "d": "Work Breakdown Structure"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#53",
+      "number": 53,
+      "stem": "According to the PMBOK Guide – Fifth Edition, which of the following is an appropriate definition of a project stakeholder?",
+      "options": {
+        "a": "A person or group who provides resources and support for the project, program, or portfolio and is accountable for enabling success.",
+        "b": "An individual, group, or organization, who may affect, be affected by, or perceive itself to be affected by a decision, activity, or outcome of a project.",
+        "c": "An organizational structure that standardizes the project-related governance processes and facilitates the sharing of resources, methodologies, tools, and techniques.",
+        "d": "The person assigned by the performing organization to lead the team that is responsible for achieving the project objectives."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#54",
+      "number": 54,
+      "stem": "Which of the following is an appropriate explanation of the Function Point method that is used for system development estimation?",
+      "options": {
+        "a": "It is a method for estimating the overall workload where the development work is broken down into units of work items and then the workload for each item is accumulated on the basis of a predefined standard value for the unit of workload.",
+        "b": "It is a method for estimating the person-hours and period of time required to complete development, on the assumption that the development scale is known. It can be applied to all fields, not just to the business field.",
+        "c": "It is a method for estimating the scale and person-hours of development on the basis of the past experience of a similar system, where past data is used for the same areas and past experience for different areas.",
+        "d": "It is a method for estimating the scale of a system where the functions of the system are quantitatively measured by using elements such as the number of I/O data items and the number of files, and an adjustment is performed on the basis of the complexity and characteristics of the application."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#55",
+      "number": 55,
+      "stem": "According to the ITIL 2011 edition, which of the following is an appropriate stage of the service life cycle where a service provider builds and deploys new or modified services?",
+      "options": {
+        "a": "Service design",
+        "b": "Service operation",
+        "c": "Service strategy",
+        "d": "Service transition"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#56",
+      "number": 56,
+      "stem": "ISO/IEC 20000-1:2011 requires the application of the methodology known as “Plan-Do-Check-Act” (PDCA) to all parts of the Service Management System (SMS) and the services. Which of the following is an activity that is included as a plan in SMS?",
+      "options": {
+        "a": "Conducting management reviews at planned intervals, and maintaining their records",
+        "b": "Creating a framework of authorities, responsibilities, and process roles",
+        "c": "Creating a plan for approved improvements, and implementing and reporting the improvements",
+        "d": "Implementing and operating SMS through allocation and management activities of funds and budgets"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#57",
+      "number": 57,
+      "stem": "According to the ISO/IEC 20000-1:2011, which of the following is a control process that includes the identification, control, recording, tracking, reporting and verification of CI and the management of CI information in the CMDB?",
+      "options": {
+        "a": "Capacity management",
+        "b": "Change management",
+        "c": "Configuration management",
+        "d": "Release and Deployment management"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#58",
+      "number": 58,
+      "stem": "Which of the following is the most appropriate purpose for which a system auditor exchanges opinions with an audited department with respect to the draft version of an audit report?",
+      "options": {
+        "a": "In order to confirm that there are no factual errors in the findings and recommendations to be described in the audit report.",
+        "b": "In order to issue the audit report to the audited department before the audit report is submitted to the person who is requesting the audit.",
+        "c": "In order to receive the approval of the responsible person of the audited department with respect to the recommendations described in the audit report.",
+        "d": "In order to substitute with an additional investigation concerning the audit report for which the investigation is insufficient, by orally confirming with the audited department."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#59",
+      "number": 59,
+      "stem": "Which of the following is a checkpoint for auditing the control of the risk of information leakage, falsification, and unauthorized use of documents concerning a system?",
+      "options": {
+        "a": "Creating the necessary documents even in prototype development",
+        "b": "Standardizing documents",
+        "c": "Taking measures in order to ensure the confidentiality of documents",
+        "d": "Updating documents without delay as changes are made in the system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#60",
+      "number": 60,
+      "stem": "Which of the following is an appropriate description concerning the implementation of a system audit?",
+      "options": {
+        "a": "For an audit of the development status of an information systems department, the audit team consists of members of the information systems department who are familiar with the details of the development.",
+        "b": "In order to enable the person requesting the audit to issue improvement instructions on the basis of the audit report, the system auditor reports the audit results to the person requesting the audit.",
+        "c": "When a system audit is performed as part of an operations audit, the audit team consists of members of the user department.",
+        "d": "When a system auditor accepts the help of other experts, the experts become responsible for decisions concerning the scope and methods of support, as well as the audit result."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#61",
+      "number": 61,
+      "stem": "Which of the following is a technique that is used to perform the optimum resource allocation for a computerization investment in each category classified on the basis of the similarities of risks and the investment value?",
+      "options": {
+        "a": "3C analysis",
+        "b": "Benchmarking",
+        "c": "Enterprise architecture",
+        "d": "IT portfolio"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#62",
+      "number": 62,
+      "stem": "Which of the following represents a part of the total cost of ownership (TCO) for SaaS (Software as a service)?",
+      "options": {
+        "a": "Cost of upgraded installation",
+        "b": "Data migration cost",
+        "c": "New software development cost",
+        "d": "Server hardware investment to host the software"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#63",
+      "number": 63,
+      "stem": "Which of the following is a measure for the risk of a decline in the system maintenance and operation quality during the outsourcing of an IT service?",
+      "options": {
+        "a": "Human resources with assessment capabilities with respect to the service cost of system maintenance and operations are secured in the company.",
+        "b": "In order to validate the service cost, the detailed fee structure by service is clearly stated in the contract or other documents.",
+        "c": "The proposal for the human resource development plan of the company after outsourcing is requested during the stage of subcontractor selection, and is also clearly stated in the contract or other documents.",
+        "d": "The service quality improvement activities are proceeded by agreeing to the desired level of quality with the subcontractor by using indexes that demonstrate the service quality."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#64",
+      "number": 64,
+      "stem": "Which of the following is a characteristic of hosting service?",
+      "options": {
+        "a": "A usage method, such as a high-performance server of a service provider being exclusively used by a single user, is not supported.",
+        "b": "In terms of operations management, all activities, including the monitoring of server operations, incident handling, etc. are addressed by users.",
+        "c": "The utilization right of a server prepared by a service provider is lent out to users.",
+        "d": "Users freely select and combine servers by providing their own servers to the service provider facility."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#65",
+      "number": 65,
+      "stem": "Which of the following is an explanation of BYOD (Bring Your Own Device)?",
+      "options": {
+        "a": "Carrying information devices provided by the company at any time for work use",
+        "b": "Configuring a usage environment for the personal use of personally-owned information devices",
+        "c": "Using employees’ personally-owned information devices for work",
+        "d": "Using laptop computers or other information devices provided by the company for personal use outside of the company"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#66",
+      "number": 66,
+      "stem": "Which of the following is the work that is performed when non-functional requirements are defined?",
+      "options": {
+        "a": "Clarifying the flow of information (i.e., data) between the functions constituting business operations",
+        "b": "Clarifying the interface for exchanging information with other systems",
+        "c": "Creating the technical requirements for the development criteria and standards according to the programming language used in system development",
+        "d": "Defining the scope to be implemented as system functions"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#67",
+      "number": 67,
+      "stem": "Which of the following is an explanation of the digital divide?",
+      "options": {
+        "a": "It refers to an economical or social gap that occurs because of differences in abilities and opportunities when using computers and communication networks.",
+        "b": "It refers to communications and broadcast services that can be used equally by any citizen with reasonable charges, without any difference between regions.",
+        "c": "It refers to citizens participating directly in government policies and autonomous bodies through the use of the Internet.",
+        "d": "It refers to the provision of all services from a single place for each event of the daily life of citizens or each field of corporate activity."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#68",
+      "number": 68,
+      "stem": "Which of the following is the purpose of analyzing business plans and competitive advantages through portfolio management that uses the matrix shown in the figure? Strength of business (market share) Attractiveness of business High (market growth rate) Low Strong Weak",
+      "options": {
+        "a": "To evaluate tactics for maintaining a competitive edge in the market by improving product quality",
+        "b": "To evaluate the change in the market by considering seasonal fluctuation factors and geographical distribution in order to set an objective",
+        "c": "To evaluate the competitors’ move in the market so that the promotion effect, set as an objective, can be measured",
+        "d": "To evaluate the position of the company’s business as the basis for setting an objective and prioritizing resource allocation"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#69",
+      "number": 69,
+      "stem": "Which of the following is an explanation of core competence?",
+      "options": {
+        "a": "Corporate activities that follow laws, various regulations, and social norms for performance management",
+        "b": "Overall system and operation optimization techniques to achieve the purposes of organizational activities",
+        "c": "Predominant abilities that cannot be imitated by competitors in a company’s area of activity",
+        "d": "The development region of a business that is decided upon based on the viewpoint of the market, technology, and products (or services)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#70",
+      "number": 70,
+      "stem": "Which of the following is the basic strategy of a niche in a competitive position?",
+      "options": {
+        "a": "A differentiation strategy necessary for a leader attack, such as a share pursuit",
+        "b": "An imitation strategy that quickly responds to market opportunities",
+        "c": "An omni-directional strategy that covers the entire market and secures the highest share",
+        "d": "A specialization strategy that aims at the specialization of the product and market"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#71",
+      "number": 71,
+      "stem": "The figure below is the work procedure of MRP (Material Requirements Planning), a technique of a production management system. Which of the following information to be inserted into A in the figure below is necessary for calculating the net requirements? Calculation of Master Calculation net requirements Calculation Arrange Arrangement schedule of gross (Calculation of of the order requirements quantity ment plan instructions the shortage) A",
+      "options": {
+        "a": "Bill of materials (configuration and requirements of each component in the final product)",
+        "b": "Inventory status (inventory amount, residual orders, in-process quantity)",
+        "c": "Ordering policy (lot organization method, ordering method, safety stock)",
+        "d": "Standard schedule (completion period, number of days of lead time)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following describes an RFID system?",
+      "options": {
+        "a": "Multiple RF Tags within range communicate with each other, and create a mesh network.",
+        "b": "RF Readers/Writers generate an electromagnetic field that charges the RF Tags within range to allow transmission of information.",
+        "c": "RF Tags process unique positioning information by using multiple satellites which allow for the tracking of the item using longitude and latitude coordinates.",
+        "d": "RF Tag transmission does not provide error correcting codes and still acquires high reliability through a wired connection."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#73",
+      "number": 73,
+      "stem": "Which of the following is a management organization that creates a cross-functional team between project and functional organizations in order to flexibly respond to changes in the business environment?",
+      "options": {
+        "a": "Divisional organization",
+        "b": "Line and staff organization",
+        "c": "Matrix organization",
+        "d": "Project organization"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is the appropriate role of a facilitator in a meeting?",
+      "options": {
+        "a": "To act as the chairperson and control the discussions so as to work out a conclusion that matches the intentions of the management",
+        "b": "To encourage the participants of the meeting to put forth their remarks and organize the flow of discussions from a neutral and impartial position",
+        "c": "To give advice only in discussions related to specific areas in which the facilitator specializes, such as technical or legal fields",
+        "d": "To offer specialized support for the administration of a meeting, such as adjusting the schedule, preparing materials, or creating minutes."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is an explanation of an affinity diagram?",
+      "options": {
+        "a": "It is a method by which along with the progress in a situation, measures are examined for problems that might have several outcomes, and the process leading to the desired result is decided.",
+        "b": "It is a method by which a causal relationship is clarified for events intertwined with complex factors.",
+        "c": "It is a method by which the collected information is categorized on the basis of a mutual relationship, and the problems to be resolved are clarified.",
+        "d": "It is a method by which the means and measures for achieving the purpose and objectives are developed sequentially, and the most appropriate means or measures are sought."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is an example of Green by IT?",
+      "options": {
+        "a": "Development of efficient in-house software",
+        "b": "Development of a powerful in-house Data Centre",
+        "c": "Using a desktop PC instead of a laptop thin client",
+        "d": "Using web conferencing instead of travelling to meetings"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#77",
+      "number": 77,
+      "stem": "A factory has recorded the number of occurrences of defective products according to the cause of the defect. Based on this record, which of the following is a Pareto chart that shows the top causes of defective product occurrences and the cumulative total of percentages?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#78",
+      "number": 78,
+      "stem": "Company A sets a goal to make a profit of $36,000 under the conditions shown in the table below. What is the minimum sales revenue for the company to achieve its goal? Selling Price $ 40 per unit Variable Cost $ 28 per unit Fixed Cost $ 42,000 per period",
+      "options": {
+        "a": "3,500",
+        "b": "6,500",
+        "c": "140,000",
+        "d": "260,000"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2018S_FE_AM#79",
+      "number": 79,
+      "stem": "When the inventory unit price is determined by dividing the total purchase amount by the total quantity of items purchased, which of the following is an appropriate inventory method to be used?",
+      "options": {
+        "a": "First-in first-out method",
+        "b": "Periodic average method",
+        "c": "Moving average method",
+        "d": "Final acquisition cost method (Final purchase cost method)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2018S_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is an appropriate description of the scope of software protection under WTO’s Agreement on Trade-Related Aspects of Intellectual Property Rights (TRIPS)?",
+      "options": {
+        "a": "Algorithms and programming languages are protected.",
+        "b": "Application programs are protected but basic programs such as an OS are not, as the value of the right is included in the hardware cost.",
+        "c": "Both source programs and object programs are protected.",
+        "d": "Documents that describe algorithms are protected, but programs created by using the algorithms are not."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

@@ -1,0 +1,1152 @@
+{
+  "examId": "2019S_FE_AM",
+  "source": "2019S_FE_AM_Question.pdf",
+  "questionCount": 80,
+  "questions": [
+    {
+      "globalId": "2019S_FE_AM#1",
+      "number": 1,
+      "stem": "For an eight-bit integer x represented in two’s complement format, which of the following yields the value of 5x? Here, the overflow or underflow can be ignored in this multiplication.",
+      "options": {
+        "a": "Shift x to the left by 1 bit, then add the initial value of x to it.",
+        "b": "Shift x to the left by 2 bits, then add the initial value of x to it.",
+        "c": "Shift x to the right arithmetically by 1 bit, then subtract the initial value of x from it.",
+        "d": "Shift x to the right arithmetically by 2 bits, then subtract the initial value of x from it."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#2",
+      "number": 2,
+      "stem": "How many four-digit decimal numbers are made from four (4) different digits between 0 and 9? Here, a four-digit decimal number has a non-zero leading digit.",
+      "options": {
+        "a": "4320",
+        "b": "4436",
+        "c": "4536",
+        "d": "5040"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#3",
+      "number": 3,
+      "stem": "What is the value of the postfix expression below when variables A, B, C, and D have values 4, 3, 5, and 6, respectively? Here, symbols ‘’, ‘’, ‘’, and ‘’ represent the arithmetic operators of addition, subtraction, multiplication, and division, respectively. A B 2   D B  C  ",
+      "options": {
+        "a": "-3",
+        "b": "0",
+        "c": "3",
+        "d": "40/3"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#4",
+      "number": 4,
+      "stem": "Which of the following is an appropriate explanation of the feedback control?",
+      "options": {
+        "a": "It performs a control in a predetermined order.",
+        "b": "It performs a control so that the output matches the target.",
+        "c": "It performs a control to avoid external disturbances to the output.",
+        "d": "It performs a control without using the output."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#5",
+      "number": 5,
+      "stem": "Which of the following is a binary search tree?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#6",
+      "number": 6,
+      "stem": "When the procedure described below is executed in sequence for an empty stack and empty queue, what is the value assigned to variable x? Here, the functions used in the procedure are defined as follows: [Function definitions] push(y): pushes data y onto the top of the stack. pop(): removes the data from the top of the stack and returns it as the function value. enq(y): inserts data y at the tail of the queue. deq(): removes the data from the head of the queue and returns it as the function value. [Procedure] push(",
+      "options": {
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "d": "d"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#7",
+      "number": 7,
+      "stem": "For a function f ( x, y) defined below, what is the value of f ( 775, 527)? Here, x mod y represents the remainder after division of x by y. f ( x, y): if y = 0 then return x else return f ( y, x mod y)",
+      "options": {
+        "a": "0",
+        "b": "31",
+        "c": "248",
+        "d": "527"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#8",
+      "number": 8,
+      "stem": "The flowchart below shows the algorithm of concatenating two character strings in X and Y, with the resulting character string in Z. Which of the following is the appropriate pair of operations to insert in the blanks, A and B? Here, X and Y are character arrays of dimensions m and n, respectively, where the i-th character of each string is stored as the i-th element of the character array. Start Loop 1 Note: k:1, 1, m The description in Loop 1 indicates that variable k varies from 1 to m by 1. So does Loop 2. A Loop 1 Loop 2 k:1, 1, n B Loop 2 End A B",
+      "options": {
+        "a": "X(k) → Z(k) Y(k) → Z(m+k)",
+        "b": "X(k) → Z(k) Y(k) → Z(n+k)",
+        "c": "Y(k) → Z(k) X(k) → Z(m+k)",
+        "d": "Y(k) → Z(k) X(k) → Z(n+k)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#9",
+      "number": 9,
+      "stem": "For a processor running at 50 MIPS, what is the average execution time per instruction?",
+      "options": {
+        "a": "20 ns",
+        "b": "50 ns",
+        "c": "2 s",
+        "d": "5 s"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#10",
+      "number": 10,
+      "stem": "Which of the following is an appropriate characteristic of SRAM compared to DRAM? Here, SRAM and DRAM are compared in products manufactured in the same or similar semiconductor geometric process.",
+      "options": {
+        "a": "SRAM consumes more power, particularly when idle, compared to DRAM.",
+        "b": "SRAM is non-volatile, whereas DRAM is volatile.",
+        "c": "SRAM needs to be refreshed, whereas DRAM does not.",
+        "d": "SRAM uses more transistors in a memory cell compared to DRAM."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#11",
+      "number": 11,
+      "stem": "In a memory system that has a cache memory, which of the following causes an increase in the average memory access time?",
+      "options": {
+        "a": "A decrease in the access time to the cache memory",
+        "b": "A decrease in the cache hit rate",
+        "c": "A decrease in the cache miss penalty",
+        "d": "A decrease in the cache miss rate"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#12",
+      "number": 12,
+      "stem": "There exists a storage system in which one (1) block is composed of eight (8) sectors of 500 bytes each, and the storage area is block-wise allocated to the files. When a 2,000-byte file and 9,000-byte file are to be saved, what is the total number of sectors that is allocated to these two (2) files? Here, the sectors that are occupied by the directory information and other such management information can be ignored.",
+      "options": {
+        "a": "22",
+        "b": "26",
+        "c": "28",
+        "d": "32"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#13",
+      "number": 13,
+      "stem": "Which of the following is an appropriate description concerning the recording method of RAID5?",
+      "options": {
+        "a": "It distributes the data over multiple hard disk drives, writes the data in units of bits, and writes the ECC (Error Correction Codes) on multiple hard disk drives.",
+        "b": "It distributes the data over multiple hard disk drives, writes the data in units of blocks, and distributes and writes the parity on multiple hard disk drives.",
+        "c": "It distributes the data over multiple hard disk drives, writes the data in units of bytes, and writes the parity on one (1) hard disk drive.",
+        "d": "It writes the same data on two (2) hard disk drives to create a mirror disk."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#14",
+      "number": 14,
+      "stem": "Which of the following is the most appropriate description of a dual system?",
+      "options": {
+        "a": "It loads the online processing program of the active system on to a backup system and sets it to a standby status. In the event of a failure in the active system, it immediately switches to the backup system and continues the processing.",
+        "b": "It prepares a duplicate processor, memory, communication channel, and power supply system and continues the processing even in the event of a failure in any of the devices.",
+        "c": "It provides a duplicate system for performing the same processing and checks the accuracy of the processing by collating the processing results. In the event of a failure in either system, it continues the processing by the degraded operation.",
+        "d": "It provides an active system for performing online processing and keeps a backup system on standby while batch processing is being performed. In the event of a failure in the active system, it switches to the backup system and continues the online processing."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#15",
+      "number": 15,
+      "stem": "A system has devices with availability R, connected as shown in the figure below. Which of the following is the expression that represents the availability of the entire system? Here, a parallel connection only requires either of the two devices to be functional, whereas a series connection requires both the devices to be functional. R R R R",
+      "options": {
+        "a": "(1- (1-R) 2) 2",
+        "b": "(1- (1-R2)) 2",
+        "c": "1- (1-R) 4",
+        "d": "1- (1-R2) 2"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#16",
+      "number": 16,
+      "stem": "Which of the following is an appropriate explanation of paging?",
+      "options": {
+        "a": "A method of memory management in which multiple records are read and written as a block on an auxiliary storage",
+        "b": "A method of memory management in which the main memory is divided into multiple areas so that reading and writing can be performed simultaneously",
+        "c": "A method of memory management in which the programs are relocated for execution in a different area of the main memory",
+        "d": "A method of memory management in which the virtual memory space and real memory space are divided into fixed-length blocks for management"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#17",
+      "number": 17,
+      "stem": "Which of the following is a method that performs data transfer between the main memory and a low-speed output device via a high-speed auxiliary storage device to increase the throughput of the entire system?",
+      "options": {
+        "a": "Blocking",
+        "b": "Paging",
+        "c": "Spooling",
+        "d": "Swapping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#18",
+      "number": 18,
+      "stem": "In the figure below, data are sent continuously for T seconds from the send task to the receive task. When the volume of the data sent per second is S and volume of the data received per second is R, which of the following is an appropriate relational expression for buffer size L for a buffer that does not overflow? Here, the transmission speed for the send task is faster than the transmission speed for the receive task, and there is sufficient time between the transmissions. Buffer Send task Receive task S Size: L R",
+      "options": {
+        "a": "L < (R - S)× T",
+        "b": "L < (S - R)× T",
+        "c": "L ≥ (R - S) × T",
+        "d": "L ≥ (S - R) × T"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#19",
+      "number": 19,
+      "stem": "On a virtual memory computer, the number of pages that can be allocated to the real memory is three (3), and the two (2) algorithms of FIFO and LRU are used for selecting the page to be removed. When a page reference string shown below accesses the three (3) pages, which of the following is an appropriate combination of the number of page replacement operations? Here, the three (3) pages are initially empty and filling of an empty page is not considered as a page replacement operation. 1, 3, 2, 1, 4, 5, 2, 3, 4, 5 FIFO LRU",
+      "options": {
+        "a": "3 2",
+        "b": "3 6",
+        "c": "4 3",
+        "d": "5 4"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#20",
+      "number": 20,
+      "stem": "A real-time OS performs preemptive scheduling on a priority basis and schedules two (2) tasks A and B. When A has a higher priority than B, which of the following is an appropriate task management by the real-time OS?",
+      "options": {
+        "a": "When A is launched during the execution of B, B is assigned a “ready” status and A is executed.",
+        "b": "When A is launched during the execution of B, B is assigned a “waiting” status and A is executed.",
+        "c": "When B is launched during the execution of A, A is assigned a “ready” status and B is executed.",
+        "d": "When B is launched during the execution of A, A is assigned a “waiting” status and B is executed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#21",
+      "number": 21,
+      "stem": "Which of the following is an appropriate explanation of the function of an actuator?",
+      "options": {
+        "a": "It changes an analog electrical signal into a digital electrical signal, which a computer can process.",
+        "b": "It changes an electrical control signal that is supplied by a computer into a mechanical motion.",
+        "c": "It identifies a physical quantity and changes it into an electrical signal.",
+        "d": "It is used in devices such as a keyboard or touch panel to enter data in a computer."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#22",
+      "number": 22,
+      "stem": "Which of the following is an appropriate example of utilizing an RFID?",
+      "options": {
+        "a": "Close range transmission of data using infrared rays",
+        "b": "Identification and management of personnel or items by using a very small wireless chip",
+        "c": "Input of information by using a reader to read a digital code that is printed on a paper",
+        "d": "Transmission of audio data between a cellphone and headphones"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#23",
+      "number": 23,
+      "stem": "Which of the following is a logical expression that is equivalent to the logic circuit shown below? A B",
+      "options": {
+        "a": "A AND B",
+        "b": "A AND (A OR B)",
+        "c": "A OR B",
+        "d": "B AND (A OR B)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#24",
+      "number": 24,
+      "stem": "For a given data, the check digit is calculated with the method below and is appended to the original data. When the given data are 7394, what is the result? Here, the weight is 1234 and base number is 11. (1) For each digit of the data, calculate the product with the digit at the same radix of the weight; then calculate the sum of the products. (2) Calculate the remainder of dividing the sum by the base number. (3) Subtract the remainder from the base number; then take the one’s place of the result as the check digit.",
+      "options": {
+        "a": "73940",
+        "b": "73941",
+        "c": "73944",
+        "d": "73947"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#25",
+      "number": 25,
+      "stem": "In 3D computer graphics, which of the following is an explanation of hidden-line removal or hidden-surface removal in rendering?",
+      "options": {
+        "a": "By analyzing the position of the light source and how much light hits the target object, its color and brightness are determined.",
+        "b": "For the generated image, only the portion that fits the computer display is rendered.",
+        "c": "For the target object, only the portion that is viewable from a specified viewpoint is rendered.",
+        "d": "Using a wireframe model with translucency, not only the surface but also the inside of the target object is rendered."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#26",
+      "number": 26,
+      "stem": "An employee works for a department, which can be located in multiple regions. Three tables EMP, DEPT, and DEPT_LOCS are created as shown below for recording the employee, department, and department location data, respectively. EMP DEPT DEPT_LOCS EID Ename DNO Salary DNO Dname Manager DNO Region 11 John Bate 1 20000 ID 1 L1 12 Mohammed Karim 2 40000 1 Admin 11 1 L3 13 Sadat Hossain 1 50000 2 Accounts 13 2 L2 14 Katherine Li 3 20000 3 Research 15 3 L3 15 Shuvashish Bose 3 40000 3 L2 What is the output of the SQL shown below? SELECT EName, Salary FROM EMP WHERE DNO IN (( SELECT DNO FROM DEPT) MINUS (SELECT DNO FROM DEPT_LOCS WHERE Region=’L2’) ))",
+      "options": {
+        "a": "",
+        "b": "Ename Salary Ename Salary John Bate 20000 NULL NULL Sadat Hossain 50000",
+        "c": "Ename Salary",
+        "d": "Ename Salary John Bate 20000 John Bate 20000 Sadat Hossain 50000 Mohammed Karim 40000 Katherine Li 20000 Sadat Hossain 50000 Shuvashish Bose 40000 Katherine Li 20000 Shuvashish Bose 40000"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#27",
+      "number": 27,
+      "stem": "In an SQL statement, which of the following is a constraint that is specified with FOREIGN KEY and REFERENCES?",
+      "options": {
+        "a": "Assertion",
+        "b": "Check constraint",
+        "c": "Key constraint",
+        "d": "Referential constraint"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#28",
+      "number": 28,
+      "stem": "In a client/server system, which of the following is the mechanism that reduces the network load between the client and server by placing the frequently used commands on the DBMS on the server in advance?",
+      "options": {
+        "a": "Group commitment",
+        "b": "Multithreading of server processes",
+        "c": "Stored procedure",
+        "d": "Two-phase commitment"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#29",
+      "number": 29,
+      "stem": "Which of the following is a characteristic to guarantee that the result of an update transaction is either performed completely or canceled as if nothing happened?",
+      "options": {
+        "a": "Atomicity",
+        "b": "Consistency",
+        "c": "Durability",
+        "d": "Isolation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#30",
+      "number": 30,
+      "stem": "Which of the following is the process that is executed periodically to prevent reducing the access efficiency of the database?",
+      "options": {
+        "a": "Backup",
+        "b": "Database dump",
+        "c": "Reorganization",
+        "d": "Roll back"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#31",
+      "number": 31,
+      "stem": "In IPv4, which of following describes the NAT function of a router that connects some computers to the Internet?",
+      "options": {
+        "a": "It caches the Internet access to speed up the connections when revisiting the same websites.",
+        "b": "It converts between private and global IP addresses.",
+        "c": "It inspects the IP packets in a transmission to detect possible attacks and intrusions from the Internet.",
+        "d": "It only passes the IP packets intended for specific terminals."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#32",
+      "number": 32,
+      "stem": "Which of the following is a feature of a switching hub (layer 2 switch) network device?",
+      "options": {
+        "a": "It breaks a received packet into smaller pieces (fragments) in the network layer.",
+        "b": "It dynamically allocates an IP address for a terminal connected to its LAN port.",
+        "c": "It forwards a received packet only to its LAN port connected to a device with the packet’s destination MAC address.",
+        "d": "It forwards a received packet to all its LAN ports (broadcast)."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#33",
+      "number": 33,
+      "stem": "Which of the following is the network routing and addressing mechanism that is used in IPv6 but not in IPv4?",
+      "options": {
+        "a": "Anycast",
+        "b": "Broadcast",
+        "c": "Multicast",
+        "d": "Unicast"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#34",
+      "number": 34,
+      "stem": "In an IPv4 network with subnet mask 255.255.255.224, what is the maximum number of host addresses assigned?",
+      "options": {
+        "a": "14",
+        "b": "20",
+        "c": "26",
+        "d": "30"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#35",
+      "number": 35,
+      "stem": "Which of the following is a protocol that uses TCP as its transport layer protocol?",
+      "options": {
+        "a": "DHCP",
+        "b": "SNMP",
+        "c": "TELNET",
+        "d": "TFTP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#36",
+      "number": 36,
+      "stem": "The IP address of Server X prepared by an attacker was stored in a DNS cache server of Company B as the IP address corresponding to the FQDN of the web server of Company A. Which of the following users will be unintentionally guided to Server X because of this attack? Here, each employee of Company A and Company B performs name resolution by using the DNS cache server of his/her own company.",
+      "options": {
+        "a": "An employee of Company A who wishes to access the web server of Company A",
+        "b": "An employee of Company A who wishes to access the web server of Company B",
+        "c": "An employee of Company B who wishes to access the web server of Company A",
+        "d": "An employee of Company B who wishes to access the web server of Company B"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is a description of a directory traversal attack?",
+      "options": {
+        "a": "An attacker enters data consisting of database command statements as the input data for a web application and forces the execution of SQL statements that are not intended by the administrator.",
+        "b": "An attacker guides a user to a web site, where a defect in the escape processing of the HTML output by a web application is exploited, and forces the execution of a malicious script on the user’s web browser.",
+        "c": "An attacker illegally obtains the session ID for a user, who has logged into a session managed by the session ID, and accesses the server by spoofing the identity of the user.",
+        "d": "An attacker specifies a file by using the path name and illegally views a file that is not intended for viewing by the administrator."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#38",
+      "number": 38,
+      "stem": "Which of the following is a description of a brute force attack by which an attempt is made to find the key of private key cryptography?",
+      "options": {
+        "a": "Finding the key by observing the ciphertext change when the plaintext is changed by a certain amount",
+        "b": "Finding the key by testing all key combinations sequentially when a set of plaintext and ciphertext is given",
+        "c": "Finding the key by using as a clue the algebraic expression representing the relationship between the plaintext, ciphertext, and key",
+        "d": "Finding the key by using as a clue the statistical correlation between a part of the information of the plaintext and part of the information of the ciphertext"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#39",
+      "number": 39,
+      "stem": "Which of the following is an explanation of the time stamp service in information security?",
+      "options": {
+        "a": "It is a service that authenticates biometric information, such as fingerprint, voice print, vein patterns, retina, and iris, by using the date and time when the information is registered in the authentication system.",
+        "b": "It is a service that certifies that electronic data certainly exist on a particular date and time and that the data have not been falsified since that date and time.",
+        "c": "It is a service that securely notifies that the date and time information is not falsified midway for setting the clock of the PCs and servers on the network.",
+        "d": "It is a web service that securely displays the global date and time information used in the official records by using encrypted communication."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#40",
+      "number": 40,
+      "stem": "Which of the following is an encryption algorithm for public key cryptography?",
+      "options": {
+        "a": "AES",
+        "b": "KCipher-2",
+        "c": "RSA",
+        "d": "SHA-256"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#41",
+      "number": 41,
+      "stem": "Which of the following is a security attack that prevents users from accessing their accounts?",
+      "options": {
+        "a": "Brute force",
+        "b": "Denial of Service",
+        "c": "Man in the middle",
+        "d": "Sniffing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#42",
+      "number": 42,
+      "stem": "Which of the following is an appropriate description of a botnet?",
+      "options": {
+        "a": "A collection of internet-connected devices, including IoT devices, infected and controlled by a common type of malware",
+        "b": "A scalable and reliable network of self-driving vehicles communicating with each other to avoid accidents/collisions",
+        "c": "A set of honeypots designed to detect and analyze malicious activities by hackers to secure the production systems in the future",
+        "d": "A wireless network for industrial robots created for collaborative manufacturing in a factory to ensure quality at all levels"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#43",
+      "number": 43,
+      "stem": "An attacker captures unencrypted network traffic with a tool and later analyzes it offline to learn about the information contained in those transmissions. Which of the following is this attack?",
+      "options": {
+        "a": "Buffer overflow attack",
+        "b": "Phishing attack",
+        "c": "Smurf attack",
+        "d": "Sniffing attack"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#44",
+      "number": 44,
+      "stem": "Which of the following is the technique of actually attempting an attack and intrusion on a system to detect the security-related vulnerabilities of a computer or network?",
+      "options": {
+        "a": "Penetration test",
+        "b": "Regression test",
+        "c": "Software inspection",
+        "d": "Walk-through"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#45",
+      "number": 45,
+      "stem": "As shown in the figure below, an application on a client accesses the data of the database on a server via database connection programs. Which of the following is a measure for preventing the leakage of the commands and execution results transmitted between the application and database? Client Server Application Database Database Database connection program connection program Tapping by attacker",
+      "options": {
+        "a": "Changing the port number from its initial value that the database connection programs use for communication in the database management system",
+        "b": "Encrypting the communication between the database connection programs",
+        "c": "Restricting the IP addresses of the clients that can access the database connection program on the server to only those that are required",
+        "d": "Setting a password for starting or stopping the database connection program on the server"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#46",
+      "number": 46,
+      "stem": "In the UML class diagram, which of the following represents the relationship between the classes as shown in the figure below? Class1 Class2",
+      "options": {
+        "a": "Aggregation",
+        "b": "Association",
+        "c": "Composition",
+        "d": "Generalization"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#47",
+      "number": 47,
+      "stem": "Which of the following is an explanation of encapsulation in object orientation?",
+      "options": {
+        "a": "Abstraction and sorting of several objects that have the same nature",
+        "b": "Combination of the data and procedures that operate the data into a single object, and their concealment from outside the object",
+        "c": "Extraction of the nature shared between classes and creation of a base class",
+        "d": "Inheritance of the nature of a base class by a subclass"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#48",
+      "number": 48,
+      "stem": "Which of the following can generally be called a subclass of an “automobile” based on the concept of object orientation?",
+      "options": {
+        "a": "Engine",
+        "b": "Manufacturing number",
+        "c": "Tire",
+        "d": "Truck"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#49",
+      "number": 49,
+      "stem": "In the flowchart below, what is the minimum number of test cases that satisfies the decision condition coverage (branch coverage)? True X>1 False (X ÷ 2) → X A = 2 or True B=0 False (X + 1) → X",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#50",
+      "number": 50,
+      "stem": "Among the software development activities, which of the following corresponds to refactoring, which is also emphasized in agile development?",
+      "options": {
+        "a": "To improve the maintainability of a software, the internal structure of a program is changed without any change in the external specifications.",
+        "b": "To improve the quality of a software, two (2) programmers cooperate with each other and perform coding of one (1) program.",
+        "c": "To obtain feedback from the users, a prototype of the software to be provided is created at an early stage.",
+        "d": "To promptly develop a software to be operated, test cases are set in advance, and then the program is coded."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#51",
+      "number": 51,
+      "stem": "Which of the following is an appropriate explanation of the PERT diagram as shown in the figure below? C A 2 G 2 4 F B 4 H Legend Activity name 4 D 5 2 Number of days required",
+      "options": {
+        "a": "The critical path is A – C – G.",
+        "b": "This project needs at least 11 days.",
+        "c": "When the activity F becomes unnecessary, the project will end 1 day earlier.",
+        "d": "When the activity H has a delay of 2 days, it will cause the project to be delayed by 2 days."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#52",
+      "number": 52,
+      "stem": "By using the triangular distribution formula of the three-point estimation technique, which of the following is the expected duration (in days) required for an activity? The estimations are as shown below. Conditions – Estimations for the activity duration Case 1: Two (2) days. If an experienced employee is assigned for this activity. Case 2: Four (4) days. If a general employee is assigned for this activity. Case3: Twelve (12) days. If an unexperienced employee is assigned for this activity.",
+      "options": {
+        "a": "4",
+        "b": "5",
+        "c": "6",
+        "d": "7"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#53",
+      "number": 53,
+      "stem": "A project is planned to complete in 12 months and the budget for the completion of the project is $100,000. After six months, it is found that $60,000 are spent, but only 40% of the work is completed. If the Cost Performance Index (CPI) is not changed, what is the estimated amount (in dollars) required to complete the remaining tasks of the project?",
+      "options": {
+        "a": "40,000",
+        "b": "60,000",
+        "c": "90,000",
+        "d": "150,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#54",
+      "number": 54,
+      "stem": "Which of the following is an appropriate cost estimation technique that estimates the cost of an activity or project using the historical data from a similar project?",
+      "options": {
+        "a": "Analogous estimating",
+        "b": "Bottom-up estimating",
+        "c": "Function point method",
+        "d": "Parametric estimating"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#55",
+      "number": 55,
+      "stem": "Which of the following is the most appropriate description concerning a backup method for data in a new system?",
+      "options": {
+        "a": "In consideration of a possible increase in the response time in the business processes, the backup schedule is adjusted so that it does not overlap with the business processes.",
+        "b": "To save the backup data for a long period of time, a random-access medium is used.",
+        "c": "To shorten the time taken for recovery from the backup data, a differential backup is used.",
+        "d": "To shorten the time taken for the backup process, the backup data are placed in the same storage medium as the source data."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#56",
+      "number": 56,
+      "stem": "For servers, the total cost of ownership (TCO) is calculated over a period of 5-years. The purchase price of the servers is $120,500 and the other annual costs are listed as below. Area of Cost Annual Cost ($) Insurance 2,030 Maintenance 1,000 Repair (average) 700 Registration 270 What is the TCO of the servers (in dollars)?",
+      "options": {
+        "a": "28,100",
+        "b": "120,500",
+        "c": "140,500",
+        "d": "622,500"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019S_FE_AM#57",
+      "number": 57,
+      "stem": "In ITIL, the reduction in the index value expressing the maintainability is cited as an example of a KPI (Key Performance Index) in availability management. Which of the following corresponds to such an index?",
+      "options": {
+        "a": "Mean time between failures",
+        "b": "Mean time between service incidents",
+        "c": "Mean time to restore service",
+        "d": "Number of interruptions in a certain period"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#58",
+      "number": 58,
+      "stem": "Which of the following is the system audit implementation structure that should be avoided from the standpoint of independence of the system auditors?",
+      "options": {
+        "a": "A person, who five (5) years ago was transferred to the audit department from a development manager position in the information systems department, audits the status of the Internet usage in the marketing department.",
+        "b": "A person in the audit department audits the status of the personal information management in the external contractor to whom personal information handling is outsourced.",
+        "c": "A person in the general affairs department, who is appointed as a member of the audit team, audits the status of the entrance and exit control in the general affairs department, together with the other members.",
+        "d": "A person in the legal department, in response to a request by the audit department, cooperates with the auditors in auditing of the validity of the outsourcing contracts."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#59",
+      "number": 59,
+      "stem": "Which of the following is an appropriate activity that is undertaken by a system auditor who audits access control?",
+      "options": {
+        "a": "Confirmation of the management status of the access control concerning the data",
+        "b": "Creation and storage of a management table for the access control concerning the software",
+        "c": "Establishment of a management policy for the access control concerning the network",
+        "d": "Implementation of the operations management for the access control concerning the hardware"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#60",
+      "number": 60,
+      "stem": "Which of the following is subject to system audits that evaluate and verify the internal control related to IT?",
+      "options": {
+        "a": "The methods for ensuring accuracy in the processes of input and update of a database performed by the sales department",
+        "b": "The process for the creation of a mid-term business plan by the business planning department",
+        "c": "The results of the employee personnel evaluations by the personnel department",
+        "d": "The status of the production equipment review conducted by the manufacturing department for the purpose of reducing defects"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#61",
+      "number": 61,
+      "stem": "Which of the following is a case that enables the customer support operations at a call center to improve the quality by applying a pattern recognition function or machine learning function to the accumulated data?",
+      "options": {
+        "a": "Deriving the most appropriate response in real time from the related materials and all the previous support history according to the content of the inquiry made by a customer",
+        "b": "Displaying the digital content of a response manual or basic customer information on a pop-up window of a screen for responding to the requests from the operators",
+        "c": "Repeatedly providing a roll play training to new operators from an experienced operator who serves as a lecturer by using the response manual as the teaching material",
+        "d": "Transferring a phone call or the relevant support screen to an experienced operator or a dedicated staff when the operator who is responding to a customer over the phone is unable to provide an answer"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#62",
+      "number": 62,
+      "stem": "When an UML is used for business modeling, which of the following is the diagram that can represent a workflow such as the execution sequence of the business processes and branching based on conditions?",
+      "options": {
+        "a": "Activity diagram",
+        "b": "Class diagram",
+        "c": "Component diagram",
+        "d": "Object diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#63",
+      "number": 63,
+      "stem": "Which of the following is a description of the SOA?",
+      "options": {
+        "a": "A concept of constructing a system by considering the software functions as components called services and combining them",
+        "b": "A concept of improving the sales efficiency and quality by using IT for the sales activities to increase the sales and profits as well as to improve customer satisfaction",
+        "c": "A concept of re-designing the business processes to innovatively improve the cost, quality, service, and speed",
+        "d": "Outsourcing the in-house operations other than those of the core businesses to concentrate the management resources on the core businesses"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#64",
+      "number": 64,
+      "stem": "Which of the following is a scheme where the user establishes a connection to the system of a service provider via the Internet and makes online use of only the necessary functions of the applications provided by the service provider at the necessary time?",
+      "options": {
+        "a": "ERP",
+        "b": "SaaS",
+        "c": "SCM",
+        "d": "XBRL"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#65",
+      "number": 65,
+      "stem": "A company chooses products and services that are acknowledged as actively addressing environmental concerns. What is this initiative called?",
+      "options": {
+        "a": "CSR",
+        "b": "Environmental assessment",
+        "c": "Green procurement",
+        "d": "Macro environment analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#66",
+      "number": 66,
+      "stem": "When a developmental process of utilizing big data is classified into the four (4) stages below, which of the following is an example that corresponds to the fourth stage? [Developmental stages of big data utilization] Stage 1: Confirmation of facts in the past and present (what was it before?) Stage 2: Interpretation of the past and present status (why have/had it be so?) Stage 3: Prediction of the occurrence of a possible event in the future (what is it likely to be?) Stage 4: Development into a future activity (what should be done?)",
+      "options": {
+        "a": "Based on the analysis results of the big data in which the operation histories of many users are stored, the operational errors and their causes that were not anticipated by the manufacturer at first are found.",
+        "b": "Based on the big data, cases of operational errors made by users and increase in the failure rate due to such cases are estimated and the user interface is improved to make it less likely to cause operational errors.",
+        "c": "By using a simulation that uses big data, an increase in the failure rate of a product is estimated when an operational error supposed occurs repeatedly.",
+        "d": "By using the Internet access function of a product, the operation histories of many users of the product are stored in big data, and the rate of using functions is clarified after the product is sold."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#67",
+      "number": 67,
+      "stem": "In a growth matrix proposed by Ansoff, which of the following is a strategy for expanding a business with an existing product in an existing market?",
+      "options": {
+        "a": "Diversification",
+        "b": "Market development",
+        "c": "Market penetration",
+        "d": "Product development"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#68",
+      "number": 68,
+      "stem": "Which of the following is a characteristic of the growth stage in a product life cycle?",
+      "options": {
+        "a": "Demand decreases, and the withdrawal of some companies is seen. A decision needs to be made regarding whether it is possible to gain a strong foothold at this stage. Migration into an alternative market is also considered.",
+        "b": "Demand is occasional, and the exploitation of new demand is the key to success. Conviction for succeeding in a specific target market is necessary.",
+        "c": "Demand reaches a peak, and the differentiation of the product and segmentation of the market become clear. The competition between the competitors also intensifies, and it becomes important to add new product types and reduce the cost.",
+        "d": "The market starts to understand the worth of the product. Both the product line and channel need to be expanded. This stage sees an increase in the sales and also requires investment."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#69",
+      "number": 69,
+      "stem": "Which of the following marketing approaches is for the push strategy?",
+      "options": {
+        "a": "A manufacturer distinguishes customers into profitable and non-profitable ones so that the manufacturer can provide priority services to the profitable customers.",
+        "b": "A manufacturer does his/her best to predict what customers want before producing an item or service.",
+        "c": "A manufacturer receives requests from customers for their own version of products or services they want, so that the manufacturer can produce them.",
+        "d": "A manufacturer tries to achieve much closer and one-to-one contact with the customers for producing new products."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#70",
+      "number": 70,
+      "stem": "Which of the following can take advantage of the cell production method?",
+      "options": {
+        "a": "Products that need to be mass produced to increase productivity",
+        "b": "Products that require division of labor by standardization, simplification, and specialization",
+        "c": "Products that require flexible production to produce a variety of types",
+        "d": "Products whose specifications do not change for a long period"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#71",
+      "number": 71,
+      "stem": "Which of the following is not appropriate as an application example of the IoT (Internet of Things)?",
+      "options": {
+        "a": "A computer that independently performs file management, arithmetic and logic operations, printing processing, and other tasks without accessing a server to avoid the security problems on the Internet",
+        "b": "A system that allows the manufacturer to understand the operating status, failure locations, and parts that require replacement in real-time via the Internet by having sensors and a communication function built in a large-scale construction equipment",
+        "c": "A system that collects automobile location information in real time and distributes the traffic jam information by communication between automobiles or between automobiles and road side units",
+        "d": "An electricity meter that sends information on the amount of power usage by communication with a power company in lieu of a meter reader"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following is a description of CGM (Consumer Generated Media)?",
+      "options": {
+        "a": "It allows the customers of a company who want to join a mailing list to register on it and periodically receive information via e-mail.",
+        "b": "It enables the delivery of the digital contents prepared by an individual to a viewer or audience and its sharing between the users.",
+        "c": "It offers functions for trading goods in an auction format and works as an intermediary for the consumers in personal trading.",
+        "d": "It provides a common ground for online shops of individual storekeepers and takes over the tasks of issuing common points and settling credit card payments."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#73",
+      "number": 73,
+      "stem": "Which of the following is a description of the long tail?",
+      "options": {
+        "a": "A link to a company is placed on a website or blog, and the company pays a referral fee when the product is purchased via the link.",
+        "b": "By directly shipping products from manufacturers or wholesalers, one can sell products on his or her own website without taking a risk of inventories.",
+        "c": "It performs necessary processing, including integrated and systematic management, and delivery of digital content such as text and images that comprise web content.",
+        "d": "The accumulated sales of the product groups that are not selling well account for a percentage that cannot be ignored against the total sales in Internet shopping."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is a use case of deep learning to improve the performance of an in-car device?",
+      "options": {
+        "a": "An accelerometer detects the collision of the vehicle against a wall and causes the air bag to blow up, thus protecting the passenger from injury.",
+        "b": "By installing equipment that automatically performs idling stop, the fuel efficiency improves as compared with the case when a driver with a vast experience of driving drives a vehicle.",
+        "c": "By the acquisition and processing of numerous images, the driver assistance system can distinguish between a pedestrian and vehicle more reliably.",
+        "d": "The navigation system updates the software by a mobile phone line and refreshes the map."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is a major role of a CIO?",
+      "options": {
+        "a": "The CIO creates a plan for optimizing the effect of investment on the information resources of the entire company to support the business strategy when a computerization strategy is established.",
+        "b": "The CIO gives advice to the information system department by auditing whether the information system is functioning appropriately with respect to the corporate activities.",
+        "c": "The CIO receives queries about the information system, reports on the problems, and gives specific instructions to the department in charge so that the information system of the entire company can be managed optimally.",
+        "d": "The CIO understands the status of the information system development and operation and specifically instructs improvement points so that the information system of the entire company functions optimally."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is a characteristic of the OJT?",
+      "options": {
+        "a": "A dedicated approach to education is possible by staying away from the work place.",
+        "b": "Because the boss or a senior associate imparts hands-on knowledge and technical education by staying close to practical affairs, the required competency can be acquired.",
+        "c": "Education that focuses on generalized knowledge and technology can be received.",
+        "d": "Regardless of the qualification of the boss or senior associate, occupational knowledge of a specific standard can be acquired."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#77",
+      "number": 77,
+      "stem": "Which of the following is a description of the ABC analysis?",
+      "options": {
+        "a": "It analyzes a region in more detail based on various data (population, purchasing power, etc.) by dividing the region into a grid with multiple sections.",
+        "b": "It arranges products in the order of high sales or high gross profit, divides into levels based on the cumulative ratio, and then plans to increase the volume of the sales of products at the high levels.",
+        "c": "It classifies and aggregates multiple parts of the survey data by a factor and analyzes the sales capacity and status of purchasing the same products.",
+        "d": "It repeatedly surveys the same panelist (respondent) many times. This data is used to understand the trends in the region or changes in the purchasers."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#78",
+      "number": 78,
+      "stem": "Which of the following is a financial statement that represents the assets, liabilities, and net assets of a company at a certain point of time and indicates the financial situation of the company?",
+      "options": {
+        "a": "Balance sheet",
+        "b": "Cash flow statement",
+        "c": "Income statement",
+        "d": "Statements of shareholders’ equity"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#79",
+      "number": 79,
+      "stem": "Which of the following is a method for making decisions on the basis of the sum of the future cashflows discounted by a discount rate?",
+      "options": {
+        "a": "Internal Rate of Return Method (IRR)",
+        "b": "Net Present Value Method (NPV)",
+        "c": "PayBack Period Method (PBP)",
+        "d": "Return on Investment Method (ROI)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019S_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is a criminal act related to a computer virus according to the Convention on Cybercrime?",
+      "options": {
+        "a": "A person creates a new virus to develop and test antivirus software.",
+        "b": "A person forwards a received e-mail that is infected with a virus without being aware of the infection.",
+        "c": "A person who finds a virus that is created by a stranger stores the virus for the purpose of subsequently running it on another person’s computer.",
+        "d": "A person who receives and finds a virus offers it to an antivirus organization with a clear indication of the virus’s presence."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

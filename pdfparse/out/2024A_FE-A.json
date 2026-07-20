@@ -1,0 +1,870 @@
+{
+  "examId": "2024A_FE-A",
+  "source": "2024A_FE-A_Questions.pdf",
+  "questionCount": 60,
+  "questions": [
+    {
+      "globalId": "2024A_FE-A#1",
+      "number": 1,
+      "stem": "P, Q, and R are propositions. It is known that the truth value of proposition P is true, and the values of both the propositions “(not P) or Q” and “(not Q) or R” are true. Which of the following is a combination of the truth values of Q and R? Here, X or Y represents the logical sum of X and Y, and not X represents the negation of X. Q R",
+      "options": {
+        "a": "False False",
+        "b": "False True",
+        "c": "True False",
+        "d": "True True"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#2",
+      "number": 2,
+      "stem": "What is the value of the postfix expression below? Here, A, B, C, and D are operands whose values are 4, 3, 5, and 6, respectively. Symbols “+”, “−”, “×”, and “÷” are arithmetic operators for addition, subtraction, multiplication, and division, respectively. AB2×+DB÷ C× −",
+      "options": {
+        "a": "−3",
+        "b": "0",
+        "c": "3",
+        "d": "40/3"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#3",
+      "number": 3,
+      "stem": "Which of the following is the computational complexity of the Heapsort algorithm? Here, n is the number of elements to be sorted, and all comparisons, swaps, and other needed operations can proceed in constant time.",
+      "options": {
+        "a": "O (log n)",
+        "b": "O (n)",
+        "c": "O (n2)",
+        "d": "O (n log n)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#4",
+      "number": 4,
+      "stem": "The presence of an edge between nodes is represented by an adjacent matrix. When the adjacent matrix of an undirected graph is as below, which of the following is its graph representation? Here, the nodes correspond with the rows and columns of the adjacent matrix. If there is an edge between nodes, this is indicated with 1, and if there is no edge, this is indicated with 0. a b c d e f a 0 1 0 0 0 0 b 1 0 1 1 0 0 c 0 1 0 1 1 0 d 0 1 1 0 0 0 e 0 0 1 0 0 1 f 0 0 0 0 1 0",
+      "options": {
+        "a": "a b c d e f",
+        "b": "a b c d e f",
+        "c": "a b c d e f",
+        "d": "a b c d e f"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#5",
+      "number": 5,
+      "stem": "What is the value of the arithmetic expression resulting from an in-order traversal of the binary tree below?",
+      "options": {
+        "a": "11",
+        "b": "20",
+        "c": "27",
+        "d": "45"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#6",
+      "number": 6,
+      "stem": "The function f (n) is recursively defined in terms of the natural number n as below. Which of the following is the value of f (5)? f (n): if n≦1 then return 1 else return n + f (n−1)",
+      "options": {
+        "a": "6",
+        "b": "9",
+        "c": "15",
+        "d": "25"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#7",
+      "number": 7,
+      "stem": "Which of the following is the appropriate description of the “selection sort” algorithm?",
+      "options": {
+        "a": "An intermediate reference value is determined, and then the elements are divided into two groups of “larger” values and “smaller” values. This operation is recursively repeated.",
+        "b": "Each set of elements extracted at regular intervals is sorted, and then the interval is further decreased. The operation is repeatedly performed until the interval becomes 1.",
+        "c": "The element with the largest value is determined and swapped for the last element, and then the largest value of the unsorted elements is determined and swapped for the second-to-the-last element. This operation is repeated in the same way.",
+        "d": "Two adjacent elements are repeatedly compared and swapped if the first element is larger than the second. This operation is repeated until all elements are arranged in an orderly fashion."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#8",
+      "number": 8,
+      "stem": "What is the approximate performance of a CPU in MIPS, when the instruction mix of the CPU is shown in the table below? Here, the CPU does not use a pipeline architecture. Instruction type Instruction execution Appearance ratio time in μs Register to register 0.3 30% operation Register to memory 0.6 50% operation Conditional branch 0.1 20% operation",
+      "options": {
+        "a": "0.03",
+        "b": "0.41",
+        "c": "2.44",
+        "d": "35.00"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#9",
+      "number": 9,
+      "stem": "When the CPU needs data, it first accesses the cache memory. When the data is not available in the cache memory, the CPU accesses the main memory. If the miss ratio is 0.2 and the access times for cache memory and main memory are as shown below, what is the approximate average memory access time in ns for the CPU? Here, there are only cache memory and main memory for the CPU, the access time for main memory includes the time to confirm whether the data is available in cache memory, and the overhead time for the cache management can be ignored. Access destination Access time (ns) Cache Memory 75 Main Memory 1500",
+      "options": {
+        "a": "315",
+        "b": "360",
+        "c": "1,215",
+        "d": "1,260"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#10",
+      "number": 10,
+      "stem": "Which of the following is the appropriate purpose of defragmentation of hard disks?",
+      "options": {
+        "a": "To access disk files faster and more efficiently",
+        "b": "To clean up temporary and junk files",
+        "c": "To delete IBG (interblock gap) and increase capacity",
+        "d": "To protect disk drives from physical failures"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#11",
+      "number": 11,
+      "stem": "Which of the following is a fail-safe concept for improving the security and reliability of the information system?",
+      "options": {
+        "a": "Even when the user performs an incorrect operation, a problem does not occur in the system.",
+        "b": "Even when there is a partial system fault, the required functions of the overall system are maintained.",
+        "c": "When a device configuring the system fails, damage can be minimized by enabling the system to stop safely.",
+        "d": "When a system failure occurs, processing is continued by switching to a standby system."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#12",
+      "number": 12,
+      "stem": "Which of the following is the approximate availability of the system comprising five devices, namely, A, B, C, D, and E as shown in the figure below? The numeric value in parentheses represents the availability of each device. The system is operational if either device connected in parallel is available. A D (0.8) (0.7) C (0.9) B E (0.7) (0.8)",
+      "options": {
+        "a": "0.003",
+        "b": "0.031",
+        "c": "0.282",
+        "d": "0.795"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#13",
+      "number": 13,
+      "stem": "There are minor and major page faults in an Operating System (OS). Which of the following is an appropriate action of the OS when a major page fault occurs?",
+      "options": {
+        "a": "Asking the user to input the instruction corresponding to the page",
+        "b": "Looking for a page in CPU cache",
+        "c": "Looking for a page in virtual memory on the hard disk",
+        "d": "Looking for the missed block corresponding to the page on the physical memory"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#14",
+      "number": 14,
+      "stem": "A real-time OS that performs preemptive priority scheduling for tasks A and B with A having a higher priority than B. Which of the following is the action that the OS takes?",
+      "options": {
+        "a": "When A is launched during the execution of B, B is put into a ready state and A is executed.",
+        "b": "When A is launched during the execution of B, B is put into a waiting state and A is executed.",
+        "c": "When B is launched during the execution of A, A is put into a ready state and B is executed.",
+        "d": "When B is launched during the execution of A, A is put into a waiting state and B is executed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#15",
+      "number": 15,
+      "stem": "An OS chooses a process for CPU execution based on a scheduling algorithm. Consider four processes, P1, P2, P3, and P4, and their corresponding arrival times along with their burst times shown in the table below. Which of the following is the correct combination of waiting times for the processes to be executed in the First-Come-First-Serve (FCFS) scheduling algorithm? Here, arrival time is when a process enters the ready queue, burst time is the time required for CPU execution, and waiting time is the time a process spends in the ready queue before CPU execution begins. Unit: millisecond Process Arrival time Burst Time P1 0 6 P2 2 4 P3 4 9 P4 5 7 P1 P2 P3 P4",
+      "options": {
+        "a": "0 2 4 5",
+        "b": "0 4 6 14",
+        "c": "6 4 9 7",
+        "d": "6 6 13 12"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#16",
+      "number": 16,
+      "stem": "A graphical symbol for the 2-to-1 MUX (multiplexer) and its truth table are shown in the figure below. The MUX has two data inputs (I0, I1), one select-line (S) and one output (Z). If the select line is S=0, then the output Z is switched to input I0, whereas if a select line is S=1, then the output Z is switched to input I1. Which of the following is a logic gate that is equivalent to the circuit implemented with the 2-to-1 MUX below?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#17",
+      "number": 17,
+      "stem": "Audio signals are recorded using 8-bit samples at a sampling rate of 11,000 times per second. When a flash memory of 512 × 106 bytes is used, what is the maximum recording time of such data in minutes?",
+      "options": {
+        "a": "77",
+        "b": "96",
+        "c": "775",
+        "d": "969"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#18",
+      "number": 18,
+      "stem": "Which of the following is a database design that consists of multiple tables with rows and columns that are linked together through matching data stored in each table?",
+      "options": {
+        "a": "Hierarchical database",
+        "b": "Network database",
+        "c": "Object-oriented database",
+        "d": "Relational database"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#19",
+      "number": 19,
+      "stem": "Which of the following is an appropriate ER diagram after considering the conditions below? - An employee is associated with 1 program and a program is associated with at least one employee - A program belongs to 1 college and a college has one or many programs",
+      "options": {
+        "a": "1..1 1.* 1.* 1.1 College Program Employee",
+        "b": "1..1 1.* 1.1 1.* College Program Employee",
+        "c": "1..* 1.1 1.* 1.1 Employee College Program",
+        "d": "1..* 1.1 1.1 1.* Program College Employee"
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#20",
+      "number": 20,
+      "stem": "An employee works for a department, which can be located in multiple regions. Three tables EMP, DEPT, and DEPT_LOCS are created as shown below for recording the employee, department, and department location data, respectively. EMP DEPT DEPT_LOCS EID Ename DNO Salary DNO Dname Manager DNO Region 11 John Bate 1 20000 ID 1 L1 12 Mohammed Karim 2 40000 1 Admin 11 1 L3 13 Sadat Hossain 1 50000 2 Accounts 13 2 L2 14 Katherine Li 3 20000 3 Research 15 3 L3 15 Shuvashish Bose 3 40000 3 L2 What is the output of the SQL shown below? SELECT EName, Salary FROM EMP WHERE DNO IN (( SELECT DNO FROM DEPT) MINUS (SELECT DNO FROM DEPT_LOCS WHERE Region=’L2’) ))",
+      "options": {
+        "a": "",
+        "b": "Ename Salary Ename Salary John Bate 20000 NULL NULL Sadat Hossain 50000",
+        "c": "Ename Salary",
+        "d": "Ename Salary John Bate 20000 John Bate 20000 Sadat Hossain 50000 Mohammed Karim 40000 Katherine Li 20000 Sadat Hossain 50000 Shuvashish Bose 40000 Katherine Li 20000 Shuvashish Bose 40000"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#21",
+      "number": 21,
+      "stem": "If a transaction processing program ends abnormally while updating the database, the database is recovered by a rollback process. In these circumstances, which of the following is the information that is used?",
+      "options": {
+        "a": "Post-update information of log files",
+        "b": "Pre-update information of log files",
+        "c": "The latest backup file information",
+        "d": "The latest snapshot information"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#22",
+      "number": 22,
+      "stem": "Which of the following is a property on a database that guarantees a result where a transaction either fully completes update processing or is revoked as if no processing took place at all?",
+      "options": {
+        "a": "Atomicity",
+        "b": "Consistency",
+        "c": "Durability",
+        "d": "Isolation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#23",
+      "number": 23,
+      "stem": "Which of the following is an appropriate description of a device that connects LANs?",
+      "options": {
+        "a": "A bridge relays frames based on IP addresses.",
+        "b": "A gateway converts the protocols of only the first through third levels in the OSI basic reference model.",
+        "c": "A repeater extends the transmission distance by amplifying signals between segments of the same type.",
+        "d": "A router relays frames based on MAC addresses."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#24",
+      "number": 24,
+      "stem": "What is the broadcast address of the network 192.168.128.0/22?",
+      "options": {
+        "a": "192.168.128.127",
+        "b": "192.168.128.255",
+        "c": "192.168.131.255",
+        "d": "192.168.255.255"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#25",
+      "number": 25,
+      "stem": "Which of the following is a protocol to gather information on network components to manage and troubleshoot the network?",
+      "options": {
+        "a": "NTP",
+        "b": "SMTP",
+        "c": "SNMP",
+        "d": "TELNET"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#26",
+      "number": 26,
+      "stem": "Which of the following is the way of using a phone to supply an Internet connection to other devices, such as a tablet or laptop computer over either Wi-Fi or Bluetooth?",
+      "options": {
+        "a": "Dedicated mobile hotspots",
+        "b": "PPPoE",
+        "c": "Tethering",
+        "d": "UPnP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#27",
+      "number": 27,
+      "stem": "Which of the following is an example of a phishing email?",
+      "options": {
+        "a": "An email containing pop-up ads for products unrelated to the email",
+        "b": "An email intercepted, altered, and successfully sent",
+        "c": "An email with a link that automatically installs an application collecting and sending data to the remote server",
+        "d": "An email with a link that redirects to a fake banking site"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#28",
+      "number": 28,
+      "stem": "Which of the following bitwise logical operation can be applied in stream cipher between a plain text and a keystream to produce a cipher text, and between a ciphertext and the keystream to recover the plaintext?",
+      "options": {
+        "a": "AND",
+        "b": "NAND",
+        "c": "OR",
+        "d": "XOR"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#29",
+      "number": 29,
+      "stem": "Which of the following description is an appropriate use of asymmetric encryption to ensure the confidentiality of a message that a sender is going to send to a receiver?",
+      "options": {
+        "a": "The message is encrypted using a pre-shared secret key.",
+        "b": "The message is encrypted using a private key of the sender.",
+        "c": "The message is encrypted using a public key of the receiver.",
+        "d": "The message is encrypted using a public key of the sender."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#30",
+      "number": 30,
+      "stem": "Which type of attack involves intercepting communication between sender and receiver?",
+      "options": {
+        "a": "Brute Force Attack",
+        "b": "Man-in-the-Middle Attack",
+        "c": "Phishing Attack",
+        "d": "Ransomware Attack"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#31",
+      "number": 31,
+      "stem": "Which of the following refers to a technique that is used in a credential stuffing attack?",
+      "options": {
+        "a": "Focusing on the case where there are users that set a word from the dictionary as their password, selecting one (1) user ID as the target of the attack, and attempting to log in using words in the dictionary and their combinations as the password",
+        "b": "Focusing on the case where there are users that use the same user ID and password on multiple websites, and attempting to log in using a list of user IDs and passwords fraudulently acquired from other websites",
+        "c": "Selecting one (1) frequently used password, and attempting to log in by using user IDs of all possible combinations of characters",
+        "d": "Selecting one (1) user ID as the target of the attack on a website that has a low maximum number of characters for passwords, and attempting to log in by using the user ID and passwords of all possible combinations of characters"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#32",
+      "number": 32,
+      "stem": "Which of the following is the name of an attack where manipulation is made to display a malicious website near the top of the results on a search website?",
+      "options": {
+        "a": "Cross-site scripting",
+        "b": "DNS cache poisoning",
+        "c": "SEO poisoning",
+        "d": "Social engineering"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#33",
+      "number": 33,
+      "stem": "Which of the following is a function of security information and event management (SIEM)?",
+      "options": {
+        "a": "The centralized control of a range of communication devices in a network, and the changing of network configuration and security settings",
+        "b": "The execution of a file in an isolated virtual environment, and the monitoring of communication to a C&C server and other behavior",
+        "c": "The general analysis of logs that are collected from a range of devices, and the support of analysis and action by an administrator",
+        "d": "The inspection of header information in packets, the identification of application programs that receive communication, and the control of communication"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#34",
+      "number": 34,
+      "stem": "Which of the following is the UML behavioral diagram showing the behavior of a single object in response to triggers?",
+      "options": {
+        "a": "Activity diagram",
+        "b": "Sequence diagram",
+        "c": "State machine diagram",
+        "d": "Use case diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#35",
+      "number": 35,
+      "stem": "In object-oriented programming, which of the following is abstraction?",
+      "options": {
+        "a": "Concealing implementation details and exposing only a simplified interface for interacting with objects",
+        "b": "Creating a subclass instance inheriting attributes and behaviors from its superclass",
+        "c": "Defining multiple methods with the same name but different parameters",
+        "d": "Redefining in the child class a method that is already provided by the superclass with the same name and parameters but a different implementation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#36",
+      "number": 36,
+      "stem": "Which of the following is an appropriate description of “delegation” in object orientation?",
+      "options": {
+        "a": "A mechanism that creates one (1) new object using multiple objects as its parts",
+        "b": "A mechanism where a lower-level class inherits the attribute or operation of a higher- level class",
+        "c": "A mechanism where an application of an operation to a certain object automatically causes the application of that operation to related objects",
+        "d": "A mechanism where an operation to a certain object is internally requested to be performed by another object"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#37",
+      "number": 37,
+      "stem": "In unit testing, which of the following activities is part of white box testing?",
+      "options": {
+        "a": "Boundary value analysis",
+        "b": "Condition testing",
+        "c": "Equivalence partitioning",
+        "d": "Orthogonal array testing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#38",
+      "number": 38,
+      "stem": "Which of the following is the appropriate explanation of a stub or a driver used in a test?",
+      "options": {
+        "a": "A driver is a module that is called from the module to be tested",
+        "b": "A driver passes arguments and calls the module to be tested",
+        "c": "A stub is a module used to call the module to be tested",
+        "d": "A stub is used to display or print the values returned from the module to be tested"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#39",
+      "number": 39,
+      "stem": "Scrum is an agile development method. In Scrum, which of the following is an event where each member of the development team talks in turn about topics such as “things I did yesterday,” “things I will do today,” and “obstacles,” and all members share the status of a project?",
+      "options": {
+        "a": "Daily Scrum",
+        "b": "Retrospective",
+        "c": "Sprint planning",
+        "d": "Sprint review"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#40",
+      "number": 40,
+      "stem": "Among eXtreme Programming (XP) practices, which of the following is adopted to improve program quality in program development through smooth communication between programmers by exchanging their roles and reviewing each other’s work?",
+      "options": {
+        "a": "Coding standard",
+        "b": "Pair programming",
+        "c": "Planning game",
+        "d": "Test-driven development"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#41",
+      "number": 41,
+      "stem": "Which of the following is an appropriate purpose for using a Work Breakdown Structure (WBS) in a software development project?",
+      "options": {
+        "a": "To clarify the sequence relation of activities and understand the critical path that should be intensively managed",
+        "b": "To hierarchically detail activities and segment them into a manageable scale",
+        "c": "To optimize the total cost when there is a trade-off between the duration and the cost of development",
+        "d": "To represent the schedule of an activity with a horizontal bar, and clarify the start time and end time of the activity as well as the progress at the present point in time"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#42",
+      "number": 42,
+      "stem": "Which of the following is an appropriate explanation concerning the scope creep in project scope management?",
+      "options": {
+        "a": "A hierarchical decomposition of the total scope of work to be carried out by the project team to accomplish the project objectives and create the required deliverables",
+        "b": "Any change to the project scope, which almost consistently requires an adjustment to the project cost or schedule",
+        "c": "The sum of the products, services, and results to be provided as a project",
+        "d": "The uncontrolled expansion of product or project scope without adjustments to time, cost, and resources"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#43",
+      "number": 43,
+      "stem": "Which of the following is a requirement for service level management?",
+      "options": {
+        "a": "A capacity plan is created, implemented, and maintained while human, technical, informational, and financial resources are considered.",
+        "b": "A service catalog and SLA are created for the service to be provided, and they are agreed upon with the customer.",
+        "c": "Costs are monitored and reported against the budget; the financial forecasts are reviewed, and costs are managed.",
+        "d": "Risks to service continuity and availability of services are assessed and documented."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#44",
+      "number": 44,
+      "stem": "A device that operates 24 hours a day, 360 days a year has an MTBF value of 1,440 hours. Which of the following is the average number of failures for this device for 360 days? Here, the result is rounded to the closest whole number, and the MTTR of the device is ignored.",
+      "options": {
+        "a": "3",
+        "b": "6",
+        "c": "9",
+        "d": "12"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#45",
+      "number": 45,
+      "stem": "Which of the following is the most appropriate description of a system auditor?",
+      "options": {
+        "a": "The entire audit interview must be conducted by one (1) system auditor, because discrepancies may occur in the record if multiple auditors are involved.",
+        "b": "The system auditor must instruct the department being audited to implement improvement measures for deficiencies identified during the audit interview.",
+        "c": "The system auditor must make an effort to obtain documents and records that support the information obtained from the department being audited during the audit interview.",
+        "d": "The system auditor must select audit interviewees from administrators who have been an auditor within the department being audited."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#46",
+      "number": 46,
+      "stem": "Which of the following is an explanation of an application architecture that constitutes enterprise architecture?",
+      "options": {
+        "a": "It systematically describes the business processes or the information flows necessary for the business strategy.",
+        "b": "It systematically describes the contents of the data necessary for business operations, the relations or structures between the data, etc.",
+        "c": "It systematically describes the functions or system configurations that support business processes.",
+        "d": "It systematically describes the technical components necessary for the developments and operations of the information systems."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#47",
+      "number": 47,
+      "stem": "Which of the following is a description of the SOA?",
+      "options": {
+        "a": "A concept of constructing a system by considering the software functions as components called services and combining them",
+        "b": "A concept of improving sales efficiency and quality by using IT for sales activities to increase sales and profits as well as to improve customer satisfaction",
+        "c": "A concept of re-designing the business processes to innovatively improve the cost, quality, service, and speed",
+        "d": "Outsourcing the in-house operations that are not part of the core businesses to concentrate the management resources on the core businesses"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#48",
+      "number": 48,
+      "stem": "Which of the following is the work that is performed when non-functional requirements are defined?",
+      "options": {
+        "a": "Clarifying the flow of information (i.e., data) between the functions constituting business operations",
+        "b": "Clarifying the interface for exchanging information with other systems",
+        "c": "Creating the technical requirements for the development criteria and standards according to the programming language used in system development",
+        "d": "Defining the scope to be implemented as system functions"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#49",
+      "number": 49,
+      "stem": "Which of the following is an explanation of diversity management?",
+      "options": {
+        "a": "Both labor and management to reach an agreement on working conditions and work together with the aim of increasing profits",
+        "b": "For employees to harmonize between work and private life, approach their work with a sense of purpose, and increase the vitality of the organization",
+        "c": "For employees to take an autonomous approach to work with the aim of achieving the objectives that they set for themselves and be evaluated according to the degree of achievement",
+        "d": "To increase the vitality of the organization by respecting the diversity among its employees in terms of aspects such as gender, age, and nationality"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#50",
+      "number": 50,
+      "stem": "In innovation theory, consumers are classified into five (5) groups innovators, early adopters, early majority, late majority, and laggards according to the timing of their purchase of a new product. Which of the following is the appropriate explanation of the early adopters?",
+      "options": {
+        "a": "A group that accepts a new product, service, or other such offering at an early phase, has a large impact on consumers, is sensitive to trends, and makes decisions after collecting information themselves",
+        "b": "A group that accepts a new product, service, or other such offering at the soonest phase without worrying about risks",
+        "c": "A group that is skeptical about the adoption of a new product or new technology and only adopts it after seeing it being adopted by most people around them",
+        "d": "A group that is the most conservative, has limited interest in movements in society and tends to adopt new trends only after they become common or, in some cases, remains firm in refusing their adoption"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#51",
+      "number": 51,
+      "stem": "Which of the following is a definition of Customer Relationship Management (CRM)?",
+      "options": {
+        "a": "A framework used to support and integrate processes, people, and information across an organization to provide a unified gateway for information and a knowledge base for employees, partners, and customers",
+        "b": "A technology for managing all of a company’s relationships and interactions with customers and potential customers in order to improve business relationships",
+        "c": "A type of software that organizations use to manage day-to-day business activities such as accounting, procurement, project management, risk management and compliance, and supply chain operations",
+        "d": "The broad range of activities required to plan, control, and execute a product's flow, from acquiring raw materials and production through distribution to the final customer, in the most streamlined and cost-effective way possible"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#52",
+      "number": 52,
+      "stem": "Which of the following is an appropriate explanation of concurrent engineering?",
+      "options": {
+        "a": "A product development technique that sequentially executes processes, such as design, manufacturing, and sales activities",
+        "b": "A technique that analyzes a target system and clarifies its specifications",
+        "c": "A technique that executes processes, such as design and production planning, in parallel with product development",
+        "d": "A technique that grasps the optimal combination of functions and costs and improves value through systematic procedures"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#53",
+      "number": 53,
+      "stem": "Which of the following is one of the main characteristics of a blockchain?",
+      "options": {
+        "a": "A centralized ledger on a server",
+        "b": "A client-server network",
+        "c": "A distributed ledger on a peer-to-peer network",
+        "d": "A type of cryptocurrency"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#54",
+      "number": 54,
+      "stem": "Which of the following is the situation where an improvement can be expected by installing a Material Requirements Planning (MRP) system?",
+      "options": {
+        "a": "Drawing information is managed on both electronic files and hard copies, so the history of design changes cannot be accurately traced.",
+        "b": "High-mix, low-volume production is adopted, so the cost of installing production equipment is increasing.",
+        "c": "Information about materials and quantities necessary for production is complicated, so a miscalculation of order quantity or an interruption of production often occurs.",
+        "d": "There are too many design changes, so production efficiency does not improve."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#55",
+      "number": 55,
+      "stem": "Which of the following is the objects that can benefit from the cell production method?",
+      "options": {
+        "a": "Products that require a wide variety and flexible production",
+        "b": "Products that require division of labor by standardization, simplification, and specialization",
+        "c": "Products that require mass production to increase productivity",
+        "d": "Products whose specifications do not change for a long period"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#56",
+      "number": 56,
+      "stem": "Which of the following is a technique that can be used to discover useful information and relationships from large amounts of customer and market data retained by a company?",
+      "options": {
+        "a": "Data dictionary",
+        "b": "Data flow diagram",
+        "c": "Data mining",
+        "d": "Data warehouse"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#57",
+      "number": 57,
+      "stem": "The relationship between the value “x” of a certain factor in the manufacture of a product and the value “y” of a quality characteristic of the product is plotted in the figure below. Which of the following is an appropriate interpretation of this figure? y 0 x",
+      "options": {
+        "a": "In order to estimate y from x, a quadratic regression coefficient needs to be calculated.",
+        "b": "The correlation coefficient between x and y is negative.",
+        "c": "The correlation coefficient between x and y is positive.",
+        "d": "The regression expression for estimating y from x is the same as that for estimating x from y."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#58",
+      "number": 58,
+      "stem": "Two (2) types of raw materials A and B are required to manufacture products X and Y. The quantity of each raw material required per unit and the procurable quantity are listed in the table below. When the profit per unit is $1 for product X and $1.5 for product Y , which of the following is the maximum profit in dollar? Raw Required quantity Required quantity Procurable material per unit of product X per unit of product Y quantity A 2 1 100 B 1 2 80",
+      "options": {
+        "a": "50",
+        "b": "60",
+        "c": "70",
+        "d": "80"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2024A_FE-A#59",
+      "number": 59,
+      "stem": "When the selling price of a product is $50 and the fixed costs for production and sales are $100,000, which of the following is the number of units to be sold to achieve the desired profit of $50,000? Here, the variable cost ratio is 60%.",
+      "options": {
+        "a": "5,000",
+        "b": "7,500",
+        "c": "10,000",
+        "d": "12,500"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2024A_FE-A#60",
+      "number": 60,
+      "stem": "Which of the following is an explanation of a volume license agreement?",
+      "options": {
+        "a": "A contract that establishes standard license conditions and deems that a license agreement is automatically established between the rightsholder and the purchaser when a certain amount of package is unwrapped within the scope of the standard license conditions",
+        "b": "A contract that predefines the number of installations and permits the use of software for companies or other such purchasers of large amounts of software",
+        "c": "A contract that restricts the location of use and permits the use of an unlimited number of units or persons within a specific facility",
+        "d": "A contract where use is permitted by selecting to agree to the terms of the contract on the screen that is displayed when software is downloaded from the Internet"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

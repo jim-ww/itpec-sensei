@@ -1,0 +1,1144 @@
+{
+  "examId": "2020S_FE_AM",
+  "source": "2020S_FE_AM_Question.pdf",
+  "questionCount": 79,
+  "questions": [
+    {
+      "globalId": "2020S_FE_AM#1",
+      "number": 1,
+      "stem": "For two 8-bit signed integers A and B in 2’s complement format, which of the following will cause an overflow when the addition of A and B is executed? A B",
+      "options": {
+        "a": "0111 1111 1111 1110",
+        "b": "0111 1111 0111 1110",
+        "c": "1000 0000 0111 0000",
+        "d": "1111 1111 1111 1111"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#2",
+      "number": 2,
+      "stem": "What is the probability of getting at least two heads when a fair coin is flipped five times?",
+      "options": {
+        "a": "0.78125",
+        "b": "0.8125",
+        "c": "0.84375",
+        "d": "0.875"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#3",
+      "number": 3,
+      "stem": "What is the value of the postfix expression below? Here, A, B, C, and D are operands whose values are 4, 3, 5, and 6, respectively. Symbols “+”, “−”, “×”, and “÷” are arithmetic operators for addition, subtraction, multiplication, and division, respectively. AB2×+DB÷ C× −",
+      "options": {
+        "a": "−3",
+        "b": "0",
+        "c": "3",
+        "d": "40/3"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#4",
+      "number": 4,
+      "stem": "In machine learning, which of the following best describes the supervised learning?",
+      "options": {
+        "a": "It helps find previously unknown features or patterns on a dataset without pre-existing labels.",
+        "b": "It tries to find the best action by evaluating each result of possible actions in a specific situation.",
+        "c": "It is used to get a correct answer for new input data after being trained on a dataset with answer keys.",
+        "d": "It is used to make a prediction about the actions of a user by collecting and analyzing behavioral data."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#5",
+      "number": 5,
+      "stem": "A list is implemented with two arrays box and next. Each element in the list corresponds to a pair (box[i], next[i]), where box[i] is the value of the element, and next[i] is the index to the next element in the list. When the element of value \"H\" is inserted between the third and fourth elements in the list shown below, which of the following is the value contained in next[8]? Here, next[0] contains the index of the leading (first) element of the list, the index i whose next[i] is 0 indicates the last element of the list, and each index i whose next[i] is blank indicates that the element is out of the list. 0 1 2 3 4 5 6 7 8 9 box A B C D E F G H I 0 1 2 3 4 5 6 7 8 9 next 1 5 0 7 3 2",
+      "options": {
+        "a": "3",
+        "b": "5",
+        "c": "7",
+        "d": "8"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#6",
+      "number": 6,
+      "stem": "Two operations against a queue are defined below. ENQ n: adds a number n at the end of the queue. DEQ: removes the number at the head of the queue. For an empty queue, a sequence of operations, “ENQ 1, ENQ 2, ENQ 3, DEQ, ENQ 4, ENQ 5, DEQ, ENQ 6, DEQ, DEQ”, is performed in this order. When another DEQ is performed in succession, what is the number to be removed by this operation?",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "5",
+        "d": "6"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#7",
+      "number": 7,
+      "stem": "Every year that is exactly divisible by four is a leap year, except for years that are exactly divisible by 100, but these centurial years are leap years if they are exactly divisible by 400. For example, the years 1700, 1800, and 1900 are not leap years, but the years 1600 and 2000 are. How many leap years are there between 1895 and 2021?",
+      "options": {
+        "a": "30",
+        "b": "31",
+        "c": "32",
+        "d": "33"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#8",
+      "number": 8,
+      "stem": "In object-oriented programming, which of the following is an explanation of overriding that achieves polymorphism?",
+      "options": {
+        "a": "A feature that allows a class to provide a specific implementation of a method that is already provided by one of its superclasses",
+        "b": "Creating a class through abstraction by collecting common properties of multiple classes",
+        "c": "Defining multiple methods in a class that have the same name but differ either in the number of arguments, argument types, or argument order",
+        "d": "Hiding the internal contracts and structures of an object from its external specification"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#9",
+      "number": 9,
+      "stem": "Which of the following is a characteristic of a RISC processor when it is compared with a CISC processor?",
+      "options": {
+        "a": "The RISC processor uses a micro-code architecture.",
+        "b": "The RISC processor uses a uniform instruction length to process tasks in a pipeline.",
+        "c": "The RISC processor uses a variable instruction length to optimize task process capability.",
+        "d": "The RISC processor uses complex instructions to process various tasks with few instructions."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#10",
+      "number": 10,
+      "stem": "Which of the following is classified as an internal interrupt?",
+      "options": {
+        "a": "An interrupt due to an abnormal power condition, such as a momentary loss of the commercial power supply",
+        "b": "An interrupt due to having performed division by zero",
+        "c": "An interrupt due to the completion of input or output",
+        "d": "An interrupt due to the occurrence of a memory parity error"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#11",
+      "number": 11,
+      "stem": "Which of the following is an appropriate characteristic of SRAM compared with DRAM?",
+      "options": {
+        "a": "Compared with DRAM, SRAM consumes more power while it is idle.",
+        "b": "Compared with DRAM, SRAM needs a fewer number of transistors to store one bit of data.",
+        "c": "SRAM does not need to be refreshed periodically as flips flops retain data, and DRAM needs to be refreshed at fixed intervals to retain data.",
+        "d": "SRAM stores data in a combination of capacitors and transistors, and DRAM stores data in a set of transistors called flip-flops."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#12",
+      "number": 12,
+      "stem": "Which one of the following serial transmission methods is used in asynchronous data communication?",
+      "options": {
+        "a": "I2C",
+        "b": "PCI Express",
+        "c": "SPI",
+        "d": "UART"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#13",
+      "number": 13,
+      "stem": "As a backup system configuration, which of the following is an appropriate description of a hot site?",
+      "options": {
+        "a": "A shared site is prepared, and at the time of the occurrence of a failure, the backed-up data and program are loaded to recover the system, and business operations are resumed.",
+        "b": "A site is operated as a standby site, the data and programs are updated at all times via a network, and the business operation is resumed immediately when a failure occurs.",
+        "c": "A spare site is secured beforehand, and at the time of the occurrence of a failure, the required hardware and the backed-up data and program are loaded to recover the system, and the business operation is resumed.",
+        "d": "Hardware is prepared at a spare site, and the periodically backed-up data and program are loaded and stored. At the time of occurrence of a failure, the system is restored by making use of these stored entities, and the business operation is resumed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#14",
+      "number": 14,
+      "stem": "A RAID 6 server is configured with six hard disk drives, and each drive’s capacity is one TB. What is the maximum total data storage capacity in TB? Here, spare disks are not used.",
+      "options": {
+        "a": "3",
+        "b": "4",
+        "c": "5",
+        "d": "6"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#15",
+      "number": 15,
+      "stem": "The life cycle of a computer system can be classified from the viewpoint of failure into the three periods of early failure period, random failure period, and wear-out failure period. Which of the following is the most appropriate description of the measures in the early failure period?",
+      "options": {
+        "a": "Implementing prior replacement of components",
+        "b": "Implementing scheduled maintenance and condition-based maintenance",
+        "c": "Performing age-based maintenance on the basis of the cumulative operating time of the items that make up the system",
+        "d": "Strengthening the design review and failure analysis in order to reduce errors in the design and manufacturing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#16",
+      "number": 16,
+      "stem": "When the number of concurrently running programs is increased in a virtual storage system with a small and insufficient main memory capacity, which of the following is the state in which the overhead of the system increases and the processor utilization of the applications decreases?",
+      "options": {
+        "a": "Bottleneck",
+        "b": "Fragmentation",
+        "c": "Paging",
+        "d": "Thrashing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#17",
+      "number": 17,
+      "stem": "When the least recently used (LRU) method is used for swapping a block between cache memory and main memory, which of the following is a block in cache memory to be replaced?",
+      "options": {
+        "a": "A block for which the longest period of time has elapsed since it was added",
+        "b": "A block for which the longest period of time has elapsed since it was last referenced",
+        "c": "A block that has been referenced the least frequently",
+        "d": "A block that has not been referenced for a certain period of time"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#18",
+      "number": 18,
+      "stem": "Assume that there are three pages in the real memory that can be allocated by the LRU method. Which of the following is the number of page faults for the page reference string shown below? Here, three pages are initially empty, and filling of an empty page is not considered as a page replacement operation. The numbers are the page IDs that come to the system from left to right. Page reference string 2 4 1 1 2 7 3 4 6 5 5 1 2",
+      "options": {
+        "a": "4",
+        "b": "5",
+        "c": "6",
+        "d": "7"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#19",
+      "number": 19,
+      "stem": "32-bit virtual address space is mapped to 4 k-byte pages. How many pages can be created? Here, 1k bytes represent 1,024 bytes.",
+      "options": {
+        "a": "2",
+        "b": "2",
+        "c": "2",
+        "d": "2"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#20",
+      "number": 20,
+      "stem": "The four jobs A through D are executed based on the conditions below and printed. How many seconds is it until all printing is completed after a job is started? [Conditions] (1) All jobs are launched at once, and executed by the CPU with a multiplicity of one. (2) Job A has the highest priority, followed by B, C, and D. (3) After each job is executed, a spooling function prints each job in turn on a single printer. (4) The execution time and printing time when each job is executed separately are as shown in the table. (5) Other overheads are not considered. Unit: seconds Job CPU Execution time Printing time A 50 50 B 30 40 C 20 30 D 40 20",
+      "options": {
+        "a": "100",
+        "b": "160",
+        "c": "190",
+        "d": "280"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#21",
+      "number": 21,
+      "stem": "Which of the following is an appropriate description of flash memory?",
+      "options": {
+        "a": "Data must be rewritten periodically.",
+        "b": "Flash memory can be rewritten at high speed and is used in the cache memory of the CPU.",
+        "c": "The content can be erased electrically in units of blocks.",
+        "d": "The entire content can be erased by ultraviolet rays."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#22",
+      "number": 22,
+      "stem": "Which of the following is equivalent to the circuit below? x y f(x,y,z) z",
+      "options": {
+        "a": "x y f(x,y,z) z",
+        "b": "x y f(x,y,z) z",
+        "c": "x y f(x,y,z) z",
+        "d": "x y f(x,y,z) z"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#23",
+      "number": 23,
+      "stem": "Which of the following is an appropriate equation of the XOR operator? Here, “・” represents the logical AND, “+” represents the logical OR, and P represents the inverse of P in the logical expression.",
+      "options": {
+        "a": "X = (A・B)・(A・B)",
+        "b": "X = (A + B)・(A・B)",
+        "c": "X = (A・B)・(A + B)",
+        "d": "X = (A + B)・(A + B)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#24",
+      "number": 24,
+      "stem": "Among GUI components, which of the following is an appropriate use of a radio button?",
+      "options": {
+        "a": "To select one item from a list of items or type a new item in a text box",
+        "b": "To select one item from a list of items that appears when activated",
+        "c": "To select one item from a group of mutually exclusive items",
+        "d": "To select one or more items from a group of items"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#25",
+      "number": 25,
+      "stem": "Audio signals are recorded using 8-bit samples at a sampling rate of 11,000 times per second. When a flash memory of 512 × 106 bytes is used, what is the maximum recording time of such data in minutes?",
+      "options": {
+        "a": "77",
+        "b": "96",
+        "c": "775",
+        "d": "969"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#26",
+      "number": 26,
+      "stem": "From the figure below, which of the following is an appropriate set of attributes for the “CatalogProduct” class table? Catalog CatalogProduct ProductItem CatalogID Price ProductID Season 1 0..* SpecialPrice 0..* 1 Vendor Year Gender Description Description EffectiveDate EndDate",
+      "options": {
+        "a": "CatalogID, Price, SpecialPrice",
+        "b": "CatalogID, PoductID, Price, SpecialPrice",
+        "c": "Price, SpecialPrice",
+        "d": "ProductID, Price, SpecialPrice"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#27",
+      "number": 27,
+      "stem": "Which of the following is the database function that is automatically executed when a specific action such as update, delete, or insert occurs within a database?",
+      "options": {
+        "a": "Cursor",
+        "b": "Stored procedure",
+        "c": "Trigger",
+        "d": "Update query"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#28",
+      "number": 28,
+      "stem": "A sequence of two relational algebra expressions is shown below. ← ( ) ← − ( × )− Here, “ ”, “×”, and “ −” represent projection, direct product, and difference, respectively. When the relational states of R and S are as follows, which of the following can be obtained as T? R S X Y X 1 A 1 2 A 2 2 B",
+      "options": {
+        "a": "T",
+        "b": "T Y Y NULL A",
+        "c": "T",
+        "d": "T Y Y B A B"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#29",
+      "number": 29,
+      "stem": "There are three tables, EMPLOYEE, PROJECT, and WORK_PROJ for recording employees, projects, and working information of employees on projects respectively. When the SQL statement shown below is executed for these tables, which of the following is generated as the output? EMPLOYEE PROJECT WORK_PROJ EID ENAME PID PNAME EID PID HOURS 1 Rahbar 1 Construction 1 1 20 2 Karthik 2 Land Purchase 1 2 10 3 Abir 2 1 40 3 1 20 3 2 10 [SQL Statement] SELECT ENAME FROM EMPLOYEE WHERE NOT EXISTS ((SELECT PID FROM PROJECT) EXCEPT (SELECT PID FROM WORK_PROJ WHERE WORK_PROJ.EID = EMPLOYEE.EID))",
+      "options": {
+        "a": "ENAME",
+        "b": "ENAME NULL Rahbar Karthik",
+        "c": "ENAME",
+        "d": "ENAME Karthik Rahbar Abir Abir"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#30",
+      "number": 30,
+      "stem": "In a database system, which of the following is the action to undo changes done by transactions executed after the last commit?",
+      "options": {
+        "a": "Commit",
+        "b": "Roll back",
+        "c": "Roll forward",
+        "d": "View"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#31",
+      "number": 31,
+      "stem": "Which device performs protocol conversion between different types of networks, functioning at the layers of transport and above in the OSI basic reference model?",
+      "options": {
+        "a": "Bridge",
+        "b": "Gateway",
+        "c": "Repeater",
+        "d": "Router"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#32",
+      "number": 32,
+      "stem": "Locations A and B, both on the ground, communicate via a geostationary satellite at an altitude of about 36,000 km. When the distance between each location and the satellite is 37,500 km, and the delay caused by the relay at the satellite is 10 milliseconds, what is the total delay in seconds for the data sent from A to arrive at B? Here, the propagation speed of radio waves is 3×108 m per second.",
+      "options": {
+        "a": "0.13",
+        "b": "0.26",
+        "c": "0.35",
+        "d": "0.52"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#33",
+      "number": 33,
+      "stem": "Which of the following is an appropriate characteristic of IPv6 addresses?",
+      "options": {
+        "a": "All addresses are global.",
+        "b": "An address consists of 96 bits.",
+        "c": "There are several address representations, one of which uses a hexadecimal string with every four digits (i.e., 16 bits) separated by a colon “ : ” .",
+        "d": "There is a one-to-one correspondence between all IPv6 addresses and all IPv4 addresses."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#34",
+      "number": 34,
+      "stem": "There is a PC whose IP address and subnet mask are shown below. Which of the following is the network address of this PC? IP address: 10.170.70.19 Subnet mask: 255.255.255.240",
+      "options": {
+        "a": "HTML",
+        "b": "MHS",
+        "c": "MIME",
+        "d": "SMTP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#36",
+      "number": 36,
+      "stem": "Which of the following is an attack using a trial-and-error method to obtain confidential information such as a user password or personal identification number (PIN)?",
+      "options": {
+        "a": "Brute force",
+        "b": "Denial of service",
+        "c": "Man-in-the-middle",
+        "d": "Sniffing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is an appropriate description of clickjacking?",
+      "options": {
+        "a": "An attacker gains remote control of the mouse of a computer and maliciously operates the computer.",
+        "b": "An attacker misleads the user to interact with a user interface and to perform unintended operations.",
+        "c": "An attacker remotely locks the mouse pointer to prevent the user from moving the pointer anymore.",
+        "d": "An attacker removes the mouse device driver of the system so that the user cannot stop doing malicious actions."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#38",
+      "number": 38,
+      "stem": "Which of the following activities targets the DHCP server and exhausts all its available IP address pool so that it cannot provide any IP addresses to its clients?",
+      "options": {
+        "a": "DHCP MAC filtering",
+        "b": "DHCP snooping",
+        "c": "DHCP spoofing",
+        "d": "DHCP starvation"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#39",
+      "number": 39,
+      "stem": "Man-in-The-Middle (MITM) attack means the attacker intercepts and alters the communication between the end-user (victim) and the server, which is shown below. In an MITM attack, when the victim sends packets to the server, the attacker receives the packets and then forwards them to the server while the server sends the packets to the victim via the attacker. In this communication channel, which of the following is the appropriate description concerning the MITM attack? End-user Server A rogue DNS points The attacker relays to the attacker's server requests to a real website Attacker",
+      "options": {
+        "a": "The attacker always uses the server IP during the communication and never uses the victim’s IP.",
+        "b": "The attacker always uses the victim’s IP during the communication and never uses the server’s IP.",
+        "c": "The attacker always uses the victim’s IP during the communication with the server and always uses the server IP during the communication with the victim.",
+        "d": "The attacker always uses the victim’s IP during the communication with the victim and always uses the server IP during the communication with the server."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#40",
+      "number": 40,
+      "stem": "Which of the following is the result when person A sends an e-mail that is encrypted by person B’s public key to person B and person C? Here, these three persons have the public keys of all three persons, and all of them have their own private keys.",
+      "options": {
+        "a": "Both B and C can decrypt the encrypted e-mail using B’s public key.",
+        "b": "Both B and C can decrypt the encrypted e-mail using their own private keys.",
+        "c": "Only B can decrypt the encrypted e-mail using A’s public key.",
+        "d": "Only B can decrypt the encrypted e-mail using B’s own private key."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#41",
+      "number": 41,
+      "stem": "Which of the following is a package of unauthorized programs and tools that have functions such as creating a back door on a server and hiding the evidence of intrusion inside a server?",
+      "options": {
+        "a": "RFID",
+        "b": "Rootkit",
+        "c": "TKIP",
+        "d": "Web beacon"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#42",
+      "number": 42,
+      "stem": "Which of the following is the most appropriate countermeasure against cross-site scripting (XSS) attacks?",
+      "options": {
+        "a": "Avoiding running a program received in an e-mail from an unknown sender",
+        "b": "Closing all unnecessary ports apart from standard web server ports",
+        "c": "Filtering out the input that can be interpreted as a script",
+        "d": "Using HTTPS instead of HTTP as the default protocol on the web server"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#43",
+      "number": 43,
+      "stem": "Which of the following is a method to prevent damage caused by an SQL injection attack?",
+      "options": {
+        "a": "Preventing input characters from being interpreted as characters that have a special meaning in querying or manipulating data in a database",
+        "b": "Rejecting any input that contains a character string that specifies a higher-level directory (../)",
+        "c": "Rejecting any input whose total length exceeds the limit",
+        "d": "Replacing an HTML tag with another character string that is not interpreted as an HTML tag if any input contains an HTML tag"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#44",
+      "number": 44,
+      "stem": "Which of the following is the network security tool that is usually deployed by a network or system administrator and presents itself as a target machine trying to lure attackers to observe their behavior and attack methodology without harming other systems?",
+      "options": {
+        "a": "Honeypot",
+        "b": "Logic analyzer",
+        "c": "Protocol analyzer",
+        "d": "Rootkit"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#45",
+      "number": 45,
+      "stem": "SSL/TLS is the industry-standard security technology creating encrypted connections between a web server and a web browser. This is used to maintain data privacy and to protect the information in online transactions. The steps for establishing an SSL/TLS connection are randomly listed as follows: 1. The web server sends a copy of its SSL/TLS certificate to the web browser. 2. SSL/TLS encrypted communication takes place between the web browser and the web server. 3. The web server sends the web browser an acknowledgment to start an SSL/TLS encrypted connection. 4. The web browser checks if the SSL/TLS certificate is trustworthy or not. If it is trustworthy, then the web browser sends a message to the web server requesting to establish an encrypted connection. 5. A web browser tries to connect to the web server secured with SSL/TLS. Which of the following is the correct step sequence?",
+      "options": {
+        "a": "1 → 5 → 2 → 3 → 4",
+        "b": "1 → 5 → 4 → 3 → 2",
+        "c": "5 → 1 → 2 → 3 → 4",
+        "d": "5 → 1 → 4 → 3 → 2"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#46",
+      "number": 46,
+      "stem": "Which of the following is an appropriate description of a UML use case diagram?",
+      "options": {
+        "a": "It shows the behavior that occurs during object life cycle using finite state transitions.",
+        "b": "It shows the exchange of messages among objects, and massage transmissions and object lifelines in a time series.",
+        "c": "It shows the flow from one activity to another activity in systems and work.",
+        "d": "It shows the scenarios for what the system will do, from the point of view of actors (i.e., external users or machines)."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#47",
+      "number": 47,
+      "stem": "Among the design techniques that are used in system development, which of the following is an explanation of a decision table?",
+      "options": {
+        "a": "It represents a combination of conditions and the corresponding operations.",
+        "b": "It represents entities by a rectangle and their relationship through connecting lines.",
+        "c": "It represents the flow of controls, such as a process or selection, by linear lines or arrows.",
+        "d": "It represents the flow of data between an external interface, processes, and data store."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#48",
+      "number": 48,
+      "stem": "Test data about the part of a program shown in the flowchart below is specified by decision condition coverage (branch coverage). When this test data is changed to being specified by multiple-condition coverage, which of the following is the appropriate test data to be added? Here, the part enclosed by parentheses () represents the set of test data. Process 1 No A > 6 or B = 0 Yes Process 2 • Test data by decision condition coverage (branch coverage) (A = 4, B = 1), (A = 5, B = 0)",
+      "options": {
+        "a": "(A = 3, B = 0), (A = 7, B = 2)",
+        "b": "(A = 3, B = 2), (A = 8, B = 0)",
+        "c": "(A = 4, B = 0), (A = 8, B = 0)",
+        "d": "(A = 7, B = 0), (A = 8, B = 2)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#49",
+      "number": 49,
+      "stem": "Among the different types of software tests, which of the following is a test that is performed with the purpose of checking whether or not a location that must not be affected by changes made for software maintenance is affected?",
+      "options": {
+        "a": "Integration test",
+        "b": "Operational test",
+        "c": "Regression test",
+        "d": "System test"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#50",
+      "number": 50,
+      "stem": "Which of the following is an explanation of reverse engineering of software?",
+      "options": {
+        "a": "The entire software is reconstructed after analyzing and understanding the existing software.",
+        "b": "The existing software is analyzed, and its specification and structure are clarified.",
+        "c": "The internal structure of software is changed without changing the behavior seen from the outside.",
+        "d": "The source code is created automatically from the design information using a development support tool."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#51",
+      "number": 51,
+      "stem": "According to PMBOK, which of the following is the description of scope creep?",
+      "options": {
+        "a": "Any change to the project scope that requires an adjustment to the project cost or schedule",
+        "b": "The approved version of a scope statement, work breakdown structure (WBS), and its associated WBS dictionary",
+        "c": "The process of monitoring the status of the project and product scope and managing changes to the scope baseline",
+        "d": "The uncontrolled expansion to product or project scope without adjustments to time, cost, and resources"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#52",
+      "number": 52,
+      "stem": "A project with a development period of 10 months and the person-hours required for development as 200 person-months is planned. Which of the following is the number of staff members required during the peak time based on the distribution sheet shown below? Here, the number of staff members does not change from the start till the end of every process. Process Requirements Development/ name Design System test definition Test Item Allocation of 16 33 42 9 person-hours (%) Allocation of time 20 30 40 10 period (%)",
+      "options": {
+        "a": "18",
+        "b": "20",
+        "c": "21",
+        "d": "22"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#53",
+      "number": 53,
+      "stem": "Which of the following is the critical path of the project activities shown in the figure below? B E H K 3 D1 1 3 2 A C F I L 2 3 3 2 3 G J Legend: 4 2 Activity name Required number of days",
+      "options": {
+        "a": "A → B → E → I → L",
+        "b": "A → C → D → E → H → K",
+        "c": "A → C → F → I → L",
+        "d": "A → C → G → J → L"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#54",
+      "number": 54,
+      "stem": "Which of the following is an explanation of the function point method?",
+      "options": {
+        "a": "The development scale is estimated by adding up the number of steps required for each program to be developed.",
+        "b": "The development scale is estimated by searching for past examples and then analyzing and evaluating the results and the differences of these examples from the system to be developed.",
+        "c": "The development scale is estimated from the counts and characteristics of external inputs and outputs, internal logical files, external inquiries, and external interface files.",
+        "d": "The number of person-hours required for each activity is estimated by creating a WBS of the activities required for a development project."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#55",
+      "number": 55,
+      "stem": "In ITIL, the reduction in the index value expressing maintainability is cited as an example of a key performance index (KPI) in availability management. Which of the following corresponds to such an index?",
+      "options": {
+        "a": "Mean time between failures",
+        "b": "Mean time between service incidents",
+        "c": "Mean time to restore service",
+        "d": "Number of interruptions in a certain period of time"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#56",
+      "number": 56,
+      "stem": "In service management, which of the following is a requirement of service level management?",
+      "options": {
+        "a": "A capacity plan is created, implemented, and maintained while human, technical, informational, and financial resources are taken into consideration.",
+        "b": "A service catalog and SLA are created for the service to be provided, and they are agreed upon with the customer.",
+        "c": "Costs are monitored and reported against the budget; the financial forecasts are reviewed, and costs are managed.",
+        "d": "The risks to service continuity and availability of services are assessed and documented."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#57",
+      "number": 57,
+      "stem": "Which of the following is an effective means of protecting an information system from the damage from over-voltage that occurs because of a lightning strike?",
+      "options": {
+        "a": "Connecting the communication cable and the computer through a surge protection device (SPD)",
+        "b": "Digitalizing the control circuit of electric power facilities",
+        "c": "Installing a private power generator",
+        "d": "Splitting the communication wire into two (2) systems that have different paths"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#58",
+      "number": 58,
+      "stem": "Among situations that are identified as results of performing an ISMS internal audit on the basis of ISO/IEC 27001:2013 (Information security management systems— Requirements), which of the following is a situation that the auditor should record in the audit report as a finding?",
+      "options": {
+        "a": "After a risk assessment was performed, risk acceptance criteria were determined.",
+        "b": "An incident of erroneous disposal of personal information was reported to a competent authority with specified procedures.",
+        "c": "Spyware was detected by a malware scan, and it was disinfected.",
+        "d": "The use of a USB memory was permitted in accordance with defined procedures."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#59",
+      "number": 59,
+      "stem": "An information security audit was performed about the security when backup media that contain confidential information are handed over to a vendor for external storage. Among situations that are identified as a result of this audit, which of the following is a situation that the auditor should record in the audit report as a finding?",
+      "options": {
+        "a": "The person in charge at the outsourcer describes the date and details in a dedicated record book and gets a stamp of receipt from the vendor each time the media is handed over.",
+        "b": "The person in charge at the outsourcer puts the backup media in a cardboard box and hands it over to the vendor.",
+        "c": "The responsible person at the outsourcer concludes a contract that requires confirmation of the storage status of media at the vendor at every set period, and then the media is handed over.",
+        "d": "The responsible person at the outsourcer concludes an outsourcing contract that includes confidentiality provisions with the vendor, and then the media is handed over."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#60",
+      "number": 60,
+      "stem": "In the system design stage, which of the following is the point to be checked during the audit of control for reducing the risk of non-fulfillment of user requirements?",
+      "options": {
+        "a": "Programming must be performed in accordance with the specified conventions.",
+        "b": "The program specifications must be created on the basis of the system design.",
+        "c": "The test plan must be created on the basis of the system test requirements, and must also be approved by the responsible person in the system operations department.",
+        "d": "The user department must participate in the review of the system design."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#61",
+      "number": 61,
+      "stem": "Among the “four categories ”of enterprise architecture, which of the following is the remaining one after business architecture, technology architecture, and application architecture?",
+      "options": {
+        "a": "Bus architecture",
+        "b": "Data architecture",
+        "c": "Software architecture",
+        "d": "System architecture"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#62",
+      "number": 62,
+      "stem": "When a workflow system is used for business improvement, which of the following is an appropriate effect that can be expected?",
+      "options": {
+        "a": "A standard protocol used for data exchange between a company and its customers can be provided.",
+        "b": "Processing speed for office procedures from document submission to approval can be improved.",
+        "c": "Services such as discounts can be provided according to the purchase amount of a customer.",
+        "d": "Shipping and receiving of stocked products can be automated in a warehouse."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#63",
+      "number": 63,
+      "stem": "The weighted comprehensive evaluation method is used to integrate and quantify the evaluation scores of multiple items for quantitatively evaluating the effect of improvements. Which of the following is the improvement proposal that should be prioritized in the table below? Improvement proposals Evaluation items Weighting factor Proposal 1 Proposal 2 Proposal 3 Proposal 4 Labor savings 4 6 8 2 5 Shortening of 3 5 5 9 5 time frame Reduction of 3 6 4 7 6 resources",
+      "options": {
+        "a": "Proposal 1",
+        "b": "Proposal 2",
+        "c": "Proposal 3",
+        "d": "Proposal 4"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#64",
+      "number": 64,
+      "stem": "Which of the following is an explanation of BYOD (bring your own device)?",
+      "options": {
+        "a": "Carrying information devices loaned by the company for use in work",
+        "b": "Configuring a usage environment for the personal use of personally-owned information devices",
+        "c": "Using employees’ personally-owned information devices for work",
+        "d": "Using laptop computers or other devices owned by the company for personal use outside of the company"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#65",
+      "number": 65,
+      "stem": "Which of the following descriptions corresponds to CSR procurement?",
+      "options": {
+        "a": "Choosing the product with the lowest price in order to minimize costs",
+        "b": "Having multiple suppliers to avoid situations in which procurement is not possible after disasters",
+        "c": "Indicating procurement standards that take the environment, human rights, etc. into account, and requiring suppliers to comply with these",
+        "d": "Using EDI for purchasing goods to perform prompt and accurate procurement"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#66",
+      "number": 66,
+      "stem": "An RFP is presented to each vendor that has responded to an RFI. Which of the following should be done beforehand in order to proceed with future vendor selection processes fairly?",
+      "options": {
+        "a": "Besides the items of the RFP, giving a high evaluation to a vendor who is familiar with the current system in order to select that vendor easily",
+        "b": "Establishing processes of selection, such as setting evaluation standards or weighting rules of conformity to the request items",
+        "c": "Issuing unofficial agreements to all vendors to whom the RFP has been presented and requesting them to prepare a contract and a statement of work to accelerate the conclusion of the contract after vendor selection",
+        "d": "Preparing bailout for a vendor that received a high evaluation on the response to the RFI in case it fails in the selection"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#67",
+      "number": 67,
+      "stem": "In a growth matrix proposed by Ansoff, which of the following is a strategy for an organization that tries to expand a business by introducing new products into new markets?",
+      "options": {
+        "a": "Diversification",
+        "b": "Market development",
+        "c": "Market penetration",
+        "d": "Product development"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#68",
+      "number": 68,
+      "stem": "Which of the following is an external factor related to company’s products, identified by SWOT analysis?",
+      "options": {
+        "a": "Strengths in product functions",
+        "b": "Strengths in sales power",
+        "c": "Threats by new entrants",
+        "d": "Weaknesses in product quality"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#69",
+      "number": 69,
+      "stem": "Heskett classified customers into four categories and explained the importance of improving customer satisfaction. Which of the following types of customers is dissatisfied and, if given a chance, would encourage others to switch as well?",
+      "options": {
+        "a": "Captive",
+        "b": "Mercenary",
+        "c": "Propagandist",
+        "d": "Terrorist"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#70",
+      "number": 70,
+      "stem": "Which of the following is a definition of Customer Relationship Management (CRM)?",
+      "options": {
+        "a": "A framework used to support and integrate processes, people, and information across an organization to give a unified gate-way for information and a knowledge base for employees, partners, and customers",
+        "b": "A technology for managing all of a company’s relationships and interactions with customers and potential customers in order to improve business relationships",
+        "c": "A type of software that organizations use to manage day-to-day business activities such as accounting, procurement, project management, risk management and compliance, and supply chain operations",
+        "d": "The broad range of activities required to plan, control and execute a product's flow, from acquiring raw materials and production through distribution to the final customer, in the most streamlined and cost-effective way possible"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#71",
+      "number": 71,
+      "stem": "Which of the following is an appropriate explanation of the technology S curve?",
+      "options": {
+        "a": "It represents the diffusion process of a new technology. It shows that the growth rate of the penetration rate gradually decreases as products applying the technology penetrate the market, by using a frequency distribution curve.",
+        "b": "It represents the maturing process of technology. It shows that during the time until the new technology is actually spread, the degree of awareness changes as time passes.",
+        "c": "It represents the process of technological progress. It shows that technology advances slowly at the beginning and then advances rapidly, and thereafter, slowly stagnates.",
+        "d": "It represents the relationship between production volume and unit cost. It shows the course of reduction in unit cost in accordance with an increase in cumulative production volume."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following is one of the main characteristics of a blockchain?",
+      "options": {
+        "a": "A centralized ledger on a server",
+        "b": "A client server network",
+        "c": "A distributed ledger on a peer to peer network",
+        "d": "A type of cryptocurrency"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#73",
+      "number": 73,
+      "stem": "When a production plan is created, it is important to select an appropriate production system. Which of the following is a suitable production system for varied and flexible high- mix low-volume production by single or several operators in charge of all processes?",
+      "options": {
+        "a": "Build-to-order production system",
+        "b": "Cell production system",
+        "c": "Continuous production system",
+        "d": "Individual production system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is a control method for a status of “a somewhat large number” or “slightly” ?",
+      "options": {
+        "a": "Feedback control",
+        "b": "Fuzzy control",
+        "c": "PWM (Pulse Width Modulation) control",
+        "d": "Sequence control"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is an explanation of a matrix organization?",
+      "options": {
+        "a": "A temporary and flexible organization in which experts are gathered together from other departments to solve specific issues with a set time frame and goal",
+        "b": "An organization having functionally differentiated departments on the basis of specialized knowledge of the work, such as procurement, production, sales, and finance",
+        "c": "An organization in which members usually belong both to a functional department and to a department that executes specified business",
+        "d": "An organization in which self-contained management activities can be developed by possessing the functions and the profit responsibility necessary for the business execution on a per-product, per-customer, or per-region basis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is an explanation of work sharing?",
+      "options": {
+        "a": "A concept that aims for diverse and flexible working styles, for the purpose of realizing harmony between work and life",
+        "b": "A method that allows employees to select welfare services within a certain range",
+        "c": "A system that allows employees to choose their workplace or duty",
+        "d": "An initiative for securing employment through shortening of work hours per employee and review of work assignments"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#77",
+      "number": 77,
+      "stem": "Which of the following is a process of discovering useful patterns and relationships by the analysis of large volume of data?",
+      "options": {
+        "a": "Brainstorming",
+        "b": "Data mining",
+        "c": "Decision tree",
+        "d": "Document analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#78",
+      "number": 78,
+      "stem": "Break-even point (BEP) is a point where total costs and total revenue are equal. The table below shows the fixed costs, price per unit, variable costs per unit, and BEP in units for Company A and Company B. Company A Company B Fixed costs ($) x y Price per unit ($) 120 140 Variable costs per unit ($) 40 60 BEP in units 500 600 Which of the following is the appropriate combination of the fixed costs of Company A, and Company B? x y",
+      "options": {
+        "a": "20,000 36,000",
+        "b": "20,000 48,000",
+        "c": "40,000 36,000",
+        "d": "40,000 48,000"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2020S_FE_AM#79",
+      "number": 79,
+      "stem": "An investor purchased property A for $500,000. Two years later, the investor sold the property for $1,000,000. Which of the following is the ROI of this investment (%)?",
+      "options": {
+        "a": "50",
+        "b": "100",
+        "c": "150",
+        "d": "200"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2020S_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is software whose copyright is abandoned and that can be used free of charge?",
+      "options": {
+        "a": "Freeware",
+        "b": "Open Source Software",
+        "c": "Public Domain Software",
+        "d": "Shareware"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

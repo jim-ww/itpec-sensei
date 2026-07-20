@@ -1,0 +1,1135 @@
+{
+  "examId": "2019A_FE_AM",
+  "source": "2019A_FE_AM_Question.pdf",
+  "questionCount": 79,
+  "questions": [
+    {
+      "globalId": "2019A_FE_AM#1",
+      "number": 1,
+      "stem": "For logical variables p and q, which of the following is a logical expressions that evaluates to true for any values of p and q?",
+      "options": {
+        "a": "𝑝̅ + (p ∙ q)",
+        "b": "(p ∙ q) + (𝑝̅ + (p ∙ 𝑞 ))",
+        "c": "(p ∙ 𝑞 ) ∙ (𝑝̅ + q)",
+        "d": "((𝑝̅ ∙ q) ∙ (p ∙ q)) ∙ 𝑞"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#2",
+      "number": 2,
+      "stem": "What is the Hamming distance of bit strings 10101 and 11110?",
+      "options": {
+        "a": "0",
+        "b": "2",
+        "c": "3",
+        "d": "5"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#3",
+      "number": 3,
+      "stem": "A candy box contains four flavors of candies: 6 lemon-flavored, 12 strawberry-flavored, 8 orange-flavored, and 4 grape-flavored. When a candy is randomly chosen from the box, what is the probability that it is either lemon- or orange-flavored?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#4",
+      "number": 4,
+      "stem": "A vehicle travels along a circle in the figure below. Two sensors L and R are attached to the left and right rear wheels, whose revolution speeds are independently controlled. Sensors L and R are photo reflective sensors, whose values change according to the ratio of black and white regions they pass over. If the ratio increases, the sensor value decreases, and if the ratio decreases, the sensor value increases. Which of the following is an appropriate control for ensuring that the vehicle travels along the black outline of the circle? Here, if the values of the two sensors match, the revolution speeds of the motors return to the initial speed. Moving direction Sensor L Sensor R Front wheel Control unit Rear wheels Motor L Motor R Circle Sensor L value > Sensor R value Sensor L value < Sensor R value Motor L Motor R Motor L Motor R Revolution speed Revolution speed Revolution speed Revolution speed",
+      "options": {
+        "a": "Increase Decrease Increase Decrease",
+        "b": "Increase Decrease Decrease Increase",
+        "c": "Decrease Increase Increase Decrease",
+        "d": "Decrease Increase Decrease Increase"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#5",
+      "number": 5,
+      "stem": "What is the result after evaluation of the following postfix expression? Here, symbols +, −, ×, and ÷ represent the arithmetic operators of addition, subtraction, multiplication, and division, respectively. 546+×493÷+×",
+      "options": {
+        "a": "98",
+        "b": "154",
+        "c": "238",
+        "d": "350"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#6",
+      "number": 6,
+      "stem": "Two stack operations are defined: PUSH n: Pushes a data (integer value n) to the stack. POP: Pops a data from the stack. For an empty stack, which of the following is the result of performing stack operations in the sequence below? PUSH 1 → PUSH 5 → POP → PUSH 7 → PUSH 6 → PUSH 4 → POP → POP → PUSH 3",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": "1 3 3 6 7 4 7 4 3 6 1 3"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#7",
+      "number": 7,
+      "stem": "In a table search, which of the following is a characteristic of the search technique known as hashing?",
+      "options": {
+        "a": "It is a method in which a collision between storage locations of data does not occur.",
+        "b": "It is a search technique that uses a binary tree.",
+        "c": "The storage locations of data are determined based on the function values of their keys.",
+        "d": "The time required to perform the search is approximately proportional to the size of the entire table."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#8",
+      "number": 8,
+      "stem": "The binary search algorithm is used to search for a given item when items are sorted. If the number of items is 1 million, which of the following is the closest to the maximum number of comparisons required to find the item?",
+      "options": {
+        "a": "15",
+        "b": "20",
+        "c": "25",
+        "d": "30"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#9",
+      "number": 9,
+      "stem": "In object-oriented programming, which of the following is an explanation of overriding that achieves polymorphism?",
+      "options": {
+        "a": "A feature that allows a class to provide a specific implementation of a method that is already provided by one of its super classes",
+        "b": "Creating a class through abstraction by collecting common properties of multiple classes",
+        "c": "Defining multiple methods in a class that have the same name, but differ in terms of the number of arguments, argument types, or argument order",
+        "d": "Hiding internal contracts and structures of an object from its external specification"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#10",
+      "number": 10,
+      "stem": "A CPU has a clock frequency of 2.0 GHz. When the instructions consist of three types, as shown in the table below, what is the approximate CPU performance in MIPS? Type Execution time (clocks) Frequency of appearance (%) Instruction 1 15 40 Instruction 2 10 20 Instruction 3 10 40",
+      "options": {
+        "a": "16.7",
+        "b": "120",
+        "c": "167",
+        "d": "200"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#11",
+      "number": 11,
+      "stem": "Which of the following is the average cycles per instruction (CPI) of a computer that can execute 1 billion instructions per second with a clock rate of 2.4 GHz?",
+      "options": {
+        "a": "0.04",
+        "b": "0.12",
+        "c": "2.4",
+        "d": "25"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#12",
+      "number": 12,
+      "stem": "The figure shows the storage sequence of instructions fetched by a processor. Which of the following corresponds to a? Processor Main Instruction memory a decoder",
+      "options": {
+        "a": "Accumulator",
+        "b": "Data cache",
+        "c": "Instruction register",
+        "d": "Program register (program counter)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#13",
+      "number": 13,
+      "stem": "Which of the following is an appropriate description of cache memory?",
+      "options": {
+        "a": "Cache memory is used to fill a gap in memory capacity between the physical memory and the virtual memory.",
+        "b": "Due to significant improvements in the access speed of semiconductor memory, the need for cache memory is decreasing.",
+        "c": "If a cache miss occurs, an interrupt is generated, and data is transferred from the main memory to the cache memory by the program.",
+        "d": "When the write instruction is executed, the cache memory is rewritten in two ways. In one, both the cache memory and the main memory are rewritten, and in the other, only the cache memory is rewritten, and the main memory is rewritten when the relevant data is removed from the cache memory."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#14",
+      "number": 14,
+      "stem": "When two computers have been prepared, and the computer in use fails, which of the following is the system that continues processing by promptly switching to the backup computer that has started the same online processing programs as those on the currently- used computer in advance, and is on standby?",
+      "options": {
+        "a": "Cold standby system",
+        "b": "Hot standby system",
+        "c": "Multiprocessor system",
+        "d": "Multiuser system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#15",
+      "number": 15,
+      "stem": "Which of the following is essential to realizing a fault-tolerant system?",
+      "options": {
+        "a": "Automatically recording the history, such as information about changes to the database, while the system is in operation in order to investigate causes of system failure and restore the system in the event of a system failure",
+        "b": "Designing for easy operations so that operational errors do not occur easily, or designing operations in such a way that even if an operational error occurs, it does not result in a fatal error",
+        "c": "Periodically taking a data backup so that the status prior to the failure can be restored to a reserve environment without delay in the event of a failure",
+        "d": "Providing redundancy in the system configuration to minimize the impact from any failure of parts so that processing can be continued without affecting the overall system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#16",
+      "number": 16,
+      "stem": "There exists a device with an MTBF of forty-five (45) hours and an MTTR of five (5) hours. What is the availability of a system that connects two (2) such devices in series?",
+      "options": {
+        "a": "0.81",
+        "b": "0.90",
+        "c": "0.95",
+        "d": "0.99"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#17",
+      "number": 17,
+      "stem": "Which of the following is an appropriate explanation of a memory leak?",
+      "options": {
+        "a": "An increase in the number of applications executed concurrently causes most processing time to be spent for paging because of a lack of main memory, and results in an extreme reduction of throughput.",
+        "b": "It is a method to insert required modules into main memory when there is a restriction on the size of the program area during execution.",
+        "c": "Part of main memory reserved during operation is not released because of a bug in the OS or an application, and as a result, the usable area of main memory decreases.",
+        "d": "The total amount of free space available for use in main memory is sufficient, but no space can be reserved for loading a large program because of fragmentation."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#18",
+      "number": 18,
+      "stem": "An operating system (OS) chooses a process for CPU execution based on a scheduling algorithm. Consider four processes, P1, P2, P3, and P4, and their corresponding arrival times along with their burst times shown in the table below. Which of the following is the correct combination of waiting times for the processes to be executed in the First-Come-First-Serve (FCFS) scheduling algorithm? Here, the arrival time is the time at which a process arrives in the ready queue, the burst time is the time required by a process for CPU execution, and the waiting time is the period of time spent by a process in the ready queue for CPU to start the execution. Unit: millisecond Process Arrival time Burst Time P1 0 6 P2 2 4 P3 4 9 P4 5 7 P1 P2 P3 P4",
+      "options": {
+        "a": "0 2 4 5",
+        "b": "0 4 6 14",
+        "c": "6 4 9 7",
+        "d": "6 6 13 12"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#19",
+      "number": 19,
+      "stem": "Which of the following is an explanation of an absolute path name in a file system?",
+      "options": {
+        "a": "The path name from the current directory to the target file",
+        "b": "The path name from the home directory to the target file",
+        "c": "The path name from the root directory to the target file",
+        "d": "The shortest path name among path names from a certain directory to the target file"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#20",
+      "number": 20,
+      "stem": "Which of the following is the main purpose of optimization by a compiler?",
+      "options": {
+        "a": "To improve the maintainability of a program",
+        "b": "To make debugging of a program easier",
+        "c": "To reduce the execution time of a program",
+        "d": "To reduce the time needed to generate object codes"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#21",
+      "number": 21,
+      "stem": "Which of the following is the OSS that is provided as an integrated development environment for software?",
+      "options": {
+        "a": "Apache Tomcat",
+        "b": "Eclipse",
+        "c": "GCC",
+        "d": "Linux"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#22",
+      "number": 22,
+      "stem": "Which of the following is a sequential circuit that has two (2) stable states?",
+      "options": {
+        "a": "Adder circuit",
+        "b": "Capacitor",
+        "c": "Flip-flop",
+        "d": "NAND gate"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#23",
+      "number": 23,
+      "stem": "Which of the following is an appropriate description of flash memory?",
+      "options": {
+        "a": "All its contents can be erased at once with ultraviolet rays.",
+        "b": "Data can be electronically erased in block units.",
+        "c": "It can be rewritten at a high speed and is used for the cache memory of a CPU.",
+        "d": "It needs to rewrite data periodically."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#24",
+      "number": 24,
+      "stem": "Which of the following is an equivalent representation of the circuit below where only NAND gates are used?",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": ""
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#25",
+      "number": 25,
+      "stem": "When an order data shown below is entered, which of the following is the data validation that is performed to determine whether the order date is on or before the business day on which the data is entered? Order data Slip No. Order date Product code Quantity Customer code (characters) (characters) (characters) (number) (characters)",
+      "options": {
+        "a": "Duplicate check",
+        "b": "Format check",
+        "c": "Logical check",
+        "d": "Sequence check"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#26",
+      "number": 26,
+      "stem": "Which of the following is the most appropriate explanation of augmented reality (AR)?",
+      "options": {
+        "a": "By appealing to the five senses through equipment, such as a head-mounted display, a person can experience locations or worlds that do not actually exist as if they were real.",
+        "b": "By constructing a 3D virtual space that is natural to humans, and changing the virtual space in accordance with a person’s movement, he or she can feel as if he or she is in that place.",
+        "c": "By seamlessly interweaving a computer-generated information with the physical world, the viewer can perceive it as an immersive aspect of the real environment.",
+        "d": "By viewing a video recorded in the past, the viewer can feel as if he or she were in that era and at that location."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#27",
+      "number": 27,
+      "stem": "Of the functions provided by a DBMS, which of the following is a means for achieving protection for data confidentiality?",
+      "options": {
+        "a": "Checking referential constraints when the data is updated",
+        "b": "Managing a transaction that combines a series of processes as a logical unit",
+        "c": "Managing the data access rights of users",
+        "d": "Placing an exclusive lock on the data before it is updated"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#28",
+      "number": 28,
+      "stem": "In a relational database, which of the following is the appropriate purpose for defining a foreign key?",
+      "options": {
+        "a": "To prevent fragmentation in the record storage area due to the repeated deletion and insertion of records",
+        "b": "To provide a constraint to maintain referential consistency between the records of related tables",
+        "c": "To restore as many records as possible when they are damaged by failure, based on the mutual relationship between tables",
+        "d": "To speed up the searching and updating of related tables by storing them closer together"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#29",
+      "number": 29,
+      "stem": "Which of the following is an SQL statement that gives the same result as the SQL statement that is described below for the “Product” table and the “Inventory” table? Here, the underlined part indicates the primary key. SELECT ProductNumber FROM Product WHERE ProductNumber NOT IN (SELECT ProductNumber FROM Inventory) Product ProductNumber ProductName UnitPrice Inventory WarehouseNumber ProductNumber InventoryQuantity",
+      "options": {
+        "a": "SELECT ProductNumber FROM Product WHERE EXISTS (SELECT ProductNumber FROM Product)",
+        "b": "SELECT ProductNumber FROM Inventory WHERE NOT EXISTS (SELECT ProductNumber FROM Product)",
+        "c": "SELECT ProductNumber FROM Product WHERE EXISTS (SELECT ProductNumber FROM Inventory WHERE Product.ProductNumber = Inventory.ProductNumber)",
+        "d": "SELECT ProductNumber FROM Product WHERE NOT EXISTS (SELECT ProductNumber FROM Inventory WHERE Product.ProductNumber = Inventory.ProductNumber)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#30",
+      "number": 30,
+      "stem": "Which of the following is a file where values before and after an update of the database are written and saved as the update history of the database?",
+      "options": {
+        "a": "Backup file",
+        "b": "Checkpoint file",
+        "c": "Dump file",
+        "d": "Log file"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#31",
+      "number": 31,
+      "stem": "Which of the following is an appropriate description of the lock operation that is used for the concurrency control of a transaction?",
+      "options": {
+        "a": "For a resource on which a shared lock is acquired, the acquisition of a new shared lock by another transaction is permitted.",
+        "b": "For a resource on which a shared lock is acquired, the acquisition of a new exclusive lock by another transaction is permitted.",
+        "c": "For a resource on which an exclusive lock is acquired, the acquisition of a new shared lock by another transaction is permitted.",
+        "d": "For a resource on which an exclusive lock is acquired, the acquisition of a new exclusive lock by another transaction is permitted."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#32",
+      "number": 32,
+      "stem": "Which of the following is the device that operates only at the physical layer of the OSI model?",
+      "options": {
+        "a": "Bridge",
+        "b": "Repeater",
+        "c": "Router",
+        "d": "Switch"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#33",
+      "number": 33,
+      "stem": "Which of the following is the maximum theoretical data rate (in Mbps) achievable in the IEEE 802.11n network?",
+      "options": {
+        "a": "11",
+        "b": "54",
+        "c": "248",
+        "d": "600"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#34",
+      "number": 34,
+      "stem": "Which of the following is an architecture that decouples the network control and forwarding functions, enabling the network control to become directly programmable and the underlying infrastructure to be abstracted for applications and network services?",
+      "options": {
+        "a": "Cloud computing",
+        "b": "Internet of things",
+        "c": "Network function virtualization",
+        "d": "Software-defined networking"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#35",
+      "number": 35,
+      "stem": "In telecommunication, which of the following is a standard for wireless broadband communication for mobile devices and data terminals?",
+      "options": {
+        "a": "IEEE 802.11",
+        "b": "LTE",
+        "c": "NFC",
+        "d": "UWB"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#36",
+      "number": 36,
+      "stem": "Which of the following is an e-mail header field that is removed during the message transfer using SMTP?",
+      "options": {
+        "a": "Bcc",
+        "b": "Date",
+        "c": "Received",
+        "d": "X-Mailer"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#37",
+      "number": 37,
+      "stem": "Which of the following is an attack that threatens the “integrity” of information?",
+      "options": {
+        "a": "A DoS attack by which the system is set to an overloaded state",
+        "b": "Falsification of a web page",
+        "c": "Tapping of communication content",
+        "d": "Unauthorized copying of data saved in a system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#38",
+      "number": 38,
+      "stem": "Which of the following is the purpose of using a message digest in a message authentication code?",
+      "options": {
+        "a": "To check the encryption method of a message",
+        "b": "To check the overview of a message",
+        "c": "To confirm that there is no falsification of a message",
+        "d": "To secure the confidentiality of a message"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#39",
+      "number": 39,
+      "stem": "Which of the following is a role that a PKI certification authority performs as a reliable third party?",
+      "options": {
+        "a": "Allocating a digital signature to an e-mail body as requested by a user",
+        "b": "Enabling the synchronization of time by returning an accurate time to a user’s request",
+        "c": "Issuing a digital certificate that certifies the private key of a user or server",
+        "d": "Issuing a digital certificate that certifies the public key of a user or server"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#40",
+      "number": 40,
+      "stem": "Which of the following is a description of a directory traversal attack?",
+      "options": {
+        "a": "By specifying a file including the path name, the attacker illegally reads an unauthorized file.",
+        "b": "The attacker enters database command statements as input data for a web application and executes unexpected SQL statements.",
+        "c": "The attacker guides a user to a website, where vulnerability in the escape processing of HTML output by a web application can be exploited, and then executes a malicious script on the user’s browser.",
+        "d": "The attacker illegally obtains the session ID of a user who has logged into a session managed by a session ID, and then accesses the server by spoofing the identity of the user."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#41",
+      "number": 41,
+      "stem": "In ISO/IEC 27000:2018 (Information Security Management Systems – Overview and Vocabulary), which of the following is defined as the “property that an entity is what it claims to be”?",
+      "options": {
+        "a": "Accountability",
+        "b": "Authenticity",
+        "c": "Nonrepudiation",
+        "d": "Reliability"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#42",
+      "number": 42,
+      "stem": "Which of the following is the purpose of port scanning when an attacker intrudes into the system?",
+      "options": {
+        "a": "To investigate if evidence of attack remains in the system log at the post-processing stage",
+        "b": "To investigate if there is a service that can be attacked at the preliminary investigation stage",
+        "c": "To investigate if there is an account whose privileges can be deprived at the privilege acquisition stage",
+        "d": "To investigate if there is user information that is beneficial to the attacker at the performance stage of a fraudulent act"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#43",
+      "number": 43,
+      "stem": "Which of the following is a description that corresponds to two-factor authentication?",
+      "options": {
+        "a": "Authentication is performed by two (2) different passwords.",
+        "b": "Authentication is performed by using a password that contains two (2) different types of special characters.",
+        "c": "Authentication is performed by using the fingerprints of two (2) fingers.",
+        "d": "Authentication is performed by using the iris and a password."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#44",
+      "number": 44,
+      "stem": "Which of the following is the combination of processes that constitutes risk assessment?",
+      "options": {
+        "a": "Risk analysis, risk evaluation, and risk response",
+        "b": "Risk analysis, risk response, and risk acceptance",
+        "c": "Risk identification, risk analysis, and risk evaluation",
+        "d": "Risk identification, risk evaluation, and risk acceptance"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#45",
+      "number": 45,
+      "stem": "Which of the following is the malware that is used to gain unauthorized privileged access, to hide its own presence, and to perform malicious activities in a computer system?",
+      "options": {
+        "a": "If an input text contains HTML tags, replacement of these tags with other character strings that are not interpreted as HTML tags",
+        "b": "Nonacceptance of an input text if the overall length of the text exceeds the limit",
+        "c": "Nonacceptance of an input text that contains a character string that specifies a higher- level directory ( . . / )",
+        "d": "Preventing input characters from being interpreted as characters that have a special meaning in an inquiry or operation on the database"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#47",
+      "number": 47,
+      "stem": "In object orientation, which of the following is the name of being able to use the attributes and functions of a class in a subclass of that class?",
+      "options": {
+        "a": "Encapsulation",
+        "b": "Inheritance",
+        "c": "Override",
+        "d": "Polymorphism"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#48",
+      "number": 48,
+      "stem": "In the development process, which of the following is an activity that should be performed in software architecture design?",
+      "options": {
+        "a": "Converting the requirements for a software item into an architecture that represents the top-level structure and identifies software components",
+        "b": "Refining a program so that the processing of each coded line is clarified",
+        "c": "Seeking comments from the customer and determining a specification",
+        "d": "Summarizing the requirements in the form of diagrams and tables, and refining and analyzing them in stages"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#49",
+      "number": 49,
+      "stem": "Which of the following is the testing technique that uses the different unique combination of input conditions to check whether the corresponding result is delivered based on the design rules as specified for the system?",
+      "options": {
+        "a": "Boundary value analysis",
+        "b": "Decision table testing",
+        "c": "Equivalence partitioning",
+        "d": "Robustness testing"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#50",
+      "number": 50,
+      "stem": "Which of the following is an appropriate test to ensure that the interfaces and linkages between different parts of software work properly?",
+      "options": {
+        "a": "Functional test",
+        "b": "Integration test",
+        "c": "Performance test",
+        "d": "Unit test"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#51",
+      "number": 51,
+      "stem": "Among eXtreme Programming (XP) practices, which of the following is adopted to improve program quality in program development through smooth communication between programmers by exchanging their roles and checking each other’s work?",
+      "options": {
+        "a": "Coding standard",
+        "b": "Pair programming",
+        "c": "Planning game",
+        "d": "Test-driven development"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#52",
+      "number": 52,
+      "stem": "Screens are created for a system that is composed of a total of 100 screens. The breakdown of the 100 screens classified on the basis of size and complexity is shown below. Number of screens with a “Small” size and “Low” complexity: 30 Number of screens with a “Medium” size and “Medium” complexity: 40 Number of screens with a “Large” size and “Medium” complexity: 20 Number of screens with a “Large” size and “High” complexity: 10 If the total number of person-days for creating all screens is estimated by using the number of person-days for creation shown in the table below, how many person-days are required? Here, a review and revision of all the screens requires five (5) person-days, and project management requires 20% of the total person-days, including the person-days for review and revision. Number of person-days for creating each screen Unit: Person-day Complexity Low Medium High Size Small 0.4 0.6 0.8 Medium 0.6 0.9 1.0 Large 0.8 1.0 1.2",
+      "options": {
+        "a": "80",
+        "b": "85",
+        "c": "101",
+        "d": "102"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#53",
+      "number": 53,
+      "stem": "Which of the following is the technique for estimating activity durations where past information is statistically analyzed and various coefficients are determined?",
+      "options": {
+        "a": "Analogous estimate",
+        "b": "Bottom-up estimate",
+        "c": "Parametric estimate",
+        "d": "Three-point estimate"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#54",
+      "number": 54,
+      "stem": "Which of the following is the critical path of the project activities shown in the figure below? B E H K 3 D1 1 3 2 A C F I L 2 3 3 2 3 G J Legend: 4 2 Activity name Required number of days",
+      "options": {
+        "a": "A -> B -> E -> I -> L",
+        "b": "A -> C -> D -> E -> H -> K",
+        "c": "A -> C -> F -> I -> L",
+        "d": "A -> C -> G -> J -> L"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#55",
+      "number": 55,
+      "stem": "In order to analyze the trend of issues that occur in a project, the number of issues by management item, such as the stakeholders, cost, schedule, quality, etc., are arranged in order starting with the highest number of issues in the form of a bar graph, and a diagram is prepared in which the number of issues accumulated in this order are superimposed in the form of a line graph. Which of the following is this diagram?",
+      "options": {
+        "a": "Cause and effect diagram",
+        "b": "Control chart",
+        "c": "Pareto diagram",
+        "d": "Scatter diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#56",
+      "number": 56,
+      "stem": "IT services are provided under the following conditions in the SLA. What is the maximum number of hours of downtime in a month that can satisfy the SLA? [Conditions of the SLA] The number of business days per month is 30. The service hours are from 7 AM to 11PM o'clock on a business day. The required availability is 99% or more. Other required time, such as maintenance time, can be ignored.",
+      "options": {
+        "a": "1.2",
+        "b": "3.0",
+        "c": "4.8",
+        "d": "7.2"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#57",
+      "number": 57,
+      "stem": "In IT service management, which of the following is a problem management activity that is performed proactively?",
+      "options": {
+        "a": "Analyzing the occurrence trend of incidents and proposing measures that prevent an incident from occurring in the future",
+        "b": "Classifying problems that have been detected and recorded, and setting the response priority",
+        "c": "Evaluating the effectiveness of a resolution to a critical problem",
+        "d": "Monitoring whether an incident occurs again or not for a certain period of time after the problem is resolved"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#58",
+      "number": 58,
+      "stem": "Among the structures and the characteristics of a service desk organization, which of the following is a description of a local service desk?",
+      "options": {
+        "a": "By locating a service desk near the users, it is possible to provide support for users who speak different languages or come from different cultures, and to provide support for VIPs by dedicated staff.",
+        "b": "By using communication technology, services can be provided as if they were provided from a single service desk, even when service staff are dispersed across multiple regions or departments.",
+        "c": "Service staff can efficiently be deployed, or a large number of calls can be handled by concentrating service desks at a single site or at limited locations.",
+        "d": "Well-controlled services can be provided by centrally integrating and managing all staff, including those at dispersed locations."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#59",
+      "number": 59,
+      "stem": "Which of the following is an appropriate activity for a system auditor?",
+      "options": {
+        "a": "The auditor moves forward with the preparation of an audit report because the initially scheduled period finished in the middle of an investigation.",
+        "b": "The auditor orders improvements for problems that are found in the course of each investigation.",
+        "c": "The auditor points out items that need to be improved regarding problems found during the investigation.",
+        "d": "The auditor summarizes audit opinions for matters that have not been fully investigated, on the basis of his or her past experience."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#60",
+      "number": 60,
+      "stem": "Among the implementation structures of a system audit, which of the following is the most important to avoid from the standpoint of the independence of a system auditor?",
+      "options": {
+        "a": "Mr. A of the general affairs department, who was appointed as a member of the audit team, audits the status of entrance and exit control for the general affairs department together with other team members.",
+        "b": "Mr. B of the audit department audits the status of personal information management by an external contractor to whom his company outsources business operations that deal with personal information.",
+        "c": "Mr. C, who was transferred to the audit department five (5) years ago from a development manager position in the information system department, audits the status of Internet use in the marketing department.",
+        "d": "Mr. D of the legal department cooperates with an auditor in an audit of the validity of an outsourcing contract in response to a request from the audit department."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#61",
+      "number": 61,
+      "stem": "In an information security audit, which of the following is a check item for confirming availability?",
+      "options": {
+        "a": "Appropriate performance of error checking for data entry",
+        "b": "Encryption of databases",
+        "c": "Managing and maintaining the level of SLA that defines downtime",
+        "d": "Prohibiting the taking of external storage media out of the company without permission"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#62",
+      "number": 62,
+      "stem": "Which of the following is an explanation of SCM (Supply Chain Management)?",
+      "options": {
+        "a": "Customer information collected through various channels is consolidated and utilized to establish closer relationships with customers.",
+        "b": "Employees’ skills and behavioral characteristics are managed for appropriate personnel assignment and evaluation from the perspective of human resources strategy.",
+        "c": "Intellectual assets of individuals, such as know-how and experience, are shared as inspiration for creative work.",
+        "d": "The sequence of business operations, from purchasing and production to sales and distribution, is reexamined across companies in view of total optimization, so as to minimize inventory and accelerate delivery."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#63",
+      "number": 63,
+      "stem": "Concerning computerization costs, which of the following is the cost that indicates the running cost?",
+      "options": {
+        "a": "The consulting cost of information systems strategy planning",
+        "b": "The cost of system engineering for performance requirements definition",
+        "c": "The installation cost of software packages",
+        "d": "The maintenance cost of information-processing equipment, such as a server"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#64",
+      "number": 64,
+      "stem": "Which of the following is an explanation of BPM?",
+      "options": {
+        "a": "To achieve a reduction in inventory and a shortening of lead time by exchanging information about a series of business processes, from the supply of components to the sale of products, in real time",
+        "b": "To achieve overall optimization of management resources through consolidated information management of the main corporate activities, such as production, materials flow, sales, finance, and human affairs",
+        "c": "To incorporate the management cycle of analysis, design, execution, and improvement into business processes in order to continuously execute improvement and revision of business processes",
+        "d": "To perform consistent management of business processes that concern the customer, which include not only the sales of products but also maintenance service and the handling of queries and claims, based on a customer database"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#65",
+      "number": 65,
+      "stem": "Which of the following is an explanation of SaaS?",
+      "options": {
+        "a": "It is a service where the user uses the functions of application software via the Internet only when necessary.",
+        "b": "It is a software package for performing integrated management of mission-critical business operations in order to effectively employ the management resources of a company.",
+        "c": "It refers to a document of consent concerning the content of service quality between the ordering company and the service provider.",
+        "d": "It refers to a far-reaching revision of the existing organization and business processes, and the redesigning of duties, business flow, management mechanism, and information systems."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#66",
+      "number": 66,
+      "stem": "Which of the following should be undertaken in order to eliminate the “digital divide”?",
+      "options": {
+        "a": "Estimating IT investment, setting result targets based on investment goals, and performing prior evaluation of the feasibility of achieving each result target",
+        "b": "Increasing learning opportunities for information literacy, and preparing an environment to further facilitate the use of information & telecommunications equipment and information services",
+        "c": "Reducing energy consumption by promoting the efficiency of business operations with the help of IT, including telecommuting, energy savings for electrical appliances and facilities, and so forth",
+        "d": "Using IC tags to enable the tracking of distribution information on products and foodstuffs, in all processes from production to final consumption or disposal"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#67",
+      "number": 67,
+      "stem": "Which of the following is an explanation of the non-functional requirements definition?",
+      "options": {
+        "a": "It clearly identifies business functions that are difficult to implement in a system, and that constitute manual operation, from among business requirements.",
+        "b": "It clearly identifies the conformity of a new package to be installed in order to implement business requirements.",
+        "c": "It clearly identifies the functions that are lacking in the current system in order to determine business requirements.",
+        "d": "It clearly identifies the quality requirements, technical requirements, and operational requirements necessary to implement business requirements."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#68",
+      "number": 68,
+      "stem": "Which of the following is an external factor concerning an in-house product identified using SWOT analysis?",
+      "options": {
+        "a": "Cost competitiveness",
+        "b": "Functional strengths",
+        "c": "Quality-related weaknesses",
+        "d": "Threats owing to a new entry"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#69",
+      "number": 69,
+      "stem": "According to the “competitive strategy” proposed by Philip Kotler, which of the following describes a company that has no high market share, but has the strategic aim to increase income and acquire a unique position by focusing management resources on particular products and services?",
+      "options": {
+        "a": "Market challenger",
+        "b": "Market follower",
+        "c": "Market leader",
+        "d": "Market nicher"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#70",
+      "number": 70,
+      "stem": "Which of the following is a technique for separating company activities into core activities and support activities for each business function, and analyzing which activities generate the profit derived from the products and services provided to customers?",
+      "options": {
+        "a": "3C analysis",
+        "b": "Five forces analysis",
+        "c": "SWOT analysis",
+        "d": "Value chain analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#71",
+      "number": 71,
+      "stem": "Which of the following is an explanation of knowledge management?",
+      "options": {
+        "a": "A flat organization structure with minimal hierarchical layers is maintained to accelerate decision-making.",
+        "b": "Comparative analysis with other successful companies is performed to drive management innovation.",
+        "c": "Knowledge scattered across an enterprise is shared to improve overall problem-solving capability.",
+        "d": "Management is centered on proprietary know-how and technology that are not easy for other companies to imitate."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#72",
+      "number": 72,
+      "stem": "Which of the following is an explanation of CAD?",
+      "options": {
+        "a": "Evaluating product performance and functions using computers, without using the actual product to perform testing or experimentation",
+        "b": "Using a computer to convert product design drawings to process design information, and support automation of machine processing, etc.",
+        "c": "Using a computer to create product design drawings from attribute data concerning product shape, composition, etc.",
+        "d": "Using a computer to derive the required volumes and timing of materials from a production schedule, a BOM (bill of materials), inventory volumes, etc."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#73",
+      "number": 73,
+      "stem": "Which of the following performs processing according to steps (1) through (3)? (1) Based on the types and quantities, as well as the parts list of the product to be manufactured within a future fixed period of time, the required quantity of components is calculated. (2) The net order quantity of each component is calculated from the amount of inventory that can be allocated. (3) The ordering time for the components is determined with consideration for the manufacturing or procurement lead time.",
+      "options": {
+        "a": "CAD",
+        "b": "CRP",
+        "c": "JIT",
+        "d": "MRP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#74",
+      "number": 74,
+      "stem": "Which of the following is an explanation of EDI?",
+      "options": {
+        "a": "A communication service that provides added value, such as the storage of data transmitted over networks and conversion of data formats",
+        "b": "An international standard for e-mail services based on the OSI basic reference model, which provides comprehensive services for the generation, transmission, and processing of messages",
+        "c": "An ordering system that allows orders to be placed by transmitting order information from a data entry terminal to the head office or a supplier",
+        "d": "The exchange of business transaction data between computers (including terminals) over the Internet on the basis of standard protocols"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#75",
+      "number": 75,
+      "stem": "Which of the following is the procurement process that enables suppliers to bid against one another on the Internet in order to sell their products or services under the conditions specified by a general customer?",
+      "options": {
+        "a": "B to B",
+        "b": "G to C",
+        "c": "Reverse auction",
+        "d": "Virtual mall"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#76",
+      "number": 76,
+      "stem": "Which of the following is an appropriate method to forecast the amount of revenue during an upcoming promotion at a store, based on historical data?",
+      "options": {
+        "a": "Cluster analysis",
+        "b": "Delphi method",
+        "c": "Pareto analysis",
+        "d": "Regression analysis"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#77",
+      "number": 77,
+      "stem": "Which of the following is an appropriate explanation of a scatter diagram?",
+      "options": {
+        "a": "It is a chart used to determine if a relationship, pattern, or trend exists between two numeric attributes.",
+        "b": "It is a chart used to summarize the frequency distribution of a given attribute.",
+        "c": "It is a type of chart that contains both bars and a line graph, where individual values are represented in descending order by bars, and the cumulative total is represented by a line.",
+        "d": "It is a type of chart used to determine whether a process is in a stable state or not, and it plots characteristic values based on temporal transition."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#78",
+      "number": 78,
+      "stem": "When a company sells a product at 17 dollars per unit, and the fixed costs and the variable costs are as shown in the tables below (in dollars), how many units does the company have to sell to earn a profit of 42,000 dollars? Fixed costs: Administration costs 130,000 R&D costs 10,000 Variable costs per unit: Raw material costs 4 Administration costs 3",
+      "options": {
+        "a": "10,200",
+        "b": "14,200",
+        "c": "16,200",
+        "d": "18,200"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2019A_FE_AM#79",
+      "number": 79,
+      "stem": "Which of the following inventory valuation methods calculates the inventory unit price by dividing the total purchase amount by the total quantity of items purchased at the end of the accounting period?",
+      "options": {
+        "a": "First-in- first-out method",
+        "b": "Last-in- first-out method",
+        "c": "Moving average method",
+        "d": "Periodic average method"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2019A_FE_AM#80",
+      "number": 80,
+      "stem": "Which of the following is an appropriate description of the scope of software protection under Agreement on Trade-Related Aspects of Intellectual Property Rights (TRIPS)?",
+      "options": {
+        "a": "Algorithms and programming languages are protected.",
+        "b": "Application programs are protected but basic programs such as an OS are not covered, as the value of the right is included in the hardware cost.",
+        "c": "Both source programs and object programs are protected.",
+        "d": "Documents that describe algorithms are protected, but programs created by using the algorithms are not protected."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

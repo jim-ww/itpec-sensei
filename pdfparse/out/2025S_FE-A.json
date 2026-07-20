@@ -1,0 +1,877 @@
+{
+  "examId": "2025S_FE-A",
+  "source": "2025S_FE-A_Questions.pdf",
+  "questionCount": 60,
+  "questions": [
+    {
+      "globalId": "2025S_FE-A#1",
+      "number": 1,
+      "stem": "For an 8-bit binary integer, which of the following is the operation that extracts the most significant 4-bits while making the other bits zero?",
+      "options": {
+        "a": "Bitwise AND operation with 11110000.",
+        "b": "Bitwise NAND operation with 11110000.",
+        "c": "Bitwise OR operation with 00001111.",
+        "d": "Bitwise XOR operation with 00001111."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#2",
+      "number": 2,
+      "stem": "Which of the following is the binary fraction that is the nearest equivalent to the decimal fraction 23.375?",
+      "options": {
+        "a": "10111.011",
+        "b": "10111.110",
+        "c": "11101.011",
+        "d": "11101.110"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#3",
+      "number": 3,
+      "stem": "Which of the following is the most appropriate description of machine learning in AI?",
+      "options": {
+        "a": "It is a technology that enters specialized knowledge in a particular field into a computer, and has the computer infer by using the knowledge entered.",
+        "b": "It is a technology that gives computers the ability to learn in the same way humans naturally learn, such as finding specific patterns from memorized data.",
+        "c": "It is a technology that reproduces vital phenomena or evolutionary processes by using computers and machines.",
+        "d": "It is a technology to give computers the ability to manage learning materials and learning by using a web system or other information technology so that people can learn interactively."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#4",
+      "number": 4,
+      "stem": "A vehicle travels along a circular path as shown in the figure below. Two sensors, L and R, whose revolution speeds are independently controlled, are attached to the left and right rear wheels. Sensors L and R are photo-reflective sensors, and their values change according to the ratio of black and white regions they pass over. If the ratio increases, the sensor value decreases, and if the ratio decreases, the sensor value increases. Which of the following is an appropriate control to ensure that the vehicle travels along the black outline of the circle? Here, if the values of the two sensors are equal, the motor revolution speeds return to the initial values. Moving direction Sensor L Sensor R Front wheel Control unit Rear wheels Motor L Motor R Circle Sensor L value > Sensor R value Sensor L value < Sensor R value Motor L Motor R Motor L Motor R Revolution speed Revolution speed Revolution speed Revolution speed",
+      "options": {
+        "a": "Decrease Increase Decrease Increase",
+        "b": "Decrease Increase Increase Decrease",
+        "c": "Increase Decrease Decrease Increase",
+        "d": "Increase Decrease Increase Decrease"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#5",
+      "number": 5,
+      "stem": "Among the four tree traversal techniques—breadth-first, in-order, post-order, and pre- order—which of the following is the appropriate combination to ensure that the last two nodes visited are the same in the tree shown below, when the left child is explored first? 18 5 20 3 22",
+      "options": {
+        "a": "Breadth-First Post-order",
+        "b": "Breadth-First Pre-order",
+        "c": "In-order Post-order",
+        "d": "In-order Pre-order"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#6",
+      "number": 6,
+      "stem": "In the graph shown below, which of the following is the output of a depth-first traversal starting from vertex A, and visiting all vertices in ascending character order? A D E B C F",
+      "options": {
+        "a": "A B C D E F",
+        "b": "A B C D F E",
+        "c": "A B D E F C",
+        "d": "A B D F E C"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#7",
+      "number": 7,
+      "stem": "A hash table of size 11 uses open addressing with hash function h(k)=k mod 11, and linear probing. The table shown below is created after inserting 4 values into an initially empty hash table. Which of the following is the sequence that represents a possible order in which the key values were inserted into the table? 0 1 2 79 3 14 4 35 5 92 6 7 8 9 10",
+      "options": {
+        "a": "14, 79, 35, 92",
+        "b": "79, 14, 92, 35",
+        "c": "79, 92, 35, 14",
+        "d": "92, 79, 14, 35"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#8",
+      "number": 8,
+      "stem": "For a CPU with a clock frequency of 800 MHz, where one instruction is executed in an average time of 4 clock cycles, what is the CPU performance in MIPS?",
+      "options": {
+        "a": "0.2",
+        "b": "20",
+        "c": "200",
+        "d": "3,200"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#9",
+      "number": 9,
+      "stem": "When a CPU has a special register used in push and pop instructions, which of the following is an appropriate term for this register?",
+      "options": {
+        "a": "Instruction register",
+        "b": "Program counter",
+        "c": "Stack pointer",
+        "d": "Status register"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#10",
+      "number": 10,
+      "stem": "The table below shows the access times for the cache memory and main memory in systems A and B. Which of the following is the approximate hit ratio of the cache memory, when the effective access time and the cache memory hit ratio are the same for systems A and B? System A System B Cache memory 14 ns 12 ns Main memory 80 ns 90 ns",
+      "options": {
+        "a": "0.17",
+        "b": "0.20",
+        "c": "0.83",
+        "d": "1.00"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#11",
+      "number": 11,
+      "stem": "Which of the following is a merit of migrating an internal business system to a cloud service?",
+      "options": {
+        "a": "If an internal business system that requires a very high level of availability is to be migrated to IaaS, all service providers guarantee high availability, so the migration is easy.",
+        "b": "If an internal on-premises business system with company-specific functions is to be migrated to a system provided by SaaS, the migration of the company-specific functions also becomes easier.",
+        "c": "If PaaS is to be used, platform management and OS updates are performed by the service provider, so the burden of installation and operation can be reduced.",
+        "d": "If SaaS is to be used temporarily for the development or evaluation of an internal business system, a highly flexible development environment can be provided."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#12",
+      "number": 12,
+      "stem": "In a system that is composed of two processing devices, what is the difference in availability between the two conditions below? Here, the availability of each processing device is 0.9, and no other factors besides the processing devices are considered. [Conditions] (1) The system is available if at least one of the processing devices is running normally. (2) The system is available only if both of the processing devices are running normally.",
+      "options": {
+        "a": "0.09",
+        "b": "0.10",
+        "c": "0.18",
+        "d": "0.19"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#13",
+      "number": 13,
+      "stem": "The relation between virtual address and physical address is shown below. Each virtual page and page frame starts at a multiple of 4096 and ends 4095 addresses higher. Virtual address space 4K-8K corresponds to 4096-8191 and 8K to 12K corresponds to 8192-12287. Which of the following is the physical address corresponding to the virtual address numbered 8300? Virtual address 60K-64K X 56K-60K X Virtual page 52K-56K X 48K-52K X 44K-48K 7 40K-44K X 36K-40K 5 Physical 32K-36K X address 28K-32K X 28K-32K 24K-28K X 24K-28K 20K-24K 3 20K-24K 16K-20K 4 16K-20K 12K-16K 0 12K-16K 8K-12K 6 8K-12K 4K-8K 1 4K-8K 0K-4K 2 0K-4K Page frame",
+      "options": {
+        "a": "8192",
+        "b": "8300",
+        "c": "24576",
+        "d": "24684"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#14",
+      "number": 14,
+      "stem": "In a system with preemptive priority scheduling, where the smallest priority number is considered as the highest priority, there are four processes, P1, P2, P3, and P4. Their arrival times, CPU-burst times, and priorities are shown in the table below. Which of the following is the average waiting time (in ms) for the processes to be executed? Process Arrival time CPU-burst time Priority (in ms) P1 0 8 2 P2 2 1 1 P3 4 2 3 P4 6 3 4",
+      "options": {
+        "a": "2.75",
+        "b": "3",
+        "c": "3.25",
+        "d": "3.5"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#15",
+      "number": 15,
+      "stem": "When it takes 10 ns to copy a byte, which of the following is the approximate time (in ms) to copy the data for a 1024 × 768-pixel graphics screen with 24-bit color? Here, any overhead time for copying can be ignored.",
+      "options": {
+        "a": "22",
+        "b": "23",
+        "c": "24",
+        "d": "25"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#16",
+      "number": 16,
+      "stem": "Which of the following is an appropriate explanation of an actuator?",
+      "options": {
+        "a": "It amplifies weak electrical signals sent from microphones, sensors, and similar devices.",
+        "b": "It compares a given target value with a controlled value obtained from a sensor, and outputs an operation amount to match the controlled value with the target value.",
+        "c": "It converts power from an energy source into rotation, translational motion, or other movements based on control signals.",
+        "d": "It detects position, angle, velocity, acceleration, force, temperature, and similar parameters, and converts them into electrical information."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#17",
+      "number": 17,
+      "stem": "When ordering data is entered in the format shown below, which of the following is the appropriate method for checking whether the order date is a business day that is the same as or prior to the entering date? Ordering data Form number Order date Product code Quantity Customer code (Characters) (Characters) (Characters) (Number) (Characters)",
+      "options": {
+        "a": "Duplication check",
+        "b": "Format check",
+        "c": "Logical check",
+        "d": "Sequence check"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#18",
+      "number": 18,
+      "stem": "Of the functions provided by a DBMS, which of the following is a means for achieving protection for data confidentiality?",
+      "options": {
+        "a": "Checking referential constraints when the data is updated",
+        "b": "Managing a transaction that combines a series of processes as a logical unit",
+        "c": "Managing the data access rights of users",
+        "d": "Placing an exclusive lock to data before updates"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#19",
+      "number": 19,
+      "stem": "Which of the following is the primary goal of conceptual database design?",
+      "options": {
+        "a": "To create a physical data model of the database",
+        "b": "To define the logical structure of the database",
+        "c": "To determine the exact data types for every database attribute",
+        "d": "To implement database security measures"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#20",
+      "number": 20,
+      "stem": "In the UML data model shown in the figure below, which of the following is a multiplicity that should be inserted in blanks I and II? [Conditions] (1) One or more employees belong to a department. (2) An employee belongs to any one department. (3) The history of the departments to which an employee has belonged is recorded as the assignment history. I II",
+      "options": {
+        "a": "0..* 0..*",
+        "b": "0..* 1..*",
+        "c": "1..* 0..*",
+        "d": "1..* 1..*"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#21",
+      "number": 21,
+      "stem": "Which of the following is the clause that should be inserted into blank ___A___ of the SQL statement below in order to display the total sales data for each product that sold for at least $5,000 from the table OrderDetails? OrderDetails (OrderID, ProductID, UnitPrice, Quantity) [SQL statement] SELECT ProductID, SUM(UnitPrice * Quantity) FROM OrderDetails ___A___",
+      "options": {
+        "a": "GROUP BY ProductID HAVING SUM(UnitPrice * Quantity) >= 5000;",
+        "b": "HAVING SUM(UnitPrice * Quantity) >= 5000;",
+        "c": "HAVING SUM(UnitPrice * Quantity) >= 5000 GROUP BY ProductI;",
+        "d": "WHERE SUM(UnitPrice * Quantity) >= 5000;"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#22",
+      "number": 22,
+      "stem": "Which of the following is an appropriate explanation of the granularity of locks?",
+      "options": {
+        "a": "When large granularity is set for a large number of transactions to update the same data, the number of transactions that can be executed simultaneously increases.",
+        "b": "When large granularity is set for all data in a table to be referenced, data referenced from other transactions can remain undisturbed.",
+        "c": "When large granularity is set for data to be updated, the waiting times for other transactions increase, and the total throughput declines.",
+        "d": "When large granularity is set, the number of data items included increases, and the number of locks that one transaction makes increases."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#23",
+      "number": 23,
+      "stem": "Which of the following is the most appropriate information for a router to determine the destination of an incoming packet?",
+      "options": {
+        "a": "Destination IP address",
+        "b": "Destination MAC address",
+        "c": "Source IP address",
+        "d": "Source MAC address"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#24",
+      "number": 24,
+      "stem": "In the OSI model, which of the following is the layer that is responsible for routing datagrams between hosts utilizing IP addresses across one or more networks?",
+      "options": {
+        "a": "Data link",
+        "b": "Network",
+        "c": "Physical",
+        "d": "Transport"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#25",
+      "number": 25,
+      "stem": "Which of the following is an appropriate explanation regarding Address Resolution Protocol (ARP)?",
+      "options": {
+        "a": "It converts MAC addresses into IP addresses.",
+        "b": "It resolves domain names into its IP addresses.",
+        "c": "It resolves IP addresses into the corresponding MAC addresses.",
+        "d": "It translates IPv4 addresses into IPv6 addresses."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#26",
+      "number": 26,
+      "stem": "An administrator of a small network is testing the new network. Which of the following is the correct combination of the network management tools to be inserted in the blanks below? The administrator first tests reachability of a remote host using ___A___ , and determines the path that packets take to the destination with ___B___ A B",
+      "options": {
+        "a": "netstat ping",
+        "b": "netstat traceroute",
+        "c": "ping traceroute",
+        "d": "traceroute ping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#27",
+      "number": 27,
+      "stem": "Which of the following is the attack that is classified as DNS cache poisoning?",
+      "options": {
+        "a": "False domain information is injected into the DNS server that is referenced by a PC, and it leads the user to a fake server.",
+        "b": "In order to interrupt the target service, the attacker uses the DNS server as a steppingstone to send a large number of recursive queries.",
+        "c": "In order to obtain internal information, the zone information stored in the DNS server is compiled and transferred.",
+        "d": "The version information of the DNS server software is obtained to identify a security hole."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#28",
+      "number": 28,
+      "stem": "A given application only has the functions of retrieving and displaying user information from a database that stores such information. When considering information security, which of the following is the appropriate database access right assigned to an account that the application uses to access the database? The names and scopes of rights are listed below. [The names and scopes of rights] Reference right: Allows the application to select a record Update right: Allows the application to insert, update, and drop a record Administrator right: Allows the application to display, create, alter, and drop a table",
+      "options": {
+        "a": "Administrator right",
+        "b": "Reference right",
+        "c": "Update right",
+        "d": "Update right and reference right"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#29",
+      "number": 29,
+      "stem": "Which of the following is a merit in using SaaS?",
+      "options": {
+        "a": "No system access management needs to be performed, and no consideration concerning the procedure for password initialization or a password policy that satisfies complexity requirements is required.",
+        "b": "No system construction needs to be performed, and neither the definition of security requirements for application software development nor the design of storage volume for system logs is required.",
+        "c": "No system operation needs to be performed, and no consideration concerning work procedures at the time of a failure or backup is required.",
+        "d": "No system security management needs to be performed, and neither the creation of information security management rules nor the assignment of an administrator is required."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#30",
+      "number": 30,
+      "stem": "Which of the following is an appropriate operation for user authentication that uses an IC card and a PIN?",
+      "options": {
+        "a": "Given that each user can be identified by an IC card, a common PIN is set for all users in order to reduce the management workload.",
+        "b": "If an IC card is lost, a new IC card is issued, and after the PIN is reset, the lost IC card is deactivated.",
+        "c": "The PIN is set by combining the numeric information imprinted on the surface of the IC card.",
+        "d": "When an IC card is delivered, the PIN is not enclosed, but is notified to the user through another channel."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#31",
+      "number": 31,
+      "stem": "Which of the following is the most effective method of detecting unauthorized changes of the contents of a web server?",
+      "options": {
+        "a": "Communications to the web server are monitored to ensure that there is no communication other than HTTP and HTTPS.",
+        "b": "The hash value of each file of the contents of the web server is stored and periodically compared with the hash value generated from each file.",
+        "c": "The memory usage of the web server is checked periodically to ensure that a buffer overflow has not occurred.",
+        "d": "The updated date of each file of the contents of the web server is stored and compared periodically with the updated date of each file."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#32",
+      "number": 32,
+      "stem": "Which of the following is the function of a WAF?",
+      "options": {
+        "a": "Encrypting data and controlling access on web server",
+        "b": "Inspecting and filtering HTTP requests",
+        "c": "Managing user authentication and authorization",
+        "d": "Scanning malware on a web server"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#33",
+      "number": 33,
+      "stem": "Which of the following is an appropriate description concerning SPF for email communication?",
+      "options": {
+        "a": "It is a policy of the public relations department to designate a specific person to send emails.",
+        "b": "It is an email sent from a spoofed email address without authorization.",
+        "c": "It matches the sender mail server IP address with the information from the domain server and accepts or rejects email.",
+        "d": "It sends an email to the address of a specific person instead of sending them to multiple email addresses."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#34",
+      "number": 34,
+      "stem": "Which of the following is the software architecture that decomposes applications into small, loosely coupled services that communicate over APIs?",
+      "options": {
+        "a": "Event-Driven Architecture",
+        "b": "Microservices Architecture",
+        "c": "Serverless Architecture",
+        "d": "Service-Oriented Architecture (SOA)"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#35",
+      "number": 35,
+      "stem": "Which of the following is the UML class diagram that shows a generalization relation?",
+      "options": {
+        "a": "Automobile",
+        "b": "Automobile 1 1 Automobile Driver inspection certificate",
+        "c": "Automobile",
+        "d": "Automobile 1 1 * * Sports car Tire Engine"
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#36",
+      "number": 36,
+      "stem": "Which of the following is an explanation of a software testing tool corresponding to a static analysis tool that supports static testing?",
+      "options": {
+        "a": "Data concerning the operating characteristics during program execution, such as the module calling frequency and execution time, or the execution frequency of executable statement is measured.",
+        "b": "The instruction coverage rate and the branch coverage rate are automatically measured and analyzed on the basis of the test execution results.",
+        "c": "The source code is analyzed to find out if grammatical errors or logical errors exist in a program.",
+        "d": "The test data of the specified conditions and the program input files are generated automatically."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#37",
+      "number": 37,
+      "stem": "Test cases for the part of a program shown in the flowchart below are created to achieve decision condition coverage (branch coverage). In order to make the test cases achieve multiple-condition coverage, which of the following is the appropriate set of test cases to be added? Here, the part enclosed by parentheses () represents a test case. Process 1 No A > 6 or B = 0 Yes Process 2 • Test cases to achieve decision condition coverage (branch coverage) (A = 4, B = 1), (A = 5, B = 0)",
+      "options": {
+        "a": "(A = 3, B = 0), (A = 7, B = 2)",
+        "b": "(A = 3, B = 2), (A = 8, B = 0)",
+        "c": "(A = 4, B = 0), (A = 8, B = 0)",
+        "d": "(A = 7, B = 0), (A = 8, B = 2)"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#38",
+      "number": 38,
+      "stem": "Which of the following is an appropriate test to ensure that the interfaces and linkages between different parts of software work properly?",
+      "options": {
+        "a": "Functional test",
+        "b": "Integration test",
+        "c": "Performance test",
+        "d": "Unit test"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#39",
+      "number": 39,
+      "stem": "Which of the following is the term that represents the process of generating a UML class diagram from a program?",
+      "options": {
+        "a": "Backtracking",
+        "b": "Forward engineering",
+        "c": "Re-engineering",
+        "d": "Reverse engineering"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#40",
+      "number": 40,
+      "stem": "Which of the following is an appropriate explanation of a Sprint in the Scrum methodology?",
+      "options": {
+        "a": "A daily meeting where team members review progress and plan the day's work",
+        "b": "A fixed-length period dedicated to developing a product increment",
+        "c": "A self-organizing team responsible for product development",
+        "d": "List of tasks and features the Scrum team has yet to complete"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#41",
+      "number": 41,
+      "stem": "Which of the following is an appropriate explanation of earned value in project management?",
+      "options": {
+        "a": "A measure of work completed in terms of budget authorized for that work.",
+        "b": "A time-phased budget that estimates the total cost of a project",
+        "c": "An authorized budget for the planned work",
+        "d": "Realized cost incurred for the work performed on an activity during a specific time period"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#42",
+      "number": 42,
+      "stem": "Which of the following is the method of estimation in the COCOMO model in software estimation?",
+      "options": {
+        "a": "The effort and duration of the project are estimated based on the size of the software.",
+        "b": "The effort of the project is estimated based on the duration of the project.",
+        "c": "The size of the software and duration of the project are estimated based on the effort of the project.",
+        "d": "The size of the software and effort of the project are estimated based on the duration of the project."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#43",
+      "number": 43,
+      "stem": "An IT service is provided under the conditions below. What is the maximum downtime in hours that satisfies the SLA during a service period of one (1) month? Here, the number of business days in one (1) month is 30, and no maintenance or other scheduled downtime of the service is performed during the service period. [Conditions of the SLA] - The service period is from 8:00 AM to 10:00 PM on business days. - The availability should be 99.5% or more.",
+      "options": {
+        "a": "0.3",
+        "b": "2.1",
+        "c": "3.0",
+        "d": "3.6"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#44",
+      "number": 44,
+      "stem": "Which of the following should be accomplished in service management concerning Maximum Tolerable Downtime (MTD), Recovery Point Objective (RPO), and Recovery Time Objective (RTO)?",
+      "options": {
+        "a": "MTD < RPO",
+        "b": "MTD < RTO",
+        "c": "RPO < MTD",
+        "d": "RTO < MTD"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#45",
+      "number": 45,
+      "stem": "Which of the following is a checkpoint for auditing the control of risks related to information leakage and unauthorized use of documents concerning a system?",
+      "options": {
+        "a": "Creating the necessary documents even in prototype development",
+        "b": "Standardizing documents",
+        "c": "Taking measures to ensure the confidentiality of documents",
+        "d": "Updating documents without delay as changes are made in the system"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#46",
+      "number": 46,
+      "stem": "Which of the following is a technique that is used to perform the optimal resource allocation for a computerization investment in each category classified on the basis of the similarities in risks and investment value?",
+      "options": {
+        "a": "3C analysis",
+        "b": "Benchmarking",
+        "c": "Enterprise architecture",
+        "d": "IT portfolio"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#47",
+      "number": 47,
+      "stem": "Which of the following is a usage scenario for the adoption of UML as a technique for visualizing business processes?",
+      "options": {
+        "a": "Diagrams are shown by using a data-oriented approach where objects are handled as entities, their attributes, and the relationships among the entities.",
+        "b": "To represent processes by using data flows, sources and sinks of data, data stores, and data processes are connected with arrows that indicate data flow.",
+        "c": "To represent processes from multiple viewpoints, some purpose-specific modeling methods are used, and each model is depicted by using standardized notation rules for object modeling.",
+        "d": "To thoroughly represent the functions of a process, the events that occur in response to a single request are described by using the conditional branch format."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#48",
+      "number": 48,
+      "stem": "Which of the following is an explanation of a hybrid cloud?",
+      "options": {
+        "a": "To configure and provide the service content of a cloud service for both consumers and companies",
+        "b": "To customize some of the functions that are provided by a cloud service for the company’s own use",
+        "c": "To provide an environment where data and application software are linked and interoperable between a cloud service for the exclusive use of a company and a general- purpose cloud service",
+        "d": "To separately provide the service content of a cloud service as paid services and free services"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#49",
+      "number": 49,
+      "stem": "Which of the following is an explanation of green procurement?",
+      "options": {
+        "a": "It refers not only to the fulfillment of the requirements of quality and price but to the preferential purchase of products and services with a lower environmental burden from companies that work toward a reduction in their environmental impact.",
+        "b": "It refers to a certificate that enables commercial trading of the green power that is generated from natural energy sources such as solar, biomass, wind power, and geothermal heat.",
+        "c": "It refers to international standards concerning environmental labels that are certified by a third party on the basis of certain criteria.",
+        "d": "It refers to mass promotion of the details of environmental protection activities and raising funds for environmental protection from investors."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#50",
+      "number": 50,
+      "stem": "Which of the following is a characteristic of the growth stage in a product life cycle?",
+      "options": {
+        "a": "Demand decreases, and the withdrawal of some companies is observed. A decision needs to be made regarding whether it is possible to gain a strong foothold at this stage. Migration into an alternative market is also considered.",
+        "b": "Demand is occasional, and exploiting new demand is key to success. Conviction for succeeding in a specific target market is necessary.",
+        "c": "Demand reaches a peak, and the differentiation of the product and segmentation of the market become clear. The competition between competitors also intensifies, and it becomes important to add new product types and reduce costs.",
+        "d": "The market starts to understand the value of the product. Both the product line and distribution channels need to be expanded. This stage sees an increase in sales and also requires investment."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#51",
+      "number": 51,
+      "stem": "Which of the following is a description of cost-plus pricing?",
+      "options": {
+        "a": "It determines a competitive price by referring to the industry average and the pricing of competitors.",
+        "b": "It determines a price by adding a certain margin to the manufacturing cost and the purchasing cost.",
+        "c": "It determines a price that ensures a certain profit margin after all costs are covered on the basis of a target volume of sales.",
+        "d": "It determines an appealing price by researching the quality and price that customers accept."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#52",
+      "number": 52,
+      "stem": "Which of the following is an explanation of Supply Chain Management (SCM)?",
+      "options": {
+        "a": "Customer information that are collected through various channels is consolidated and utilized to establish closer relationships with customers.",
+        "b": "Employees’ skills and behavior characteristics are grasped, and management such as appropriate personnel assignment and evaluation from the perspective of human resources strategy is performed.",
+        "c": "Intellectual assets of individuals, such as know-how and experience, are shared across the organization to be used for creative work.",
+        "d": "The entire series of business operations, from purchasing and production to sales and distribution, is reexamined both within the company and among companies in view of total optimization in order to shorten delivery times and minimize inventory."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#53",
+      "number": 53,
+      "stem": "Which of the following is the appropriate explanation for product innovation in the management of technology?",
+      "options": {
+        "a": "Acquiring business profits through the achievements of technology development",
+        "b": "Developing new products or products that enable differentiation from other companies",
+        "c": "Making innovative reforms in business processes",
+        "d": "Strategically managing business with technology as the core"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#54",
+      "number": 54,
+      "stem": "Which of the following is a characteristic of MRP?",
+      "options": {
+        "a": "The development, designing, and production preparation of a product are performed simultaneously in parallel.",
+        "b": "The number of required components is calculated on the basis of the standard production plan of a product.",
+        "c": "The production of a product is initiated after an order from a customer is received.",
+        "d": "Work instructions and transport instructions are provided by using a worksheet."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#55",
+      "number": 55,
+      "stem": "Which of the following corresponds to (5) in the example of a model of an affiliate program that is shown in the Internet advertising? Here, (1) to (5) indicate the order of operations in the model, and (1), (2), (4), and (5) each correspond to one of the options",
+      "options": {
+        "a": "Agree to and participate in the affiliate program",
+        "d": "Purchase the desired product",
+        "b": "Click the advertisement on the website",
+        "c": "Pay a success fee on the basis of the sales of the product"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#56",
+      "number": 56,
+      "stem": "A smart meter is a highly functional electricity meter with a function for communications and a function for the management of other devices. Which of the following is not an appropriate purpose for installing a smart meter?",
+      "options": {
+        "a": "Continuing the power supply for a fixed amount of time by functioning as an auxiliary power source during a power failure",
+        "b": "Improving the efficiency of meter reading work through automatic meter reading",
+        "c": "Increasing awareness of power-saving through the visualization of the amount of power consumption",
+        "d": "Restraining peak power by controlling power demand through the use of demand response"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#57",
+      "number": 57,
+      "stem": "Which of the following is the appropriate role of a facilitator in a meeting?",
+      "options": {
+        "a": "To act as the chairperson and control the discussions in order to work out a conclusion that matches the intentions of the management",
+        "b": "To encourage the meeting participants to express their opinions and organize the flow of discussions from a neutral and impartial position",
+        "c": "To offer specialized support for meeting administration, such as adjusting the schedule, preparing materials, or taking minutes.",
+        "d": "To provide advice only on discussions related to specific areas in which the facilitator specializes, such as technical or legal fields"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#58",
+      "number": 58,
+      "stem": "The figure below shows part of a cause and effect diagram (also known as a fishbone diagram). Which of the following is the relationship between A and B? A B",
+      "options": {
+        "a": "B is an attribute of A.",
+        "b": "B is the cause of A.",
+        "c": "B is the means of A.",
+        "d": "B is the purpose of A."
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2025S_FE-A#59",
+      "number": 59,
+      "stem": "Both Data mining and Process mining are methods for improving business operations. While Data mining aims to discover knowledge by analyzing large amounts of data by using statistical and AI analysis methods, which of the following is an appropriate explanation of Process mining?",
+      "options": {
+        "a": "It is a management strategy focused on changing workflows and business processes within an organization by emphasizing new ideas and new ways of doing business.",
+        "b": "It is a method aimed at analyzing data sets, finding unsuspected relationships, and summarizing the data in novel ways.",
+        "c": "It is a methodology for improving performance by systematically removing unnecessary data.",
+        "d": "It is a technique for analyzing and improving business processes by using knowledge that is extracted from event logs."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025S_FE-A#60",
+      "number": 60,
+      "stem": "Company A purchased a machine for an original cost of $126,000. The salvage value after 6 years is $6,000. What is the annual depreciation expense (in dollars) by using the straight-line method?",
+      "options": {
+        "a": "12,000",
+        "b": "20,000",
+        "c": "21,000",
+        "d": "36,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}

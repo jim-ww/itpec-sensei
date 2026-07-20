@@ -1,0 +1,878 @@
+{
+  "examId": "2025A_FE-A",
+  "source": "2025A_FE-A_Questions.pdf",
+  "questionCount": 60,
+  "questions": [
+    {
+      "globalId": "2025A_FE-A#1",
+      "number": 1,
+      "stem": "In the single precision format of the “IEEE Standard for Binary Floating-Point Arithmetic” (IEEE 754), a 32-bit floating point number is represented as below: S: Sign (1 bit) E: Exponent (8 bits) F: Fraction (23 bits) If 0 < E < 255, then the value of the number is (–1)S × 2 (E–127) × (1+F) where F represents the fractional part of the number, stored as a 23-bit binary sequence. This F is the sum of its weighted binary components: F=b1×2−1+b2×2−2+⋯+b23×2−23 , where b₁, b₂, …, b₂₃ are the binary digits of F. According to the IEEE-754 standard, which of the following is the decimal equivalent of the 32-bit floating point number given below? 01000001011000000000000000000000",
+      "options": {
+        "a": "0.1875",
+        "b": "0.4375",
+        "c": "6.0",
+        "d": "14.0"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#2",
+      "number": 2,
+      "stem": "Let n be a binary integer represented in two’s complement. Which of the following is the operation that results in the value 9 × n using only bit shifting and an addition or subtraction?",
+      "options": {
+        "a": "Shift n 2 bits to the left, then add n to the result.",
+        "b": "Shift n 2 bits to the left, then subtract n from the result.",
+        "c": "Shift n 3 bits to the left, then add n to the result.",
+        "d": "Shift n 3 bits to the left, then subtract n from the result."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#3",
+      "number": 3,
+      "stem": "Three friends and 4 other people are randomly seated in 7 seats arranged in a row. What is the probability that the 3 friends sit next to one another? 1 1 1 1",
+      "options": {
+        "a": "",
+        "b": "",
+        "c": "",
+        "d": "168 42 35 7"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#4",
+      "number": 4,
+      "stem": "For an automaton with input and output symbols {0, 1} and a state transition diagram shown below, which of the following is the output string for the input string 0011001110? Here, S1 represents the initial state, and the label x/y on each arc indicates that if x is an input, then y is the corresponding output at the state transition. 0/0 1/1 1/0 1/1 S1 S2 S3 0/0 0/0",
+      "options": {
+        "a": "0001000110",
+        "b": "0001001110",
+        "c": "0010001000",
+        "d": "0011111110"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#5",
+      "number": 5,
+      "stem": "The table below shows the data in a list structure that has bidirectional pointers. In this table, a new Employee G is to be inserted between Employee A and Employee K. Which of the following contains only the pointers (among a through f) whose values change after the insertion? Table Address EmployeeName NextPointer PreviousPointer 100 Employee A 300 0 200 Employee T 0 300 300 Employee K 200 100 Table after the addition Address EmployeeName NextPointer PreviousPointer 100 Employee A a b 200 Employee T c d 300 Employee K e f 400 Employee G x y",
+      "options": {
+        "a": "a, b, e, f",
+        "b": "a, e, f",
+        "c": "a, f",
+        "d": "b, e"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#6",
+      "number": 6,
+      "stem": "The flowchart shown below expresses an algorithm that determines the greatest common divisor between two integers a and b. How many times is A passed? Start a ← 56 b ← 48 r ← a mod b A a←b b←r No r=0 Yes print a End",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "4",
+        "d": "8"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#7",
+      "number": 7,
+      "stem": "In object-oriented programming, which of the following is the concept that refers to a class that defines a method with the same name and type signature as a method in its superclass?",
+      "options": {
+        "a": "Hiding",
+        "b": "Inheritance",
+        "c": "Overloading",
+        "d": "Overriding"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#8",
+      "number": 8,
+      "stem": "There exists a main process and the two (2) interrupt processes A and B, as shown in the table below. Multiplex interrupts are permitted. When interrupts A and B occur with the timing shown in the diagram below, how many milliseconds (ms) can the main process use the CPU during the time period between 0 ms and 5 ms? Here, the overhead from calling an interrupt process and resuming from it can be ignored. Interrupt Processing time (ms) Interrupt priority A 0.5 High B 1.5 Low Occurrence of interrupt A Occurrence of interrupt B 0 1 2 3 4 5 Time (ms) Note: indicates the timing of an interrupt.",
+      "options": {
+        "a": "2",
+        "b": "2.5",
+        "c": "3.5",
+        "d": "5"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#9",
+      "number": 9,
+      "stem": "When an HDD has the specifications shown in the table below, what is the average access time for the HDD to transfer 16 kB of data in milliseconds (ms)? The average access time is calculated as the sum of the average seek time, controller overhead, rotational latency, and transfer time. Other overheads can be ignored. Here, 1 MB = 1,024 kB. Average seek time 5 ms Rotation Speed 6,000 RPM Transfer rate 1 MB/s Controller overhead 0.1 ms",
+      "options": {
+        "a": "20.1",
+        "b": "25.725 c 30.725",
+        "d": "74.1"
+      },
+      "stemVisual": true,
+      "answersVisual": true,
+      "visualKind": [
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#10",
+      "number": 10,
+      "stem": "Which of the following is an appropriate description of a 3D printer’s function?",
+      "options": {
+        "a": "It detects the shape of three-dimensional objects and produces output of 3D data.",
+        "b": "It functions by pushing the pins of a high-temperature printing head onto heat-sensitive paper.",
+        "c": "It makes three-dimensional objects using methods such as fused filament fabrication.",
+        "d": "It projects computer graphics onto uneven three-dimensional objects such as buildings and furniture."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#11",
+      "number": 11,
+      "stem": "Which of the following is the most appropriate explanation of edge computing?",
+      "options": {
+        "a": "Increasing the operability and expressiveness of web application software by performing screen creation and data processing on the client side",
+        "b": "Increasing the real-time nature of processing by performing primary processing of data on a server or other such computer in a location close to the origin of data, such as a sensor that is attached to a user or a device",
+        "c": "Increasing throughput with parallel processing by virtualizing and integrating several servers and PCs and creating a single high-performance computer",
+        "d": "Starting up the required server only when data comes in, and freeing up resources by stopping the server as soon as the processing is finished"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#12",
+      "number": 12,
+      "stem": "One (1) server, three (3) clients, and two (2) printers are connected via a LAN as shown in the figure below. This system prints data that is located on the server in response to instructions from the clients. When the availability of each device is as shown in the table below, which of the following is the expression that represents the availability for the system? Here, the system is considered available if one (1) of the three (3) clients and one (1) of the two (2) printers are running. Server Client Client Client Printer Printer Device Availability Server a Client b Printer c LAN 1",
+      "options": {
+        "a": "ab3 c2",
+        "b": "3 ) (1−(1−",
+        "c": "2 )",
+        "d": "a (1−(1−"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#13",
+      "number": 13,
+      "stem": "Five processes A, B, C, D and E arrive at almost the same time in the order of A, B, C, D and E. The processes have estimated running times of 10, 6, 2, 8, and 4 milliseconds, respectively. Which of the following is the average process turnaround time with the First- Come-First-Served (FCFS) scheduling algorithm?",
+      "options": {
+        "a": "14",
+        "b": "19.2",
+        "c": "20",
+        "d": "22"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#14",
+      "number": 14,
+      "stem": "In indirect addressing of direct file organization, which of the following is an appropriate method for calculating the record address from a record key in the superposition addressing method, or folding and adding method? Here, the record key is 123456 in decimal. The total number of records is 1,000, and the closest prime number to 1,000 is 997. The decimal number 123456 is equivalent to 361100 in octal.",
+      "options": {
+        "a": "Converting the record key into 361100 and using it as the address",
+        "b": "Dividing the record key by 997 and using the remainder of 825 as the address",
+        "c": "Splitting the record key into 123 and 456 and using their sum, 579, as the address",
+        "d": "Using the record key 123456 as the address"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#15",
+      "number": 15,
+      "stem": "The page capacity of main memory is three pages, and the pages are referenced in the order {1, 2, 3, 2, 1, 4, 5}. Which of the following is the page that will be replaced from main memory for the last page reference if LRU is used as the page replacement technique?",
+      "options": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#16",
+      "number": 16,
+      "stem": "Which of the following is equivalent to the logical circuit shown below?",
+      "options": {
+        "a": "𝐴 ⋅ 𝐵",
+        "b": "𝐴̅ ⋅ 𝐵",
+        "c": "𝐴 ⋅ 𝐵",
+        "d": "𝐴̅ ⋅ 𝐵"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#17",
+      "number": 17,
+      "stem": "Which of the following is a method used to improve the appearance of a jagged edge of a slanted line so that it appears smooth on a screen, such as that of an LCD?",
+      "options": {
+        "a": "Anti-aliasing",
+        "b": "Bump mapping",
+        "c": "Shading",
+        "d": "Texture mapping"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#18",
+      "number": 18,
+      "stem": "Which of the following is the appropriate explanation of attributes in the relational model?",
+      "options": {
+        "a": "It is possible to define attributes that have no name.",
+        "b": "The domains of definition for attributes within a relation must not overlap.",
+        "c": "The same name can be given to two (2) or more attributes in a relation.",
+        "d": "There is no meaning in the order of attributes within a relation, and the relation remains unchanged even if the order is changed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#19",
+      "number": 19,
+      "stem": "When the functional dependencies shown below are satisfied, which of the following is the transitive functional dependency that holds? Here, “A→B” indicates that B is functionally dependent on A, and “A→{B, C}” indicates that “A→B” and “A→C ” both hold. [Functional dependencies] {OrderCode, ProductCode} → {CustomerOrderQuantity, OrderAmount} OrderCode → {OrderDate, CustomerCode, OrderManagerCode} ProductCode → {ProductName, SupplierCode, ProductSalePrice} SupplierCode → {SupplierName, SupplierAddress, SupplierManagerCode} CustomerCode → {CustomerName, CustomerAddress}",
+      "options": {
+        "a": "OrderCode → CustomerCode → CustomerAddress",
+        "b": "OrderCode → ProductCode → CustomerOrderQuantity",
+        "c": "ProductCode → SupplierCode → ProductSalePrice",
+        "d": "SupplierCode → SupplierManagerCode → SupplierAddress"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#20",
+      "number": 20,
+      "stem": "Which of the following is an appropriate description of distributed database?",
+      "options": {
+        "a": "Access to a database server is shared among a globally distributed userbase so that everyone can access the database.",
+        "b": "It is a database that is distributed to all interested researchers and other users worldwide so that everyone can benefit.",
+        "c": "It is a NoSQL database instead of a Relational Database Management System (RDBMS).",
+        "d": "It stores different parts of a database in different locations, and its processing is distributed across those parts."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#21",
+      "number": 21,
+      "stem": "Which of the following is the clause that is inserted into blank A of the SQL statement in order to display the names of employees who work in the same department as any employee located in \"New York\"? Employees (employee_id, employee_name, salary, department_id) Departments (department_id, department_name, location) [SQL command] SELECT employee_name FROM Employees WHERE A",
+      "options": {
+        "a": "department_id IN (SELECT department_id FROM Departments WHERE location = 'New York');",
+        "b": "department_id NOT IN (SELECT department_id FROM Departments WHERE location = 'New York');",
+        "c": "department_id IN (SELECT department_id FROM Employees WHERE location = 'New York');",
+        "d": "department_id = ALL (SELECT department_id FROM Employees WHERE location = 'New York');"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#22",
+      "number": 22,
+      "stem": "In the context of transaction management, which of the following is a condition that the Isolation property ensures?",
+      "options": {
+        "a": "Data is written permanently after a transaction.",
+        "b": "Only valid data is written to the database.",
+        "c": "Transactions are either fully completed or revoked.",
+        "d": "Transactions are executed without affecting each other."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#23",
+      "number": 23,
+      "stem": "Which of the following is a mechanism used to prioritize traffic based on its importance and minimize network latency for network applications?",
+      "options": {
+        "a": "AAA",
+        "b": "PoE",
+        "c": "QoS",
+        "d": "RTP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#24",
+      "number": 24,
+      "stem": "PC5 has been newly added to the network. It wants to send data to PC4 using SSH protocol. It must resolve the MAC address of PC4 from its IP address before sending the data. Which of the following is the destination MAC address that PC5 will use in ARP request? Network Switch 192.168.1.2 PC1 PC3 192.168.1.7 78:E1:00:3C:A1:5D 78:E1:00:3C:A1:7A 192.168.1.5 PC2 PC4 192.168.1.10 78:E1:00:3C:A1:6E PC5 78:E1:00:3C:A1:8B 192.168.1.11 78:E1:00:3C:A1:9F",
+      "options": {
+        "a": "00:00:00:00:00:00",
+        "b": "78:E1:00:3C:A1:8B",
+        "c": "78:E1:00:3C:A1:9F",
+        "d": "FF:FF:FF:FF:FF:FF"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#25",
+      "number": 25,
+      "stem": "Between LAN systems that are different from the transport layer upward in the OSI basic reference model, which of the following is a device that performs protocol conversion?",
+      "options": {
+        "a": "Bridge",
+        "b": "Gateway",
+        "c": "Repeater",
+        "d": "Router"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#26",
+      "number": 26,
+      "stem": "Which of the following is an Internet standard that extends the format of email header fields to handle not only text messages but also audio and image files?",
+      "options": {
+        "a": "HTML",
+        "b": "MHS",
+        "c": "MIME",
+        "d": "SMTP"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#27",
+      "number": 27,
+      "stem": "An attacker left a USB stick labeled “Next ITPEC exam questions and answers” that contains malware in front of an office, expecting someone to plug it into a PC. Once plugged in, the attacker gains control of the PC. Which of the following types of attack is this?",
+      "options": {
+        "a": "Baiting",
+        "b": "Identity theft",
+        "c": "Phishing",
+        "d": "Pretexting"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#28",
+      "number": 28,
+      "stem": "When X receives a message with a digital signature that uses public key cryptography from Y, which of the following is the key that X uses to verify that the message truly came from Y?",
+      "options": {
+        "a": "X’s private key",
+        "b": "X’s public key",
+        "c": "Y’s private key",
+        "d": "Y’s public key"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#29",
+      "number": 29,
+      "stem": "The IP address of server X that is owned by an attacker, is recorded on Company B’s DNS cache server as the IP address corresponding to the FQDN of Company A’s web server. As a result, which of the following are the users that unintentionally connect to server X? Here, the employees of Company A and Company B use their own company’s DNS cache server for name resolution.",
+      "options": {
+        "a": "Company A employees who try to connect to Company A’s web server",
+        "b": "Company A employees who try to connect to Company B’s web server",
+        "c": "Company B employees who try to connect to Company A’s web server",
+        "d": "Company B employees who try to connect to Company B’s web server"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#30",
+      "number": 30,
+      "stem": "When a fraud occurs, all three (3) elements of the “fraud triangle” are believed to exist. Which of the following is the appropriate explanation of an element of the “fraud triangle”?",
+      "options": {
+        "a": "“Information and communication” refers to the identification, understanding, and processing of the required information, and its proper communication both within and outside the organization, and among the concerned persons.",
+        "b": "“Opportunity” refers to the existence of an environment, such as technologies like the information system, physical environment, organizational rules, etc., that makes fraud possible or easy to commit.",
+        "c": "“Pressure,” also known as incentive or motivation, refers to the selfish reasoning to justify committing fraud, such as interpreting things in a way that overcomes guilt or shifts blame.",
+        "d": "“Rationalization” refers to the feeling of being forced caused by unrealistic performance targets."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#31",
+      "number": 31,
+      "stem": "Which of the following is a function of an IDS?",
+      "options": {
+        "a": "It checks whether software products that are installed on a PC are the latest version.",
+        "b": "It collects the status of information security measures, such as the status of operations management for an information system, and also obtains company information, then performs a self-diagnosis on the status of activities for information security in an organization.",
+        "c": "It monitors a server or a network and notifies the administrator when it has detected an intrusion or infringement.",
+        "d": "It sends test data to a product that it examines and detects any vulnerability from the response or behavior of the product."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#32",
+      "number": 32,
+      "stem": "Which of the following is an appropriate description concerning the timing and purpose of port scanning when an attacker intrudes into a system?",
+      "options": {
+        "a": "It is conducted at the post-processing stage in order to look for any evidence of attack that may remain in the system log.",
+        "b": "It is conducted at the preliminary investigation stage in order to look for any service that can be attacked.",
+        "c": "It is conducted at the privilege escalation stage in order to look for any account whose privileges can be obtained.",
+        "d": "It is conducted at the unauthorized action stage in order to look for any user information that may be beneficial to the attacker."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#33",
+      "number": 33,
+      "stem": "In a system with the configuration and communication services shown in the figure below, which of the following is the most appropriate location for the installation of a WAF as a countermeasure for a vulnerability in a web application? Here, the WAF has no function to encrypt or decrypt communications. PC PC PC Internet HTTPS A Firewall HTTPS B SSL accelerator HTTP C Web server Service for accessing D the database Database server",
+      "options": {
+        "a": "A",
+        "b": "B",
+        "c": "C",
+        "d": "D"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#34",
+      "number": 34,
+      "stem": "Which of the following is an appropriate description of a UML use case diagram?",
+      "options": {
+        "a": "It shows the behavior during the object’s life cycle using finite state transitions.",
+        "b": "It shows the exchange of messages among objects and objects’ lifelines in a time series.",
+        "c": "It shows the flow from one activity to another activity in a system or business process.",
+        "d": "It shows the scenarios for how actors, i.e., external users or machines, interact with a system."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#35",
+      "number": 35,
+      "stem": "In the development process, which of the following is an activity that should be performed in software architecture design?",
+      "options": {
+        "a": "Analyzing the requirements in incremental steps by arranging them in the form of a chart",
+        "b": "Describing the specifications so that the program is clarified on a line-by-line basis",
+        "c": "Obtaining the opinion of the customer and deciding on the specifications",
+        "d": "Transforming the requirements for the software items into a design that describes its top- level structure and identifies the software components"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#36",
+      "number": 36,
+      "stem": "Which of the following is an appropriate description concerning a state transition test in a system integration test?",
+      "options": {
+        "a": "A method for black box tests that does not focus on a system’s internal state.",
+        "b": "A method that checks whether a system behaves according to the designed combinations of events and internal states.",
+        "c": "A method that is suitable for tests of calculations and processing systems whose internal state does not change depending on the occurrence of an event.",
+        "d": "A method that uses a data flow diagram and a decision table to analyze the internal state of a system."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#37",
+      "number": 37,
+      "stem": "Which of the following is an appropriate description of an acceptance test?",
+      "options": {
+        "a": "It is conducted by developers to verify response time and other performance items.",
+        "b": "It is conducted by testers to ensure that the interfaces and linkages between different software parts work properly.",
+        "c": "It is conducted by the project manager to verify whether users’ functional requirements are met or not.",
+        "d": "It is conducted by users to confirm that the software is complete and meets the business needs that prompted the software to be developed."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#38",
+      "number": 38,
+      "stem": "What is the expected value in dollars for the correction cost of an application program in the first year under the conditions shown below? [Conditions] (1) Program size: 2,000 k steps (2) Potential defective rate of program: 0.04 defects / k steps (3) Annual discovery rate of potential defects: 20% / year (4) Classification of discovered defects: –Major impact: 20% –Minor impact: 80% (5) Correction cost per defect Defects with major impact: 20,000 dollars Defects with minor impact: 5,000 dollars (6) In the first year, only defects with major impact are corrected",
+      "options": {
+        "a": "64,000",
+        "b": "128,000",
+        "c": "160,000",
+        "d": "640,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#39",
+      "number": 39,
+      "stem": "Which of the following is refactoring in software development activities?",
+      "options": {
+        "a": "In order to improve the maintainability of a program, its internal structure is modified without any change to the external specifications.",
+        "b": "In order to improve the quality of a program, two programmers cooperate to perform the coding of a single program.",
+        "c": "In order to obtain feedback from users, the prototype of a program to be provided is created at an early stage.",
+        "d": "In order to promptly develop a program to be operated, test cases are set in advance, and the program is then coded."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#40",
+      "number": 40,
+      "stem": "Which of the following is an appropriate explanation of comprehensive patent cross- licensing?",
+      "options": {
+        "a": "An agreement to share the necessary costs for patent registration is concluded.",
+        "b": "The source code is published free of charge on the Internet or other places, and anyone may improve and redistribute the software.",
+        "c": "The use of patent rights is mutually licensed among companies in the specified fields of technology or products.",
+        "d": "To ensure that a company’s patent rights are not violated, the right to stop a counterpart’s manufacturing is exercised."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#41",
+      "number": 41,
+      "stem": "Eight (8) activities and milestones of a project are shown in the arrow diagram below. Which of the following is the critical path of this project? A D E 15 10 15 H B C 15 10 F G 10 15 5 Legend: Activity name Number of days required Dummy",
+      "options": {
+        "a": "A, C, E, H",
+        "b": "A, C, F, G",
+        "c": "B, E, H",
+        "d": "B, F, G"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#42",
+      "number": 42,
+      "stem": "Based on the requirements gathered, the cost of a software project under normal conditions is estimated at $70,000. In case of smooth project implementation, some activities are not required and the estimated cost is reduced to $50,000; however, in the worst-case scenario, additional tasks are required and the cost increases to $120,000. What is the expected cost of the project (in dollars) that is calculated by using the three-point estimate in the beta distribution, also known as PERT?",
+      "options": {
+        "a": "70,000",
+        "b": "75,000",
+        "c": "80,000",
+        "d": "85,000"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#43",
+      "number": 43,
+      "stem": "IT services are provided under the conditions in the SLA shown below. What is the maximum number of hours of downtime in a month that can satisfy the SLA? [Conditions in the SLA] ‐Number of business days per month: 30 ‐Service hours: 7 AM to 11 PM on business days ‐Agreed availability: 99% or more ‐Maintenance time can be ignored.",
+      "options": {
+        "a": "1.2",
+        "b": "3.0",
+        "c": "4.8",
+        "d": "7.2"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#44",
+      "number": 44,
+      "stem": "Which of the following is an appropriate description of the relationship between a record of an incident and a record of a problem in IT service management?",
+      "options": {
+        "a": "A cross-reference to the incident that triggered the problem is included in the record of the problem.",
+        "b": "If known errors have been identified at the time of ending the record of the problem, the record of the incident that triggered the record of the problem is deleted.",
+        "c": "One (1) problem record is always associated with one (1) incident record.",
+        "d": "Problems are classified and recorded by a different criterion from the classification of incidents."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#45",
+      "number": 45,
+      "stem": "In the system design phase, when an audit is performed on the control to reduce the risk of user requirements not being met, which of the following is a point to be checked?",
+      "options": {
+        "a": "Whether programming is performed in accordance with the specified conventions and standards",
+        "b": "Whether the program specifications are created on the basis of the system design documents",
+        "c": "Whether the test plan is created on the basis of the system test requirements, and the manager’s approval of the system operations department is obtained",
+        "d": "Whether the user department participates in the review of the system design documents"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#46",
+      "number": 46,
+      "stem": "Which of the following is an appropriate feasibility evaluation when checking whether the lifetime benefits of the proposed information system are greater than its lifetime costs?",
+      "options": {
+        "a": "Economic feasibility",
+        "b": "Operational feasibility",
+        "c": "Scheduling feasibility",
+        "d": "Technical feasibility"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#47",
+      "number": 47,
+      "stem": "Which of the following is a measure for the risk of a decline in the system maintenance and operation quality during the outsourcing of an IT service?",
+      "options": {
+        "a": "Clearly stating the detailed fee structure by service in the contract or other documents, in order to validate the service costs",
+        "b": "Requesting a proposal for the human resource development plan of the company after outsourcing during the stage of subcontractor selection, and clearly stating it in the contract or other documents",
+        "c": "Securing human resources with capabilities to evaluate the appropriateness of service costs for system maintenance and operation within the company",
+        "d": "Using indexes that demonstrate the service quality in order to promote improvement activities after agreeing on the desired level of quality with the subcontractor"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#48",
+      "number": 48,
+      "stem": "In a business scenario where marketing managers analyze customer interests and sales patterns, design promotional campaigns, and then send targeted emails to customers, which of the following is a modeling technique used to represent how information flows between internal processes, data stores, and external entities?",
+      "options": {
+        "a": "Class Diagram",
+        "b": "Data Flow Diagram (DFD)",
+        "c": "Entity-Relationship Diagram (ERD)",
+        "d": "Use Case Diagram"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#49",
+      "number": 49,
+      "stem": "Which of the following is an explanation of benchmarking that is used for corporate management?",
+      "options": {
+        "a": "It refers to a qualitative and quantitative understanding of a company’s own products, services, and operations through comparison with those of competitors or advanced companies.",
+        "b": "It refers to drastically reforming the quality and structure of a company by redesigning its business processes from a customer viewpoint and by taking full advantage of information technology.",
+        "c": "It refers to the ability to plan and manage the allocation of company-wide management resources in an effective and integrated manner in order to improve management efficiency.",
+        "d": "It refers to the concentration of management resources on the unique skills and technologies of a company that can generate profit and that are superior to those of other companies."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#50",
+      "number": 50,
+      "stem": "Which of the following is an explanation of relationship marketing?",
+      "options": {
+        "a": "It is a marketing technique of setting a time limit for a short period, ranging from a few hours to a few days, and selling products on the Internet only during that period.",
+        "b": "It is a marketing technique of using the GPS function of a smartphone to send advertisements from stores near the current location.",
+        "c": "It is a marketing technique that aims at a diversified approach to consumers by using several media such as television, newspapers, and magazines.",
+        "d": "It is a marketing technique that aims to acquire stable sales over a long period of time from each customer by maintaining a good connection with the customer. ."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#51",
+      "number": 51,
+      "stem": "Which of the following is an explanation of ERP?",
+      "options": {
+        "a": "It is a method or concept by which wholesalers and manufacturers expand their business transactions with retail stores by supporting the business activities of retail stores.",
+        "b": "It is a method or concept for performing business transactions with consumers or between companies through the use of electronic networks such as the Internet.",
+        "c": "It is a method or concept that aims to drastically increase sales, profit, and customer satisfaction by improving the efficiency and quality of sales through the use of IT in sales activities.",
+        "d": "It is a method or concept that aims to improve management efficiency by planning and controlling the management resources of an entire company in an effective and comprehensive manner."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#52",
+      "number": 52,
+      "stem": "Which of the following is the appropriate description of process innovation?",
+      "options": {
+        "a": "Development of an innovative new product on the basis of an original and high technology",
+        "b": "Development of innovative manufacturing procedures that improve the quality of a product",
+        "c": "Outsourcing manufacturing to another company that has a semiconductor manufacturing process",
+        "d": "Wide adoption after passing the competition, resulting in the establishment of a de facto standard"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#53",
+      "number": 53,
+      "stem": "Basic elements and examples of devices and services when the IoT is used in a factory’s equipment maintenance tasks are compiled as shown below. When",
+      "options": {
+        "a": "Abnormal value judgment tool",
+        "d": "Wireless communication within the factory",
+        "b": "Display for work instructions",
+        "c": "Temperature sensor for equipment"
+      },
+      "stemVisual": true,
+      "answersVisual": false,
+      "visualKind": [
+        "diagram",
+        "table"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#54",
+      "number": 54,
+      "stem": "Which of the following is a characteristic of an IC tag (RFID)?",
+      "options": {
+        "a": "It handles a large amount of information, so it uses an external storage device for storing information.",
+        "b": "It is stain-resistant, and recorded information can be read from the outside of the package.",
+        "c": "It is used by inserting the tag into a dedicated magnetic reader.",
+        "d": "It uses GPS to display location information or attribute information about the current location."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#55",
+      "number": 55,
+      "stem": "Which of the following is an explanation of a sharing economy?",
+      "options": {
+        "a": "It is a concept by which efficient management and operation of renewable energy and urban infrastructure are performed by using IT, which improves the quality of people’s lives and achieves sustainable economic growth.",
+        "b": "It is a concept by which the productivity of an entire economy increases through the use of IT, eliminating the supply and demand gap via SCM progress, which leads to sustainable inflation-free growth.",
+        "c": "It is a mechanism by which over-the-counter and Internet sales are integrated to combine the benefits of both and expand overall sales.",
+        "d": "It is a mechanism, mainly between individuals, that uses the community function or other functions of social media to share, lend, or borrow unused assets owned by individuals."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#56",
+      "number": 56,
+      "stem": "Which of the following is an example of Green IT?",
+      "options": {
+        "a": "Development of a powerful in-house data center",
+        "b": "Development of efficient in-house software",
+        "c": "Using a desktop PC instead of a thin client laptop",
+        "d": "Using web conferencing instead of traveling to meetings"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#57",
+      "number": 57,
+      "stem": "Which of the following is a major role of a CIO?",
+      "options": {
+        "a": "The CIO creates a plan to optimize the effect of investment on information resources across the company to support business strategy when a computerization strategy is established.",
+        "b": "The CIO gives advice to the information system department by auditing whether the information system functions properly in corporate activities.",
+        "c": "The CIO receives queries about the information system, reports on the problems, and gives specific instructions to the department in charge to ensure optimal management of the company-wide information system.",
+        "d": "The CIO understands the status of information system development and operation and provides specific instructions on improvements to ensure that the company-wide information system functions optimally."
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#58",
+      "number": 58,
+      "stem": "The horizontal and vertical axes of an Operating Characteristic (OC) curve in quality management generally represent the percent defective of a lot and the success rate of a lot, respectively. Samples of size n are extracted from a lot of size N. When the number of defective samples is less than or equal to the pass quantity C, the lot is considered to have passed; otherwise, it is considered to have failed. Which of the following is a diagram that shows the trend of change in the OC curve when N and n are fixed and C takes the values 0, 1, and 2?",
+      "options": {
+        "a": "",
+        "b": "0 C=2 C= 1 C=1 C= 2 C= 0 C= 0 0",
+        "c": "",
+        "d": "2 0 C= 1 C= 1 C= =0 C= =2 C C 0 0"
+      },
+      "stemVisual": false,
+      "answersVisual": true,
+      "visualKind": [
+        "diagram"
+      ]
+    },
+    {
+      "globalId": "2025A_FE-A#59",
+      "number": 59,
+      "stem": "Which of the following is a financial statement that represents the assets, liabilities, and net assets of a company at a certain point in time and indicates the financial situation of the company?",
+      "options": {
+        "a": "Balance sheet",
+        "b": "Income statement",
+        "c": "Statement of Cash Flows",
+        "d": "Statement of Changes in Equity"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    },
+    {
+      "globalId": "2025A_FE-A#60",
+      "number": 60,
+      "stem": "For a shrink-wrap license, which of the following is the point in time when a software license agreement is concluded?",
+      "options": {
+        "a": "At the time the purchased software is paid for",
+        "b": "At the time the CD-ROM containing the software is received",
+        "c": "At the time the DVD-ROM package containing the software is opened",
+        "d": "At the time the software is installed on a PC"
+      },
+      "stemVisual": false,
+      "answersVisual": false,
+      "visualKind": []
+    }
+  ]
+}
