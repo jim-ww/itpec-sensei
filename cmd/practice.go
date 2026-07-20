@@ -31,7 +31,7 @@ type practiceFlags struct {
 // poolFlagNames are the flags that plan a fresh question pool — they're
 // meaningless (and rejected) alongside --continue/--repeat, which instead
 // reuse an existing session's params.
-var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "tags", "q", "limit", "order", "time-limit", "question-time-limit"}
+var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "tags", "question", "limit", "order", "time-limit", "question-time-limit"}
 
 // newPracticeCmd implements `itpec-sensei practice ...`.
 func newPracticeCmd(app *App) *cobra.Command {
@@ -49,9 +49,9 @@ func newPracticeCmd(app *App) *cobra.Command {
 		Example: `  itpec-sensei practice --exam=2025A_FE-A
   itpec-sensei practice --exam-type=fe --part=pm --order=review
   itpec-sensei practice --exam=2025A_FE-A --time-limit=150m --question-time-limit=90s
-  itpec-sensei practice --exam=2025A_FE-A --q=34
+  itpec-sensei practice --exam=2025A_FE-A -q 34
   itpec-sensei practice --exam=2025A_FE-A --limit=5
-  itpec-sensei practice --exam=2025A_FE-A --q=34 --answer
+  itpec-sensei practice --exam=2025A_FE-A -q 34 --answer
   itpec-sensei practice --topic="Networks" --part=am
   itpec-sensei practice --tags=cache-memory,pipeline-hazard --part=am
   itpec-sensei practice --continue
@@ -90,7 +90,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 			}
 
 			if question > 0 && examID == "" {
-				return fmt.Errorf("-q requires --exam")
+				return fmt.Errorf("-q/--question requires --exam")
 			}
 
 			if topic != "" && !contains(c.Bank.Topics(), topic) {
@@ -135,13 +135,13 @@ func newPracticeCmd(app *App) *cobra.Command {
 
 	flags := cmd.Flags()
 	flags.StringVar(&examType, "exam-type", "fe", "fe | itpassport")
-	flags.StringVar(&examID, "exam", "", "scope to one exam id")
+	flags.StringVarP(&examID, "exam", "e", "", "scope to one exam id")
 	flags.StringVar(&part, "part", "all", "am | pm | all — which exam session to practice (e.g. FE-AM/FE-A vs FE-PM/FE-B); ignored if --exam is set")
-	flags.StringVar(&topic, "topic", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
+	flags.StringVarP(&topic, "topic", "t", "", "filter to one topic; combines with --exam/--part (see \"itpec-sensei topics\" for valid names)")
 	flags.StringSliceVar(&tags, "tags", nil, "filter to questions carrying any of these tags (comma-separated, or repeat the flag); combines with --exam/--part/--topic (see \"itpec-sensei tags\" for valid names)")
-	flags.IntVar(&question, "q", 0, "practice only this specific question number within --exam")
-	flags.IntVar(&limit, "limit", 0, "max number of questions this session (0 = no limit)")
-	flags.StringVar(&order, "order", "random", "sequential | random | fail-count | weak (weighted towards low-accuracy topics) | review (spaced repetition: only questions due under the Leitner-box schedule)")
+	flags.IntVarP(&question, "question", "q", 0, "practice only this specific question number within --exam")
+	flags.IntVarP(&limit, "limit", "l", 0, "max number of questions this session (0 = no limit)")
+	flags.StringVarP(&order, "order", "o", "random", "sequential | random | fail-count | weak (weighted towards low-accuracy topics) | review (spaced repetition: only questions due under the Leitner-box schedule)")
 	flags.DurationVar(&timeLimit, "time-limit", 0, "whole-session time limit, e.g. 150m")
 	flags.DurationVar(&questionTimeLimit, "question-time-limit", 0, "per-question time limit, e.g. 90s")
 	flags.StringVar(&imageViewer, "image-viewer", "sixel", "sixel | xdg-open — how to display question images")
