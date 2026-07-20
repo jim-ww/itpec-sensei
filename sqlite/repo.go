@@ -16,6 +16,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"strings"
 	"time"
 
 	_ "modernc.org/sqlite"
@@ -178,6 +179,7 @@ func (r *Repository) InsertSession(ctx context.Context, p core.SessionParams) (i
 		ExamType:                 p.ExamType,
 		ExamID:                   nullableString(p.ExamID),
 		Topic:                    nullableString(p.Topic),
+		Tags:                     nullableString(strings.Join(p.Tags, ",")),
 		Part:                     nullableString(p.Part),
 		Mode:                     p.Mode,
 		OrderStrategy:            p.OrderStrategy,
@@ -234,6 +236,7 @@ func (r *Repository) SessionParamsByID(ctx context.Context, sessionID int64) (co
 		ExamType:       row.ExamType,
 		ExamID:         row.ExamID.String,
 		Topic:          row.Topic.String,
+		Tags:           splitTags(row.Tags.String),
 		Part:           row.Part.String,
 		Mode:           row.Mode,
 		OrderStrategy:  row.OrderStrategy,
@@ -334,6 +337,16 @@ func toInt(v any) int {
 	default:
 		return 0
 	}
+}
+
+// splitTags reverses the comma-join used to store SessionParams.Tags in the
+// single "tags" TEXT column, returning nil (not an empty slice) for "" so
+// round-tripping an unset Tags field stays unset.
+func splitTags(s string) []string {
+	if s == "" {
+		return nil
+	}
+	return strings.Split(s, ",")
 }
 
 func nullableString(s string) sql.NullString {

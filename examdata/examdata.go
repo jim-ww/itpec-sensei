@@ -39,6 +39,12 @@ type Question struct {
 	// Decoded convenience fields, populated by DecodeAnswer.
 	SimpleAnswer string      `json:"simpleAnswer,omitempty"`
 	SubAnswers   []SubAnswer `json:"subAnswers,omitempty"`
+
+	// Tags is fine-grained topic tagging, populated by core.LoadBank from the
+	// sidecar tags.json file (see pdfparse/tags.json) — never present in the
+	// scraper's own per-exam JSON, so it's not part of that wire format
+	// proper, just carried alongside it for convenience.
+	Tags []string `json:"tags,omitempty"`
 }
 
 // DecodeAnswer figures out which shape Answer is and fills in SimpleAnswer or

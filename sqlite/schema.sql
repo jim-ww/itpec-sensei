@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS sessions (
   topic                        TEXT,
   part                         TEXT,
   question_limit               INTEGER,
-  question_number              INTEGER
+  question_number              INTEGER,
+  tags                         TEXT
 );
 
 CREATE TABLE IF NOT EXISTS attempts (

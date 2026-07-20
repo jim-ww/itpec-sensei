@@ -15,6 +15,15 @@ import (
 	"github.com/jim-ww/itpec-sensei/core"
 )
 
+// tagsSuffix formats a question's tags, if any, as a trailing ", tag1, tag2"
+// fragment for the question header line — empty string when untagged.
+func tagsSuffix(q *core.Question) string {
+	if len(q.Tags) == 0 {
+		return ""
+	}
+	return ", " + strings.Join(q.Tags, ", ")
+}
+
 // executeSession runs the answer loop over ordered. If existingSessionID is 0,
 // a new sessions row is created lazily on the first submitted answer, as
 // before; otherwise the caller is resuming an already-started session
@@ -56,8 +65,8 @@ func executeSession(ctx context.Context, c *core.Core, pf practiceFlags, ordered
 
 questionLoop:
 	for i, q := range ordered {
-		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s)  [%s %s]\n",
-			i+1, len(ordered), q.ExamID, q.ID, q.Topic(),
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s%s)  [%s %s]\n",
+			i+1, len(ordered), q.ExamID, q.ID, q.Topic(), tagsSuffix(q),
 			color.New(color.FgGreen, color.Bold).Sprintf("%d✓", correct),
 			color.New(color.FgRed, color.Bold).Sprintf("%d✗", answered-correct))
 		killExternalViewer(&lastExternalImage)
@@ -135,6 +144,7 @@ questionLoop:
 				ExamType:                 pf.examType,
 				ExamID:                   pf.examID,
 				Topic:                    pf.topic,
+				Tags:                     pf.tags,
 				Part:                     pf.part,
 				Mode:                     sessionMode(pf),
 				OrderStrategy:            pf.order,
@@ -221,7 +231,7 @@ func runAnswerReveal(c *core.Core, pf practiceFlags, ordered []*core.Question) e
 	defer killExternalViewer(&lastExternalImage)
 
 	for i, q := range ordered {
-		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s)\n", i+1, len(ordered), q.ExamID, q.ID, q.Topic())
+		fmt.Printf("\nQuestion %d of %d  (%s, q%d, %s%s)\n", i+1, len(ordered), q.ExamID, q.ID, q.Topic(), tagsSuffix(q))
 		killExternalViewer(&lastExternalImage)
 		if err := renderImage(c, q, pf.imageViewer, pf.dark, &lastExternalImage); err != nil {
 			fmt.Printf("[image unavailable: %v]\n", err)

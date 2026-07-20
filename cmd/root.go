@@ -48,6 +48,7 @@ func NewRootCmd() *cobra.Command {
 		newExamsCmd(app),
 		newExamCmd(app),
 		newTopicsCmd(app),
+		newTagsCmd(app),
 		newResetCmd(app),
 		newDataCmd(app),
 		newServeCmd(app),

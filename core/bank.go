@@ -3,6 +3,7 @@ package core
 import (
 	"cmp"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"image"
 	"image/color"
@@ -16,15 +17,23 @@ import (
 	"strings"
 )
 
+// tagsFileName is the sidecar tag file (see pdfparse/tags.json) that ships
+// alongside the per-exam JSON files in the data directory. It is not itself
+// an exam file, so LoadBank's exam-file scan skips it and loads it
+// separately.
+const tagsFileName = "tags.json"
+
 // Bank is the in-memory, read-only index over the downloaded question set.
 type Bank struct {
 	fsys     fs.FS
 	byID     map[string]*Question // keyed by Question.GlobalID()
 	byExam   map[string][]*Question
 	byTopic  map[string][]*Question
+	byTag    map[string][]*Question
 	examInfo map[string]ExamInfo
 	exams    []string
 	topics   []string
+	tags     []string
 	// topicParts maps each topic to the exam part ("am"/"pm") all of its
 	// questions come from. Topics whose questions span more than one part (or
 	// come from a part-less exam like IT Passport) map to "", grouped as
@@ -43,6 +52,7 @@ func LoadBank(dataDir string) (*Bank, error) {
 		byID:     make(map[string]*Question),
 		byExam:   make(map[string][]*Question),
 		byTopic:  make(map[string][]*Question),
+		byTag:    make(map[string][]*Question),
 		examInfo: make(map[string]ExamInfo),
 	}
 
@@ -56,7 +66,7 @@ func LoadBank(dataDir string) (*Bank, error) {
 	topicPartSet := make(map[string]map[string]struct{})
 
 	for _, e := range entries {
-		if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
+		if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") || e.Name() == tagsFileName {
 			continue
 		}
 		raw, err := fs.ReadFile(sub, e.Name())
@@ -98,6 +108,10 @@ func LoadBank(dataDir string) (*Bank, error) {
 	}
 	sort.Strings(b.topics)
 
+	if err := b.loadTags(sub); err != nil {
+		return nil, err
+	}
+
 	b.topicParts = make(map[string]string, len(topicPartSet))
 	for t, parts := range topicPartSet {
 		if len(parts) == 1 {
@@ -108,6 +122,49 @@ func LoadBank(dataDir string) (*Bank, error) {
 	}
 
 	return b, nil
+}
+
+// loadTags reads the sidecar tags.json file (globalId -> []tag) if present
+// and attaches each question's tags to it, building the byTag index. A
+// missing tags.json is not an error — Tags()/byTag simply stay empty (e.g.
+// exam parts pdfparse hasn't tagged yet, or a dev fixture with no tags at
+// all).
+func (b *Bank) loadTags(sub fs.FS) error {
+	raw, err := fs.ReadFile(sub, tagsFileName)
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil
+	}
+	if err != nil {
+		return fmt.Errorf("bank: read %s: %w", tagsFileName, err)
+	}
+
+	var tagsByQuestion map[string][]string
+	if err := json.Unmarshal(raw, &tagsByQuestion); err != nil {
+		return fmt.Errorf("bank: parse %s: %w", tagsFileName, err)
+	}
+
+	tagSet := make(map[string]struct{})
+	for globalID, qTags := range tagsByQuestion {
+		q, ok := b.byID[globalID]
+		if !ok {
+			continue // tags.json may cover exams/questions not present in this data dir
+		}
+		q.Tags = qTags
+		for _, tag := range qTags {
+			tagSet[tag] = struct{}{}
+			b.byTag[tag] = append(b.byTag[tag], q)
+		}
+	}
+	for t := range tagSet {
+		b.tags = append(b.tags, t)
+	}
+	sort.Strings(b.tags)
+	return nil
+}
+
+// Tags returns all known tags, sorted.
+func (b *Bank) Tags() []string {
+	return b.tags
 }
 
 // Question returns the question with the given global ID (Question.GlobalID()),
@@ -180,6 +237,30 @@ func (b *Bank) Questions(topic, examID string) []*Question {
 	}
 	slices.SortFunc(pool, func(a, b *Question) int { return cmp.Compare(a.GlobalID(), b.GlobalID()) })
 	return pool
+}
+
+// FilterByTags narrows pool to questions carrying at least one of tags
+// (match-any, not match-all — questions are tagged with a handful of
+// specific concepts each, so requiring every selected tag would usually
+// over-narrow the pool to nothing).
+func FilterByTags(pool []*Question, tags []string) []*Question {
+	if len(tags) == 0 {
+		return pool
+	}
+	want := make(map[string]struct{}, len(tags))
+	for _, t := range tags {
+		want[t] = struct{}{}
+	}
+	var filtered []*Question
+	for _, q := range pool {
+		for _, t := range q.Tags {
+			if _, ok := want[t]; ok {
+				filtered = append(filtered, q)
+				break
+			}
+		}
+	}
+	return filtered
 }
 
 // QuestionsForExams returns all questions across the given exam IDs, sorted by ID.

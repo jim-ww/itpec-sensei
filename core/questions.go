@@ -26,6 +26,7 @@ import (
 // instead of getting the same first question every time).
 func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Question, error) {
 	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
+	pool = FilterByTags(pool, filter.Tags)
 	if len(pool) == 0 {
 		// Topic and examId each narrow the pool independently, but topics are
 		// NOT shared across all exams (e.g. AM/subject-A exams use topics like

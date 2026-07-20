@@ -42,4 +42,5 @@ type Session struct {
 	Part                     sql.NullString
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
+	Tags                     sql.NullString
 }

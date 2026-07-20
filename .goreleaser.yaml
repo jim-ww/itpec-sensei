@@ -17,8 +17,11 @@ before:
     # package the question bank (data/questions) into a fixed-name archive so
     # the CLI's first-run download can find it as a release asset. Staged
     # outside dist/, since goreleaser expects to own that directory's
-    # lifecycle exclusively.
-    - sh -c "mkdir -p .data-archive && tar czf .data-archive/data.tar.gz -C data/questions ."
+    # lifecycle exclusively. tags.json is pdfparse's sidecar tag file, kept
+    # out of data/questions (scraper-owned) but bundled alongside it here so
+    # it lands in dataDir/questions next to the exam files core.LoadBank
+    # expects it beside (see core.tagsFileName).
+    - sh -c "mkdir -p .data-archive && cp pdfparse/tags.json data/questions/tags.json && tar czf .data-archive/data.tar.gz -C data/questions . && rm data/questions/tags.json"
 
 builds:
   - main: ./...

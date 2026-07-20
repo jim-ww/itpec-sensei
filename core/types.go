@@ -20,9 +20,10 @@ type (
 
 // QuestionFilter narrows GetNextQuestion selection.
 type QuestionFilter struct {
-	Topic  string // optional
-	ExamID string // optional
-	Mode   string // "random" | "review" | "weak" | "sequential"
+	Topic  string   // optional
+	ExamID string   // optional
+	Tags   []string // optional, match-any (see FilterByTags)
+	Mode   string   // "random" | "review" | "weak" | "sequential"
 	// ExcludeIDs are Question.GlobalID()s to skip, e.g. questions already
 	// answered in the caller's current session — so "sequential" can advance
 	// past them, and so repeats aren't handed back in other modes either.

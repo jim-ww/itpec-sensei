@@ -60,6 +60,7 @@ type SessionParams struct {
 	ExamType                 string
 	ExamID                   string
 	Topic                    string
+	Tags                     []string
 	Part                     string
 	Mode                     string
 	OrderStrategy            string

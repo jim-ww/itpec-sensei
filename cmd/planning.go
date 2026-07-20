@@ -57,6 +57,9 @@ func planPool(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Ques
 	if pf.topic != "" {
 		planned = filterByTopic(planned, pf.topic)
 	}
+	if len(pf.tags) > 0 {
+		planned = core.FilterByTags(planned, pf.tags)
+	}
 	// "review" is a filter (narrow to due questions), not a sort — once
 	// applied, order the resulting due-pool randomly like any other pool.
 	orderStrategy := pf.order

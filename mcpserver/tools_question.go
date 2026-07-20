@@ -35,13 +35,20 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 	})
 
 	mcp.AddTool(server, &mcp.Tool{
+		Name:        "list_tags",
+		Description: "List all known fine-grained question tags, so the AI can offer tag filtering on get_next_question rather than guessing tag names.",
+	}, func(ctx context.Context, req *mcp.CallToolRequest, in struct{}) (*mcp.CallToolResult, listTagsOut, error) {
+		return nil, listTagsOut{Tags: c.Bank.Tags()}, nil
+	})
+
+	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_next_question",
 		Description: "Return the next practice question, filtered by topic/exam/mode. The question text, diagrams, and answer choices are ONLY in the image at imageUrl — nothing here contains the question itself. You must fetch/view that image yourself to know what's actually being asked before answering or discussing it. When you relay the question to the user, transcribe it as-is — don't reword, summarize, or paraphrase it unless the user explicitly asks you to. If the question has visuals that can't be reliably described in text, call open_question_image to show it to the user directly. Never includes the answer. The tool result also embeds the image directly (always in original/light colors, regardless of imageUrl's dark default) as a fallback for clients that can't fetch imageUrl.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getNextQuestionIn) (*mcp.CallToolResult, getNextQuestionOut, error) {
 		if in.ContinueSessionID != 0 && in.RepeatSessionID != 0 {
 			return nil, getNextQuestionOut{}, fmt.Errorf("continueSessionId and repeatSessionId are mutually exclusive")
 		}
-		topic, examID := in.Topic, in.ExamID
+		topic, examID, tags := in.Topic, in.ExamID, in.Tags
 		if !sess.started {
 			switch {
 			case in.ContinueSessionID != 0:
@@ -69,6 +76,9 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				if examID == "" {
 					examID = params.ExamID
 				}
+				if len(tags) == 0 {
+					tags = params.Tags
+				}
 				sess.id = in.ContinueSessionID
 				sess.started = true
 			case in.RepeatSessionID != 0:
@@ -82,8 +92,11 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				if examID == "" {
 					examID = params.ExamID
 				}
+				if len(tags) == 0 {
+					tags = params.Tags
+				}
 				id, err := c.StartSession(ctx, core.SessionParams{
-					ExamType: "fe", ExamID: examID, Topic: topic,
+					ExamType: "fe", ExamID: examID, Topic: topic, Tags: tags,
 					Mode: cmp.Or(in.Mode, params.Mode), OrderStrategy: "random",
 				})
 				if err != nil {
@@ -93,7 +106,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				sess.started = true
 			default:
 				id, err := c.StartSession(ctx, core.SessionParams{
-					ExamType: "fe", ExamID: examID, Topic: topic,
+					ExamType: "fe", ExamID: examID, Topic: topic, Tags: tags,
 					Mode: cmp.Or(in.Mode, "normal"), OrderStrategy: "random",
 				})
 				if err != nil {
@@ -114,7 +127,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				excludeIDs = append(excludeIDs, id)
 			}
 		}
-		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Mode: mode, ExcludeIDs: excludeIDs})
+		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Tags: tags, Mode: mode, ExcludeIDs: excludeIDs})
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}
@@ -161,6 +174,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 		if q.Explanation != nil {
 			out.Topic = q.Explanation.Topic
 		}
+		out.Tags = q.Tags
 		out.Answer = q.Answer
 		out.SimpleAnswer = q.SimpleAnswer
 		out.SubAnswers = q.SubAnswers
