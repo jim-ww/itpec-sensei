@@ -31,11 +31,13 @@ func TestScopeQuestionIDs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ids, err := c.scopeQuestionIDs(tt.scope)
+			filter, err := ParseScope(tt.scope)
 			if tt.wantErr {
 				assert.Error(t, err)
 				return
 			}
+			require.NoError(t, err)
+			ids, err := c.scopeQuestionIDs(filter)
 			require.NoError(t, err)
 			if tt.want == nil {
 				assert.Nil(t, ids)

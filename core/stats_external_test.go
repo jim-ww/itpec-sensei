@@ -27,7 +27,7 @@ func TestGetTopicStats(t *testing.T) {
 	_, err = c.SubmitAnswer(ctx, sessionID, securityQ.GlobalID(), "B", false, 0) // correct
 	require.NoError(t, err)
 
-	stats, err := c.GetTopicStats(ctx, core.ScopeAll)
+	stats, err := c.GetTopicStats(ctx, core.ScopeFilter{})
 	require.NoError(t, err)
 
 	byTopic := map[string]core.TopicStat{}
@@ -60,7 +60,7 @@ func TestGetExamStats(t *testing.T) {
 	_, err = c.SubmitAnswer(ctx, sessionID, pmQ.GlobalID(), "Y", false, 0) // incorrect
 	require.NoError(t, err)
 
-	stats, err := c.GetExamStats(ctx, core.ScopeAll)
+	stats, err := c.GetExamStats(ctx, core.ScopeFilter{})
 	require.NoError(t, err)
 
 	byExam := map[string]core.ExamStat{}
@@ -95,7 +95,7 @@ func TestGetProgressSummary(t *testing.T) {
 		Box: 1, DueAt: time.Now().UTC().Add(-time.Minute), LastReviewedAt: time.Now().UTC(),
 	}))
 
-	summary, err := c.GetProgressSummary(ctx, core.ScopeAll, core.PeriodAll)
+	summary, err := c.GetProgressSummary(ctx, core.ScopeFilter{}, core.PeriodAll)
 	require.NoError(t, err)
 
 	assert.Equal(t, 2, summary.Answered)

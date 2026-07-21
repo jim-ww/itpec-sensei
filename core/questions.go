@@ -116,7 +116,7 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 		return stripAnswer(pool[rand.IntN(len(pool))]), nil
 
 	case strings.EqualFold(filter.Mode, "weak"):
-		topicStats, err := c.GetTopicStats(ctx, ScopeAll)
+		topicStats, err := c.GetTopicStats(ctx, ScopeFilter{})
 		if err != nil {
 			return nil, err
 		}

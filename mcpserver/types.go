@@ -65,9 +65,12 @@ type undoLastAnswerOut struct {
 }
 
 type getProgressSummaryIn struct {
-	Scope       string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
-	Period      string `json:"period,omitempty" jsonschema:"week | month | all, default all"`
-	WeakestTags int    `json:"weakestTags,omitempty" jsonschema:"how many of the weakest tags to include in tagStats (by lowest accuracy, min. 3 attempts each), sorted weakest first; default (or 0) is 10, pass -1 for unlimited"`
+	Topic       string   `json:"topic,omitempty" jsonschema:"filter by topic; combines with tags/examId/part"`
+	Tags        []string `json:"tags,omitempty" jsonschema:"filter to questions carrying ANY of these tags; combines with topic/examId/part"`
+	ExamID      string   `json:"examId,omitempty" jsonschema:"filter by exam id; combines with topic/tags/part"`
+	Part        string   `json:"part,omitempty" jsonschema:"am | pm; combines with topic/tags/examId"`
+	Period      string   `json:"period,omitempty" jsonschema:"week | month | all, default all"`
+	WeakestTags int      `json:"weakestTags,omitempty" jsonschema:"how many of the weakest tags to include in tagStats (by lowest accuracy, min. 3 attempts each), sorted weakest first; default (or 0) is 10, pass -1 for unlimited"`
 }
 
 type partStatOut struct {
@@ -145,9 +148,12 @@ type openQuestionImageOut struct {
 }
 
 type getHistoryIn struct {
-	Scope string `json:"scope,omitempty" jsonschema:"all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm, default all"`
-	Order string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
-	Limit int    `json:"limit,omitempty" jsonschema:"max attempts to return, default 20"`
+	Topic  string   `json:"topic,omitempty" jsonschema:"filter by topic; combines with tags/examId/part"`
+	Tags   []string `json:"tags,omitempty" jsonschema:"filter to questions carrying ANY of these tags; combines with topic/examId/part"`
+	ExamID string   `json:"examId,omitempty" jsonschema:"filter by exam id; combines with topic/tags/part"`
+	Part   string   `json:"part,omitempty" jsonschema:"am | pm; combines with topic/tags/examId"`
+	Order  string   `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
+	Limit  int      `json:"limit,omitempty" jsonschema:"max attempts to return, default 20"`
 }
 
 type historyAttempt struct {
@@ -183,7 +189,8 @@ type getExamOut struct {
 }
 
 type getSessionsIn struct {
-	Scope          string `json:"scope,omitempty" jsonschema:"all | exam:<id> | part:am | part:pm, default all (topic scope not supported); ignored when incompleteOnly is true"`
+	ExamID         string `json:"examId,omitempty" jsonschema:"filter by exam id; combines with part (topic/tags not supported — a session isn't scoped to one topic); ignored when incompleteOnly is true"`
+	Part           string `json:"part,omitempty" jsonschema:"am | pm; combines with examId; ignored when incompleteOnly is true"`
 	Order          string `json:"order,omitempty" jsonschema:"newest | oldest, default newest"`
 	Limit          int    `json:"limit,omitempty" jsonschema:"max sessions to return, default 20"`
 	IncompleteOnly bool   `json:"incompleteOnly,omitempty" jsonschema:"only return sessions that never finished cleanly (interrupted, or the process was killed before it could mark completion) — use to find a session id to pass as continueSessionId to get_next_question"`

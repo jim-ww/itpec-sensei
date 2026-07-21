@@ -157,7 +157,7 @@ func orderQuestions(ctx context.Context, c *core.Core, pool []*core.Question, or
 		// attempted yet (default weight below any known accuracy) — unlike
 		// fail-count this is topic-level, not tied to a specific
 		// question having been seen before.
-		topicStats, err := c.GetTopicStats(ctx, core.ScopeAll)
+		topicStats, err := c.GetTopicStats(ctx, core.ScopeFilter{})
 		if err != nil {
 			return nil, err
 		}

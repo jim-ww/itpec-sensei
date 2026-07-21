@@ -29,7 +29,11 @@ func (c *Core) ResetProgress(ctx context.Context, scope Scope) error {
 		return c.Repo.ResetAllProgress(ctx)
 	}
 
-	ids, err := c.scopeQuestionIDs(scope)
+	filter, err := ParseScope(scope)
+	if err != nil {
+		return err
+	}
+	ids, err := c.scopeQuestionIDs(filter)
 	if err != nil {
 		return err
 	}

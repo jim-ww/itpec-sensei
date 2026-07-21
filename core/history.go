@@ -10,7 +10,7 @@ import (
 // oldest first), capped at limit (0 means no cap). Each record is joined with
 // question metadata (topic, examId) at query time, since attempts only store
 // the raw question id.
-func (c *Core) GetHistory(ctx context.Context, scope Scope, order HistoryOrder, limit int) ([]AttemptRecord, error) {
+func (c *Core) GetHistory(ctx context.Context, scope ScopeFilter, order HistoryOrder, limit int) ([]AttemptRecord, error) {
 	ids, err := c.scopeQuestionIDs(scope)
 	if err != nil {
 		return nil, err
@@ -42,10 +42,10 @@ func (c *Core) GetHistory(ctx context.Context, scope Scope, order HistoryOrder, 
 
 // GetSessions returns past practice sessions (newest/oldest first per order),
 // each with its aggregate answered/correct count joined from attempts. scope
-// supports "all", "exam:<id>", and "part:am|pm" (matched against a session's
-// own exam_id) — unlike GetHistory/GetTopicStats, "topic:<name>" isn't
-// supported here, since a session isn't inherently scoped to one topic.
-func (c *Core) GetSessions(ctx context.Context, scope Scope, order HistoryOrder, limit int) ([]SessionRecord, error) {
+// supports ExamID and Part (matched against a session's own exam_id) —
+// unlike GetHistory/GetTopicStats, Topic/Tag aren't supported here, since a
+// session isn't inherently scoped to one topic.
+func (c *Core) GetSessions(ctx context.Context, scope ScopeFilter, order HistoryOrder, limit int) ([]SessionRecord, error) {
 	if err := validateSessionScope(scope); err != nil {
 		return nil, err
 	}
@@ -62,43 +62,33 @@ func (c *Core) GetSessions(ctx context.Context, scope Scope, order HistoryOrder,
 	return records, nil
 }
 
-func validateSessionScope(scope Scope) error {
-	s := string(scope)
-	if s == "" || Scope(s) == ScopeAll {
-		return nil
+func validateSessionScope(scope ScopeFilter) error {
+	if scope.Topic != "" || len(scope.Tags) > 0 {
+		return fmt.Errorf("topic/tag scope is not supported for sessions (a session isn't scoped to one topic or tag)")
 	}
-	kind, _, ok := strings.Cut(s, ":")
-	if !ok {
-		return fmt.Errorf("invalid scope %q, expected all|exam:<id>|part:<am|pm>", scope)
+	if scope.Part != "" {
+		p := strings.ToLower(scope.Part)
+		if p != "am" && p != "pm" {
+			return fmt.Errorf("invalid part %q, expected am or pm", scope.Part)
+		}
 	}
-	switch kind {
-	case "exam", "part":
-		return nil
-	case "topic", "tag":
-		return fmt.Errorf("%s scope is not supported for sessions (a session isn't scoped to one %s)", kind, kind)
-	default:
-		return fmt.Errorf("invalid scope kind %q, expected exam or part", kind)
-	}
+	return nil
 }
 
-func filterSessionsByScope(records []SessionRecord, scope Scope) []SessionRecord {
-	s := string(scope)
-	if s == "" || Scope(s) == ScopeAll {
+func filterSessionsByScope(records []SessionRecord, scope ScopeFilter) []SessionRecord {
+	if scope.IsEmpty() {
 		return records
 	}
-	kind, value, _ := strings.Cut(s, ":")
+	part := strings.ToLower(scope.Part)
 	var filtered []SessionRecord
 	for _, r := range records {
-		switch kind {
-		case "exam":
-			if r.ExamID == value {
-				filtered = append(filtered, r)
-			}
-		case "part":
-			if ExamPart(r.ExamID) == strings.ToLower(value) {
-				filtered = append(filtered, r)
-			}
+		if scope.ExamID != "" && r.ExamID != scope.ExamID {
+			continue
 		}
+		if part != "" && ExamPart(r.ExamID) != part {
+			continue
+		}
+		filtered = append(filtered, r)
 	}
 	return filtered
 }

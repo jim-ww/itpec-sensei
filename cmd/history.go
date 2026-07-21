@@ -13,7 +13,8 @@ import (
 // newHistoryCmd implements `itpec-sensei history [--scope=...] [--limit=N]`
 // and, via --undo, `itpec-sensei history --undo [--session=N]`.
 func newHistoryCmd(app *App) *cobra.Command {
-	var scope, order string
+	var topic, examID, part, order string
+	var tags []string
 	var limit int
 	var undo bool
 	var session int64
@@ -45,12 +46,16 @@ func newHistoryCmd(app *App) *cobra.Command {
 				return nil
 			}
 
-			records, err := c.GetHistory(ctx, core.Scope(scope), core.HistoryOrder(order), limit)
+			scope, err := scopeFromFlags(topic, examID, part, tags)
+			if err != nil {
+				return err
+			}
+			records, err := c.GetHistory(ctx, scope, core.HistoryOrder(order), limit)
 			if err != nil {
 				return fmt.Errorf("get history: %w", err)
 			}
 
-			fmt.Printf("itpec-sensei — attempt history (scope=%s, order=%s)\n\n", scope, order)
+			fmt.Printf("itpec-sensei — attempt history (scope=%s, order=%s)\n\n", scopeLabel(scope), order)
 			if len(records) == 0 {
 				fmt.Println("No attempts recorded yet.")
 				return nil
@@ -77,7 +82,7 @@ func newHistoryCmd(app *App) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&scope, "scope", "all", "all | topic:<name> | tag:<name> | exam:<id> | part:am | part:pm")
+	addScopeFlags(cmd.Flags(), &topic, &examID, &part, &tags, true)
 	cmd.Flags().StringVar(&order, "order", "newest", "newest | oldest")
 	cmd.Flags().IntVar(&limit, "limit", 20, "max attempts to show (0 = all)")
 	cmd.Flags().BoolVar(&undo, "undo", false, "delete the most recent attempt instead of listing history")

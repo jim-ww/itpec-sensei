@@ -19,7 +19,7 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 		Name:        "get_progress_summary",
 		Description: "Return accuracy/streak/review-queue plus per-part (AM/PM), per-topic, and per-exam breakdowns, so the AI can meaningfully reference progress in conversation. AM and PM are never blended into one accuracy/timing number since they test very different material.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getProgressSummaryIn) (*mcp.CallToolResult, getProgressSummaryOut, error) {
-		scope := core.Scope(cmp.Or(in.Scope, "all"))
+		scope := core.ScopeFilter{Topic: in.Topic, Tags: in.Tags, ExamID: in.ExamID, Part: in.Part}
 		period := core.Period(cmp.Or(in.Period, "all"))
 		s, err := c.GetProgressSummary(ctx, scope, period)
 		if err != nil {
@@ -78,7 +78,7 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 		Name:        "get_history",
 		Description: "List past attempts (newest first), so the AI can reference specific questions the user already answered.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, in getHistoryIn) (*mcp.CallToolResult, getHistoryOut, error) {
-		scope := core.Scope(cmp.Or(in.Scope, "all"))
+		scope := core.ScopeFilter{Topic: in.Topic, Tags: in.Tags, ExamID: in.ExamID, Part: in.Part}
 		order := core.HistoryOrder(cmp.Or(in.Order, "newest"))
 		limit := in.Limit
 		if limit <= 0 {
@@ -118,7 +118,7 @@ func (t *toolCtx) registerProgressTools(server *mcp.Server) {
 		if in.IncompleteOnly {
 			records, err = c.IncompleteSessions(ctx, limit)
 		} else {
-			scope := core.Scope(cmp.Or(in.Scope, "all"))
+			scope := core.ScopeFilter{ExamID: in.ExamID, Part: in.Part}
 			order := core.HistoryOrder(cmp.Or(in.Order, "newest"))
 			records, err = c.GetSessions(ctx, scope, order, limit)
 		}

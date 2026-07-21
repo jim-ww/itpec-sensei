@@ -21,7 +21,7 @@ func TestGetHistory(t *testing.T) {
 	_, err = c.SubmitAnswer(ctx, sessionID, q.GlobalID(), "A", false, 0)
 	require.NoError(t, err)
 
-	records, err := c.GetHistory(ctx, core.ScopeAll, core.HistoryNewestFirst, 20)
+	records, err := c.GetHistory(ctx, core.ScopeFilter{}, core.HistoryNewestFirst, 20)
 	require.NoError(t, err)
 	require.Len(t, records, 1)
 	assert.Equal(t, "2020A_FE-A", records[0].ExamID)
@@ -38,7 +38,7 @@ func TestGetSessions(t *testing.T) {
 	id2, err := c.StartSession(ctx, core.SessionParams{ExamType: "fe", ExamID: "2020A_FE-B", Mode: "normal", OrderStrategy: "random"})
 	require.NoError(t, err)
 
-	records, err := c.GetSessions(ctx, core.Scope("exam:2020A_FE-B"), core.HistoryNewestFirst, 0)
+	records, err := c.GetSessions(ctx, core.ScopeFilter{ExamID: "2020A_FE-B"}, core.HistoryNewestFirst, 0)
 	require.NoError(t, err)
 	require.Len(t, records, 1)
 	assert.Equal(t, id2, records[0].ID)
@@ -46,6 +46,6 @@ func TestGetSessions(t *testing.T) {
 
 func TestGetSessionsRejectsTopicScope(t *testing.T) {
 	c := core.New(newTestBank(t), newTestRepo(t))
-	_, err := c.GetSessions(context.Background(), core.Scope("topic:Networks"), core.HistoryNewestFirst, 0)
+	_, err := c.GetSessions(context.Background(), core.ScopeFilter{Topic: "Networks"}, core.HistoryNewestFirst, 0)
 	assert.Error(t, err)
 }

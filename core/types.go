@@ -33,15 +33,35 @@ type QuestionFilter struct {
 	Unanswered bool
 }
 
-// Scope narrows progress queries / resets: "all", "topic:<name>", "tag:<name>",
-// "exam:<id>", or "part:am" / "part:pm" (FE-AM/FE-A vs FE-PM/FE-B exam
-// session). GetSessions is the one exception — it rejects topic/tag scope,
-// since a session isn't inherently scoped to one (see validateSessionScope).
+// Scope is the single-dimension "all"/"topic:<name>"/"tag:<name>"/
+// "exam:<id>"/"part:am|pm" scope string used only by ResetProgress (see
+// ParseScope) — kept as its own deliberately terse, hard-to-mistype
+// mini-syntax for a destructive command. Everywhere else that narrows by
+// scope (progress queries) uses the combinable ScopeFilter instead.
 type Scope string
 
 const (
 	ScopeAll = Scope("all")
 )
+
+// ScopeFilter narrows progress queries (GetProgressSummary, GetTopicStats,
+// GetTagStats, GetExamStats, GetHistory, GetSessions) by topic/tag/exam/part
+// combined with AND, mirroring QuestionFilter's combinability. All fields
+// empty means "no filter". GetSessions is the one exception — it rejects a
+// non-empty Topic/Tag, since a session isn't inherently scoped to one (see
+// validateSessionScope).
+type ScopeFilter struct {
+	Topic  string
+	Tags   []string // match-any, like QuestionFilter.Tags
+	ExamID string
+	Part   string // "am" | "pm" | ""
+}
+
+// IsEmpty reports whether filter narrows nothing (equivalent to the old
+// "all" scope).
+func (f ScopeFilter) IsEmpty() bool {
+	return f.Topic == "" && len(f.Tags) == 0 && f.ExamID == "" && f.Part == ""
+}
 
 // Period narrows progress summary time window.
 type Period string

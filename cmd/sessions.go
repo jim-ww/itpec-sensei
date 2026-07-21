@@ -12,7 +12,7 @@ import (
 
 // newSessionsCmd implements `itpec-sensei sessions [--scope=...] [--limit=N]`.
 func newSessionsCmd(app *App) *cobra.Command {
-	var scope, order string
+	var examID, part, order string
 	var limit int
 	var incomplete bool
 	var deleteID int64
@@ -35,12 +35,16 @@ func newSessionsCmd(app *App) *cobra.Command {
 				return runDeleteSession(ctx, c, deleteID, yes)
 			}
 
+			scope, err := scopeFromFlags("", examID, part, nil)
+			if err != nil {
+				return err
+			}
+
 			var records []core.SessionRecord
-			var err error
 			if incomplete {
 				records, err = c.IncompleteSessions(ctx, limit)
 			} else {
-				records, err = c.GetSessions(ctx, core.Scope(scope), core.HistoryOrder(order), limit)
+				records, err = c.GetSessions(ctx, scope, core.HistoryOrder(order), limit)
 			}
 			if err != nil {
 				return fmt.Errorf("get sessions: %w", err)
@@ -50,7 +54,7 @@ func newSessionsCmd(app *App) *cobra.Command {
 				fmt.Println("resumable practice sessions")
 				fmt.Println()
 			} else {
-				fmt.Printf("practice sessions (scope=%s, order=%s)\n\n", scope, order)
+				fmt.Printf("practice sessions (scope=%s, order=%s)\n\n", scopeLabel(scope), order)
 			}
 			if len(records) == 0 {
 				fmt.Println("No sessions recorded yet.")
@@ -74,7 +78,7 @@ func newSessionsCmd(app *App) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&scope, "scope", "all", "all | exam:<id> | part:am | part:pm")
+	addScopeFlags(cmd.Flags(), nil, &examID, &part, nil, false)
 	cmd.Flags().StringVar(&order, "order", "newest", "newest | oldest")
 	cmd.Flags().IntVar(&limit, "limit", 20, "max sessions to show (0 = all)")
 	cmd.Flags().BoolVar(&incomplete, "incomplete", false, "only show sessions that never finished cleanly (interrupted, or killed before it could mark completion) — use to find an id for \"practice --continue\"")

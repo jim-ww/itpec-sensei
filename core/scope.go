@@ -5,40 +5,65 @@ import (
 	"strings"
 )
 
-// scopeQuestionIDs resolves a Scope to the set of matching question global IDs.
-// Returns nil for ScopeAll (meaning "no filter").
-func (c *Core) scopeQuestionIDs(scope Scope) (map[string]struct{}, error) {
-	s := string(scope)
-	if s == "" || Scope(s) == ScopeAll {
+// scopeQuestionIDs resolves a ScopeFilter to the set of matching question
+// global IDs. Returns nil for an empty filter (meaning "no filter").
+func (c *Core) scopeQuestionIDs(filter ScopeFilter) (map[string]struct{}, error) {
+	if filter.IsEmpty() {
 		return nil, nil
 	}
-	parts := strings.SplitN(s, ":", 2)
-	if len(parts) != 2 {
-		return nil, fmt.Errorf("invalid scope %q, expected all|topic:<name>|tag:<name>|exam:<id>|part:<am|pm>", scope)
+
+	part := strings.ToLower(filter.Part)
+	if part != "" && part != "am" && part != "pm" {
+		return nil, fmt.Errorf("invalid part %q, expected am or pm", filter.Part)
 	}
-	kind, value := parts[0], parts[1]
-	var pool []*Question
-	switch kind {
-	case "topic":
-		pool = c.Bank.Questions(value, "")
-	case "tag":
-		pool = FilterByTags(c.Bank.Questions("", ""), []string{value})
-	case "exam":
-		pool = c.Bank.Questions("", value)
-	case "part":
-		value = strings.ToLower(value)
-		if value != "am" && value != "pm" {
-			return nil, fmt.Errorf("invalid part %q, expected am or pm", value)
+
+	pool := c.Bank.Questions(filter.Topic, filter.ExamID)
+	pool = FilterByTags(pool, filter.Tags)
+	if part != "" {
+		var filtered []*Question
+		for _, q := range pool {
+			if ExamPart(q.ExamID) == part {
+				filtered = append(filtered, q)
+			}
 		}
-		pool = c.Bank.QuestionsForExams(c.Bank.ExamsByPart(value))
-	default:
-		return nil, fmt.Errorf("invalid scope kind %q, expected topic, tag, exam, or part", kind)
+		pool = filtered
 	}
+
 	ids := make(map[string]struct{}, len(pool))
 	for _, q := range pool {
 		ids[q.GlobalID()] = struct{}{}
 	}
 	return ids, nil
+}
+
+// ParseScope parses ResetProgress's single-dimension scope string —
+// "all", "topic:<name>", "tag:<name>", "exam:<id>", or "part:am"/"part:pm"
+// — into a ScopeFilter.
+func ParseScope(scope Scope) (ScopeFilter, error) {
+	s := string(scope)
+	if s == "" || Scope(s) == ScopeAll {
+		return ScopeFilter{}, nil
+	}
+	kind, value, ok := strings.Cut(s, ":")
+	if !ok {
+		return ScopeFilter{}, fmt.Errorf("invalid scope %q, expected all|topic:<name>|tag:<name>|exam:<id>|part:<am|pm>", scope)
+	}
+	switch kind {
+	case "topic":
+		return ScopeFilter{Topic: value}, nil
+	case "tag":
+		return ScopeFilter{Tags: []string{value}}, nil
+	case "exam":
+		return ScopeFilter{ExamID: value}, nil
+	case "part":
+		value = strings.ToLower(value)
+		if value != "am" && value != "pm" {
+			return ScopeFilter{}, fmt.Errorf("invalid part %q, expected am or pm", value)
+		}
+		return ScopeFilter{Part: value}, nil
+	default:
+		return ScopeFilter{}, fmt.Errorf("invalid scope kind %q, expected topic, tag, exam, or part", kind)
+	}
 }
 
 // questionIDList converts a scopeQuestionIDs result to the slice form

@@ -9,8 +9,8 @@ import (
 )
 
 // runSummary implements the root command's default action:
-// `itpec-sensei [--scope=...] [--period=...] [--weakest-tags=N]`.
-func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core.Period, weakestTagsLimit int) error {
+// `itpec-sensei [--topic=...] [--tags=...] [--exam=...] [--part=...] [--period=...] [--weakest-tags=N]`.
+func runSummary(ctx context.Context, c *core.Core, scope core.ScopeFilter, period core.Period, weakestTagsLimit int) error {
 	summary, err := c.GetProgressSummary(ctx, scope, period)
 	if err != nil {
 		return fmt.Errorf("get progress summary: %w", err)
@@ -32,7 +32,7 @@ func runSummary(ctx context.Context, c *core.Core, scope core.Scope, period core
 		weakestTags = core.WeakestTags(tagStats, weakestTagsLimit, core.MinTagAttempts)
 	}
 
-	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", scope, period)
+	fmt.Printf("itpec-sensei — progress summary (scope=%s, period=%s)\n\n", scopeLabel(scope), period)
 	fmt.Printf("Answered:      %d\n", summary.Answered)
 	fmt.Printf("Streak:        %d day(s) (best: %d)\n", summary.Streak, summary.MaxStreak)
 	fmt.Printf("Review queue:  %d question(s)\n", summary.ReviewQueue)

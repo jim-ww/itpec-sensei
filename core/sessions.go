@@ -30,7 +30,7 @@ func (c *Core) DeleteSession(ctx context.Context, sessionID int64) error {
 // offer to resume them via --continue. Sessions that ran to completion have
 // exit_reason "completed" and are excluded.
 func (c *Core) IncompleteSessions(ctx context.Context, limit int) ([]SessionRecord, error) {
-	all, err := c.GetSessions(ctx, ScopeAll, HistoryNewestFirst, 0)
+	all, err := c.GetSessions(ctx, ScopeFilter{}, HistoryNewestFirst, 0)
 	if err != nil {
 		return nil, err
 	}

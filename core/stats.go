@@ -9,7 +9,7 @@ import (
 )
 
 // GetProgressSummary computes overall accuracy/streak/heatmap/review-queue for scope+period.
-func (c *Core) GetProgressSummary(ctx context.Context, scope Scope, period Period) (*ProgressSummary, error) {
+func (c *Core) GetProgressSummary(ctx context.Context, scope ScopeFilter, period Period) (*ProgressSummary, error) {
 	ids, err := c.scopeQuestionIDs(scope)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func periodSince(period Period) *time.Time {
 }
 
 // GetTopicStats returns per-topic answered/correct/accuracy for scope.
-func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, error) {
+func (c *Core) GetTopicStats(ctx context.Context, scope ScopeFilter) ([]TopicStat, error) {
 	ids, err := c.scopeQuestionIDs(scope)
 	if err != nil {
 		return nil, err
@@ -222,7 +222,7 @@ func (c *Core) GetTopicStats(ctx context.Context, scope Scope) ([]TopicStat, err
 // contributes to all N tag buckets, since tags aren't mutually exclusive the
 // way topics are. Questions with no tags contribute to none (no
 // "Uncategorized" bucket, unlike topic).
-func (c *Core) GetTagStats(ctx context.Context, scope Scope) ([]TagStat, error) {
+func (c *Core) GetTagStats(ctx context.Context, scope ScopeFilter) ([]TagStat, error) {
 	ids, err := c.scopeQuestionIDs(scope)
 	if err != nil {
 		return nil, err
@@ -292,7 +292,7 @@ func WeakestTags(stats []TagStat, limit, minAttempts int) []TagStat {
 }
 
 // GetExamStats returns per-exam answered/correct/accuracy for scope, mirroring GetTopicStats.
-func (c *Core) GetExamStats(ctx context.Context, scope Scope) ([]ExamStat, error) {
+func (c *Core) GetExamStats(ctx context.Context, scope ScopeFilter) ([]ExamStat, error) {
 	ids, err := c.scopeQuestionIDs(scope)
 	if err != nil {
 		return nil, err
@@ -351,7 +351,7 @@ func (c *Core) GetExam(ctx context.Context, examID string) (*ExamDetail, error) 
 		detail.TargetSecondsPerQuestion = info.DurationMinutes * 60 / info.TotalQuestions
 	}
 
-	stats, err := c.GetExamStats(ctx, Scope("exam:"+examID))
+	stats, err := c.GetExamStats(ctx, ScopeFilter{ExamID: examID})
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (c *Core) GetExam(ctx context.Context, examID string) (*ExamDetail, error) 
 		detail.Accuracy = stats[0].Accuracy
 	}
 
-	ids, err := c.scopeQuestionIDs(Scope("exam:" + examID))
+	ids, err := c.scopeQuestionIDs(ScopeFilter{ExamID: examID})
 	if err != nil {
 		return nil, err
 	}
