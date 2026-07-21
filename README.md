@@ -39,6 +39,7 @@ On first run, itpec-sensei asks for consent to download the question bank
 ## CLI Usage
 
     itpec-sensei
+    itpec-sensei --topic "Databases" --period week   # combine --topic/--tags/--exam/--part to narrow the summary
 
 Show progress summary: streaks, review-queue count, per-topic/per-exam accuracy.
 
@@ -46,8 +47,10 @@ Show progress summary: streaks, review-queue count, per-topic/per-exam accuracy.
     itpec-sensei practice --part am --limit 5   # practice 5 FE questions (Morning part)
     itpec-sensei practice --exam 2025A_FE-A --order sequential --time-limit 90m   # simulate the real exam, in order, under a time limit
     itpec-sensei practice --topic "Databases" --limit 10   # drill just one topic
+    itpec-sensei practice --topic "Databases" --tags normalization --unanswered   # only questions you've never answered
 
 Start a practice session — default, a quick drill, or a full timed mock exam.
+`--topic`/`--tags`/`--exam`/`--part` combine freely (AND across them, `--tags` matches ANY of the given tags).
 
     itpec-sensei sessions --incomplete
     itpec-sensei practice --continue      # resume the most recent not-completed session, exactly where it left off
@@ -66,6 +69,7 @@ List all known topics (valid values for `--topic`).
 
     itpec-sensei history
     itpec-sensei sessions
+    itpec-sensei history --exam 2025A_FE-A --tags cache-memory   # same combinable topic/tags/exam/part filters as practice
 
 List past individual answers, or past practice sessions.
 
