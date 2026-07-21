@@ -187,6 +187,7 @@ func (r *Repository) InsertSession(ctx context.Context, p core.SessionParams) (i
 		QuestionTimeLimitSeconds: nullableInt64Ptr(p.QuestionTimeLimitSeconds),
 		QuestionLimit:            nullableInt64(p.QuestionLimit),
 		QuestionNumber:           nullableInt64(p.QuestionNumber),
+		Unanswered:               p.Unanswered,
 	})
 	if err != nil {
 		return 0, fmt.Errorf("start session: %w", err)
@@ -242,6 +243,7 @@ func (r *Repository) SessionParamsByID(ctx context.Context, sessionID int64) (co
 		OrderStrategy:  row.OrderStrategy,
 		QuestionLimit:  int(row.QuestionLimit.Int64),
 		QuestionNumber: int(row.QuestionNumber.Int64),
+		Unanswered:     row.Unanswered,
 	}
 	if row.TimeLimitSeconds.Valid {
 		v := int(row.TimeLimitSeconds.Int64)

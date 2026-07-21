@@ -152,6 +152,7 @@ questionLoop:
 				QuestionNumber:           pf.question,
 				TimeLimitSeconds:         timeLimitSec,
 				QuestionTimeLimitSeconds: qTimeLimitSec,
+				Unanswered:               pf.unanswered,
 			})
 			if err != nil {
 				fmt.Printf("error starting session: %v\n", err)

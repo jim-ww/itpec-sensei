@@ -297,8 +297,8 @@ func (q *Queries) InsertAttempt(ctx context.Context, arg InsertAttemptParams) er
 const insertSession = `-- name: InsertSession :one
 
 INSERT INTO sessions (started_at, exam_type, exam_id, topic, part, mode, order_strategy,
-                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number, tags)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number, tags, unanswered)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 RETURNING id
 `
 
@@ -315,6 +315,7 @@ type InsertSessionParams struct {
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
 	Tags                     sql.NullString
+	Unanswered               bool
 }
 
 // Sessions --
@@ -332,6 +333,7 @@ func (q *Queries) InsertSession(ctx context.Context, arg InsertSessionParams) (i
 		arg.QuestionLimit,
 		arg.QuestionNumber,
 		arg.Tags,
+		arg.Unanswered,
 	)
 	var id int64
 	err := row.Scan(&id)
@@ -612,7 +614,7 @@ func (q *Queries) ListSessions(ctx context.Context) ([]ListSessionsRow, error) {
 const sessionParamsByID = `-- name: SessionParamsByID :one
 SELECT exam_type, exam_id, topic, part, mode, order_strategy,
        time_limit_seconds, question_time_limit_seconds,
-       question_limit, question_number, tags
+       question_limit, question_number, tags, unanswered
 FROM sessions WHERE id = ?
 `
 
@@ -628,6 +630,7 @@ type SessionParamsByIDRow struct {
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
 	Tags                     sql.NullString
+	Unanswered               bool
 }
 
 func (q *Queries) SessionParamsByID(ctx context.Context, id int64) (SessionParamsByIDRow, error) {
@@ -645,6 +648,7 @@ func (q *Queries) SessionParamsByID(ctx context.Context, id int64) (SessionParam
 		&i.QuestionLimit,
 		&i.QuestionNumber,
 		&i.Tags,
+		&i.Unanswered,
 	)
 	return i, err
 }

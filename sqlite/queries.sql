@@ -62,8 +62,8 @@ DELETE FROM attempts;
 
 -- name: InsertSession :one
 INSERT INTO sessions (started_at, exam_type, exam_id, topic, part, mode, order_strategy,
-                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number, tags)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                       time_limit_seconds, question_time_limit_seconds, question_limit, question_number, tags, unanswered)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 RETURNING id;
 
 -- name: EndSession :exec
@@ -75,7 +75,7 @@ DELETE FROM sessions WHERE id = ?;
 -- name: SessionParamsByID :one
 SELECT exam_type, exam_id, topic, part, mode, order_strategy,
        time_limit_seconds, question_time_limit_seconds,
-       question_limit, question_number, tags
+       question_limit, question_number, tags, unanswered
 FROM sessions WHERE id = ?;
 
 -- name: ListSessions :many

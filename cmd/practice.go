@@ -26,12 +26,13 @@ type practiceFlags struct {
 	showAnswer        bool
 	dark              bool
 	explanations      bool
+	unanswered        bool
 }
 
 // poolFlagNames are the flags that plan a fresh question pool — they're
 // meaningless (and rejected) alongside --continue/--repeat, which instead
 // reuse an existing session's params.
-var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "tags", "question", "limit", "order", "time-limit", "question-time-limit"}
+var poolFlagNames = []string{"exam-type", "exam", "part", "topic", "tags", "question", "limit", "order", "time-limit", "question-time-limit", "unanswered"}
 
 // newPracticeCmd implements `itpec-sensei practice ...`.
 func newPracticeCmd(app *App) *cobra.Command {
@@ -39,7 +40,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 	var tags []string
 	var question, limit int
 	var timeLimit, questionTimeLimit time.Duration
-	var showAnswer, dark, explanations bool
+	var showAnswer, dark, explanations, unanswered bool
 	var continueID, repeatID int64
 
 	cmd := &cobra.Command{
@@ -128,6 +129,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 				showAnswer:        showAnswer,
 				dark:              dark,
 				explanations:      explanations,
+				unanswered:        unanswered,
 			}
 			return runPracticeSession(ctx, c, pf)
 		},
@@ -148,6 +150,7 @@ func newPracticeCmd(app *App) *cobra.Command {
 	flags.BoolVar(&showAnswer, "answer", false, "reveal the correct answer/explanation immediately per question instead of grading input; no DB writes in this mode")
 	flags.BoolVar(&dark, "dark", true, "invert question image colors, for dark terminal themes (default on; pass --dark=false to see original colors)")
 	flags.BoolVar(&explanations, "explanations", true, "show topic + explanation after each graded answer (default on; pass --explanations=false to skip)")
+	flags.BoolVar(&unanswered, "unanswered", false, "restrict the pool to questions you've never answered in any session")
 	flags.Int64Var(&continueID, "continue", 0, "resume a not-completed session exactly where it left off: bare --continue resumes the most recent not-completed session, or pass --continue=<id> for a specific one (see \"itpec-sensei sessions --incomplete\")")
 	flags.Lookup("continue").NoOptDefVal = "0" // makes a bare --continue (no =value) valid, same trick bool flags use
 	flags.Int64Var(&repeatID, "repeat", 0, "start a new session reusing exam/topic/part/mode/order/limits from an existing session (completed or not), with a fresh question draw")
@@ -259,6 +262,7 @@ func practiceFlagsFromParams(p core.SessionParams, imageViewer string, showAnswe
 		showAnswer:   showAnswer,
 		dark:         dark,
 		explanations: explanations,
+		unanswered:   p.Unanswered,
 	}
 	if p.TimeLimitSeconds != nil {
 		pf.timeLimit = time.Duration(*p.TimeLimitSeconds) * time.Second

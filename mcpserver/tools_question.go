@@ -48,7 +48,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 		if in.ContinueSessionID != 0 && in.RepeatSessionID != 0 {
 			return nil, getNextQuestionOut{}, fmt.Errorf("continueSessionId and repeatSessionId are mutually exclusive")
 		}
-		topic, examID, tags := in.Topic, in.ExamID, in.Tags
+		topic, examID, tags, unanswered := in.Topic, in.ExamID, in.Tags, in.Unanswered
 		if !sess.started {
 			switch {
 			case in.ContinueSessionID != 0:
@@ -79,6 +79,9 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				if len(tags) == 0 {
 					tags = params.Tags
 				}
+				if !unanswered {
+					unanswered = params.Unanswered
+				}
 				sess.id = in.ContinueSessionID
 				sess.started = true
 			case in.RepeatSessionID != 0:
@@ -95,9 +98,12 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				if len(tags) == 0 {
 					tags = params.Tags
 				}
+				if !unanswered {
+					unanswered = params.Unanswered
+				}
 				id, err := c.StartSession(ctx, core.SessionParams{
 					ExamType: "fe", ExamID: examID, Topic: topic, Tags: tags,
-					Mode: cmp.Or(in.Mode, params.Mode), OrderStrategy: "random",
+					Mode: cmp.Or(in.Mode, params.Mode), OrderStrategy: "random", Unanswered: unanswered,
 				})
 				if err != nil {
 					return nil, getNextQuestionOut{}, err
@@ -107,7 +113,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 			default:
 				id, err := c.StartSession(ctx, core.SessionParams{
 					ExamType: "fe", ExamID: examID, Topic: topic, Tags: tags,
-					Mode: cmp.Or(in.Mode, "normal"), OrderStrategy: "random",
+					Mode: cmp.Or(in.Mode, "normal"), OrderStrategy: "random", Unanswered: unanswered,
 				})
 				if err != nil {
 					return nil, getNextQuestionOut{}, err
@@ -127,7 +133,7 @@ func (t *toolCtx) registerQuestionTools(server *mcp.Server) {
 				excludeIDs = append(excludeIDs, id)
 			}
 		}
-		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Tags: tags, Mode: mode, ExcludeIDs: excludeIDs})
+		q, err := c.GetNextQuestion(ctx, core.QuestionFilter{Topic: topic, ExamID: examID, Tags: tags, Mode: mode, ExcludeIDs: excludeIDs, Unanswered: unanswered})
 		if err != nil {
 			return nil, getNextQuestionOut{}, err
 		}

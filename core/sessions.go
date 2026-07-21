@@ -54,8 +54,9 @@ func (c *Core) GetSessionParams(ctx context.Context, sessionID int64) (SessionPa
 	return c.Repo.SessionParamsByID(ctx, sessionID)
 }
 
-// AnsweredQuestionIDs returns the set of question GlobalIDs already answered
-// within one session, so --continue can skip them when resuming.
+// AnsweredQuestionIDs returns the set of question GlobalIDs already
+// answered within one session (so --continue can skip them when resuming),
+// or across all sessions if sessionID is 0 (see QuestionFilter.Unanswered).
 func (c *Core) AnsweredQuestionIDs(ctx context.Context, sessionID int64) (map[string]bool, error) {
 	rows, err := c.Repo.ListAttempts(ctx, AttemptFilter{SessionID: sessionID}, "", 0)
 	if err != nil {

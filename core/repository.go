@@ -68,6 +68,7 @@ type SessionParams struct {
 	QuestionNumber           int // 0 = not a single-question session
 	TimeLimitSeconds         *int
 	QuestionTimeLimitSeconds *int
+	Unanswered               bool // restrict pool to questions never answered (any session)
 }
 
 // Repository is the progress store's persistence boundary: every SQL

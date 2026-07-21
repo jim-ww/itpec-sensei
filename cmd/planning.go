@@ -60,6 +60,13 @@ func planPool(ctx context.Context, c *core.Core, pf practiceFlags) ([]*core.Ques
 	if len(pf.tags) > 0 {
 		planned = core.FilterByTags(planned, pf.tags)
 	}
+	if pf.unanswered {
+		var err error
+		planned, err = unansweredFiltered(ctx, c, planned)
+		if err != nil {
+			return nil, err
+		}
+	}
 	// "review" is a filter (narrow to due questions), not a sort — once
 	// applied, order the resulting due-pool randomly like any other pool.
 	orderStrategy := pf.order
@@ -87,6 +94,22 @@ func reviewFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([
 	var filtered []*core.Question
 	for _, q := range pool {
 		if dueIDs[q.GlobalID()] {
+			filtered = append(filtered, q)
+		}
+	}
+	return filtered, nil
+}
+
+// unansweredFiltered narrows pool to questions never answered in any
+// session (not just the current one) — see practiceFlags.unanswered.
+func unansweredFiltered(ctx context.Context, c *core.Core, pool []*core.Question) ([]*core.Question, error) {
+	answered, err := c.AnsweredQuestionIDs(ctx, 0)
+	if err != nil {
+		return nil, err
+	}
+	var filtered []*core.Question
+	for _, q := range pool {
+		if !answered[q.GlobalID()] {
 			filtered = append(filtered, q)
 		}
 	}

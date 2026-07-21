@@ -14,6 +14,8 @@ import (
 var migrations = []string{
 	// 1: sessions.tags — comma-joined tag filter, added alongside topic/part.
 	`ALTER TABLE sessions ADD COLUMN tags TEXT;`,
+	// 2: sessions.unanswered — restrict pool to never-attempted questions.
+	`ALTER TABLE sessions ADD COLUMN unanswered BOOLEAN NOT NULL DEFAULT FALSE;`,
 }
 
 // migrate brings db up to the latest schema. Tracked via SQLite's built-in

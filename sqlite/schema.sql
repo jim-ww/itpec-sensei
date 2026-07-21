@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS sessions (
   part                         TEXT,
   question_limit               INTEGER,
   question_number              INTEGER,
-  tags                         TEXT
+  tags                         TEXT,
+  unanswered                   BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS attempts (

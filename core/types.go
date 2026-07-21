@@ -28,6 +28,9 @@ type QuestionFilter struct {
 	// answered in the caller's current session — so "sequential" can advance
 	// past them, and so repeats aren't handed back in other modes either.
 	ExcludeIDs []string
+	// Unanswered restricts the pool to questions never answered in any
+	// session, not just the current one.
+	Unanswered bool
 }
 
 // Scope narrows progress queries / resets: "all", "topic:<name>", "tag:<name>",

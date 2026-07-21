@@ -43,4 +43,5 @@ type Session struct {
 	QuestionLimit            sql.NullInt64
 	QuestionNumber           sql.NullInt64
 	Tags                     sql.NullString
+	Unanswered               bool
 }

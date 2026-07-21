@@ -70,6 +70,23 @@ func (c *Core) GetNextQuestion(ctx context.Context, filter QuestionFilter) (*Que
 		}
 	}
 
+	if filter.Unanswered {
+		answered, err := c.AnsweredQuestionIDs(ctx, 0)
+		if err != nil {
+			return nil, err
+		}
+		var filtered []*Question
+		for _, q := range pool {
+			if !answered[q.GlobalID()] {
+				filtered = append(filtered, q)
+			}
+		}
+		pool = filtered
+		if len(pool) == 0 {
+			return nil, fmt.Errorf("no unanswered questions remain in this filter")
+		}
+	}
+
 	switch {
 	case strings.EqualFold(filter.Mode, "sequential"):
 		sorted := make([]*Question, len(pool))
