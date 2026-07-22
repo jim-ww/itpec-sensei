@@ -25,7 +25,7 @@ func newTopicsCmd(app *App) *cobra.Command {
 				}
 				fmt.Println(label + ":")
 				for _, topic := range topics {
-					fmt.Println("  ", topic)
+					fmt.Println("  " + topic)
 				}
 			}
 			printGroup("AM", am)

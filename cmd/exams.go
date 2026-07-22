@@ -18,7 +18,7 @@ func newExamsCmd(app *App) *cobra.Command {
 				return fmt.Errorf("list exams: %w", err)
 			}
 			for _, id := range exams {
-				fmt.Println(" ", id)
+				fmt.Println(id)
 			}
 			return nil
 		},
